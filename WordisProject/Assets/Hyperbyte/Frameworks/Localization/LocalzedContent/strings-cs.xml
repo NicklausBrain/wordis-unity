@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>	
+	<!-- Common-->
+	<string name = "txtDataPrivacy" text = "OCHRANA ÚDAJŮ"/>
+	<string name = "txtPrivacyPolicy" text = "ZÁSADY OCHRANY OSOBNÍCH ÚDAJŮ"/>
+	<string name = "txtContinue" text = "POKRAČOVAT"/>
+	<string name = "txtHome" text = "DOMOV"/>
+	<string name = "txtOk" text = "OK"/>
+	<string name = "txtYes" text = "ANO"/>
+	<string name = "txtNo" text = "NE"/>
+	<string name = "txtNote" text = "POZNÁMKA"/>
+	<string name = "txtSuccess" text = "ÚSPĚCH!"/>
+	<string name = "txtAlert" text = "UPOZORNĚNÍ!"/>
+	<string name = "txtOops" text = "OOPS!"/>
+	<string name = "txtOutOfGemsTitle" text = "Z drahokamů!"/>
+	<string name = "txtFreeGems" text = "ZDARMA drahokamy!"/>
+    <string name = "txtAwesome" text = "ÚŽASNÝ!"/>
+    
+	<!-- Consent Setting -->
+	<string name = "txtNotNow" text="Teď ne"/>
+	<string name = "txtDataSetting_content1" text = "Staráme se o vaše soukromí a bezpečnost dat. Udržujeme aplikace zdarma zobrazováním reklam."/>
+	<string name = "txtDataSetting_content2" text = "Můžeme i nadále používat vaše data k přizpůsobení reklam pro vás?"/>
+	<string name = "txtDataSetting_content3" text = "Volbu můžete kdykoli změnit v nastavení aplikace. Naši partneři budou shromažďovat data a používat jedinečný identifikátor ve vašem zařízení k zobrazování reklam. Přečtěte si více o tom, jak tato aplikace a naši partneři shromažďují a používají data:"/>
+
+	<!-- Tutorial Text -->
+	<string name = "txtTutorial1" text = "Umístěte blok do zvýrazněné oblasti."/>
+	<string name = "txtTutorial2" text = "Úžasné, nyní dokončete celou řadu a vyčistěte ji."/>
+	<string name = "txtTutorial3" text = "Zkusme to ještě jednou."/>
+	<string name = "txtTutorial4" text = "Skvělé, začněme zábavu!"/>
+
+	<!-- Shop -->
+	<string name = "txtShop" text = "PRODEJNA"/>
+	<string name = "txtRemoveAds" text = "ODEBRAT REKLAMY!"/>
+	<string name = "txtRestorePurchases" text = "OBNOVIT NÁKUPY"/>
+	<string name = "txtGems_FR" text = "{0} KLENOT"/>
+	<string name = "txtExtra_FR" text = "{0}% Další"/>
+	<string name = "txtGetFree" text = "VOLNÝ"/>
+
+	<!-- Home Screen -->
+	<string name = "txtTitle" text = "BLOCK PUZZLE"/>
+	<string name = "txtPlay" text = "HRÁT SI"/>
+    
+    <!-- Select Mode Screen -->
+    <string name = "txtSelectMode" text = "VÝBĚR REŽIMU"/>
+    <string name = "txtClassicMode" text = "KLASICKÝ REŽIM"/>
+    <string name = "txtTimeMode" text = "ČASOVÝ REŽIM"/>
+    <string name = "txtBlastMode" text = "VÝBUCH REŽIM"/>
+    <string name = "txtAdvanceMode" text = "ZÁLOHA REŽIM"/>
+    
+    <!-- Pause Screen -->
+    <string name = "txtGamePaused" text = "HRA POZASTAVENO"/>
+    
+	<!-- Setting Screen -->
+	<string name = "txtSettings" text = "NASTAVENÍ"/>
+	<string name = "txtSoundEffect" text = "ZVUKOVÉ EFEKTY"/>
+	<string name = "txtMusicEffect" text = "HUDEBNÍ ÚČINKY"/>
+	<string name = "txtVibration" text = "VIBRACE"/>
+	<string name = "txtSelectLang" text = "ZVOLTE JAZYK"/>
+	<string name = "txtNotitications" text = "OZNAMOVÁNÍ"/>
+	<string name = "txtSupport" text = "PODPORA"/>
+    
+    <!-- Select Theme Screen -->
+    <string name = "txtSelectTheme" text = "VYBERTE TÉMATU"/>
+	<string name = "txtActive" text = "AKTIVNÍ"/>
+	<string name = "txtUnlock" text = "UNLOCK"/>
+	<string name = "txtSelect" text = "VYBRAT"/>
+
+	<!-- Review Screen -->
+	<string name = "txtEnjoyingGame" text = "VYŽÁDÁTE SI HRU?"/>
+	<string name = "txtRateContent" text = "JAK SE MÁTE TENTO HRU?"/>
+	<string name = "txtSubmit" text = "PŘEDLOŽIT"/>
+
+	<!-- Daily Rewards -->
+	<string name = "txtDailyRewards" text = "DENNÍ ODMĚNY"/>
+	<string name = "txtDay_FR" text = "DEN {0}"/>
+
+	<!-- Purchase Screen -->
+	<string name = "txtInappSuccessMsg" text = "Odměna byla úspěšně přijata!"/>
+	<string name = "txtInAppRestored" text = "In-App byl úspěšně obnoven."/>
+	<string name = "txtNoRestore" text = "Neexistuje žádná aplikace pro obnovení."/>
+	<string name = "txtPurchaseFail" text = "Při nákupu došlo k chybě. Prosím zkuste to znovu později."/>
+
+	<!-- Game Tips -->
+	<string name = "txtBombTip" text = "TIP: VYMAZTE BOMB PŘED VÝSLEDKY!"/>
+	<string name = "txtTimeTip1" text = "TIP: UDRŽUJTE HODINU NA ČASOVAČI!"/>
+	<string name = "txtTimeTip2" text = "TIP: VYMAZAT LINKY PRO ZVÝŠENÍ ČASU!"/>
+
+	<!-- Game Over -->
+	<string name = "txtGameOver" text = "KONEC HRY"/>
+	<string name = "txtGameOver_gridfull" text = "Z POHYBU!"/>
+	<string name = "txtGameOver_bombexplode" text = "BOMB EXPLODED!"/>
+	<string name = "txtGameOver_timeover" text = "ČAS VYPRŠEL!"/>
+
+	<!-- RESCUE -->
+	<string name = "txtDontgiveup" text = "Nevzdávejte to, máte ještě jednu šanci!"/>
+
+	<!-- Quit Game -->
+	<string name = "txtQuitTitle" text = "DŮLEŽITÉ POTVRZENÍ!"/>
+	<string name = "txtQuitConfirm" text = "Opravdu chcete hru ukončit?"/>
+
+	<!--FREE GEMS POPUP-->
+	<string name = "txtOutOfGems" text = "OOPS! Zdá se, že jste z mincí!"/>
+</Resources>

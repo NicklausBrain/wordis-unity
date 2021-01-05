@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>	
+
+	<!-- Common-->
+	<string name = "txtDataPrivacy" text = "DATAINTEGRITET" />
+	<string name = "txtPrivacyPolicy" text = "INTEGRITETSPOLICY" />
+	<string name = "txtContinue" text = "FORTSÄTTA" />
+	<string name = "txtHome" text = "HEM" />
+	<string name = "txtOk" text = "OK" />
+	<string name = "txtYes" text = "JA" />
+	<string name = "txtNo" text = "NEJ" />
+	<string name = "txtNote" text = "NOTERA!" />
+	<string name = "txtSuccess" text = "FRAMGÅNG!" />
+	<string name = "txtAlert" text = "VARNA!" />
+	<string name = "txtOops" text = "HOPPSAN!" />
+	<string name = "txtOutOfGemsTitle" text = "UT AV GEMS!" />
+	<string name = "txtFreeGems" text = "GRATIS GEMS!" />
+	<string name = "txtAwesome" text = "GRYMT BRA!" />
+
+	<!-- Consent Setting -->
+	<string name = "txtNotNow" text = "Inte nu" />
+	<string name = "txtDataSetting_content1" text = "Vi bryr oss om din integritet och datasäkerhet. Vi håller appar gratis genom att visa annonser." />
+	<string name = "txtDataSetting_content2" text = "Kan vi fortsätta använda dina data för att skräddarsy annonser för dig?" />
+	<string name = "txtDataSetting_content3" text = "Du kan ändra ditt val när som helst i appinställningarna. Våra partners samlar in data och använder unik identifierare på din enhet för att visa dig annonser. Lär dig mer om hur denna app och våra partners samlar in och använder data: "/>
+	
+	<!-- Tutorial Text -->
+	<string name = "txtTutorial1" text = "Placera blocket i det markerade området."/>
+	<string name = "txtTutorial2" text = "Fantastiskt, slutför nu hela raden för att rensa den."/>
+	<string name = "txtTutorial3" text = "Låt oss försöka en gång till."/>
+	<string name = "txtTutorial4" text = "Bra, låt oss börja kul!"/>
+
+	<!-- Shop -->
+	<string name = "txtShop" text = "AFFÄR" />
+	<string name = "txtRemoveAds" text = "TA BORT ANNONSER!" />
+	<string name = "txtRestorePurchases" text = "ÅTERSTÄLLA KÖP" />
+	<string name = "txtGems_FR" text = "{0} GEMS" />
+	<string name = "txtExtra_FR" text = "{0}% Extra" />
+	<string name = "txtGetFree" text = "FÅ GRATIS"/>
+
+	<!-- Home Screen -->
+	<string name = "txtTitle" text = "BLOCK PUZZLE" />
+	<string name = "txtPlay" text = "SPELA" />
+
+	<!-- Select Mode Screen -->
+	<string name = "txtSelectMode" text = "VÄLJ LÄGE" />
+	<string name = "txtClassicMode" text = "KLASSISK LÄGE" />
+	<string name = "txtTimeMode" text = "TIDLÄGE" />
+	<string name = "txtBlastMode" text = "KUL LÄGE" />
+	<string name = "txtAdvanceMode" text = "AVANCERAT LÄGE" />
+	    
+	<!-- Pause Screen -->
+	<string name = "txtGamePaused" text = "SPEL PAUSAD!" />
+	    
+	<!-- Setting Screen -->
+	<string name = "txtSettings" text = "INSTÄLLNINGAR" />
+	<string name = "txtSoundEffect" text = "LJUD EFFEKTER" />
+	<string name = "txtMusicEffect" text = "MUSIKeffekter" />
+	<string name = "txtVibration" text = "VIBRATION" />
+	<string name = "txtSelectLang" text = "VÄLJ SPRÅK" />
+	<string name = "txtNotications" text = "ANMÄLAN" />
+	<string name = "txtSupport" text = "STÖD" />
+	    
+	<!-- Select Theme Screen -->
+	<string name = "txtSelectTheme" text = "VÄLJ TEMA" />
+	<string name = "txtActive" text = "AKTIVA"/>
+	<string name = "txtUnlock" text = "LÅSA UPP"/>
+	<string name = "txtSelect" text = "VÄLJ"/>
+
+	<!-- Review Screen -->
+	<string name = "txtEnjoyingGame" text = "NJUTA SPEL?" />
+	<string name = "txtRateContent" text = "Hur skulle du betygsätta detta spel?" />
+	<string name = "txtSubmit" text = "SKICKA IN" />
+
+	<!-- Daily Rewards -->
+	<string name = "txtDailyRewards" text = "DAGLIGA LÖNNINGAR" />
+	<string name = "txtDay_FR" text = "DAG {0}" />
+
+	<!-- Purchase Screen -->
+	<string name = "txtInappSuccessMsg" text = "Belöning mottagits framgångsrikt!" />
+	<string name = "txtInAppRestored" text = "I-app återställs." />
+	<string name = "txtNoRestore" text = "Det finns ingen in-app att återställa." />
+	<string name = "txtPurchaseFail" text = "Något gick fel med ditt köp. Försök igen senare." />
+
+	<!-- Game Tips -->
+	<string name = "txtBombTip" text = "TIPS: RENA BOMBEN FÖR DET EXPLODERAR!" />
+	<string name = "txtTimeTip1" text = "TIPS: Håll en klocka på timern!" />
+	<string name = "txtTimeTip2" text = "TIPS: RENA FODRAR FÖR ATT ÖKA TIMER!" />
+
+	<!-- Game Over -->
+	<string name = "txtGameOver" text = "SPEL ÖVER" />
+	<string name = "txtGameOver_gridfull" text = "UT AV RÖRNING!" />
+	<string name = "txtGameOver_bombexplode" text = "BOMB EXPLODERAD!" />
+	<string name = "txtGameOver_timeover" text = "TID ÖVER!" />
+
+	<!-- RESCUE -->
+	<string name = "txtDontgiveup" text = "Ge inte upp, du har en chans till!" />
+
+	<!-- Quit Game -->
+	<string name = "txtQuitTitle" text = "Sluta bekräftelse!" />
+	<string name = "txtQuitConfirm" text = "Är du säker på att du vill avsluta spelet?" />
+
+	<!-- FREE GEMS POPUP -->
+	<string name = "txtOutOfGems" text = "HOPPSAN! Du verkar vara slut på mynt!" />
+</Resources>

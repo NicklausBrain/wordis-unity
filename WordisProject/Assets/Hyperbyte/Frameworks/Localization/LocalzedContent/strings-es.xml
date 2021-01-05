@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>	
+	<!-- Common-->
+	<string name = "txtDataPrivacy" text = "PRIVACIDAD DE DATOS" />
+	<string name = "txtPrivacyPolicy" text = "POLÍTICA DE PRIVACIDAD" />
+	<string name = "txtContinue" text = "SEGUIR" />
+	<string name = "txtHome" text = "HOGAR" />
+	<string name = "txtOk" text = "Okay" />
+	<string name = "txtYes" text = "SI" />
+	<string name = "txtNo" text = "NO" />
+	<string name = "txtNote" text = "NOTA!" />
+	<string name = "txtSuccess" text = "¡ÉXITO!" />
+	<string name = "txtAlert" text = "¡ALERTA!" />
+	<string name = "txtOops" text = "¡Vaya!" />
+	<string name = "txtOutOfGemsTitle" text = "FUERA DE GEMAS!" />
+	<string name = "txtFreeGems" text = "¡GEMAS GRATUITAS!" />
+	<string name = "txtAwesome" text = "¡INCREÍBLE!" />
+	    
+	<!-- Consent Setting -->
+	<string name = "txtNotNow" text = "Ahora no" />
+	<string name = "txtDataSetting_content1" text = "Nos preocupamos por su privacidad y seguridad de datos. Mantenemos las aplicaciones gratuitas al mostrar anuncios." />
+	<string name = "txtDataSetting_content2" text = "¿Podemos seguir usando sus datos para personalizar sus anuncios?" />
+	<string name = "txtDataSetting_content3" text = "Puede cambiar su elección en cualquier momento en la configuración de la aplicación. Nuestros socios recopilarán datos y utilizarán un identificador único en su dispositivo para mostrarle anuncios. Obtenga más información sobre cómo esta aplicación y nuestros socios recopilan y usan datos: "/>
+
+	<!-- Tutorial Text -->
+	<string name = "txtTutorial1" text = "Coloque el bloque en el área resaltada."/>
+	<string name = "txtTutorial2" text = "Impresionante, ahora completa toda la línea para borrarla."/>
+	<string name = "txtTutorial3" text = "Probemos una vez más."/>
+	<string name = "txtTutorial4" text = "Genial, ¡comencemos la diversión!"/>
+	
+	<!-- Shop -->
+	<string name = "txtShop" text = "TIENDA" />
+	<string name = "txtRemoveAds" text = "¡QUITAR ANUNCIOS!" />
+	<string name = "txtRestorePurchases" text = "RESTAURAR LAS COMPRAS" />
+	<string name = "txtGems_FR" text = "{0} GEMS" />
+	<string name = "txtExtra_FR" text = "{0}% Extra" />
+	<string name = "txtGetFree" text = "LIBERARSE"/>
+
+	<!-- Home Screen -->
+	<string name = "txtTitle" text = "BLOCK PUZZLE" />
+	<string name = "txtPlay" text = "JUGAR" />
+	    
+	<!-- Select Mode Screen -->
+	<string name = "txtSelectMode" text = "SELECCIONAR MODO" />
+	<string name = "txtClassicMode" text = "MODO CLÁSICO" />
+	<string name = "txtTimeMode" text = "EL MODO DE HORA" />
+	<string name = "txtBlastMode" text = "MODO BLAST" />
+	<string name = "txtAdvanceMode" text = "MODO AVANZADO" />
+	    
+	<!-- Pause Screen -->
+	<string name = "txtGamePaused" text = "¡JUEGO PAUSADO!" />
+	    
+	<!-- Setting Screen -->
+	<string name = "txtSettings" text = "AJUSTES" />
+	<string name = "txtSoundEffect" text = "EFECTOS DE SONIDO" />
+	<string name = "txtMusicEffect" text = "EFECTOS MUSICALES" />
+	<string name = "txtVibration" text = "VIBRACIÓN" />
+	<string name = "txtSelectLang" text = "SELECCIONE EL IDIOMA" />
+	<string name = "txtNotitications" text = "NOTIFICACIONES" />
+	<string name = "txtSupport" text = "APOYO" />
+	    
+	<!-- Select Theme Screen -->
+	<string name = "txtSelectTheme" text = "SELECCIONE EL TEMA" />
+	<string name = "txtActive" text = "ACTIVO"/>
+	<string name = "txtUnlock" text = "DESBLOQUEAR"/>
+	<string name = "txtSelect" text = "SELECCIONE"/>
+
+	<!-- Review Screen -->
+	<string name = "txtEnjoyingGame" text = "¿DISFRUTA DEL JUEGO?" />
+	<string name = "txtRateContent" text = "¿CÓMO CALIFICARÍAS ESTE JUEGO?" />
+	<string name = "txtSubmit" text = "ENVIAR" />
+
+	<!-- Daily Rewards -->
+	<string name = "txtDailyRewards" text = "RECOMPENSAS DIARIAS" />
+	<string name = "txtDay_FR" text = "DIA {0}" />
+
+	<!-- Purchase Screen -->
+	<string name = "txtInappSuccessMsg" text = "Recompensa recibida con éxito!" />
+	<string name = "txtInAppRestored" text = "In-App restaurado con éxito" />
+	<string name = "txtNoRestore" text = "No hay que restaurar la aplicación" />
+	<string name = "txtPurchaseFail" text = "Algo salió mal con su compra. Vuelva a intentarlo más tarde"/>
+
+	<!-- Game Tips -->
+	<string name = "txtBombTip" text = "CONSEJO: ¡BORRAR BOMBA ANTES DE QUE EXPLOTE!" />
+	<string name = "txtTimeTip1" text = "CONSEJO: ¡MANTENGA UN RELOJ EN EL TEMPORIZADOR!" />
+	<string name = "txtTimeTip2" text = "SUGERENCIA: ¡BORRAR LÍNEAS PARA AUMENTAR EL TEMPORIZADOR!" />
+
+	<!-- Game Over -->
+	<string name = "txtGameOver" text = "JUEGO TERMINADO" />
+	<string name = "txtGameOver_gridfull" text = "¡FUERA DE MOVIMIENTO!" />
+	<string name = "txtGameOver_bombexplode" text = "¡BOMBA EXPLOTÓ!" />
+	<string name = "txtGameOver_timeover" text = "¡SE ACABÓ EL TIEMPO!" />
+
+	<!-- RESCUE -->
+	<string name = "txtDontgiveup" text = "¡No te rindas, tienes una oportunidad más!" />
+
+	<!-- Quit Game -->
+	<string name = "txtQuitTitle" text = "¡SALIR CONFIRMAR!" />
+	<string name = "txtQuitConfirm" text = "¿Estás seguro de que quieres salir del juego?" />
+
+	<!-- FREE GEMS POPUP -->
+	<string name = "txtOutOfGems" text = "¡Vaya! ¡Parece que no tienes monedas!" />
+</Resources>

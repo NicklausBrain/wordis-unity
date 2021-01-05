@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 66a6019a65abf43a7a6867de7384bb84
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Neuron
+  fontNames:
+  - Neuron
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4d649a6300d264f68bc95d50126d898d, type: 3}
+  - {fileID: 12800000, guid: e503d8b7594417347bb6b5830c79725f, type: 3}
+  - {fileID: 12800000, guid: 7280c05df2f5a2f44aaeab3adcf47df8, type: 3}
+  - {fileID: 12800000, guid: 1d18f8de645aa463d8d1848e3fc693b4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
