@@ -7,6 +7,7 @@
 - [Algorithm](docs/algorithm.md)
 - [Architecture](docs/architecture.md)
 - [Prerequisites](docs/prerequisites.md)
+- [SDK Integration](docs/SDK_Integration.pdf)
 
 ## Startup
 
