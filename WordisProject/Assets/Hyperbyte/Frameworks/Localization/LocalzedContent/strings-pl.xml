@@ -45,7 +45,6 @@
 	<string name = "txtSelectMode" text = "WYBIERZ TRYB" />
 	<string name = "txtClassicMode" text = "TRYB KLASYCZNY" />
 	<string name = "txtTimeMode" text = "TRYB CZASU" />
-	<string name = "txtBlastMode" text = "TRYB BLAST" />
 	<string name = "txtAdvanceMode" text = "TRYB ADVANCE" />
 
 	<!-- Pause Screen -->
