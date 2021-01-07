@@ -45,7 +45,6 @@
 	<string name = "txtSelectMode" text = "SELECT MODE" />
 	<string name = "txtClassicMode" text = "CLASSIC MODE" />
 	<string name = "txtTimeMode" text = "TIME MODE" />
-	<string name = "txtBlastMode" text = "BLAST MODE" />
 	<string name = "txtAdvanceMode" text = "ADVANCE MODE" />
 	    
 	<!-- Pause Screen -->

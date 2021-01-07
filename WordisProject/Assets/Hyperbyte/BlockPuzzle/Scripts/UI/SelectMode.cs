@@ -60,19 +60,6 @@ namespace Hyperbyte
         }
 
         /// <summary>
-        /// Blast mode button listener.
-        /// </summary>
-        public void OnBlastModeButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Blast);
-            }
-        }
-
-        /// <summary>
         /// Advance mode button listener.
         /// </summary>
         public void OnAdvanceModeButtonPressed()

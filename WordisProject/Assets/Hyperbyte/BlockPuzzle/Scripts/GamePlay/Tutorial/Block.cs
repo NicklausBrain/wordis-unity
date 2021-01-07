@@ -27,50 +27,20 @@ namespace Hyperbyte.Tutorial
     {
 
         // Returns rowId 
-        public int RowId
-        {
-            get
-            {
-                return _rowId;
-            }
-            private set
-            {
-                _rowId = value;
-            }
-        }
+        public int RowId { get; private set; }
 
         //Returns columnId
-        public int ColumnId
-        {
-            get
-            {
-                return _columnId;
-            }
-            private set
-            {
-                _columnId = value;
-            }
-        }
+        public int ColumnId { get; private set; }
 
         // Represents row id of block in the grid.
-        private int _rowId;
 
         // Represents columnId id of block in the grid.
-        private int _columnId;
 
         // Block is filled  with current playing block shape.
         [System.NonSerialized] public bool isFilled = false;
 
         // Block is available to place block shape or not.
         [System.NonSerialized] public bool isAvailable = true;
-
-        #region Blast Mode Specific
-        // Whether Block contains bomb. Applied only to time mode.
-        [System.NonSerialized] public bool isBomb = false;
-
-        // Instance on bomb on the block. 
-        [System.NonSerialized] public Bomb thisBomb = null;
-        #endregion
 
         // Default sprite tag on the block. Will update runtime.
         public string defaultSpriteTag;
@@ -84,19 +54,19 @@ namespace Hyperbyte.Tutorial
         // Box collide attached to this block.
         BoxCollider2D thisCollider;
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // Image component on the block. Assigned from Inspector.
         [SerializeField] Image blockImage;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         // Particle effect when clearing the block.
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] GameObject clearParticle;
-        #pragma warning restore 0649
-        
+#pragma warning restore 0649
+
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             /// Initializes the collider component on Awake.
@@ -176,7 +146,7 @@ namespace Hyperbyte.Tutorial
         public void Clear()
         {
             transform.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            
+
             // BlockImage will scale down to 0 in 0.35 seconds. and will reset to scale 1 on animation completion.
             UIFeedback.Instance.PlayHapticLight();
             blockImage.transform.LocalScale(Vector3.zero, 0.35F).OnComplete(() =>
@@ -185,7 +155,8 @@ namespace Hyperbyte.Tutorial
                 blockImage.sprite = null;
             });
 
-            blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(()=>{
+            blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(() =>
+            {
                 blockImage.transform.localEulerAngles = Vector3.zero;
             });
 

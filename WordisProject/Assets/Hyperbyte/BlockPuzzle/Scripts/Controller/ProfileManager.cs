@@ -20,9 +20,9 @@ using Hyperbyte.HapticFeedback;
 
 namespace Hyperbyte
 {
-	/// <summary>
-	/// This script compont manages and saves the basic status if user control including sound, music, haptic feedback, notification, ad status etc.
-	/// </summary>
+    /// <summary>
+    /// This script compont manages and saves the basic status if user control including sound, music, haptic feedback, notification, ad status etc.
+    /// </summary>
     public class ProfileManager : Singleton<ProfileManager>
     {
         [SerializeField] AppSettings appSettings;
@@ -39,55 +39,27 @@ namespace Hyperbyte
         // Notification status change event action.
         public static event Action<bool> OnNotificationStatusChangedEvent;
 
-		// Returns current status of sound.
-        private bool isSoundEnabled = true;
-        public bool IsSoundEnabled
-        {
-            get
-            {
-                return isSoundEnabled;
-            }
-        }
+        // Returns current status of sound.
+        public bool IsSoundEnabled { get; private set; } = true;
 
-		// Returns current status of music.
-        private bool isMusicEnabled = true;
-        public bool IsMusicEnabled
-        {
-            get
-            {
-                return isMusicEnabled;
-            }
-        }
+        // Returns current status of music.
+        public bool IsMusicEnabled { get; private set; } = true;
 
-		// Returns current status of Vibrations/Haptic Feedback.
-        private bool isVibrationEnabled = true;
-        public bool IsVibrationEnabled
-        {
-            get
-            {
-                return isVibrationEnabled;
-            }
-        }
+        // Returns current status of Vibrations/Haptic Feedback.
+        public bool IsVibrationEnabled { get; private set; } = true;
 
-		// Returns current status of Notifications.
-        private bool isNotificationEnabled = true;
-        public bool IsNotificationEnabled
-        {
-            get
-            {
-                return isNotificationEnabled;
-            }
-        }
+        // Returns current status of Notifications.
+        public bool IsNotificationEnabled { get; private set; } = true;
 
-		// Whether user will be served ads or not.
+        // Whether user will be served ads or not.
         [System.NonSerialized] bool isUserAdFree = false;
 
-		// List of all sessions when review nad should be shown to user.
+        // List of all sessions when review nad should be shown to user.
         [HideInInspector] public List<int> appLaunchReviewSessions = new List<int>();
-        
+
         [HideInInspector] public List<int> gameOverReviewSessions = new List<int>();
 
-		// Profile manager has initialized or not.
+        // Profile manager has initialized or not.
         bool hasInitialised = false;
 
         /// <summary>
@@ -99,19 +71,21 @@ namespace Hyperbyte
             Initialise();
         }
 
-		/// <summary>
-		/// Initializes the profilemanager.
-		/// </summary>
+        /// <summary>
+        /// Initializes the profilemanager.
+        /// </summary>
         void Initialise()
         {
             if (appSettings == null)
             {
                 appSettings = (AppSettings)Resources.Load("AppSettings");
-                if (appSettings.showReviewPopupOnLaunch && appSettings.reviewPopupAppLaunchCount != string.Empty) {
+                if (appSettings.showReviewPopupOnLaunch && appSettings.reviewPopupAppLaunchCount != string.Empty)
+                {
                     appLaunchReviewSessions = appSettings.reviewPopupAppLaunchCount.Split(',').Select(n => Convert.ToInt32(n)).ToList();
                 }
 
-                if (appSettings.showReviewPopupOnGameOver && appSettings.reviewPopupGameOverCount != string.Empty) {
+                if (appSettings.showReviewPopupOnGameOver && appSettings.reviewPopupGameOverCount != string.Empty)
+                {
                     gameOverReviewSessions = appSettings.reviewPopupGameOverCount.Split(',').Select(n => Convert.ToInt32(n)).ToList();
                 }
             }
@@ -119,21 +93,21 @@ namespace Hyperbyte
             initProfileStatus();
         }
 
-		/// <summary>
+        /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         private void OnEnable()
         {
-		    /// Initiate haptic feedback generator.
+            /// Initiate haptic feedback generator.
             HapticFeedbackGenerator.InitHapticFeedbackGenerator();
         }
 
-		/// <summary>
+        /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
         private void OnDisable()
         {
-		    /// Releases haptic feedback generator.
+            /// Releases haptic feedback generator.
             HapticFeedbackGenerator.ReleaseHapticFeedbackGenerator();
         }
 
@@ -142,30 +116,30 @@ namespace Hyperbyte
         /// </summary>
         public void initProfileStatus()
         {
-			// Fetches the status of all user setting and invokes event callbacks for each settings.
-			
-            isMusicEnabled = (PlayerPrefs.GetInt("isMusicEnabled", 0) == 0) ? true : false;
-            isVibrationEnabled = (PlayerPrefs.GetInt("isVibrationEnabled", 0) == 0) ? true : false;
-            isNotificationEnabled = (PlayerPrefs.GetInt("isNotificationEnabled", 0) == 0) ? true : false;
-            isSoundEnabled = (PlayerPrefs.GetInt("isSoundEnabled", 0) == 0) ? true : false;
+            // Fetches the status of all user setting and invokes event callbacks for each settings.
 
-            if ((!isSoundEnabled) && (OnSoundStatusChangedEvent != null))
-            {
-                OnSoundStatusChangedEvent.Invoke(isSoundEnabled);
-            }
-            if ((!isMusicEnabled) && (OnMusicStatusChangedEvent != null))
-            {
-                OnMusicStatusChangedEvent.Invoke(isMusicEnabled);
-            }
-            if ((!isVibrationEnabled) && (OnVibrationStatusChangedEvent != null))
-            {
-                OnVibrationStatusChangedEvent.Invoke(isVibrationEnabled);
-            }
-            if (!appSettings.enableVibrations) { isVibrationEnabled = false; }
+            IsMusicEnabled = (PlayerPrefs.GetInt("isMusicEnabled", 0) == 0) ? true : false;
+            IsVibrationEnabled = (PlayerPrefs.GetInt("isVibrationEnabled", 0) == 0) ? true : false;
+            IsNotificationEnabled = (PlayerPrefs.GetInt("isNotificationEnabled", 0) == 0) ? true : false;
+            IsSoundEnabled = (PlayerPrefs.GetInt("isSoundEnabled", 0) == 0) ? true : false;
 
-            if ((!isNotificationEnabled) && (OnNotificationStatusChangedEvent != null))
+            if ((!IsSoundEnabled) && (OnSoundStatusChangedEvent != null))
             {
-                OnNotificationStatusChangedEvent.Invoke(isNotificationEnabled);
+                OnSoundStatusChangedEvent.Invoke(IsSoundEnabled);
+            }
+            if ((!IsMusicEnabled) && (OnMusicStatusChangedEvent != null))
+            {
+                OnMusicStatusChangedEvent.Invoke(IsMusicEnabled);
+            }
+            if ((!IsVibrationEnabled) && (OnVibrationStatusChangedEvent != null))
+            {
+                OnVibrationStatusChangedEvent.Invoke(IsVibrationEnabled);
+            }
+            if (!appSettings.enableVibrations) { IsVibrationEnabled = false; }
+
+            if ((!IsNotificationEnabled) && (OnNotificationStatusChangedEvent != null))
+            {
+                OnNotificationStatusChangedEvent.Invoke(IsNotificationEnabled);
             }
 
             isUserAdFree = ((PlayerPrefs.GetInt("isUserAdFree", 0) == 1) ? true : false);
@@ -176,12 +150,12 @@ namespace Hyperbyte
         /// </summary>
         public void ToggleSoundStatus()
         {
-            isSoundEnabled = (isSoundEnabled) ? false : true;
-            PlayerPrefs.SetInt("isSoundEnabled", (isSoundEnabled) ? 0 : 1);
+            IsSoundEnabled = (IsSoundEnabled) ? false : true;
+            PlayerPrefs.SetInt("isSoundEnabled", (IsSoundEnabled) ? 0 : 1);
 
             if (OnSoundStatusChangedEvent != null)
             {
-                OnSoundStatusChangedEvent.Invoke(isSoundEnabled);
+                OnSoundStatusChangedEvent.Invoke(IsSoundEnabled);
             }
         }
 
@@ -190,12 +164,12 @@ namespace Hyperbyte
         /// </summary>
         public void ToggleMusicStatus()
         {
-            isMusicEnabled = (isMusicEnabled) ? false : true;
-            PlayerPrefs.SetInt("isMusicEnabled", (isMusicEnabled) ? 0 : 1);
+            IsMusicEnabled = (IsMusicEnabled) ? false : true;
+            PlayerPrefs.SetInt("isMusicEnabled", (IsMusicEnabled) ? 0 : 1);
 
             if (OnMusicStatusChangedEvent != null)
             {
-                OnMusicStatusChangedEvent.Invoke(isMusicEnabled);
+                OnMusicStatusChangedEvent.Invoke(IsMusicEnabled);
             }
         }
 
@@ -204,12 +178,12 @@ namespace Hyperbyte
         /// </summary>
         public void TogglVibrationStatus()
         {
-            isVibrationEnabled = (isVibrationEnabled) ? false : true;
-            PlayerPrefs.SetInt("isVibrationEnabled", (isVibrationEnabled) ? 0 : 1);
+            IsVibrationEnabled = (IsVibrationEnabled) ? false : true;
+            PlayerPrefs.SetInt("isVibrationEnabled", (IsVibrationEnabled) ? 0 : 1);
 
             if (OnVibrationStatusChangedEvent != null)
             {
-                OnVibrationStatusChangedEvent.Invoke(isVibrationEnabled);
+                OnVibrationStatusChangedEvent.Invoke(IsVibrationEnabled);
             }
         }
 
@@ -218,12 +192,12 @@ namespace Hyperbyte
         /// </summary>
         public void ToggleNotificationStatus()
         {
-            isNotificationEnabled = (isNotificationEnabled) ? false : true;
-            PlayerPrefs.SetInt("isNotificationEnabled", (isNotificationEnabled) ? 0 : 1);
+            IsNotificationEnabled = (IsNotificationEnabled) ? false : true;
+            PlayerPrefs.SetInt("isNotificationEnabled", (IsNotificationEnabled) ? 0 : 1);
 
             if (OnNotificationStatusChangedEvent != null)
             {
-                OnNotificationStatusChangedEvent.Invoke(isNotificationEnabled);
+                OnNotificationStatusChangedEvent.Invoke(IsNotificationEnabled);
             }
         }
 

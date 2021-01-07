@@ -1,4 +1,4 @@
-﻿    // ©2019 - 2020 HYPERBYTE STUDIOS LLP
+﻿// ©2019 - 2020 HYPERBYTE STUDIOS LLP
 // All rights reserved
 // Redistribution of this software is strictly not allowed.
 // Copy of this software can be obtained from unity asset store only.
@@ -23,12 +23,12 @@ namespace Hyperbyte
     /// </summary>
     public class RescueGame : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] Text txtTitle;
         [SerializeField] RectTransform gemsIcon;
         [SerializeField] Text txtRescueGemAmount;
         [SerializeField] Button BtnRescueWithAds;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         bool attemptedRescueWithGems = false;
         string rescueVideoTag = "RescueGame";
@@ -51,10 +51,6 @@ namespace Hyperbyte
                     txtTitle.SetTextWithTag("txtGameOver_gridfull");
                     break;
 
-                case GameOverReason.BOMB_BLAST:
-                    txtTitle.SetTextWithTag("txtGameOver_bombexplode");
-                    break;
-
                 case GameOverReason.TIME_OVER:
                     txtTitle.SetTextWithTag("txtGameOver_timeover");
                     break;
@@ -71,10 +67,13 @@ namespace Hyperbyte
             AdManager.OnRewardedAdRewardedEvent += OnRewardedAdRewarded;
             UIController.Instance.EnableCurrencyBalanceButton();
 
-            if(AdManager.Instance.IsRewardedAvailable()) {
+            if (AdManager.Instance.IsRewardedAvailable())
+            {
                 BtnRescueWithAds.GetComponent<CanvasGroup>().alpha = 1.0F;
                 BtnRescueWithAds.interactable = true;
-            } else {
+            }
+            else
+            {
                 BtnRescueWithAds.GetComponent<CanvasGroup>().alpha = 0.2F;
                 BtnRescueWithAds.interactable = false;
             }
@@ -90,7 +89,8 @@ namespace Hyperbyte
             attemptedRescueWithGems = false;
             UIController.Instance.DisableCurrencyBalanceButton();
 
-            if(isRescueDone) {
+            if (isRescueDone)
+            {
                 GamePlayUI.Instance.ResumeGame();
             }
             isRescueDone = false;
@@ -102,7 +102,8 @@ namespace Hyperbyte
         /// </summary>
         public void OnContinueWithWatchVideoButtonPressed()
         {
-            if (InputManager.Instance.canInput()) {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 ShowRewardedToRescue();
             }
@@ -157,7 +158,8 @@ namespace Hyperbyte
 
         void ShowRewardedToRescue()
         {
-            if (AdManager.Instance.IsRewardedAvailable()) {
+            if (AdManager.Instance.IsRewardedAvailable())
+            {
                 AdManager.Instance.ShowRewardedWithTag(rescueVideoTag);
             }
         }
@@ -191,4 +193,3 @@ namespace Hyperbyte
         }
     }
 }
-

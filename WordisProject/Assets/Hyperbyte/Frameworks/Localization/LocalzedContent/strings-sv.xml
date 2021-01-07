@@ -45,7 +45,6 @@
 	<string name = "txtSelectMode" text = "VÄLJ LÄGE" />
 	<string name = "txtClassicMode" text = "KLASSISK LÄGE" />
 	<string name = "txtTimeMode" text = "TIDLÄGE" />
-	<string name = "txtBlastMode" text = "KUL LÄGE" />
 	<string name = "txtAdvanceMode" text = "AVANCERAT LÄGE" />
 	    
 	<!-- Pause Screen -->

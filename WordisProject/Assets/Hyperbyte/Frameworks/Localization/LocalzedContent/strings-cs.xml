@@ -44,7 +44,6 @@
     <string name = "txtSelectMode" text = "VÝBĚR REŽIMU"/>
     <string name = "txtClassicMode" text = "KLASICKÝ REŽIM"/>
     <string name = "txtTimeMode" text = "ČASOVÝ REŽIM"/>
-    <string name = "txtBlastMode" text = "VÝBUCH REŽIM"/>
     <string name = "txtAdvanceMode" text = "ZÁLOHA REŽIM"/>
     
     <!-- Pause Screen -->

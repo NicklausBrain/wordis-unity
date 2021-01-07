@@ -19,7 +19,6 @@ public enum GameMode
     Tutorial,
     Classic,
     Timed,
-    Blast,
     Advance
 }
 
@@ -60,9 +59,6 @@ public class GamePlaySettings : ScriptableObject
     // Time mode settings.
     public GameModeSettings timeModeSettings;
 
-    // Blast mode settings.
-    public GameModeSettings blastModeSettings;
-
     // Advance mode settings.
     public GameModeSettings advancedModeSettings;
 
@@ -72,15 +68,6 @@ public class GamePlaySettings : ScriptableObject
 
     // Bonus secods on line break.
     public int addSecondsOnLineBreak = 10;
-    #endregion
-
-    #region BlastMode Additional Settings
-
-    // Initial counter on bomb on placing.
-    public int blastModeCounter = 9;
-
-    // After how many moves new bomb should be added.
-    public int addBombAfterMoves = 5;
     #endregion
 
     // Should give reward on game over.

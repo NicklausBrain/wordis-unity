@@ -19,11 +19,10 @@ using UnityEngine;
 
 namespace Hyperbyte
 {
-    public enum GameOverReason 
+    public enum GameOverReason
     {
         GRID_FILLED,    // If there is no enough space to place existing blocks. Applies to all game mode.
         TIME_OVER,      // If timer finishing. Applied only to time mode.
-        BOMB_BLAST      // If Counter on placed bomb reaches to 0. Applies only to blast mode.
     }
 
     public class GamePlayUI : Singleton<GamePlayUI>
@@ -44,7 +43,7 @@ namespace Hyperbyte
 
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
-        
+
         [System.NonSerialized] public GameModeSettings currentModeSettings;
 
         // Stores current playing mode.
@@ -59,7 +58,7 @@ namespace Hyperbyte
 
         //Event action for shape place callback.
         public static event Action OnShapePlacedEvent;
-        
+
         //Event action for game finish callback.
         public static event Action<GameMode> OnGameOverEvent;
 
@@ -79,9 +78,11 @@ namespace Hyperbyte
         /// <summary>
 		/// Awake is called when the script instance is being loaded.
 		/// </summary>
-        private void Awake() {
+        private void Awake()
+        {
             // Initializes the GamePlay Settings Scriptable.
-            if (gamePlaySettings == null)  {
+            if (gamePlaySettings == null)
+            {
                 gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
             }
         }
@@ -94,17 +95,19 @@ namespace Hyperbyte
             currentGameMode = gameMode;
             currentModeSettings = GetCurrentModeSettings();
 
-            // Checks if the there is user progerss from previos session.
+            // Checks if the there is user progress from previous session.
             bool hasPreviosSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
-            if (hasPreviosSessionProgress) {
+            if (hasPreviosSessionProgress)
+            {
                 progressData = GameProgressTracker.Instance.GetGameProgress(GamePlayUI.Instance.currentGameMode);
             }
 
             // Enables gameplay screen if not active.
-            if (!gamePlay.gameObject.activeSelf) {
+            if (!gamePlay.gameObject.activeSelf)
+            {
                 gamePlay.gameObject.SetActive(true);
             }
-            
+
             // Generated gameplay grid.
             gamePlay.boardGenerator.GenerateBoard(progressData);
 
@@ -113,48 +116,50 @@ namespace Hyperbyte
 
             #region Time Mode Specific
             // Will enable timer start seeking it. If there is previos session data then timer will start from remaining duration.
-            if(gameMode == GameMode.Timed) {
+            if (gameMode == GameMode.Timed)
+            {
                 timeModeProgresssBar.gameObject.SetActive(true);
                 timeModeProgresssBar.SetTimer((progressData != null) ? progressData.remainingTimer : timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
-            } else {
-                if (timeModeProgresssBar.gameObject.activeSelf) {
+            }
+            else
+            {
+                if (timeModeProgresssBar.gameObject.activeSelf)
+                {
                     timeModeProgresssBar.gameObject.SetActive(false);
                 }
             }
 
-            if(progressData != null) {
+            if (progressData != null)
+            {
                 totalLinesCompleted = progressData.totalLinesCompleted;
                 rescueDone = progressData.rescueDone;
             }
             #endregion
 
-
             // Invokes Game Start Event Callback.
-            if(OnGameStartedEvent != null) {
-                OnGameStartedEvent.Invoke(currentGameMode);
-            }
+            OnGameStartedEvent?.Invoke(currentGameMode);
 
             ShowInitialTip();
-
         }
 
-        void ShowInitialTip() {
-             
-             switch(currentGameMode) {
-                 case GameMode.Timed:
+        void ShowInitialTip()
+        {
+
+            switch (currentGameMode)
+            {
+                case GameMode.Timed:
                     UIController.Instance.ShowTimeModeTip();
-                 break;
-             }
+                    break;
+            }
         }
-
-        
 
         /// <summary>
         /// Returns size of the current grid.
         /// </summary>
         /// <returns></returns>
-        public BoardSize GetBoardSize() {
+        public BoardSize GetBoardSize()
+        {
             return currentModeSettings.boardSize;
         }
 
@@ -169,8 +174,6 @@ namespace Hyperbyte
                     return gamePlaySettings.classicModeSettings;
                 case GameMode.Timed:
                     return gamePlaySettings.timeModeSettings;
-                case GameMode.Blast:
-                    return gamePlaySettings.blastModeSettings;
                 case GameMode.Advance:
                     return gamePlaySettings.advancedModeSettings;
             }
@@ -178,103 +181,53 @@ namespace Hyperbyte
         }
 
         // Returns of list of all standard block shapes.
-        public List<BlockShapeInfo> GetStandardBlockShapesInfo() {
+        public List<BlockShapeInfo> GetStandardBlockShapesInfo()
+        {
             return gamePlaySettings.standardBlockShapesInfo.ToList();
         }
 
         // Returns of list of all advanced block shapes.
-        public List<BlockShapeInfo> GetAdvancedBlockShapesInfo() {
+        public List<BlockShapeInfo> GetAdvancedBlockShapesInfo()
+        {
             return gamePlaySettings.advancedBlockShapesInfo.ToList();
         }
 
         // Returns score to be added on for each block cleared.
-        public int blockScore {
-            get {
-                return gamePlaySettings.blockScore;
-            }
-        }
+        public int blockScore => gamePlaySettings.blockScore;
 
         // Returns score to be added on for each line cleared.
-        public int singleLineBreakScore
-        {
-            get  {
-                return gamePlaySettings.singleLineBreakScore;
-            }
-        }
+        public int singleLineBreakScore => gamePlaySettings.singleLineBreakScore;
 
         // Returns score multiplier to be added on for each line cleared when more than 1 lines cleared together.
-        public int multiLineScoreMultiplier {
-            get {
-                return gamePlaySettings.multiLineScoreMultiplier;
-            }
-        }
+        public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
 
         #region Time Mode Specific
         // Returns Intial timer for time mode.
-        public float timeModeInitialTimer {
-            get {
-                return gamePlaySettings.initialTime;
-            }
-        }
+        public float timeModeInitialTimer => gamePlaySettings.initialTime;
 
         // Returns seconds to be added 
-        public float timeModeAddSecondsOnLineBreak {
-            get {
-                return gamePlaySettings.addSecondsOnLineBreak;
-            }
-        }
+        public float timeModeAddSecondsOnLineBreak => gamePlaySettings.addSecondsOnLineBreak;
+
         #endregion
 
-        #region Blast Mode Specific
-        // Returns initial counter when on bomb.
-        public int blastModeCounter {
-            get {
-                return gamePlaySettings.blastModeCounter;
-            }
-        }
+        public bool rewardOnGameOver => gamePlaySettings.rewardOnGameOver;
 
-        //Retuens after how many block shape place new bomb should be placed.
-        public int addBombAfterMoves {
-            get {
-                return gamePlaySettings.addBombAfterMoves;
-            }
-        }
-        #endregion
+        public bool giveFixedReward => gamePlaySettings.giveFixedReward;
 
-        public bool rewardOnGameOver {
-            get {
-                return gamePlaySettings.rewardOnGameOver;
-            }
-        }
+        public int fixedRewardAmount => gamePlaySettings.fixedRewardAmount;
 
-        public bool giveFixedReward { 
-            get {
-                return gamePlaySettings.giveFixedReward;
-            }
-        }
-
-        public int fixedRewardAmount {
-            get {
-                return gamePlaySettings.fixedRewardAmount;
-            }
-        }
-
-        public float rewardPerLine {
-            get {
-                return gamePlaySettings.rewardPerLineCompleted;
-            }
-        }
-
+        public float rewardPerLine => gamePlaySettings.rewardPerLineCompleted;
 
         // Invokes callback for OnShapePlaced Event.
-        public void OnShapePlaced() {
-            if(OnShapePlacedEvent != null) {
-                OnShapePlacedEvent.Invoke();
-            }
+        public void OnShapePlaced()
+        {
+            OnShapePlacedEvent?.Invoke();
         }
 
-        public bool CanRescueGame() {
-            if(!rescueDone && currentModeSettings.allowRescueGame) {
+        public bool CanRescueGame()
+        {
+            if (!rescueDone && currentModeSettings.allowRescueGame)
+            {
                 return true;
             }
             return false;
@@ -283,50 +236,58 @@ namespace Hyperbyte
         /// <summary>
         /// Checks if game can be rescued.
         /// </summary>
-        public void TryRescueGame(GameOverReason reason) {
+        public void TryRescueGame(GameOverReason reason)
+        {
             currentGameOverReason = reason;
             StartCoroutine(TryRescueGameEnumerator(reason));
-           
+
         }
 
-
-        IEnumerator TryRescueGameEnumerator(GameOverReason reason) 
+        IEnumerator TryRescueGameEnumerator(GameOverReason reason)
         {
             inGameMessage.ShowMessage(reason);
             yield return new WaitForSeconds(1.5F);
             GameProgressTracker.Instance.ClearProgressData();
-            
-            if(CanRescueGame()) {
+
+            if (CanRescueGame())
+            {
                 UIController.Instance.rescueGameScreen.Activate();
                 UIController.Instance.rescueGameScreen.GetComponent<RescueGame>().SetRescueReason(reason);
-            } else {
+            }
+            else
+            {
                 OnGameOver();
             }
         }
 
-        public void OnRescueCancelled() {
-             OnGameOver();
+        public void OnRescueCancelled()
+        {
+            OnGameOver();
         }
 
         /// <summary>
         /// Resume Game With Rescue Done
         /// </summary>
-        public void OnRescueSuccessful() {
+        public void OnRescueSuccessful()
+        {
             gamePlay.PerfromRescueAction(currentGameOverReason);
-			rescueDone = true;
+            rescueDone = true;
 
             GameProgressTracker.Instance.SaveProgressExplicitly();
             gamePlay.blockShapeController.UpdateShapeContainers();
-		}
+        }
 
         /// <summary>
         /// Pauses the game on pressing pause button.
         /// </summary>
-        public void OnPauseButtonPressed() {
-            if (InputManager.Instance.canInput()) {
+        public void OnPauseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 #region Time Mode Specific
-                if(currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F) {
+                if (currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F)
+                {
                     return;
                 }
                 #endregion
@@ -337,18 +298,25 @@ namespace Hyperbyte
         /// <summary>
         /// Will be called on game over. 
         /// </summary>
-        public void OnGameOver() {
-            if(OnGameOverEvent != null) {
-                OnGameOverEvent.Invoke(currentGameMode);
-            }
-            UIController.Instance.gameOverScreen.GetComponent<GameOver>().SetGameData(currentGameOverReason, scoreManager.GetScore(), totalLinesCompleted, currentGameMode);
+        public void OnGameOver()
+        {
+            OnGameOverEvent?.Invoke(currentGameMode);
+            UIController.Instance.gameOverScreen
+                .GetComponent<GameOver>()
+                .SetGameData(
+                    currentGameOverReason,
+                    scoreManager.GetScore(),
+                    totalLinesCompleted,
+                    currentGameMode);
+
             UIController.Instance.gameOverScreen.Activate();
         }
 
         /// <summary>
         /// Resets game.
         /// </summary>
-        public void ResetGame() {
+        public void ResetGame()
+        {
             progressData = null;
             totalLinesCompleted = 0;
             rescueDone = false;
@@ -356,11 +324,12 @@ namespace Hyperbyte
             scoreManager.ResetGame();
         }
 
-         #region Time Mode Specific
+        #region Time Mode Specific
         /// <summary>
         /// Returns Remaining Timer.
         /// </summary>
-        public int GetRemainingTimer() {
+        public int GetRemainingTimer()
+        {
             return (currentGameMode == GameMode.Timed) ? timeModeProgresssBar.GetRemainingTimer() : 0;
         }
         #endregion  
@@ -368,25 +337,24 @@ namespace Hyperbyte
         /// <summary>
         /// Pauses game.
         /// </summary>
-        public void PauseGame() {
-            if(OnGamePausedEvent != null) {
-                OnGamePausedEvent.Invoke(currentGameMode, true);
-            }
+        public void PauseGame()
+        {
+            OnGamePausedEvent?.Invoke(currentGameMode, true);
         }
-        
+
         /// <summary>
         /// Resumes game.
         /// </summary>
-        public void ResumeGame() {
-            if (OnGamePausedEvent != null) {
-                OnGamePausedEvent.Invoke(currentGameMode, false);
-            }
+        public void ResumeGame()
+        {
+            OnGamePausedEvent?.Invoke(currentGameMode, false);
         }
 
         /// <summary>
         /// Will rest game to empty state and start new game with same selected mode.
         /// </summary>
-        public void RestartGame() {
+        public void RestartGame()
+        {
             GameProgressTracker.Instance.ClearProgressData();
             ResetGame();
             StartGamePlay(currentGameMode);

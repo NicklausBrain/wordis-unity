@@ -57,8 +57,10 @@ namespace Hyperbyte
         /// <summary>
         /// Save progres on calling manually. Typically will be called after rescue done.
         /// </summary>
-        public void SaveProgressExplicitly() {
-            if(GamePlayUI.Instance.currentModeSettings.saveProgress) {
+        public void SaveProgressExplicitly()
+        {
+            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            {
                 Invoke("SaveProgress", 2F);
             }
         }
@@ -68,7 +70,8 @@ namespace Hyperbyte
         /// </summary>
         private void GamePlayUI_OnShapePlacedEvent()
         {
-            if (GamePlayUI.Instance.currentModeSettings.saveProgress) {
+            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            {
                 Invoke("SaveProgress", 1F);
             }
         }
@@ -81,7 +84,7 @@ namespace Hyperbyte
             ClearProgressData();
         }
 
-         /// <summary>
+        /// <summary>
         /// Clears the progress of current gameplay.
         /// </summary>
         public void ClearProgressData()
@@ -122,7 +125,9 @@ namespace Hyperbyte
                     string row = "";
                     foreach (Block b in blockRow)
                     {
-                        row = (row == string.Empty) ? (row = (b.isAvailable + "-" + b.assignedSpriteTag)) : (string.Concat(row, "," + (b.isAvailable + "-" + b.assignedSpriteTag)));
+                        row = row == string.Empty
+                            ? $"{b.isAvailable}-{b.assignedSpriteTag}"
+                            : (string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}"));
                     }
                     gridData[rowIndex] = row;
                     rowIndex++;
@@ -130,14 +135,6 @@ namespace Hyperbyte
 
                 currentProgressData.gridData = gridData;
                 currentProgressData.currentShapesInfo = GamePlay.Instance.blockShapeController.GetCurrentShapesInfo();
-                
-                #region Blast Mode Specific
-                // Gets all the placed bombs and its counter.
-                if (GamePlayUI.Instance.currentGameMode == GameMode.Blast)
-                {
-                    currentProgressData.allBombInfo = GamePlay.Instance.GetAllBombInfo();
-                }
-                #endregion
 
                 // Attached all the fetched data to progress data class instance.
                 currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
@@ -161,7 +158,8 @@ namespace Hyperbyte
         {
             if (HasGameProgress(gameMode))
             {
-                ProgressData progressData = JsonUtility.FromJson<ProgressData>(PlayerPrefs.GetString("gameProgress_" + gameMode));
+                ProgressData progressData = JsonUtility.FromJson<ProgressData>(
+                    PlayerPrefs.GetString($"gameProgress_{gameMode}"));
                 if (progressData != null)
                 {
                     return progressData;
@@ -186,11 +184,7 @@ namespace Hyperbyte
     {
         public string[] gridData;
         public ShapeInfo[] currentShapesInfo;
-        
-        #region Blast Mode Specific
-        public BombInfo[] allBombInfo;
-        #endregion
-        
+
         public int score;
         public int totalLinesCompleted;
         public bool rescueDone;
@@ -216,33 +210,14 @@ namespace Hyperbyte
         public float shapeRotation;
 
         // Class constructor with required parameters.
-        public ShapeInfo(bool _isAdvanceShape, string _shapeName, float _shapeRotation)
+        public ShapeInfo(
+            bool _isAdvanceShape,
+            string _shapeName,
+            float _shapeRotation)
         {
             isAdvanceShape = _isAdvanceShape;
             shapeName = _shapeName;
             shapeRotation = _shapeRotation;
         }
     }
-
-    #region Blast Mode Specific
-    /// <summary>
-    /// Class that contains info on bomb.
-    /// </summary>
-    [System.Serializable]
-    public class BombInfo
-    {
-        public int rowId;
-        public int columnId;
-        public int remainCounter;
-
-        // Class constructor with required parameters.
-        public BombInfo(int _rowId, int _columnId, int _remainCounter)
-        {
-            this.rowId = _rowId;
-            this.columnId = _columnId;
-            this.remainCounter = _remainCounter;
-        }
-    }
-    #endregion
 }
-
