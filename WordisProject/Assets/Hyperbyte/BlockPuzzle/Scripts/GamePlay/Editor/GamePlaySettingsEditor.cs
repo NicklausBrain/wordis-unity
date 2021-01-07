@@ -15,35 +15,36 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Hyperbyte
-{	
-	[CustomEditor(typeof(GamePlaySettings))]
-	public class GamePlaySettingsEditor : CustomInspectorHelper 
-	{
-		private bool cache = false;
-		GamePlaySettings gamePlaySettings;
-		SerializedProperty standardBlockShapesInfo;
+{
+    [CustomEditor(typeof(GamePlaySettings))]
+    public class GamePlaySettingsEditor : CustomInspectorHelper
+    {
+        private bool cache = false;
+        GamePlaySettings gamePlaySettings;
+        SerializedProperty standardBlockShapesInfo;
         SerializedProperty advancedBlockShapesInfo;
 
         SerializedProperty tutorialModeSettings;
         SerializedProperty classicModeSettings;
         SerializedProperty timeModeSettings;
-        SerializedProperty blastModeSettings;
         SerializedProperty advancedModeSettings;
 
         GUIStyle labelStyle;
         GUIStyle inputStyle;
         GUIStyle popupStyle;
 
-        readonly string[] boardSizes = new string[] {"0X0", "1X1", "2X2", "3X3","4X4","5X5","6X6","7X7","8X8","9X9","10X10","11X11","12X12" };
-
+        readonly string[] boardSizes =
+        {
+            "0X0", "1X1", "2X2", "3X3","4X4","5X5","6X6","7X7","8X8","9X9","10X10","11X11","12X12"
+        };
 
         public override void OnInspectorGUI()
-    	{
-			serializedObject.Update();
+        {
+            serializedObject.Update();
 
-			if (!cache)
-			{
-				gamePlaySettings = (GamePlaySettings)target;
+            if (!cache)
+            {
+                gamePlaySettings = (GamePlaySettings)target;
 
                 standardBlockShapesInfo = serializedObject.FindProperty("standardBlockShapesInfo");
                 advancedBlockShapesInfo = serializedObject.FindProperty("advancedBlockShapesInfo");
@@ -51,33 +52,36 @@ namespace Hyperbyte
                 tutorialModeSettings = serializedObject.FindProperty("tutorialModeSettings");
                 classicModeSettings = serializedObject.FindProperty("classicModeSettings");
                 timeModeSettings = serializedObject.FindProperty("timeModeSettings");
-                blastModeSettings = serializedObject.FindProperty("blastModeSettings");
                 advancedModeSettings = serializedObject.FindProperty("advancedModeSettings");
 
-                labelStyle = new GUIStyle(GUI.skin.label);
-                labelStyle.fontStyle = FontStyle.Normal;
+                labelStyle = new GUIStyle(GUI.skin.label)
+                {
+                    fontStyle = FontStyle.Normal
+                };
 
-                inputStyle = new GUIStyle(GUI.skin.textField);
-                inputStyle.fontStyle = FontStyle.Bold;
-                inputStyle.alignment = TextAnchor.MiddleCenter;
+                inputStyle = new GUIStyle(GUI.skin.textField)
+                {
+                    fontStyle = FontStyle.Bold,
+                    alignment = TextAnchor.MiddleCenter
+                };
 
                 popupStyle = EditorStyles.popup;
                 popupStyle.alignment = TextAnchor.MiddleCenter;
                 cache = true;
             }
-			
-			EditorGUILayout.Space();
+
+            EditorGUILayout.Space();
             DrawAllModeSettings();
             EditorGUILayout.Space();
-			DrawBlockShapesInfo();
+            DrawBlockShapesInfo();
             EditorGUILayout.Space();
             DrawRewardSettings();
             EditorGUILayout.Space();
             DrawScoreSettings();
 
             serializedObject.ApplyModifiedProperties();
-			EditorUtility.SetDirty(gamePlaySettings);
-		}
+            EditorUtility.SetDirty(gamePlaySettings);
+        }
 
         void DrawAllModeSettings()
         {
@@ -85,37 +89,42 @@ namespace Hyperbyte
             labelStyle.alignment = TextAnchor.MiddleLeft;
 
             bool isExpanded = BeginFoldoutBox("All Modes Settings");
-            int indentLevel = EditorGUI.indentLevel;
 
             if (isExpanded)
             {
-                if(tutorialModeSettings != null) {
+                if (tutorialModeSettings != null)
+                {
                     DrawTutorialSettings(tutorialModeSettings, "Tutorial Settings");
-                } else {
-                     tutorialModeSettings = serializedObject.FindProperty("tutorialModeSettings");
+                }
+                else
+                {
+                    tutorialModeSettings = serializedObject.FindProperty("tutorialModeSettings");
                 }
 
-                if(classicModeSettings != null) {
+                if (classicModeSettings != null)
+                {
                     DrawGameModeSettings(classicModeSettings, "Classic Mode");
-                } else {
+                }
+                else
+                {
                     classicModeSettings = serializedObject.FindProperty("classicModeSettings");
                 }
 
-                if(timeModeSettings != null) {
+                if (timeModeSettings != null)
+                {
                     DrawGameModeSettings(timeModeSettings, "Time Mode");
-                } else {
+                }
+                else
+                {
                     timeModeSettings = serializedObject.FindProperty("timeModeSettings");
                 }
 
-                if(blastModeSettings != null) {
-                    DrawGameModeSettings(blastModeSettings, "Blast Mode");
-                } else {
-                    blastModeSettings = serializedObject.FindProperty("blastModeSettings");
-                }
-
-                if(advancedModeSettings != null) {
+                if (advancedModeSettings != null)
+                {
                     DrawGameModeSettings(advancedModeSettings, "Advanced Mode");
-                } else {
+                }
+                else
+                {
                     advancedModeSettings = serializedObject.FindProperty("advancedModeSettings");
                 }
             }
@@ -208,14 +217,11 @@ namespace Hyperbyte
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(3);
 
-                if(modeName == "Time Mode") {
+                if (modeName == "Time Mode")
+                {
                     DrawTimeModeAdditionalSettings();
                 }
 
-                if (modeName == "Blast Mode") {
-                    DrawBlastModeAdditionalSettings();
-                }
-                //EndBox();
                 GUI.enabled = true;
             }
             //EditorGUILayout.EndHorizontal();
@@ -239,7 +245,7 @@ namespace Hyperbyte
             EditorGUILayout.BeginHorizontal();
             bool isExpanded = BeginSimpleFoldoutBox(modeName);
 
-            modeEnabled.boolValue = EditorGUILayout.Toggle(modeEnabled.boolValue, GUILayout.Width(30)); 
+            modeEnabled.boolValue = EditorGUILayout.Toggle(modeEnabled.boolValue, GUILayout.Width(30));
             EditorGUILayout.LabelField("", GUILayout.Width(5));
             EditorGUILayout.EndHorizontal();
 
@@ -289,7 +295,8 @@ namespace Hyperbyte
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(3);
 
-                if (!standardShapeAllowed.boolValue && !advancedShapeAllowed.boolValue) {
+                if (!standardShapeAllowed.boolValue && !advancedShapeAllowed.boolValue)
+                {
                     advancedShapeAllowed.boolValue = true;
                 }
 
@@ -302,7 +309,8 @@ namespace Hyperbyte
                 DrawLine();
 
 
-                if(!standardShapeAllowed.boolValue && !advancedShapeAllowed.boolValue) {
+                if (!standardShapeAllowed.boolValue && !advancedShapeAllowed.boolValue)
+                {
                     standardShapeAllowed.boolValue = true;
                 }
 
@@ -365,13 +373,11 @@ namespace Hyperbyte
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(3);
 
-                if (modeName == "Time Mode") {
+                if (modeName == "Time Mode")
+                {
                     DrawTimeModeAdditionalSettings();
                 }
 
-                if (modeName == "Blast Mode") {
-                    DrawBlastModeAdditionalSettings();
-                }
                 //EndBox();
                 GUI.enabled = true;
             }
@@ -404,69 +410,58 @@ namespace Hyperbyte
             GUILayout.Space(3);
         }
 
-        void DrawBlastModeAdditionalSettings()
+        void DrawBlockShapesInfo()
         {
-            DrawLine();
-            DrawBoldLabel("Bomb Placement Settings : ");
+            labelStyle.fontStyle = FontStyle.Bold;
 
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Initial Counter : ", labelStyle, GUILayout.Width(170));
-            EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
-            gamePlaySettings.blastModeCounter = EditorGUILayout.IntField(gamePlaySettings.blastModeCounter, inputStyle, GUILayout.Width(70));
-            EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(3);
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Add Bomb After Moves : ", labelStyle, GUILayout.Width(170));
-            EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
-            gamePlaySettings.addBombAfterMoves = EditorGUILayout.IntField(gamePlaySettings.addBombAfterMoves, inputStyle, GUILayout.Width(70));
-            EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(3);
-        }
-
-        void DrawBlockShapesInfo() {
-			labelStyle.fontStyle = FontStyle.Bold;
-
-			bool isExpanded = BeginFoldoutBox("GamePlay Block Shapes Settings : ");
-			int indentLevel = EditorGUI.indentLevel;
+            bool isExpanded = BeginFoldoutBox("GamePlay Block Shapes Settings : ");
+            int indentLevel = EditorGUI.indentLevel;
 
             bool isStandardShapesExpanded = false;
             bool isAdvanceShapesExpanded = false;
 
-            if (isExpanded) {
-                if (standardBlockShapesInfo != null) {
+            if (isExpanded)
+            {
+                if (standardBlockShapesInfo != null)
+                {
                     isStandardShapesExpanded = BeginFoldoutBox("Standard Shapes");
 
-                    if (isStandardShapesExpanded) {
+                    if (isStandardShapesExpanded)
+                    {
                         DrawShapeInfo(standardBlockShapesInfo);
                     }
                     EndBox();
-                } else {
+                }
+                else
+                {
                     standardBlockShapesInfo = serializedObject.FindProperty("standardBlockShapesInfo");
                 }
 
-                if(advancedBlockShapesInfo != null) {
+                if (advancedBlockShapesInfo != null)
+                {
                     isAdvanceShapesExpanded = BeginFoldoutBox("Advance Shapes");
 
-                    if(isAdvanceShapesExpanded) {
+                    if (isAdvanceShapesExpanded)
+                    {
                         DrawShapeInfo(advancedBlockShapesInfo);
                     }
                     EndBox();
-                } else {
+                }
+                else
+                {
                     advancedBlockShapesInfo = serializedObject.FindProperty("advancedBlockShapesInfo");
                 }
 
-                if(isStandardShapesExpanded || isAdvanceShapesExpanded) {
+                if (isStandardShapesExpanded || isAdvanceShapesExpanded)
+                {
                     GUI.backgroundColor = Color.grey;
                     EditorGUILayout.HelpBox("Prob. Is Probability of how often shape will spawn during game. Value Should be 1 to 10.", MessageType.Info, true);
                     GUI.backgroundColor = Color.white;
                 }
             }
             EndBox();
-			EditorGUI.indentLevel = indentLevel;
-		}
+            EditorGUI.indentLevel = indentLevel;
+        }
 
         void DrawShapeInfo(SerializedProperty shapeInfo)
         {
@@ -508,11 +503,13 @@ namespace Hyperbyte
 
                     EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
 
-                    if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f))) {
+                    if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f)))
+                    {
                         shapeInfo.InsertArrayElementAtIndex(i);
                     }
 
-                    if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f))) {
+                    if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f)))
+                    {
                         shapeInfo.DeleteArrayElementAtIndex(i);
                         return;
                     }
@@ -524,7 +521,8 @@ namespace Hyperbyte
 
             //EditorGUI.indentLevel = 0;
 
-            if (DrawAddElementButton("Add Element")) {
+            if (DrawAddElementButton("Add Element"))
+            {
                 shapeInfo.arraySize += 1;
             }
         }
@@ -560,20 +558,23 @@ namespace Hyperbyte
                     EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
                     EditorGUILayout.EndHorizontal();
 
-                    if(gamePlaySettings.giveFixedReward) {
+                    if (gamePlaySettings.giveFixedReward)
+                    {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField("Game Over Reward (GEMS) : ", labelStyle, GUILayout.Width(200));
                         EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
                         gamePlaySettings.fixedRewardAmount = EditorGUILayout.IntField(gamePlaySettings.fixedRewardAmount, inputStyle, GUILayout.Width(70));
                         EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
-                        EditorGUILayout.EndHorizontal();    
-                    } else {
+                        EditorGUILayout.EndHorizontal();
+                    }
+                    else
+                    {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField("Reward/Line Complete (GEMS) : ", labelStyle, GUILayout.Width(200));
                         EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
                         gamePlaySettings.rewardPerLineCompleted = EditorGUILayout.FloatField(gamePlaySettings.rewardPerLineCompleted, inputStyle, GUILayout.Width(70));
                         EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
-                    EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.EndHorizontal();
                     }
                 }
             }

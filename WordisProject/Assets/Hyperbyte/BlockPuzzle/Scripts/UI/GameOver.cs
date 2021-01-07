@@ -21,7 +21,7 @@ namespace Hyperbyte
 {
     public class GameOver : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
 
         [Tooltip("Game Over reason text")]
         [SerializeField] Text txtGameOveTitle;
@@ -32,7 +32,7 @@ namespace Hyperbyte
         [Tooltip("BestScore text from game over screen")]
         [SerializeField] Text txtBestScore;
 
-        [Tooltip("Reward Penel")] 
+        [Tooltip("Reward Penel")]
         [SerializeField] GameObject rewardPanel;
 
         [Tooltip("Reward text from game over screen")]
@@ -40,7 +40,7 @@ namespace Hyperbyte
         [SerializeField] GameObject gemImage;
         [SerializeField] GameObject rewardAnimation;
         [SerializeField] GameObject highScoreParticle;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
 
         int rewardAmount = 0;
@@ -50,30 +50,30 @@ namespace Hyperbyte
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-		private void OnEnable() 
-		{
+        private void OnEnable()
+        {
             UIController.Instance.EnableCurrencyBalanceButton();
             TryShowingInterstitial();
-		}
+        }
 
-		/// <summary>
+        /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-		private void OnDisable() 
+        private void OnDisable()
         {
             rewardAnimation.SetActive(false);
             UIController.Instance.DisableCurrencyBalanceButton();
         }
 
-
         /// <summary>
         /// Try to show Interstitial ad on game over if ad is available.
         /// </summary>
-        void TryShowingInterstitial() 
+        void TryShowingInterstitial()
         {
-            if(AdManager.Instance.adSettings.showInterstitialOnGameOver) 
+            if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
             {
-                if(AdManager.Instance.IsInterstitialAvailable()) {
+                if (AdManager.Instance.IsInterstitialAvailable())
+                {
                     AdManager.Instance.ShowInterstitial();
                 }
             }
@@ -82,16 +82,16 @@ namespace Hyperbyte
         /// <summary>
         /// Sets game data and score on game over.
         /// </summary>
-        public void SetGameData(GameOverReason reason, int score, int _totalLinesCompleted, GameMode gameMode)
-        {   
+        public void SetGameData(
+            GameOverReason reason,
+            int score,
+            int _totalLinesCompleted,
+            GameMode gameMode)
+        {
             switch (reason)
             {
                 case GameOverReason.GRID_FILLED:
                     txtGameOveTitle.SetTextWithTag("txtGameOver_gridfull");
-                    break;
-
-                case GameOverReason.BOMB_BLAST:
-                    txtGameOveTitle.SetTextWithTag("txtGameOver_bombexplode");
                     break;
 
                 case GameOverReason.TIME_OVER:
@@ -113,47 +113,55 @@ namespace Hyperbyte
 
 
             // Number of time game over shown. Also total game play counts.
-            gameOverId = PlayerPrefs.GetInt("gameOverId",0);
+            gameOverId = PlayerPrefs.GetInt("gameOverId", 0);
             gameOverId += 1;
             PlayerPrefs.SetInt("gameOverId", gameOverId);
 
-            if(ProfileManager.Instance.gameOverReviewSessions.Contains(gameOverId)) {
+            if (ProfileManager.Instance.gameOverReviewSessions.Contains(gameOverId))
+            {
                 InputManager.Instance.DisableTouchForDelay(2F);
-                Invoke("CheckForReview",2F);
+                Invoke("CheckForReview", 2F);
             }
         }
 
+        public void ProgressGameReward()
+        {
 
-        public void ProgressGameReward() {
-            
-            if(GamePlayUI.Instance.rewardOnGameOver) 
+            if (GamePlayUI.Instance.rewardOnGameOver)
             {
-                if(!rewardPanel.activeSelf) {
+                if (!rewardPanel.activeSelf)
+                {
                     rewardPanel.SetActive(true);
                     gemImage.SetActive(true);
                 }
 
-                if(GamePlayUI.Instance.giveFixedReward) {
+                if (GamePlayUI.Instance.giveFixedReward)
+                {
                     rewardAmount = GamePlayUI.Instance.fixedRewardAmount;
-                } else {
-                    rewardAmount =  ((int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
+                }
+                else
+                {
+                    rewardAmount = ((int)(GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
                 }
                 txtReward.text = rewardAmount.ToString();
 
-                if(rewardAmount > 0) {
-                    Invoke("ShowRewardAnimation",1F);
+                if (rewardAmount > 0)
+                {
+                    Invoke("ShowRewardAnimation", 1F);
                 }
-            } else {
+            }
+            else
+            {
                 rewardPanel.SetActive(false);
             }
         }
 
-
-        void CheckForReview() {
-             UIController.Instance.CheckForReviewAppPopupOnGameOver(gameOverId);
+        void CheckForReview()
+        {
+            UIController.Instance.CheckForReviewAppPopupOnGameOver(gameOverId);
         }
 
-        void ShowRewardAnimation() 
+        void ShowRewardAnimation()
         {
             CurrencyManager.Instance.AddGems(rewardAmount);
             rewardAnimation.SetActive(true);
@@ -207,5 +215,3 @@ namespace Hyperbyte
         }
     }
 }
-
-

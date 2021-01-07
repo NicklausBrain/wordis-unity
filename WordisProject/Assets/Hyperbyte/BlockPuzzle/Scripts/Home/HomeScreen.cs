@@ -15,36 +15,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hyperbyte
-{	
-	public class HomeScreen : MonoBehaviour 
-	{
-        #pragma warning disable 0649
+{
+    public class HomeScreen : MonoBehaviour
+    {
+#pragma warning disable 0649
         [SerializeField] Button btnClassicMode;
         [SerializeField] Button btnTimeMode;
-        [SerializeField] Button btnBlastMode;
         [SerializeField] Button btnAdvanceMode;
-		#pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake()
         {
-            GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings"); 
-            
-            if(!gamePlaySettings.classicModeSettings.modeEnabled) {
+            GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+
+            if (!gamePlaySettings.classicModeSettings.modeEnabled)
+            {
                 btnClassicMode.gameObject.SetActive(false);
             }
 
-            if(!gamePlaySettings.timeModeSettings.modeEnabled) {
+            if (!gamePlaySettings.timeModeSettings.modeEnabled)
+            {
                 btnTimeMode.gameObject.SetActive(false);
             }
 
-            if(!gamePlaySettings.blastModeSettings.modeEnabled) {
-                btnBlastMode.gameObject.SetActive(false);
-            }
-
-            if(!gamePlaySettings.advancedModeSettings.modeEnabled) {
+            if (!gamePlaySettings.advancedModeSettings.modeEnabled)
+            {
                 btnAdvanceMode.gameObject.SetActive(false);
             }
 
@@ -54,12 +52,13 @@ namespace Hyperbyte
         /// <summary>
         /// Action on pressing play button on home screen. This is not used and Select Mode screen is also not in use.
         /// </summary>
-        public void OnPlayButtonPressed() 
+        public void OnPlayButtonPressed()
         {
-            if(InputManager.Instance.canInput()) {
+            if (InputManager.Instance.canInput())
+            {
                 InputManager.Instance.DisableTouchForDelay();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                
+
                 //Opens mode selection screen.
                 UIController.Instance.selectModeScreen.Activate();
             }
@@ -90,18 +89,6 @@ namespace Hyperbyte
         }
 
         /// <summary>
-        /// Blast mode button listener.
-        /// </summary>
-        public void OnBlastModeButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Blast);
-            }
-        }
-
-        /// <summary>
         /// Advance mode button listener.
         /// </summary>
         public void OnAdvanceModeButtonPressed()
@@ -112,5 +99,5 @@ namespace Hyperbyte
                 UIController.Instance.LoadGamePlay(GameMode.Advance);
             }
         }
-	}
+    }
 }

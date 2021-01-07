@@ -22,13 +22,13 @@ namespace Hyperbyte
     /// </summary>
 	public class BoardGenerator : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // Prefab template of block.
         [SerializeField] GameObject blockTemplate;
 
         // Parent inside which all blocks will be generated. Typically root of block grid.
         [SerializeField] GameObject blockRoot;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Generates the block grid based on game settings and will also set progress from previoius session if any.
@@ -42,7 +42,7 @@ namespace Hyperbyte
 
             // Fetched the size of block that should be used.
             float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
-            
+
             // Fetched the space between blocks that should be used.
             float blockSpace = GamePlayUI.Instance.currentModeSettings.blockSpace;
 
@@ -88,7 +88,7 @@ namespace Hyperbyte
                 GamePlayUI.Instance.gamePlay.allRows.Add(blockRow);
             }
 
-            // Sets progress and status to each blocks if there is any from previos session.
+            // Sets progress and status to each blocks if there is any from previous session.
             if (progressData != null)
             {
                 int rowIndex = 0;
@@ -100,20 +100,14 @@ namespace Hyperbyte
                     {
                         if (rowIndex < rowSize && columnIndex < columnSize)
                         {
-                            SetBlockStatus(GamePlay.Instance.allRows[rowIndex][columnIndex], blockData);
+                            SetBlockStatus(
+                                block: GamePlay.Instance.allRows[rowIndex][columnIndex],
+                                statusData: blockData);
                         }
                         columnIndex++;
                     }
                     rowIndex++;
                 }
-
-                #region Blast Mode Specific
-                // Places all bombs with its counter from previous session. Applies to blast mode only.
-                foreach (BombInfo bombInfo in progressData.allBombInfo)
-                {
-                    GamePlay.Instance.allRows[bombInfo.rowId][bombInfo.columnId].PlaceBomb(bombInfo.remainCounter);
-                }
-                #endregion
             }
             GamePlay.Instance.OnBoardGridReady();
         }
@@ -123,9 +117,7 @@ namespace Hyperbyte
         /// </summary>
         void SetBlockStatus(Block block, string statusData)
         {
-            bool isAvailable = true;
-            bool.TryParse(statusData.Split('-')[0], out isAvailable);
-            string spriteTag = statusData.Split('-')[1];
+            bool.TryParse(statusData.Split('-')[0], out var isAvailable);
 
             if (!isAvailable)
             {
@@ -138,8 +130,10 @@ namespace Hyperbyte
         /// </summary>
         public float GetStartPointX(float blockSize, int rowSize)
         {
-            float totalWidth = (blockSize * rowSize) + ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
-            return -((totalWidth / 2) - (blockSize / 2));
+            float totalWidth =
+                blockSize * rowSize +
+                (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return -(totalWidth / 2 - blockSize / 2);
         }
 
         /// <summary>
@@ -147,7 +141,9 @@ namespace Hyperbyte
         /// </summary>
         public float GetStartPointY(float blockSize, int columnSize)
         {
-            float totalHeight = (blockSize * columnSize) + ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
+            float totalHeight =
+                (blockSize * columnSize) +
+                ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
             return ((totalHeight / 2) - (blockSize / 2));
         }
 

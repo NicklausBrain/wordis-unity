@@ -13,7 +13,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Hyperbyte.Utils;
 using UnityEngine;
 
 namespace Hyperbyte
@@ -28,9 +27,6 @@ namespace Hyperbyte
         public BlockShapesController blockShapeController;
 
         [Header("Other Public Members")]
-        #region Blast Mode Specific
-        public GameObject bombTemplate;
-        #endregion
 
         //List of all Blocks in Row X Column format.
         [System.NonSerialized] public List<List<Block>> allRows = new List<List<Block>>();
@@ -47,62 +43,6 @@ namespace Hyperbyte
 
         // Saves highlighting columns as cached to reduce iterations . Will keep updating runtime. 
         List<int> cachedHighlightingColumns = new List<int>();
-
-        #region Blast Mode Specific
-        /// <summary>
-        /// Places bomb at random empty block on grid.
-        /// </summary>
-        public void PlaceBombAtRandomPlace()
-        {
-            Block emptyBlock = GetRandomEmptyBlock();
-
-            if (emptyBlock != null)
-            {
-                emptyBlock.PlaceBomb(GamePlayUI.Instance.blastModeCounter);
-            }
-        }
-
-        /// <summary>
-        /// Returns random empty block from grid.
-        /// </summary>
-        Block GetRandomEmptyBlock()
-        {
-            List<Block> emptyBlocks = new List<Block>();
-            foreach (List<Block> blocks in allRows)
-            {
-                emptyBlocks.AddRange(blocks.FindAll(o => o.isAvailable));
-            }
-            if (emptyBlocks.Count > 0)
-            {
-                emptyBlocks.Shuffle();
-                return emptyBlocks[0];
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Returns List of all bombs of the block grid.
-        /// </summary>
-        public BombInfo[] GetAllBombInfo()
-        {
-            List<Block> allBombs = new List<Block>();
-
-            foreach (List<Block> blocks in allRows) {
-                allBombs.AddRange(blocks.FindAll(o => o.isBomb));
-            }
-
-            BombInfo[] allBombsInfo = new BombInfo[allBombs.Count];
-            int bombIndex = 0;
-
-            foreach (Block block in allBombs)
-            {
-                allBombsInfo[bombIndex] = new BombInfo(block.RowId, block.ColumnId, block.thisBomb.remainingCounter);
-                bombIndex++;
-            }
-
-            return allBombsInfo;
-        }
-        #endregion
 
         /// <summary>
         /// Will get called when board grid gets initialized.
@@ -347,7 +287,7 @@ namespace Hyperbyte
         #region Rescue Specific Code
         public void PerfromRescueAction(GameOverReason reason) {
             switch(reason) {
-                //Resuce for Grid Filled and no new shape can be placed. Below code will cleae 3 lines horizontally and vertically from the grid.
+                //Rescue for Grid Filled and no new shape can be placed. Below code will clear 3 lines horizontally and vertically from the grid.
                 case GameOverReason.GRID_FILLED:
                 ClearBoardLinesForRescue();
                 break;
@@ -367,14 +307,6 @@ namespace Hyperbyte
                 }
                 #endregion
                 break;
-
-                case GameOverReason.BOMB_BLAST:
-                RemoveCriticalBombs();
-                bool canAnyShapePlacedBlastRescue = blockShapeController.CheckBlockShapeCanPlaced();
-                if(!canAnyShapePlacedBlastRescue) {
-                    ClearBoardLinesForRescue();
-                }
-                break;
             }
         }
         #endregion
@@ -393,16 +325,6 @@ namespace Hyperbyte
 
             if(linesCleared > 0) {
                 AudioController.Instance.PlayLineBreakSound(linesCleared);
-            }
-        }
-
-        void RemoveCriticalBombs() {
-            BombInfo[] allBombInfo  = GetAllBombInfo();
-
-            foreach(BombInfo bombInfo in allBombInfo) {
-                if(bombInfo.remainCounter <= 4) {
-                    allRows[bombInfo.rowId][bombInfo.columnId].ClearBombExplicitly();
-                }
             }
         }
 

@@ -354,20 +354,6 @@ namespace Hyperbyte
         {
             Invoke("UpdateShapeContainers", 0.1F);
             totalShapesPlaced += 1;
-            #region Blast Mode Specific
-            if (GamePlayUI.Instance.currentGameMode == GameMode.Blast)
-            {
-                if ((totalShapesPlaced % GamePlayUI.Instance.addBombAfterMoves) == 0)
-                {
-                    GamePlay.Instance.PlaceBombAtRandomPlace();
-
-                    if(!PlayerPrefs.HasKey("bombTip")) {
-                        UIController.Instance.ShowBombPlaceTip();
-                        PlayerPrefs.SetInt("bombTip",1);
-                    }
-                }
-            }
-            #endregion
         }
         #endregion
 
