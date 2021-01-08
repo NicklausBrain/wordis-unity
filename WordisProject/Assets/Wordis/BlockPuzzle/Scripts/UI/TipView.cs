@@ -24,11 +24,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField] Text txtTip;
 #pragma warning restore 0649
 
-        public void ShowTipAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText)
+        public void ShowTipAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText)
         {
-            if (IsInvoking("HideTip"))
+            if (IsInvoking(nameof(HideTip)))
             {
-                CancelInvoke("HideTip");
+                CancelInvoke(nameof(HideTip));
             }
 
             tipContent.anchorMax = anchor;
@@ -38,11 +41,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             txtTip.text = tipText;
         }
 
-        public void ShowTipAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText, float duration)
+        public void ShowTipAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText,
+            float duration)
         {
-            if (IsInvoking("HideTip"))
+            if (IsInvoking(nameof(HideTip)))
             {
-                CancelInvoke("HideTip");
+                CancelInvoke(nameof(HideTip));
             }
 
             tipContent.anchorMax = anchor;
@@ -51,9 +58,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             tipContent.anchoredPosition = tipPosition;
             txtTip.text = tipText;
 
-            if (!IsInvoking("HideTip"))
+            if (!IsInvoking(nameof(HideTip)))
             {
-                Invoke("HideTip", duration);
+                Invoke(nameof(HideTip), duration);
             }
         }
 
