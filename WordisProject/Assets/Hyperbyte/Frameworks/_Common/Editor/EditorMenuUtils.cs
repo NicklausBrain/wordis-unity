@@ -11,51 +11,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
-public static class EditorMenuUtils 
+namespace Assets.Hyperbyte.Frameworks._Common.Editor
 {
-    [MenuItem("Hyperbyte/Misc./Clear All PlayerPrefs")]
-    public static void ClearAllPlayerPrefs() {
-        PlayerPrefs.DeleteAll();
-    }
-
-    [MenuItem("Hyperbyte/Misc./Clear Define Symbol EditorPrefs")]
-    public static void ClearDefineSymbolEditorPrefs() {
-        EditorPrefs.DeleteKey("userRemoved_" + "UnityIAP");
-        EditorPrefs.DeleteKey("userRemoved_" + "UnityAds");
-        EditorPrefs.DeleteKey("userRemoved_" + "Admob");
-        EditorPrefs.DeleteKey("userRemoved_" + "IronSource");
-        EditorPrefs.DeleteKey("userRemoved_" + "AppLovinMax");
-        EditorPrefs.DeleteKey("userRemoved_" + "Vungle");
-    }
-
-    #region CaptureScreenshot
-    [MenuItem("Hyperbyte/Misc./Capture Screenshot/1X")]
-    private static void Capture1XScreenshot()
+    public static class EditorMenuUtils
     {
-        CaptureScreenshot(1);
-    }
+        [MenuItem("Hyperbyte/Misc./Clear All PlayerPrefs")]
+        public static void ClearAllPlayerPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+        }
 
-    [MenuItem("Hyperbyte/Misc./Capture Screenshot/2X")]
-    private static void Capture2XScreenshot()
-    {
-        CaptureScreenshot(2);
-    }
+        [MenuItem("Hyperbyte/Misc./Clear Define Symbol EditorPrefs")]
+        public static void ClearDefineSymbolEditorPrefs()
+        {
+            EditorPrefs.DeleteKey("userRemoved_" + "UnityIAP");
+            EditorPrefs.DeleteKey("userRemoved_" + "UnityAds");
+            EditorPrefs.DeleteKey("userRemoved_" + "Admob");
+            EditorPrefs.DeleteKey("userRemoved_" + "IronSource");
+            EditorPrefs.DeleteKey("userRemoved_" + "AppLovinMax");
+            EditorPrefs.DeleteKey("userRemoved_" + "Vungle");
+        }
 
-    [MenuItem("Hyperbyte/Misc./Capture Screenshot/3X")]
-    private static void Capture3XScreenshot()
-    {
-        CaptureScreenshot(3);
-    }
+        #region CaptureScreenshot
+        [MenuItem("Hyperbyte/Misc./Capture Screenshot/1X")]
+        private static void Capture1XScreenshot()
+        {
+            CaptureScreenshot(1);
+        }
 
-    public static void CaptureScreenshot(int supersize)
-    {
-        string imgName = "IMG-" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString("00") + DateTime.Now.Day.ToString("00") + "-" + DateTime.Now.Hour.ToString("00") + DateTime.Now.Minute.ToString("00") + DateTime.Now.Second.ToString("00") + ".png";
-        ScreenCapture.CaptureScreenshot((Application.dataPath + "/" + imgName), supersize);
-        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+        [MenuItem("Hyperbyte/Misc./Capture Screenshot/2X")]
+        private static void Capture2XScreenshot()
+        {
+            CaptureScreenshot(2);
+        }
+
+        [MenuItem("Hyperbyte/Misc./Capture Screenshot/3X")]
+        private static void Capture3XScreenshot()
+        {
+            CaptureScreenshot(3);
+        }
+
+        public static void CaptureScreenshot(int supersize)
+        {
+            string imgName =
+                $"IMG-{DateTime.Now.Year}{DateTime.Now.Month:00}{DateTime.Now.Day:00}-{DateTime.Now.Hour:00}{DateTime.Now.Minute:00}{DateTime.Now.Second:00}.png";
+            ScreenCapture.CaptureScreenshot($"{Application.dataPath}/{imgName}", supersize);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+        }
+        #endregion
     }
-    #endregion
 }

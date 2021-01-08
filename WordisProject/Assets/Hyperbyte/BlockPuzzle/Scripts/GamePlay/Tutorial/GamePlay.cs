@@ -13,14 +13,14 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlay : Singleton<GamePlay>
     {
-        [Header("Public Class Members")]
-        [Tooltip("BoardGenerator Script Reference")]
+        [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
         [Tooltip("BlockShapesController Script Reference")]
@@ -49,12 +49,15 @@ namespace Hyperbyte.Tutorial
         {
             int totalRows = allRows.Count;
 
-            for(int rowId = 0; rowId < allRows[0].Count; rowId++) {
-                 List<Block> thisColumn = new List<Block>();
-                 for (int columnId = 0; columnId < totalRows; columnId++) { 
-                     thisColumn.Add(allRows[columnId][rowId]);
-                 }
-                 allColumns.Add(thisColumn);
+            for (int rowId = 0; rowId < allRows[0].Count; rowId++)
+            {
+                List<Block> thisColumn = new List<Block>();
+                for (int columnId = 0; columnId < totalRows; columnId++)
+                {
+                    thisColumn.Add(allRows[columnId][rowId]);
+                }
+
+                allColumns.Add(thisColumn);
             }
         }
 
@@ -86,8 +89,8 @@ namespace Hyperbyte.Tutorial
         IEnumerator ClearAllBlocks(List<Block> allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = (allBlocks.Count % 2 == 0) ? (allBlocks.Count / 2) : ((allBlocks.Count / 2) + 1);
-            int leftIndex = (middleIndex - 1);
+            int middleIndex = allBlocks.Count % 2 == 0 ? allBlocks.Count / 2 : allBlocks.Count / 2 + 1;
+            int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
             int totalBlocks = allBlocks.Count;
 
@@ -97,12 +100,15 @@ namespace Hyperbyte.Tutorial
                 {
                     allBlocks[leftIndex].Clear();
                 }
+
                 if (rightIndex < totalBlocks)
                 {
                     allBlocks[rightIndex].Clear();
                 }
+
                 yield return new WaitForSeconds(0.03F);
             }
+
             yield return new WaitForSeconds(1);
             GamePlayUI.Instance.TutorialStepCompleted();
         }
@@ -110,7 +116,8 @@ namespace Hyperbyte.Tutorial
         /// <summary>
         /// Returns all blocks from the given row.
         /// </summary>
-        public List<Block> GetEntireRow(int rowId) {
+        public List<Block> GetEntireRow(int rowId)
+        {
             return allRows[rowId];
         }
 
@@ -125,15 +132,17 @@ namespace Hyperbyte.Tutorial
         /// <summary>
         /// Returns true if row is about to complete on current block shape being placed otherwise false.
         /// </summary>
-        public bool CanHighlightRow(int rowId) {
-            return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool CanHighlightRow(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
         /// Returns true if given row if all blocks in given row are filled. Otherwise false.
         /// </summary>
-        public bool IsRowCompleted(int rowId) {
-             return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool IsRowCompleted(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -141,7 +150,7 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         public bool CanHighlightColumn(int columnId)
         {
-             return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -149,7 +158,7 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         public bool IsColumnCompleted(int columnId)
         {
-            return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -163,6 +172,7 @@ namespace Hyperbyte.Tutorial
                 {
                     allRows[rowId][columnId].Highlight(sprite);
                 }
+
                 cachedHighlightingRows.Add(rowId);
             }
         }
@@ -174,9 +184,11 @@ namespace Hyperbyte.Tutorial
         {
             if (!cachedHighlightingColumns.Contains(columnId))
             {
-                foreach(Block block in GetEntirColumn(columnId)) {
+                foreach (Block block in GetEntirColumn(columnId))
+                {
                     block.Highlight(sprite);
                 }
+
                 cachedHighlightingColumns.Add(columnId);
             }
         }
@@ -242,6 +254,7 @@ namespace Hyperbyte.Tutorial
                     StopHighlightingColumn(column);
                 }
             }
+
             highlightingRows.Clear();
             highlightingColumns.Clear();
         }
@@ -251,11 +264,13 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         void StopHighlightingRow(int rowId)
         {
-            foreach(Block block in GetEntireRow(rowId)) {
+            foreach (Block block in GetEntireRow(rowId))
+            {
                 block.Reset();
             }
 
-            if (cachedHighlightingRows.Contains(rowId)) {
+            if (cachedHighlightingRows.Contains(rowId))
+            {
                 cachedHighlightingRows.Remove(rowId);
             }
         }
@@ -265,10 +280,13 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         void StopHighlightingColumn(int columnId)
         {
-            foreach(Block block in GetEntirColumn(columnId)) {
-                 block.Reset();
+            foreach (Block block in GetEntirColumn(columnId))
+            {
+                block.Reset();
             }
-            if (cachedHighlightingColumns.Contains(columnId)) {
+
+            if (cachedHighlightingColumns.Contains(columnId))
+            {
                 cachedHighlightingColumns.Remove(columnId);
             }
         }

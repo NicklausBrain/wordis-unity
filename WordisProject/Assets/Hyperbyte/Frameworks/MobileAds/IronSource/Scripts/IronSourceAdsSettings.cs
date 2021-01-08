@@ -11,40 +11,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
 {
-	/// <summary>
-	/// Ironsource Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
-	/// </summary>
-	public class IronSourceAdsSettings : ScriptableObject 
-	{	
-		#pragma warning disable 0649
-		// Android App Id.
-		[SerializeField] string appId_android;
-		
-		// Apple App Id.
-		[SerializeField] string appId_iOS;
+    /// <summary>
+    /// Ironsource Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
+    /// </summary>
+    public class IronSourceAdsSettings : ScriptableObject
+    {
+#pragma warning disable 0649
+        // Android App Id.
+        [SerializeField] string appId_android;
 
-		// Banner ad position.
-		[SerializeField] BannerAdPosition bannerAdPosition;
+        // Apple App Id.
+        [SerializeField] string appId_iOS;
 
-		// Banner ad bg color.
-		[SerializeField] string bannerBGColor;
-        #pragma warning restore 0649
+        // Banner ad position.
+        [SerializeField] BannerAdPosition bannerAdPosition;
 
-		public string GetAppId() {
-			#if UNITY_ANDROID
+        // Banner ad bg color.
+        [SerializeField] string bannerBGColor;
+#pragma warning restore 0649
+
+        public string GetAppId()
+        {
+#if UNITY_ANDROID
 			return appId_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return appId_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		#if HB_IRONSOURCE
+#if HB_IRONSOURCE
 		// Returns banner ad position.
 		public IronSourceBannerPosition GetBannerPosition() 
 		{
@@ -66,11 +68,12 @@ namespace Hyperbyte.Ads
 			}
 			return position;
 		}
-		#endif
+#endif
 
-		// Banner ad bg color.
-		public string GetBannerBgColor() {
-			return bannerBGColor;
-		}
-	}
+        // Banner ad bg color.
+        public string GetBannerBgColor()
+        {
+            return bannerBGColor;
+        }
+    }
 }

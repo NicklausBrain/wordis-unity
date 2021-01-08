@@ -12,15 +12,17 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.
+    /// This script component will generate the board with given size and will also place blocks from previous session if there is progress.
     /// </summary>
-	public class BoardGenerator : MonoBehaviour
+    public class BoardGenerator : MonoBehaviour
     {
 #pragma warning disable 0649
         // Prefab template of block.
@@ -31,7 +33,7 @@ namespace Hyperbyte
 #pragma warning restore 0649
 
         /// <summary>
-        /// Generates the block grid based on game settings and will also set progress from previoius session if any.
+        /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
         public void GenerateBoard(ProgressData progressData)
         {
@@ -57,7 +59,8 @@ namespace Hyperbyte
             GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
             GamePlayUI.Instance.gamePlay.allColumns = new List<List<Block>>();
 
-            Sprite blockBGSprite = ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
+            Sprite blockBGSprite =
+                ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
 
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
@@ -69,7 +72,7 @@ namespace Hyperbyte
                     // Spawn a block instance and prepares it.
                     RectTransform blockElement = GetBlockInsideGrid();
                     blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
-                    currentPositionX += (blockSize + blockSpace);
+                    currentPositionX += blockSize + blockSpace;
                     blockElement.sizeDelta = Vector3.one * blockSize;
                     blockElement.GetComponent<BoxCollider2D>().size = Vector3.one * blockSize;
                     blockElement.GetComponent<Image>().sprite = blockBGSprite;
@@ -82,8 +85,9 @@ namespace Hyperbyte
                     blockRow.Add(block);
                     block.assignedSpriteTag = block.defaultSpriteTag;
                 }
+
                 currentPositionX = startPointX;
-                currentPositionY -= (blockSize + blockSpace);
+                currentPositionY -= blockSize + blockSpace;
 
                 GamePlayUI.Instance.gamePlay.allRows.Add(blockRow);
             }
@@ -104,16 +108,19 @@ namespace Hyperbyte
                                 block: GamePlay.Instance.allRows[rowIndex][columnIndex],
                                 statusData: blockData);
                         }
+
                         columnIndex++;
                     }
+
                     rowIndex++;
                 }
             }
+
             GamePlay.Instance.OnBoardGridReady();
         }
 
         /// <summary>
-        /// Will set block status if there is any from previos session progress.
+        /// Will set block status if there is any from previous session progress.
         /// </summary>
         void SetBlockStatus(Block block, string statusData)
         {
@@ -142,9 +149,9 @@ namespace Hyperbyte
         public float GetStartPointY(float blockSize, int columnSize)
         {
             float totalHeight =
-                (blockSize * columnSize) +
-                ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
-            return ((totalHeight / 2) - (blockSize / 2));
+                blockSize * columnSize +
+                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return totalHeight / 2 - blockSize / 2;
         }
 
         /// <summary>
@@ -152,7 +159,7 @@ namespace Hyperbyte
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)(Instantiate(blockTemplate)) as GameObject;
+            GameObject block = (GameObject)Instantiate(blockTemplate) as GameObject;
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

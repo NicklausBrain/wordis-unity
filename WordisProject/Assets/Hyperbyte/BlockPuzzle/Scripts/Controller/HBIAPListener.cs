@@ -11,23 +11,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using Hyperbyte.Localization;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.UnityIAP.Scripts;
 using UnityEngine;
 
 #if HB_UNITYIAP
 using UnityEngine.Purchasing;
 #endif
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     public class HBIAPListener : MonoBehaviour
     {
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable() {
+        private void OnEnable()
+        {
             IAPManager.OnPurchaseSuccessfulEvent += OnPurchaseSuccessful;
             IAPManager.OnPurchaseFailedEvent += OnPurchaseFailed;
             IAPManager.OnRestoreCompletedEvent += OnRestoreCompleted;
@@ -36,7 +38,8 @@ namespace Hyperbyte
         /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-        private void OnDisable() {
+        private void OnDisable()
+        {
             IAPManager.OnPurchaseSuccessfulEvent -= OnPurchaseSuccessful;
             IAPManager.OnPurchaseFailedEvent -= OnPurchaseFailed;
             IAPManager.OnRestoreCompletedEvent -= OnRestoreCompleted;
@@ -46,47 +49,55 @@ namespace Hyperbyte
         /// Purchase Rewards will be processed from here. You can adjust your code based on your requirements.
         /// </summary>
         /// <param name="productInfo"></param>
-        void OnPurchaseSuccessful(ProductInfo productInfo) 
+        void OnPurchaseSuccessful(ProductInfo productInfo)
         {
-            RewardType rewardType = ((RewardType)productInfo.rewardType); 
+            RewardType rewardType = (RewardType) productInfo.rewardType;
 
-			switch(rewardType) 
+            switch (rewardType)
             {
-				case RewardType.REMOVE_ADS:
-					ProfileManager.Instance.SetAppAsAdFree();
-                    UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtSuccess"), LocalizationManager.Instance.GetTextWithTag("txtInappSuccessMsg"));
-				break;
-				case RewardType.GEMS:
-					int rewardAmount = productInfo.rewardAmount;
-					CurrencyManager.Instance.AddGems(rewardAmount);
+                case RewardType.REMOVE_ADS:
+                    ProfileManager.Instance.SetAppAsAdFree();
+                    UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtSuccess"),
+                        LocalizationManager.Instance.GetTextWithTag("txtInappSuccessMsg"));
+                    break;
+                case RewardType.GEMS:
+                    int rewardAmount = productInfo.rewardAmount;
+                    CurrencyManager.Instance.AddGems(rewardAmount);
                     UIController.Instance.purchaseSuccessScreen.Activate();
-				break;
+                    break;
 
-                case RewardType.OTHER :
-                break;
-			}
+                case RewardType.OTHER:
+                    break;
+            }
 
-            #if HB_UNITYIAP
+#if HB_UNITYIAP
             Product product = IAPManager.Instance.GetProductFromSku(productInfo.productName);
-            #endif
+#endif
         }
 
-        void OnPurchaseFailed(string reason) {
-            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtOops")).
-			SetMessage(LocalizationManager.Instance.GetTextWithTag("txtPurchaseFail")).
-			SetMessageType(CommonDialogueMessageType.Info).
-			SetOnConfirmButtonClickListener(()=> {
-				UIController.Instance.commonMessageScreen.Deactivate();
-                UIController.Instance.shopScreen.Activate();
-			}).Show();
+        void OnPurchaseFailed(string reason)
+        {
+            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtOops"))
+                .SetMessage(LocalizationManager.Instance.GetTextWithTag("txtPurchaseFail"))
+                .SetMessageType(CommonDialogueMessageType.Info).SetOnConfirmButtonClickListener(() =>
+                {
+                    UIController.Instance.commonMessageScreen.Deactivate();
+                    UIController.Instance.shopScreen.Activate();
+                }).Show();
         }
 
-        void OnRestoreCompleted(bool result) {
-            if(result) {
-                UIController.Instance.ShowMessage(("txtSuccess"), LocalizationManager.Instance.GetTextWithTag("txtInAppRestored"));
-            } else {
-                UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtAlert"), LocalizationManager.Instance.GetTextWithTag("txtNoRestore"));
+        void OnRestoreCompleted(bool result)
+        {
+            if (result)
+            {
+                UIController.Instance.ShowMessage("txtSuccess",
+                    LocalizationManager.Instance.GetTextWithTag("txtInAppRestored"));
+            }
+            else
+            {
+                UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtAlert"),
+                    LocalizationManager.Instance.GetTextWithTag("txtNoRestore"));
             }
         }
-    }   
+    }
 }

@@ -11,16 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Editor
 {	
 	[CustomEditor(typeof(IronSourceAdsSettings))]
 	public class IronSourceAdsSettingsEditor : CustomInspectorHelper 
@@ -177,7 +175,7 @@ namespace Hyperbyte.Ads
 		void AutoDetectSdk() 
 		{
 			// thisSdkExists = NamespaceUtils.CheckNamespacesExists(thisSDKInfo.sdkNameSpace);
-			thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/IronSource"));
+			thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/IronSource");
 			thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
 			VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
 		}
@@ -193,7 +191,7 @@ namespace Hyperbyte.Ads
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

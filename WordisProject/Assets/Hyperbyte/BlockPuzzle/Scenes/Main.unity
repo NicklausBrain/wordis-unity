@@ -15820,7 +15820,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 442241588}
-        m_MethodName: OnSelectLangaugeButtonPressed
+        m_MethodName: OnSelectLanguageButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16474,7 +16474,7 @@ MonoBehaviour:
   UICanvas: {fileID: 1840772184}
   homeScreen: {fileID: 644614682}
   gameScreen: {fileID: 1501201907}
-  gameScreen_Tutorial: {fileID: 1929342057}
+  gameScreenTutorial: {fileID: 0}
   shopScreen: {fileID: 778718246504830255}
   settingScreen: {fileID: 1069858229}
   consentScreen: {fileID: 927073206}
@@ -16487,7 +16487,7 @@ MonoBehaviour:
   commonMessageScreen: {fileID: 1620112355}
   dailyRewardScreen: {fileID: 815620054}
   gameOverScreen: {fileID: 1131847844}
-  lanagueSelectionScreen: {fileID: 1979308524}
+  languageSelectionScreen: {fileID: 1979308524}
   currencyBalanceButton: {fileID: 858439629}
   tipView: {fileID: 2016342174}
   ShopButtonGemsIcon: {fileID: 1396033311}

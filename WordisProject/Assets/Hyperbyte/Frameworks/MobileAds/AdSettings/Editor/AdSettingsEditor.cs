@@ -11,18 +11,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Hyperbyte.Ads;
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 {
-    [CustomEditor(typeof(AdSettings))]
+    [CustomEditor(typeof(Scripts.AdSettings))]
     public class AdSettingsEditor : CustomInspectorHelper
     {
         private bool cache = false;
-        AdSettings adSettings;
+        Scripts.AdSettings adSettings;
         GUIStyle labelStyle;
 
         #region AdNetworkSelectionSpecific
@@ -36,13 +41,13 @@ namespace Hyperbyte
 
             if (!cache)
             {
-                adSettings = (AdSettings)target;
+                adSettings = (Scripts.AdSettings)target;
 
                 labelStyle = new GUIStyle(GUI.skin.label);
                 labelStyle.fontStyle = FontStyle.Bold;
 
                 allNetworks = EnumUtils.GetValuesAsStringArray<AdNetworkSelection>();
-                selectedAdNetwork = ((int)adSettings.selectedAdNetwork);
+                selectedAdNetwork = (int)adSettings.selectedAdNetwork;
 
                 cache = true;
             }
@@ -196,7 +201,7 @@ namespace Hyperbyte
 
                 if (adSettings.selectedAdNetwork != AdNetworkSelection.Custom)
                 {
-                    string buttonText = "Configure " + ((adSettings.adsEnabled) ? ("<color=yellow>" + adSettings.selectedAdNetwork.ToString() + "</color>") : adSettings.selectedAdNetwork.ToString()) + " Settings";
+                    string buttonText = "Configure " + (adSettings.adsEnabled ? "<color=yellow>" + adSettings.selectedAdNetwork.ToString() + "</color>" : adSettings.selectedAdNetwork.ToString()) + " Settings";
 
                     if (GUILayout.Button(new GUIContent(buttonText), style2))
                     {
@@ -234,11 +239,11 @@ namespace Hyperbyte
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        unityAdsAsset = (UnityAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        unityAdsAsset = (UnityAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        unityAdsAsset = ScriptableObject.CreateInstance<UnityAdsSettings>();
+                        unityAdsAsset = CreateInstance<UnityAdsSettings>();
                         AssetDatabase.CreateAsset(unityAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -253,11 +258,11 @@ namespace Hyperbyte
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        googleAdsAsset = (GoogleMobileAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        googleAdsAsset = (GoogleMobileAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        googleAdsAsset = ScriptableObject.CreateInstance<GoogleMobileAdsSettings>();
+                        googleAdsAsset = CreateInstance<GoogleMobileAdsSettings>();
                         AssetDatabase.CreateAsset(googleAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -272,11 +277,11 @@ namespace Hyperbyte
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        ironsourceAdsAsset = (IronSourceAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        ironsourceAdsAsset = (IronSourceAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        ironsourceAdsAsset = ScriptableObject.CreateInstance<IronSourceAdsSettings>();
+                        ironsourceAdsAsset = CreateInstance<IronSourceAdsSettings>();
                         AssetDatabase.CreateAsset(ironsourceAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -291,11 +296,11 @@ namespace Hyperbyte
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        applovinAdsAsset = (AppLovinAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        applovinAdsAsset = (AppLovinAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        applovinAdsAsset = ScriptableObject.CreateInstance<AppLovinAdsSettings>();
+                        applovinAdsAsset = CreateInstance<AppLovinAdsSettings>();
                         AssetDatabase.CreateAsset(applovinAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }

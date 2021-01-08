@@ -12,11 +12,10 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System.Linq;
+using UnityEditor;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks._Common.Editor
 {
     public static class ScriptingDefineSymbolEditor
     {
@@ -27,7 +26,6 @@ namespace Hyperbyte
             AddSymbolForTarget(BuildTargetGroup.iOS, defineSymbol);
         }
 
-
         private static void AddSymbolForTarget(BuildTargetGroup targetGroup, string defineSymbol)
         {
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
@@ -35,7 +33,7 @@ namespace Hyperbyte
             {
                 return;
             }
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, (defines + ";" + defineSymbol));
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, defines + ";" + defineSymbol);
         }
         #endregion
 
@@ -59,7 +57,7 @@ namespace Hyperbyte
             string newDefine = "";
             foreach (string symbol in allSymbols)
             {
-                newDefine = newDefine + ";" + symbol;
+                newDefine = $"{newDefine};{symbol}";
             }
             PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, newDefine);
         }

@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils
 {
     /// <summary>
     /// Attach this script to any Text Mesh renderer to associalte it with color tag.
@@ -22,14 +22,14 @@ namespace Hyperbyte
     public class TextMeshColorTag : MonoBehaviour
     {
         TextMesh thisText;
-        
-        #pragma warning disable 0649
+
+#pragma warning disable 0649
         [SerializeField] string colorTag;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             thisText = GetComponent<TextMesh>();

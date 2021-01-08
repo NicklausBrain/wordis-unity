@@ -11,11 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using UnityEngine;
 using System;
+using System.Collections;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 {
     /// <summary>
     /// Canvas Group Tween.
@@ -72,10 +73,11 @@ namespace Hyperbyte.UITween
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if (_loopType == LoopType.PingPong && (_loopCount > 1))
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
             {
-                _loopCount = (_loopCount * 2);
+                _loopCount = _loopCount * 2;
             }
+
             return this;
         }
 
@@ -114,8 +116,8 @@ namespace Hyperbyte.UITween
         // Returns interpolation for the given time.
         public float GetLerpT(float time)
         {
-            float timeValue = (time > duration) ? duration : time;
-            float t = (duration == 0) ? 1 : timeValue / duration;
+            float timeValue = time > duration ? duration : time;
+            float t = duration == 0 ? 1 : timeValue / duration;
 
             switch (easeType)
             {
@@ -132,6 +134,7 @@ namespace Hyperbyte.UITween
                     t = animationCurve.Evaluate(t);
                     break;
             }
+
             return t;
         }
 
@@ -178,39 +181,34 @@ namespace Hyperbyte.UITween
 
                     elapsedLoop += 1;
 
-                    if ((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)
+                    if (loopCount > 1 && elapsedLoop < loopCount || loopCount < 0)
                     {
                         switch (loopType)
                         {
                             case LoopType.Loop:
                                 SetTweenParams(fromValue, toValue);
 
-                                if (OnLoopCompleteDelegate != null)
-                                {
-                                    OnLoopCompleteDelegate.Invoke(elapsedLoop);
-                                }
+                                OnLoopCompleteDelegate?.Invoke(elapsedLoop);
+
                                 break;
                             case LoopType.PingPong:
                                 SetTweenParams(toValue, fromValue);
 
                                 if (elapsedLoop % 2 == 0)
                                 {
-                                    if (OnLoopCompleteDelegate != null)
-                                    {
-                                        OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
-                                    }
+                                    OnLoopCompleteDelegate?.Invoke(elapsedLoop / 2);
                                 }
+
                                 break;
                         }
+
                         PlayAfterDelay();
                         elapsedTime = 0;
                     }
                     else
                     {
-                        if (OnCompleteDeletegate != null)
-                        {
-                            OnCompleteDeletegate.Invoke();
-                        }
+                        OnCompleteDeletegate?.Invoke();
+
                         StartCoroutine(DestroyThis());
                     }
                 }

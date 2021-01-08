@@ -11,47 +11,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte 
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
 {
-	/// <summary>
-	/// This script is not in use.
-	/// </summary>
-	[RequireComponent(typeof(Button))]
-	public class SettingButton : MonoBehaviour 
-	{
-		Button btnSetting;
+    /// <summary>
+    /// This script is not in use.
+    /// </summary>
+    [RequireComponent(typeof(Button))]
+    public class SettingButton : MonoBehaviour
+    {
+        Button btnSetting;
 
-		private void Awake() {
-			btnSetting = GetComponent<Button>();	
-		}
+        private void Awake()
+        {
+            btnSetting = GetComponent<Button>();
+        }
 
-		/// <summary>
+        /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-		private void OnEnable() {
-			btnSetting.onClick.AddListener(OnSettingsButtonClicked);
-		}
+        private void OnEnable()
+        {
+            btnSetting.onClick.AddListener(OnSettingsButtonClicked);
+        }
 
-		/// <summary>
+        /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-		private void OnDisable() {
-			btnSetting.onClick.RemoveListener(OnSettingsButtonClicked);
-		}
+        private void OnDisable()
+        {
+            btnSetting.onClick.RemoveListener(OnSettingsButtonClicked);
+        }
 
-		/// <summary>
-		/// Setting button listener.
-		/// </summary>
-		void OnSettingsButtonClicked() {
-			if(InputManager.Instance.canInput()) {
-				UIFeedback.Instance.PlayButtonPressEffect();
-				UIController.Instance.settingScreen.Activate();
-			}
-		}
-	}
+        /// <summary>
+        /// Setting button listener.
+        /// </summary>
+        void OnSettingsButtonClicked()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.settingScreen.Activate();
+            }
+        }
+    }
 }

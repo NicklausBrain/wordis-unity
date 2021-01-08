@@ -11,14 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Hyperbyte;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Editor
 {
     [CustomEditor(typeof(LocalizationSettings))]
     public class LocalizationSettingsEditor : CustomInspectorHelper
@@ -139,7 +137,7 @@ namespace Hyperbyte.Localization
                             if(isLanguageEnabled.boolValue) 
                             {
                                 int subIndentLevel = EditorGUI.indentLevel;
-                                EditorGUI.indentLevel = (subIndentLevel+1);
+                                EditorGUI.indentLevel = subIndentLevel+1;
                                 
                                 EditorGUILayout.BeginHorizontal();
                                 SerializedProperty langaugeDisplayName = list.GetArrayElementAtIndex(i).FindPropertyRelative("langaugeDisplayName");

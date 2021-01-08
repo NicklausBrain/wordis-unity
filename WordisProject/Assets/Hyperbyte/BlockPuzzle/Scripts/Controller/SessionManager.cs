@@ -11,110 +11,136 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System;
+using UnityEngine;
 
-public class SessionManager : MonoBehaviour 
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
-	public static event Action<SessionInfo> OnSessionUpdatedEvent;
-	bool isFreshLauched = true;
+    public class SessionManager : MonoBehaviour
+    {
+        public static event Action<SessionInfo> OnSessionUpdatedEvent;
 
-	TimeSpan backgroundThreshHoldTimeSpan = new TimeSpan(0,0,120);
-	SessionInfo currentSessionInfo = null;
+        bool _isFreshLauched = true;
+        readonly TimeSpan _backgroundThreshHoldTimeSpan = new TimeSpan(0, 0, 120);
+        SessionInfo _currentSessionInfo = null;
 
-	/// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-	void Start() 
-	{	
-		if(!PlayerPrefs.HasKey("firstOpenDate")) {
-			PlayerPrefs.SetString("firstOpenDate", DateTime.Now.ToBinary().ToString());
-		}
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        void Start()
+        {
+            if (!PlayerPrefs.HasKey("firstOpenDate"))
+            {
+                PlayerPrefs.SetString("firstOpenDate", DateTime.Now.ToBinary().ToString());
+            }
 
-		Invoke("CheckForSessionStatus",0.5F);
-	}
+            Invoke("CheckForSessionStatus", 0.5F);
+        }
 
-	void OnApplicationPause(bool pauseStatus)
-	{
-		if(pauseStatus) {
-			isFreshLauched = false;
-			PlayerPrefs.SetString("lastPauseTime",DateTime.Now.ToBinary().ToString());
-			PlayerPrefs.SetString("lastAccessedDate",DateTime.Now.ToBinary().ToString());
-		} else 
-		{
-			if(!isFreshLauched) {
-				
-				bool doCheckForSessionChange = true;
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                _isFreshLauched = false;
+                PlayerPrefs.SetString("lastPauseTime", DateTime.Now.ToBinary().ToString());
+                PlayerPrefs.SetString("lastAccessedDate", DateTime.Now.ToBinary().ToString());
+            }
+            else
+            {
+                if (!_isFreshLauched)
+                {
+                    bool doCheckForSessionChange = true;
 
-				if(PlayerPrefs.HasKey("lastPauseTime")) {
+                    if (PlayerPrefs.HasKey("lastPauseTime"))
+                    {
+                        DateTime lastOpenedTime =
+                            DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("lastPauseTime")));
+                        TimeSpan pauseDuration = DateTime.Now - lastOpenedTime;
 
-					DateTime lastOpenedTime = DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("lastPauseTime")));
-					TimeSpan pauseDuration = (DateTime.Now - lastOpenedTime);
-					
-					if(pauseDuration.TotalSeconds < backgroundThreshHoldTimeSpan.TotalSeconds) {
-						doCheckForSessionChange = false;
-					}
-				}
+                        if (pauseDuration.TotalSeconds < _backgroundThreshHoldTimeSpan.TotalSeconds)
+                        {
+                            doCheckForSessionChange = false;
+                        }
+                    }
 
-				if(doCheckForSessionChange) {
-					Invoke("CheckForSessionStatus",0.5F);
-				}
-			}
-		}
-	}
+                    if (doCheckForSessionChange)
+                    {
+                        Invoke("CheckForSessionStatus", 0.5F);
+                    }
+                }
+            }
+        }
 
-	void CheckForSessionStatus() 
-	{
-		//Calculate Session Count.
-		int currentSessionCount = 0;
-		
-		if(PlayerPrefs.HasKey("currentSessionCount")) {
-			currentSessionCount = PlayerPrefs.GetInt("currentSessionCount",0);
-		}
-		currentSessionCount ++;
-		PlayerPrefs.SetInt("currentSessionCount", currentSessionCount);
-		PlayerPrefs.DeleteKey("lastPauseTime");
+        void CheckForSessionStatus()
+        {
+            //Calculate Session Count.
+            int currentSessionCount = 0;
 
-		//SessionOfTheDay
-		int currentSessionOfDay = PlayerPrefs.GetInt("currentSessionOfDay_"+DateTime.Now.Year + "_" + DateTime.Now.DayOfYear, 0);
-		currentSessionOfDay += 1;
-		PlayerPrefs.SetInt("currentSessionOfDay_"+DateTime.Now.Year + "_" + DateTime.Now.DayOfYear, currentSessionOfDay);
+            if (PlayerPrefs.HasKey("currentSessionCount"))
+            {
+                currentSessionCount = PlayerPrefs.GetInt("currentSessionCount", 0);
+            }
 
-		//Days Since Last Accessed
-		DateTime lastAccessedDate = DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("lastAccessedDate",DateTime.Now.ToBinary().ToString())));
-		TimeSpan durationSinceLastAccessed = (DateTime.Now - lastAccessedDate);
+            currentSessionCount++;
+            PlayerPrefs.SetInt("currentSessionCount", currentSessionCount);
+            PlayerPrefs.DeleteKey("lastPauseTime");
 
-		//Days Since Installed
-		DateTime firstOpenDate = DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("firstOpenDate",DateTime.Now.ToBinary().ToString())));
-		TimeSpan durationSinceFirstTimeAccessed = (DateTime.Now - firstOpenDate);
+            //SessionOfTheDay
+            int currentSessionOfDay =
+                PlayerPrefs.GetInt("currentSessionOfDay_" + DateTime.Now.Year + "_" + DateTime.Now.DayOfYear, 0);
+            currentSessionOfDay += 1;
+            PlayerPrefs.SetInt("currentSessionOfDay_" + DateTime.Now.Year + "_" + DateTime.Now.DayOfYear,
+                currentSessionOfDay);
 
-		currentSessionInfo = new SessionInfo(currentSessionCount, currentSessionOfDay, durationSinceLastAccessed, durationSinceFirstTimeAccessed);
+            //Days Since Last Accessed
+            DateTime lastAccessedDate =
+                DateTime.FromBinary(
+                    Convert.ToInt64(PlayerPrefs.GetString("lastAccessedDate", DateTime.Now.ToBinary().ToString())));
 
-		if(OnSessionUpdatedEvent != null) {
-			OnSessionUpdatedEvent.Invoke(currentSessionInfo);
-		}
-	}
+            TimeSpan durationSinceLastAccessed = DateTime.Now - lastAccessedDate;
 
-	void OnApplicationQuit() {
-		PlayerPrefs.SetString("lastAccessedDate",DateTime.Now.ToBinary().ToString());
-	}
+            //Days Since Installed
+            DateTime firstOpenDate =
+                DateTime.FromBinary(
+                    Convert.ToInt64(PlayerPrefs.GetString("firstOpenDate", DateTime.Now.ToBinary().ToString())));
 
-	public SessionInfo getCurrentSessionInfo() {
-		return currentSessionInfo;
-	}
-}
+            TimeSpan durationSinceFirstTimeAccessed = DateTime.Now - firstOpenDate;
 
-public class SessionInfo {
-	public int currentSessionCount = 0;
-	public int currentSessionOfDay = 0;
-	public TimeSpan durationSinceLastAccessed;
-	public TimeSpan durationSinceFirstTimeAccessed;
+            _currentSessionInfo = new SessionInfo(currentSessionCount, currentSessionOfDay, durationSinceLastAccessed,
+                durationSinceFirstTimeAccessed);
 
-	public SessionInfo(int _currentSessionCount, int _currentSessionOfDay, TimeSpan _durationSinceLastAccessed, TimeSpan _durationSinceFirstTimeAccessed) {
-		this.currentSessionCount = _currentSessionCount;
-		this.currentSessionOfDay = _currentSessionOfDay;
-		this.durationSinceLastAccessed = _durationSinceLastAccessed;
-		this.durationSinceFirstTimeAccessed = _durationSinceFirstTimeAccessed;
-	}
+            OnSessionUpdatedEvent?.Invoke(_currentSessionInfo);
+        }
+
+        void OnApplicationQuit()
+        {
+            PlayerPrefs.SetString("lastAccessedDate", DateTime.Now.ToBinary().ToString());
+        }
+
+        public SessionInfo getCurrentSessionInfo()
+        {
+            return _currentSessionInfo;
+        }
+    }
+
+    public class SessionInfo
+    {
+        public int currentSessionCount = 0;
+        public int currentSessionOfDay = 0;
+        public TimeSpan durationSinceLastAccessed;
+        public TimeSpan durationSinceFirstTimeAccessed;
+
+        public SessionInfo(
+            int currentSessionCount,
+            int currentSessionOfDay,
+            TimeSpan durationSinceLastAccessed,
+            TimeSpan durationSinceFirstTimeAccessed)
+        {
+            this.currentSessionCount = currentSessionCount;
+            this.currentSessionOfDay = currentSessionOfDay;
+            this.durationSinceLastAccessed = durationSinceLastAccessed;
+            this.durationSinceFirstTimeAccessed = durationSinceFirstTimeAccessed;
+        }
+    }
 }

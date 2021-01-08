@@ -11,12 +11,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// This script is used to rescue game using coins or watching video.
@@ -31,7 +35,7 @@ namespace Hyperbyte
 #pragma warning restore 0649
 
         bool attemptedRescueWithGems = false;
-        string rescueVideoTag = "RescueGame";
+        const string RescueVideoTag = "RescueGame";
 
         bool isRescueDone = false;
 
@@ -93,6 +97,7 @@ namespace Hyperbyte
             {
                 GamePlayUI.Instance.ResumeGame();
             }
+
             isRescueDone = false;
         }
 
@@ -160,7 +165,7 @@ namespace Hyperbyte
         {
             if (AdManager.Instance.IsRewardedAvailable())
             {
-                AdManager.Instance.ShowRewardedWithTag(rescueVideoTag);
+                AdManager.Instance.ShowRewardedWithTag(RescueVideoTag);
             }
         }
 
@@ -169,7 +174,7 @@ namespace Hyperbyte
         /// </summary>
         void OnRewardedAdRewarded(string watchVidoTag)
         {
-            if (watchVidoTag == rescueVideoTag)
+            if (watchVidoTag == RescueVideoTag)
             {
                 isRescueDone = true;
                 GamePlayUI.Instance.OnRescueSuccessful();

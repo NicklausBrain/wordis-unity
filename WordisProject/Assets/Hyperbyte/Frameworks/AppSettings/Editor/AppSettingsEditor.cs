@@ -11,16 +11,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks._Common.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.AppSettings.Editor
 {	
-	[CustomEditor(typeof(AppSettings))]
+	[CustomEditor(typeof(Scripts.AppSettings))]
 	public class AppSettingsEditor : CustomInspectorHelper 
 	{
 		private bool cache = false;
-		AppSettings appSettings;
+		Scripts.AppSettings appSettings;
 		private SerializedProperty dailyRewardsSettings;
 		GUIStyle labelStyle;
 
@@ -30,7 +31,7 @@ namespace Hyperbyte
 
 			if (!cache)
 			{
-				appSettings = (AppSettings)target;
+				appSettings = (Scripts.AppSettings)target;
 				dailyRewardsSettings = serializedObject.FindProperty("dailyRewardsSettings");
 				
 				labelStyle = new GUIStyle(GUI.skin.label);

@@ -18,7 +18,7 @@ using UnityEngine.UI;
 using UnityEngine.Purchasing;
 #endif
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 {
     /// <summary>
     /// Any UI Button with attached this script will work as IAP Button and request a IAP Purchase of selected SKU from the dropdown selection. 
@@ -77,16 +77,16 @@ namespace Hyperbyte
         /// <summary>
         ///  Fetrched IAP product and assign to button which listener.
         /// </summary>
-        void InitIAPProduct() 
+        void InitIAPProduct()
         {
             thisProduct = IAPManager.Instance.GetProductInfoById(inAppProductIndex);
             thisButton.onClick.AddListener(OnPurchaseButtonPressed);
 
-            if(!hasInitialized) 
+            if (!hasInitialized)
             {
-                if(IAPManager.Instance.hasUnityIAPSdkInitialised) 
+                if (IAPManager.Instance.hasUnityIAPSdkInitialised)
                 {
-                    #if HB_UNITYIAP
+#if HB_UNITYIAP
                     Product product = IAPManager.Instance.GetProductFromSku(thisProduct.productName);
 
                     if(product != null) {
@@ -104,7 +104,7 @@ namespace Hyperbyte
                         }
                         hasInitialized = true;
                     }
-                    #endif
+#endif
                 }
             }
         }

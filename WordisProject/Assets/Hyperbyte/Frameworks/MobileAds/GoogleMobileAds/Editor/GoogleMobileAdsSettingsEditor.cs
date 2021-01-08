@@ -11,11 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
-using Hyperbyte.Utils;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Editor
 {	
 	[CustomEditor(typeof(GoogleMobileAdsSettings))]
 	public class GoogleMobileAdsSettingsEditor : CustomInspectorHelper 
@@ -246,7 +249,7 @@ namespace Hyperbyte.Ads
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

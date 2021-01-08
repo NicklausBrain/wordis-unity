@@ -12,12 +12,16 @@
 // THE SOFTWARE.
 
 using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlayUI : Singleton<GamePlayUI>
     {
@@ -25,17 +29,19 @@ namespace Hyperbyte.Tutorial
         [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
-        [System.NonSerialized] public GameModeSettings currentModeSettings;
+        [NonSerialized] public GameModeSettings currentModeSettings;
 
         // Stores current playing mode.
-        [System.NonSerialized] public GameMode currentGameMode;
+        [NonSerialized] public GameMode currentGameMode;
 
         // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [System.NonSerialized] GamePlaySettings gamePlaySettings;
+        [NonSerialized] GamePlaySettings gamePlaySettings;
 
         #region  Game Status event callbacks.
+
         //Event action for shape place callback.
         public static event Action OnShapePlacedEvent;
+
         #endregion
 
         public GameObject boardHighlightImage;
@@ -47,13 +53,15 @@ namespace Hyperbyte.Tutorial
         public GameObject tutorialCompletePopup;
 
         int tutorialStep = 1;
+
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
-        private void Awake() 
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
         {
             // Initializes the GamePlay Settings Scriptable.
-            if (gamePlaySettings == null)  {
+            if (gamePlaySettings == null)
+            {
                 gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
             }
         }
@@ -66,11 +74,11 @@ namespace Hyperbyte.Tutorial
         {
             StartTutorial(GameMode.Tutorial);
         }
-       
+
         /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
-        public void StartTutorial(GameMode gameMode) 
+        public void StartTutorial(GameMode gameMode)
         {
             currentGameMode = gameMode;
             currentModeSettings = gamePlaySettings.tutorialModeSettings;
@@ -79,10 +87,11 @@ namespace Hyperbyte.Tutorial
             currentModeSettings.boardSize = BoardSize.BoardSize_5X5;
 
             // Enables gameplay screen if not active.
-            if (!gamePlay.gameObject.activeSelf) {
+            if (!gamePlay.gameObject.activeSelf)
+            {
                 gamePlay.gameObject.SetActive(true);
             }
-            
+
             // Generated gameplay grid.
             gamePlay.boardGenerator.GenerateBoard();
             gamePlay.boardGenerator.UpdateBoardForTutorial(1);
@@ -97,36 +106,38 @@ namespace Hyperbyte.Tutorial
             boardHighlightImage.transform.localScale = Vector3.one * (currentModeSettings.blockSize / 90F);
         }
 
-        public void TutorialStepCompleted() 
+        public void TutorialStepCompleted()
         {
             tutorialStep += 1;
-            gamePlay.boardGenerator.UpdateBoardForTutorial(tutorialStep);   
+            gamePlay.boardGenerator.UpdateBoardForTutorial(tutorialStep);
             gamePlay.blockShapeController.PrepareShapeContainer(tutorialStep);
 
-            if(tutorialStep == 2) {
-                txtTutorialText1.SetAlpha(0,0);
-                txtTutorialText2.SetAlpha(0,0);
+            if (tutorialStep == 2)
+            {
+                txtTutorialText1.SetAlpha(0, 0);
+                txtTutorialText2.SetAlpha(0, 0);
                 txtTutorialText2.text = "";
 
                 txtTutorialText1.text = LocalizationManager.Instance.GetTextWithTag("txtTutorial3");
                 txtTutorialText1.SetAlpha(1, 0.3F);
-
             }
 
-            if(tutorialStep == 3) 
+            if (tutorialStep == 3)
             {
                 GamePlay.Instance.boardGenerator.gameObject.SetActive(false);
                 GamePlay.Instance.blockShapeController.gameObject.SetActive(false);
-                
+
                 boardHighlightImage.SetActive(false);
                 tutorialCompletePopup.Activate(false);
 
-                PlayerPrefs.SetInt("tutorialShown",1);
+                PlayerPrefs.SetInt("tutorialShown", 1);
             }
         }
 
-        public void ContinueGamePlay() {
-            if (InputManager.Instance.canInput()) {
+        public void ContinueGamePlay()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.LoadGamePlay(UIController.Instance.cachedSelectedMode);
             }
@@ -136,21 +147,20 @@ namespace Hyperbyte.Tutorial
         /// Returns size of the current grid.
         /// </summary>
         /// <returns></returns>
-        public BoardSize GetBoardSize() {
+        public BoardSize GetBoardSize()
+        {
             return currentModeSettings.boardSize;
         }
 
         // Invokes callback for OnShapePlaced Event.
-        public void OnShapePlaced() {
+        public void OnShapePlaced()
+        {
+            OnShapePlacedEvent?.Invoke();
 
-
-            if(OnShapePlacedEvent != null) {
-                OnShapePlacedEvent.Invoke();
-            }
-
-            if(tutorialStep == 1) 
+            if (tutorialStep == 1)
             {
-                if(txtTutorialText2.text == "") {
+                if (string.IsNullOrWhiteSpace(txtTutorialText2.text))
+                {
                     txtTutorialText2.text = LocalizationManager.Instance.GetTextWithTag("txtTutorial2");
                     txtTutorialText2.SetAlpha(1, 0.3F);
                 }

@@ -13,9 +13,8 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 {
     /// <summary>
     /// This script is a demo script to test ad.
@@ -117,86 +116,86 @@ namespace Hyperbyte
             AdManager.OnRewardedAdRewardedEvent -= OnRewardedAdRewarded;
         }
 
-		// Invokes callback on banner ad loaded and ready to show.
+        // Invokes callback on banner ad loaded and ready to show.
         void OnBannerLoaded()
         {
             ShowText("Banner Loaded.");
         }
 
-		// Invokes callback on banner ad fails to load.
+        // Invokes callback on banner ad fails to load.
         void OnBannerFailed(string reason)
         {
             ShowText("Banner Load Failed : " + reason);
         }
 
-		// Invokes callback on interstitial ad loaded and ready to show.
+        // Invokes callback on interstitial ad loaded and ready to show.
         void OnInterstitialLoaded()
         {
             ShowText("Interstitial Loaded.");
         }
 
-		// Invokes callback on interstitial ad fails to load.
+        // Invokes callback on interstitial ad fails to load.
         void OnInterstitialLoadFailed(string reason)
         {
             ShowText("Interstitial Load Failed : " + reason);
         }
 
-		// Invokes callback on showing interstitial.
+        // Invokes callback on showing interstitial.
         void OnInterstitialShown()
         {
             ShowText("Interstitial Shown.");
         }
 
-		// Invokes callback on closing interstitial.
+        // Invokes callback on closing interstitial.
         void OnInterstitialClosed()
         {
             ShowText("Interstitial Closed.");
         }
 
-		// Invokes callback rewarded ad loaded and ready to show.
+        // Invokes callback rewarded ad loaded and ready to show.
         void OnRewardedLoaded()
         {
             ShowText("Rewarded Loaded.");
         }
 
-		// Invokes callback on rewarded ad fails to load.
+        // Invokes callback on rewarded ad fails to load.
         void OnRewardedLoadFailed(string reason)
         {
             ShowText("Rewarded Load Failed : " + reason);
         }
 
-		// Invokes callback on starting rewarded ad. 
+        // Invokes callback on starting rewarded ad. 
         void OnRewardedShown()
         {
             ShowText("Rewarded Shown.");
         }
 
-		// Invokes callback on rewarded ad closed.
+        // Invokes callback on rewarded ad closed.
         void OnRewardedClosed()
         {
             ShowText("Rewarded Closed.");
         }
 
-		// Invokes callback on rewarded ad finishes ad rewarded.
+        // Invokes callback on rewarded ad finishes ad rewarded.
         void OnRewardedAdRewarded(string tag)
         {
             ShowText("Rewarded Rewarded : " + tag);
         }
 
-		// Close ad demo popup.
+        // Close ad demo popup.
         public void OnCloseButtonPressed()
         {
             gameObject.SetActive(false);
         }
 
-		// Shows the debug text.
+        // Shows the debug text.
         void ShowText(string text)
         {
             txtResult.text = text;
             Invoke("HideText", 3F);
         }
 
-		// Hides debug text.
+        // Hides debug text.
         void HideText()
         {
             txtResult.text = "";

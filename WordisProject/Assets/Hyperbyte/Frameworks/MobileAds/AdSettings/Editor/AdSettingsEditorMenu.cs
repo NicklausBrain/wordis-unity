@@ -11,11 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
-using Hyperbyte.Utils;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 {
     public class AdSettingsEditorMenu : MonoBehaviour
     {
@@ -26,7 +27,7 @@ namespace Hyperbyte
             string assetPath = "Assets/Hyperbyte/Resources";
             string assetName = "AdSettings.asset";
 
-            AdSettings asset;
+            Scripts.AdSettings asset;
 
             if (!System.IO.Directory.Exists(assetPath))
             {
@@ -35,11 +36,11 @@ namespace Hyperbyte
 
             if (System.IO.File.Exists(assetPath + "/" + assetName))
             {
-                asset = (AdSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (Scripts.AdSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {
-                asset = ScriptableObject.CreateInstance<AdSettings>();
+                asset = ScriptableObject.CreateInstance<Scripts.AdSettings>();
                 AssetDatabase.CreateAsset(asset, assetPath + "/" + assetName);
                 AssetDatabase.SaveAssets();
             }
@@ -92,14 +93,14 @@ namespace Hyperbyte
             #region IronSource
             thisSDKInfo = new SDKInfo("IronSource", "IronSourceJSON", "HB_IRONSOURCE");
             // thisSdkExists = NamespaceUtils.CheckNamespacesExists(thisSDKInfo.sdkNameSpace);
-            thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/IronSource"));
+            thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/IronSource");
             thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
             VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
             #endregion
 
             #region AppLovinMax
             thisSDKInfo = new SDKInfo("AppLovinMax", "AppLovinMax", "HB_APPLOVINMAX");
-            thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/MaxSdk"));
+            thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/MaxSdk");
             thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
             VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
             #endregion

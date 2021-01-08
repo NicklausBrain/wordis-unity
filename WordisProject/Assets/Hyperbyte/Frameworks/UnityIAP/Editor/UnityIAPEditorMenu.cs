@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.UnityIAP.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
-using Hyperbyte.Utils;
+using UnityEngine;
 
-namespace  Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Editor
 {    
     public class UnityIAPEditorMenu : MonoBehaviour
     {
@@ -35,7 +37,7 @@ namespace  Hyperbyte
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))
             {
-                asset = (IAPProducts)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (IAPProducts)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {

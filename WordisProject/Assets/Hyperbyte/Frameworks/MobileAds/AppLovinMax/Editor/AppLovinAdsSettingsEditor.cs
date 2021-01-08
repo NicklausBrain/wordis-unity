@@ -11,16 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Editor
 {	
 	[CustomEditor(typeof(AppLovinAdsSettings))]
 	public class AppLovinAdsSettingsEditor : CustomInspectorHelper 
@@ -226,7 +224,7 @@ namespace Hyperbyte.Ads
 
 		void AutoDetectSdk() 
 		{
-			thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/MaxSdk"));
+			thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/MaxSdk");
 			thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
 			VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
 		}
@@ -242,7 +240,7 @@ namespace Hyperbyte.Ads
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

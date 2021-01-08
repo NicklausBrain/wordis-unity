@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Common
 {
     public class DontDestroyOnLoad : MonoBehaviour
     {

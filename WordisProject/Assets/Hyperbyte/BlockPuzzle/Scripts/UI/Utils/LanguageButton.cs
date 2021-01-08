@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
 {
     /// <summary>
     /// This script is attached to each langauge selection button. This script will change app language to
@@ -26,16 +28,16 @@ namespace Hyperbyte
         /// Instance of current button's localize language.
         LocalizedLanguage currentButtonLanaguage;
 
-        #pragma warning disable 0649
-		// Name of langauge.
+#pragma warning disable 0649
+        // Name of langauge.
         [SerializeField] Text txtLangaugeName;
 
-		// Check mark enabled if current language is this.
+        // Check mark enabled if current language is this.
         [SerializeField] Image imgCheckMark;
 
-		// Line below localization button.
+        // Line below localization button.
         [SerializeField] Image imgLine;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
 
         // Language is active?
@@ -105,6 +107,7 @@ namespace Hyperbyte
                 {
                     imgCheckMark.enabled = false;
                 }
+
                 isActiveLangauge = false;
             }
         }

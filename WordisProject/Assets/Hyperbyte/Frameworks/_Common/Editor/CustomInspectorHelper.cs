@@ -11,33 +11,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks._Common.Editor
 {
-    public class CustomInspectorHelper : Editor
+    public class CustomInspectorHelper : UnityEditor.Editor
     {
-        private Texture2D lineTexture;
+        private Texture2D _lineTexture;
+
         private Texture2D LineTexture
         {
             get
             {
-                if (lineTexture == null)
+                if (_lineTexture == null)
                 {
-                    lineTexture = new Texture2D(1, 1);
-                    lineTexture.SetPixel(0, 0, new Color(37f / 255f, 37f / 255f, 37f / 255f));
-                    lineTexture.Apply();
+                    _lineTexture = new Texture2D(1, 1);
+                    _lineTexture.SetPixel(0, 0, new Color(37f / 255f, 37f / 255f, 37f / 255f));
+                    _lineTexture.Apply();
                 }
 
-                return lineTexture;
+                return _lineTexture;
             }
         }
 
         protected void DrawLine()
         {
-            GUIStyle lineStyle = new GUIStyle();
-            lineStyle.normal.background = LineTexture;
+            GUIStyle lineStyle = new GUIStyle {normal =
+            {
+                background = LineTexture
+            }};
 
             GUILayout.Space(3);
             GUILayout.BeginVertical(lineStyle);
@@ -211,7 +214,6 @@ namespace Hyperbyte
             return false;
         }
 
-
         protected void SetBoxExpanded(string prefKey)
         {
             string boxExpandedStr = EditorPrefs.GetString("hb-toggle-on");
@@ -253,8 +255,10 @@ namespace Hyperbyte
 
         protected bool DrawBoldFoldout(bool isExpanded, string text)
         {
-            GUIStyle foldoutStyle = new GUIStyle(EditorStyles.foldout);
-            foldoutStyle.fontStyle = FontStyle.Bold;
+            GUIStyle foldoutStyle = new GUIStyle(EditorStyles.foldout)
+            {
+                fontStyle = FontStyle.Bold
+            };
             return EditorGUILayout.Foldout(isExpanded, text, foldoutStyle);
         }
 
@@ -263,10 +267,12 @@ namespace Hyperbyte
             Color bgColor = GUI.backgroundColor;
 
             GUI.backgroundColor = Color.grey;
-            GUIStyle style2 = new GUIStyle(GUI.skin.button);
-            style2.richText = true;
+            GUIStyle style2 = new GUIStyle(GUI.skin.button)
+            {
+                richText = true
+            };
 
-            bool isPressed = (GUILayout.Button("<b>" +btnText + "</b>", style2));
+            bool isPressed = GUILayout.Button($"<b>{btnText}</b>", style2);
             GUI.backgroundColor = bgColor;
             return isPressed;
         }

@@ -11,15 +11,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Editor
 {	
 	public class GamePlaySettingsEditorMenu
 	{
@@ -37,7 +32,7 @@ namespace Hyperbyte
             }
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))  {
-                asset = (GamePlaySettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (GamePlaySettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else   {
                 asset = ScriptableObject.CreateInstance<GamePlaySettings>();

@@ -11,58 +11,65 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
-	/// <summary>
-	/// This script component is attached to review screen popup windows and user can select starts and nevigate to store to review app.
-	/// </summary>
+    /// <summary>
+    /// This script component is attached to review screen popup windows and user can select starts and nevigate to store to review app.
+    /// </summary>
     public class ReviewAppScreen : MonoBehaviour
     {
-		[SerializeField] Button btnSubmitReview;
+        [SerializeField] Button btnSubmitReview;
 
-		[HideInInspector] public float minRatingToSubmitReview = 4.5F;
-		[HideInInspector] public float currentRating = 0.0F;
+        [HideInInspector] public float minRatingToSubmitReview = 4.5F;
+        [HideInInspector] public float currentRating = 0.0F;
 
-		/// <summary>
-    	/// Start is called on the frame when a script is enabled just before
-    	/// any of the Update methods is called the first time.
-    	/// </summary>
-		private void Start() {
-			minRatingToSubmitReview = ProfileManager.Instance.GetAppSettings().minRatingToNavigateToStore;	
-		}
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        private void Start()
+        {
+            minRatingToSubmitReview = ProfileManager.Instance.GetAppSettings().minRatingToNavigateToStore;
+        }
 
-		/// <summary>
-		/// Close button click listener.
-		/// </summary>
-		public void OnCloseButtonPressed() {
-			if(InputManager.Instance.canInput()) {
-				UIFeedback.Instance.PlayButtonPressEffect();
-				UIController.Instance.reviewScreen.Deactivate();
-			}
-		}
+        /// <summary>
+        /// Close button click listener.
+        /// </summary>
+        public void OnCloseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.reviewScreen.Deactivate();
+            }
+        }
 
-		/// <summary>
-		/// Submit button click listener.
-		/// </summary>
-		public void OnSubmitButtonPressed() {
-			if(InputManager.Instance.canInput()) {
-				UIFeedback.Instance.PlayButtonPressEffect();
-				Invoke("NavigateToStore",0.2F);
-				UIController.Instance.reviewScreen.Deactivate();
-			}
-		}
+        /// <summary>
+        /// Submit button click listener.
+        /// </summary>
+        public void OnSubmitButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                Invoke("NavigateToStore", 0.2F);
+                UIController.Instance.reviewScreen.Deactivate();
+            }
+        }
 
-		private void NavigateToStore() 
-		{
-			if(currentRating >= ProfileManager.Instance.GetAppSettings().minRatingToNavigateToStore) 
-			{
-				#if UNITY_IOS
+        private void NavigateToStore()
+        {
+            if (currentRating >= ProfileManager.Instance.GetAppSettings().minRatingToNavigateToStore)
+            {
+#if UNITY_IOS
 				Application.OpenURL("itms-apps://itunes.apple.com/app/id" + ProfileManager.Instance.GetAppSettings().appleID);
-				#elif UNITY_ANDROID
-
+#elif UNITY_ANDROID
 				switch (ProfileManager.Instance.GetAppSettings().currentAndroidStore)
 				{
 					//Google
@@ -80,9 +87,9 @@ namespace Hyperbyte
 						Application.OpenURL(ProfileManager.Instance.GetAppSettings().samsungReviewURL);
 					break;
 				}
-				#endif
-				PlayerPrefs.SetInt("AppRated",1);
-			}
-		} 
+#endif
+                PlayerPrefs.SetInt("AppRated", 1);
+            }
+        }
     }
 }

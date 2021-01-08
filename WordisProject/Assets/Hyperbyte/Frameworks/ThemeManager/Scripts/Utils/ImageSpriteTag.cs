@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils
 {
     /// <summary>
     /// Attach this script to any UI Image type to associalte it with sprite tag.
@@ -23,14 +23,14 @@ namespace Hyperbyte
     public class ImageSpriteTag : MonoBehaviour
     {
         Image thisImage;
-        
-        #pragma warning disable 0649
+
+#pragma warning disable 0649
         [SerializeField] string spriteTag;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             thisImage = GetComponent<Image>();

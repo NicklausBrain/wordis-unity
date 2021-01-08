@@ -12,21 +12,21 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
-using Hyperbyte.Utils;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
     /// This script controlls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.
     /// </summary>
     public class BlockShapesController : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
         [SerializeField] List<ShapeContainer> allShapeContainers;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         public List<BlockShape> tutorialBlockShapes_1 = new List<BlockShape>();
         public List<BlockShape> tutorialBlockShapes_2 = new List<BlockShape>();
@@ -48,9 +48,10 @@ namespace Hyperbyte.Tutorial
         int currentTutorialStep = 1;
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
-        private void Awake() {
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
             blockShapePlacementChecker = GetComponent<BlockShapePlacementChecker>();
         }
 
@@ -89,30 +90,34 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         void PrepareShapePool()
         {
-            if(currentTutorialStep == 1) 
+            if (currentTutorialStep == 1)
             {
                 blockShapesPool = new List<GameObject>();
                 // Gets all the standard shapes added in gameplay settings.
-                foreach(BlockShape blockShape in tutorialBlockShapes_1) {
+                foreach (BlockShape blockShape in tutorialBlockShapes_1)
+                {
                     blockShapesPool.Add(blockShape.gameObject);
                 }
-                Invoke("ShowDragTip",1F);
+
+                Invoke("ShowDragTip", 1F);
             }
 
-            if(currentTutorialStep == 2) 
+            if (currentTutorialStep == 2)
             {
                 blockShapesPool.Clear();
                 upcomingBlockShapes.Clear();
                 ClearAllShapeContainers();
 
                 // Gets all the standard shapes added in gameplay settings.
-                foreach(BlockShape blockShape in tutorialBlockShapes_1) {
+                foreach (BlockShape blockShape in tutorialBlockShapes_1)
+                {
                     blockShapesPool.Add(blockShape.gameObject);
                 }
-            }    
+            }
         }
 
-        void ShowDragTip() {
+        void ShowDragTip()
+        {
             GamePlayUI.Instance.shapeDragHandImage.SetActive(true);
         }
 
@@ -121,7 +126,8 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         void FillAllShapeContainers()
         {
-            foreach (ShapeContainer shapeContainer in allShapeContainers) {
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
                 FillShapeInContainer(shapeContainer);
             }
         }
@@ -173,11 +179,12 @@ namespace Hyperbyte.Tutorial
             }
 
             // Takes a block shape instance from pool and instantiates it.
-            GameObject upcomingShape = (GameObject)Instantiate(upcomingBlockShapes[0]);
+            GameObject upcomingShape = (GameObject) Instantiate(upcomingBlockShapes[0]);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
-            if(currentTutorialStep > 1) {
-               upcomingShape.transform.localEulerAngles = new Vector3(0,0,90);
+            if (currentTutorialStep > 1)
+            {
+                upcomingShape.transform.localEulerAngles = new Vector3(0, 0, 90);
             }
 
             // Removes shapes from pool.
@@ -224,7 +231,6 @@ namespace Hyperbyte.Tutorial
 
             for (int i = 0; i < allShapeContainers.Count; i++)
             {
-
                 if (allShapeContainers[i].blockShape != null)
                 {
                     if (emptyShapeContainer != null)
@@ -247,6 +253,7 @@ namespace Hyperbyte.Tutorial
                     }
                 }
             }
+
             FillLastShapeContainer();
         }
 
@@ -262,10 +269,12 @@ namespace Hyperbyte.Tutorial
                     return false;
                 }
             }
+
             return true;
         }
 
         #region Registered Events Callback
+
         /// <summary>
         /// Callback when any block shape places on board.
         /// </summary>
@@ -274,9 +283,10 @@ namespace Hyperbyte.Tutorial
             Invoke("UpdateShapeContainers", 0.1F);
             totalShapesPlaced += 1;
         }
+
         #endregion
 
-         /// <summary>
+        /// <summary>
         /// Checks if any block shape from all containers can be placed on board. Game will go to rescue or gameover state upon returning false.
         /// </summary>
         void CheckAllShapesCanbePlaced()
@@ -299,7 +309,7 @@ namespace Hyperbyte.Tutorial
                 if (shapeContainer.blockShape != null)
                 {
                     bool shapeCanbePlaced = blockShapePlacementChecker.CheckShapeCanbePlaced(shapeContainer.blockShape);
-                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = (shapeCanbePlaced) ? 1F : 0.5F;
+                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanbePlaced ? 1F : 0.5F;
 
                     if (shapeCanbePlaced)
                     {
@@ -307,6 +317,7 @@ namespace Hyperbyte.Tutorial
                     }
                 }
             }
+
             return canAnyShapePlaced;
         }
 
@@ -323,14 +334,17 @@ namespace Hyperbyte.Tutorial
                 if (shapeContainer.blockShape != null)
                 {
                     bool isAdvanceShape = shapeContainer.blockShape.isAdvanceShape;
-                    allShapesInfo[shapeIndex] = new ShapeInfo(shapeContainer.blockShape.isAdvanceShape, shapeContainer.blockShape.name, shapeContainer.blockShape.transform.localEulerAngles.z);
+                    allShapesInfo[shapeIndex] = new ShapeInfo(shapeContainer.blockShape.isAdvanceShape,
+                        shapeContainer.blockShape.name, shapeContainer.blockShape.transform.localEulerAngles.z);
                 }
                 else
                 {
                     allShapesInfo[shapeIndex] = new ShapeInfo(false, null, 0);
                 }
+
                 shapeIndex++;
             }
+
             return allShapesInfo;
         }
 
@@ -351,7 +365,8 @@ namespace Hyperbyte.Tutorial
             ClearAllShapeContainers();
         }
 
-        void ClearAllShapeContainers() {
+        void ClearAllShapeContainers()
+        {
             foreach (ShapeContainer shapeContainer in allShapeContainers)
             {
                 shapeContainer.Reset();

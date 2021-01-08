@@ -12,18 +12,13 @@
 // THE SOFTWARE.
 
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
-using System;
 #if UNITY_IOS
 using UnityEngine.iOS;
 #endif
 
-namespace Hyperbyte.HapticFeedback
-{	
-	// Haptic feedback type.
+namespace Assets.Hyperbyte.Frameworks.HapticFeedback.Scripts
+{
+    // Haptic feedback type.
     public enum FeedbackType
     {
         LightImpact,
@@ -35,70 +30,72 @@ namespace Hyperbyte.HapticFeedback
         Failure,
     }
 
-	/// <summary>
-	/// This calss acts as plugin to generate Haptic feedback on iOS device. In turn it also uses Amplitude and vibrations to generate similar like 
-	/// Effect on android. iOS device above iOS 7 have dedicated haptic motor which will be utilized to generate haptic feedback. Please follow offical
-	/// Documentation to further enhance to effect.static
-	///
-	/// iOS Official Documentation : https://developer.apple.com/documentation/uikit/uifeedbackgenerator
-	/// Anndroid Official Documentation : https://developer.android.com/reference/android/os/VibrationEffect
-	/// 
-	/// iOS Unity Plugin Guide : https://docs.unity3d.com/Manual/PluginsForIOS.html
-	/// Unity Android Plugin Guide :  https://docs.unity3d.com/530/Documentation/Manual/PluginsForAndroid.html
-	/// 
-	/// NOTE : iOS 10 and above supports Haptic feedback while android sdk 26 and above supports amplitude with vibration.static
-	/// </summary>
-
+    /// <summary>
+    /// This calss acts as plugin to generate Haptic feedback on iOS device. In turn it also uses Amplitude and vibrations to generate similar like 
+    /// Effect on android. iOS device above iOS 7 have dedicated haptic motor which will be utilized to generate haptic feedback. Please follow offical
+    /// Documentation to further enhance to effect.static
+    ///
+    /// iOS Official Documentation : https://developer.apple.com/documentation/uikit/uifeedbackgenerator
+    /// Anndroid Official Documentation : https://developer.android.com/reference/android/os/VibrationEffect
+    /// 
+    /// iOS Unity Plugin Guide : https://docs.unity3d.com/Manual/PluginsForIOS.html
+    /// Unity Android Plugin Guide :  https://docs.unity3d.com/530/Documentation/Manual/PluginsForAndroid.html
+    /// 
+    /// NOTE : iOS 10 and above supports Haptic feedback while android sdk 26 and above supports amplitude with vibration.static
+    /// </summary>
     public static class HapticFeedbackGenerator
     {
         public static bool isHapticSupported = false;
 
-		/// <summary>
-		/// Generates to given haptic type.
-		/// </summary>
+        /// <summary>
+        /// Generates to given haptic type.
+        /// </summary>
         public static void Haptic(FeedbackType type, bool defaultToRegularVibrate = false)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			GenerateAndroidHapticFeedback(type,defaultToRegularVibrate);
-			#elif UNITY_IOS && !UNITY_EDITOR
+#elif UNITY_IOS && !UNITY_EDITOR
 			GenerateiOSHapticFeedback (type, defaultToRegularVibrate);
-			#endif
+#endif
         }
 
-		//=========================================== ANDROID SPECIFIC ===========================================//
+        //=========================================== ANDROID SPECIFIC ===========================================//
 
-		/// <summary>
-		/// Duration and implitude setting for various effect on android.
-		/// </summary>
-		#if UNITY_ANDROID && !UNITY_EDITOR
+        /// <summary>
+        /// Duration and implitude setting for various effect on android.
+        /// </summary>
+#if UNITY_ANDROID && !UNITY_EDITOR
 		private static int _sdkVersion = -1;
-		public 	static 	long	Duration_ImpactLight 			= 	20;
-		public 	static 	int 	Amplitude_ImpactLight 			= 	40;
-        private static 	long[] 	Pattern_ImpactLight 			= 	{ 0, Duration_ImpactLight };
-        private static 	int[] 	LightImpactPatternAmplitude 	= 	{ 0, Amplitude_ImpactLight };
+		public 	static 	long	Duration_ImpactLight = 20;
+		public 	static 	int 	Amplitude_ImpactLight = 40;
+        private static 	long[] 	Pattern_ImpactLight = { 0, Duration_ImpactLight };
+        private static 	int[] 	LightImpactPatternAmplitude = { 0, Amplitude_ImpactLight };
 
-		public	static	long 	Duration_MediumImpact 			= 	40;
-		public 	static 	int 	Amplitude_MediumImpact 			= 	120;
-        private static 	long[] 	Pattern_ImpactMedium 			= 	{ 0, Duration_MediumImpact };
-        private static 	int[] 	MediumImpactPatternAmplitude	=	{ 0, Amplitude_MediumImpact };
+		public	static	long 	Duration_MediumImpact = 40;
+		public 	static 	int 	Amplitude_MediumImpact = 120;
+        private static 	long[] 	Pattern_ImpactMedium = { 0, Duration_MediumImpact };
+        private static 	int[] 	MediumImpactPatternAmplitude = { 0, Amplitude_MediumImpact };
 
-		public 	static 	long 	Duration_HeavyImpact 			= 	80;
-		public 	static 	int 	Amplitude_HeavyImpact 			= 	255;
-        private static 	long[] 	Pattern_ImpactHeavy 			= 	{ 0, Duration_HeavyImpact };
-        private static 	int[] 	HeavyImpactPatternAmplitude 	= 	{ 0, Amplitude_HeavyImpact };
+		public 	static 	long 	Duration_HeavyImpact = 80;
+		public 	static 	int 	Amplitude_HeavyImpact = 255;
+        private static 	long[] 	Pattern_ImpactHeavy = { 0, Duration_HeavyImpact };
+        private static 	int[] 	HeavyImpactPatternAmplitude = { 0, Amplitude_HeavyImpact };
 		
-        private static 	long[] 	Pattern_Success 				= 	{ 0, Duration_ImpactLight, Duration_ImpactLight, Duration_HeavyImpact};
-		private static 	int[] 	SuccessPatternAmplitude 		= 	{ 0, Amplitude_ImpactLight, 0, Amplitude_HeavyImpact};
+        private static 	long[] 	Pattern_Success =
+ { 0, Duration_ImpactLight, Duration_ImpactLight, Duration_HeavyImpact};
+		private static 	int[] 	SuccessPatternAmplitude = { 0, Amplitude_ImpactLight, 0, Amplitude_HeavyImpact};
 
-		private static 	long[] 	Pattern_Warning 				= 	{ 0, Duration_HeavyImpact, Duration_ImpactLight, Duration_MediumImpact};
-		private static 	int[] 	WarningPatternAmplitude 		= 	{ 0, Amplitude_HeavyImpact, 0, Amplitude_MediumImpact};
+		private static 	long[] 	Pattern_Warning =
+ { 0, Duration_HeavyImpact, Duration_ImpactLight, Duration_MediumImpact};
+		private static 	int[] 	WarningPatternAmplitude = { 0, Amplitude_HeavyImpact, 0, Amplitude_MediumImpact};
 		
-		private static 	long[] 	Pattern_Failure 				= 	{ 0, Duration_MediumImpact, Duration_ImpactLight, Duration_MediumImpact, Duration_ImpactLight, Duration_HeavyImpact, Duration_ImpactLight, Duration_ImpactLight};
-		private static 	int[] 	FailurePatternAmplitude 		= 	{ 0, Amplitude_MediumImpact, 0, Amplitude_MediumImpact, 0, Amplitude_HeavyImpact, 0, Amplitude_ImpactLight};
-		#endif
+		private static 	long[] 	Pattern_Failure =
+ { 0, Duration_MediumImpact, Duration_ImpactLight, Duration_MediumImpact, Duration_ImpactLight, Duration_HeavyImpact, Duration_ImpactLight, Duration_ImpactLight};
+		private static 	int[] 	FailurePatternAmplitude =
+ { 0, Amplitude_MediumImpact, 0, Amplitude_MediumImpact, 0, Amplitude_HeavyImpact, 0, Amplitude_ImpactLight};
+#endif
 
-		#if UNITY_ANDROID && !UNITY_EDITOR
-		
+#if UNITY_ANDROID && !UNITY_EDITOR
 		// Instance of unity player class.
 		private static AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 		
@@ -106,7 +103,8 @@ namespace Hyperbyte.HapticFeedback
 		private static AndroidJavaObject CurrentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
 		// Get System service for vibration class.
-		private static AndroidJavaObject AndroidVibrator = CurrentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+		private static AndroidJavaObject AndroidVibrator =
+ CurrentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
 
 		// Vibration effect class.
 		private static AndroidJavaClass VibrationEffectClass;
@@ -117,29 +115,30 @@ namespace Hyperbyte.HapticFeedback
 		// Default amplitude amount.
 		private static int DefaultAmplitude;
 		
-		private static IntPtr AndroidVibrateMethodRawClass = AndroidJNIHelper.GetMethodID(AndroidVibrator.GetRawClass(), "vibrate", "(J)V", false);
+		private static IntPtr AndroidVibrateMethodRawClass =
+ AndroidJNIHelper.GetMethodID(AndroidVibrator.GetRawClass(), "vibrate", "(J)V", false);
 		private static jvalue[] AndroidVibrateMethodRawClassParameters = new jvalue[1];
-		#endif
+#endif
 
-		/// <summary>
-		/// Initialize vibration effect class.
-		/// </summary>
+        /// <summary>
+        /// Initialize vibration effect class.
+        /// </summary>
         private static void VibrationEffectClassInitialization()
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			if (VibrationEffectClass == null)
             {
                 VibrationEffectClass = new AndroidJavaClass ("android.os.VibrationEffect");
-            }	
-			#endif
+            }
+#endif
         }
 
-		/// <summary>
-		/// Generates the given feedack type.
-		/// </summary>
-		public static void GenerateAndroidHapticFeedback(FeedbackType type, bool defaultToRegularVibrate = false)
+        /// <summary>
+        /// Generates the given feedack type.
+        /// </summary>
+        public static void GenerateAndroidHapticFeedback(FeedbackType type, bool defaultToRegularVibrate = false)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			switch (type)
 			{
 				// Light Impact.
@@ -177,26 +176,26 @@ namespace Hyperbyte.HapticFeedback
 					AndroidVibrate(Pattern_Failure, FailurePatternAmplitude, -1);
 					break;
 			}
-			#endif
+#endif
         }
 
-		/// <summary>
-		///	Will be called if android device does not support amplitude.
-		/// </summary>
+        /// <summary>
+        ///	Will be called if android device does not support amplitude.
+        /// </summary>
         public static void AndroidVibrate(long milliseconds)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             AndroidVibrateMethodRawClassParameters[0].j = milliseconds;
             AndroidJNI.CallVoidMethod(AndroidVibrator.GetRawObject(), AndroidVibrateMethodRawClass, AndroidVibrateMethodRawClassParameters);
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Android vibrate with ampitude.
-		/// </summary>
+        /// <summary>
+        /// Android vibrate with ampitude.
+        /// </summary>
         public static void AndroidVibrate(long milliseconds, int amplitude)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			if ((_sdkVersion < 26)) 
 			{ 
 				AndroidVibrate (milliseconds); 
@@ -204,18 +203,19 @@ namespace Hyperbyte.HapticFeedback
 			else
 			{
 				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createOneShot", new object[] { milliseconds,	amplitude });
+				VibrationEffect =
+ VibrationEffectClass.CallStatic<AndroidJavaObject> ("createOneShot", new object[] { milliseconds,	amplitude });
                 AndroidVibrator.Call ("vibrate", VibrationEffect);
 			}
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Android vibrate with pattern and ampitude.
-		/// </summary>
+        /// <summary>
+        /// Android vibrate with pattern and ampitude.
+        /// </summary>
         public static void AndroidVibrate(long[] pattern, int repeat)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			if ((_sdkVersion < 26))
 			{ 
 				AndroidVibrator.Call ("vibrate", pattern, repeat);
@@ -223,18 +223,19 @@ namespace Hyperbyte.HapticFeedback
 			else
 			{
 				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	repeat });
+				VibrationEffect =
+ VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	repeat });
                 AndroidVibrator.Call ("vibrate", VibrationEffect);
             }
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Android vibrate with pattern and ampitude.
-		/// </summary>
+        /// <summary>
+        /// Android vibrate with pattern and ampitude.
+        /// </summary>
         public static void AndroidVibrate(long[] pattern, int[] amplitudes, int repeat)
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			if ((_sdkVersion < 26))
 			{ 
 				AndroidVibrator.Call ("vibrate", pattern, repeat);
@@ -242,28 +243,28 @@ namespace Hyperbyte.HapticFeedback
 			else
 			{
 				VibrationEffectClassInitialization ();
-				VibrationEffect = VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	amplitudes, repeat });
+				VibrationEffect =
+ VibrationEffectClass.CallStatic<AndroidJavaObject> ("createWaveform", new object[] { pattern,	amplitudes, repeat });
 				AndroidVibrator.Call ("vibrate", VibrationEffect);
 			}
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Cancel vibration effect.
-		/// </summary>
+        /// <summary>
+        /// Cancel vibration effect.
+        /// </summary>
         public static void AndroidCancelVibrations()
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 			AndroidVibrator.Call("cancel");
-			#endif
+#endif
         }
 
-		//========================================= END ANDROID SPECIFIC =========================================//
+        //========================================= END ANDROID SPECIFIC =========================================//
 
-		//============================================= IOS SPECIFIC =============================================//
+        //============================================= IOS SPECIFIC =============================================//
 
-		#if UNITY_IOS && !UNITY_EDITOR
-		
+#if UNITY_IOS && !UNITY_EDITOR
 		[DllImport ("__Internal")]
 		private static extern void InitHapticFeedback();
 
@@ -290,57 +291,84 @@ namespace Hyperbyte.HapticFeedback
 		
 		[DllImport ("__Internal")]
 		private static extern void FailureHaptic();
-		
-		#else
 
-        private static void InitHapticFeedback() { }
-        private static void ReleaseHapticFeedback() { }
-        private static void LightImpactHaptic() { }
-        private static void MediumImpactHaptic() { }
-        private static void HeavyImpactHaptic() { }
-        private static void SelectionHaptic() { }
-        private static void SuccessHaptic() { }
-        private static void WarningHaptic() { }
-        private static void FailureHaptic() { }
+#else
 
-		#endif
+        private static void InitHapticFeedback()
+        {
+        }
 
-		#if UNITY_IOS && !UNITY_EDITOR
+        private static void ReleaseHapticFeedback()
+        {
+        }
+
+        private static void LightImpactHaptic()
+        {
+        }
+
+        private static void MediumImpactHaptic()
+        {
+        }
+
+        private static void HeavyImpactHaptic()
+        {
+        }
+
+        private static void SelectionHaptic()
+        {
+        }
+
+        private static void SuccessHaptic()
+        {
+        }
+
+        private static void WarningHaptic()
+        {
+        }
+
+        private static void FailureHaptic()
+        {
+        }
+
+#endif
+
+#if UNITY_IOS && !UNITY_EDITOR
         private static bool iOSHapticsInitialized = false;
-        #endif
+#endif
 
-		/// <summary>
-		/// Initialized Haptic feedback generator.
-		/// </summary>
+        /// <summary>
+        /// Initialized Haptic feedback generator.
+        /// </summary>
         public static void InitHapticFeedbackGenerator()
         {
-			#if UNITY_ANDROID && !UNITY_EDITOR
-			_sdkVersion = int.Parse (SystemInfo.operatingSystem.Substring(SystemInfo.operatingSystem.IndexOf("-") + 1, 3));
-			#elif UNITY_IOS && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
+			_sdkVersion =
+ int.Parse (SystemInfo.operatingSystem.Substring(SystemInfo.operatingSystem.IndexOf("-") + 1, 3));
+#elif UNITY_IOS && !UNITY_EDITOR
 			InitHapticFeedback ();
 			iOSHapticsInitialized = true;
 			isHapticSupported = HapticsSupported();
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Releases Haptic feedback generator.
-		/// </summary>
+        /// <summary>
+        /// Releases Haptic feedback generator.
+        /// </summary>
         public static void ReleaseHapticFeedbackGenerator()
         {
-			#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 			ReleaseHapticFeedback ();
-			#endif
+#endif
         }
 
-		/// <summary>
-		/// Returns if haptic is supported or not. Not the best approach but this works.static :D
-		/// </summary>
-		/// <returns></returns>
+        /// <summary>
+        /// Returns if haptic is supported or not. Not the best approach but this works.static :D
+        /// </summary>
+        /// <returns></returns>
         public static bool HapticsSupported()
         {
             bool hapticsSupported = false;
-			#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 			DeviceGeneration generation = Device.generation;
 			if (
 				(generation == DeviceGeneration.iPhoneUnknown)	||	(generation == DeviceGeneration.iPhone3G)			||	(generation == DeviceGeneration.iPhone3GS)			||
@@ -364,19 +392,18 @@ namespace Hyperbyte.HapticFeedback
 			{
 			    hapticsSupported = true;
 			}
-			#endif
+#endif
             return hapticsSupported;
         }
 
-		/// <summary>
-		/// Generates Haptic feedback impact of given type.
-		/// </summary>
-		/// <param name="type"></param>
-		/// <param name="defaultToRegularVibrate"></param>
+        /// <summary>
+        /// Generates Haptic feedback impact of given type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="defaultToRegularVibrate"></param>
         public static void GenerateiOSHapticFeedback(FeedbackType type, bool defaultToRegularVibrate = false)
         {
-			#if UNITY_IOS && !UNITY_EDITOR
-
+#if UNITY_IOS && !UNITY_EDITOR
 			if (!iOSHapticsInitialized)
 			{
 				InitHapticFeedbackGenerator ();
@@ -426,22 +453,23 @@ namespace Hyperbyte.HapticFeedback
 			{
 				Handheld.Vibrate();
 			}
-			#endif
+#endif
         }
 
 
-		/// <summary>
-		/// Returns iOS SDK Version.
-		/// </summary>
-		/// <returns></returns>
+        /// <summary>
+        /// Returns iOS SDK Version.
+        /// </summary>
+        /// <returns></returns>
         public static string iOSSDKVersion()
         {
-			#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 			return Device.systemVersion;
-			#else
+#else
             return null;
-			#endif
+#endif
         }
-		//=========================================== END IOS SPECIFIC ===========================================//
+
+        //=========================================== END IOS SPECIFIC ===========================================//
     }
 }

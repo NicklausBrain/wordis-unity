@@ -12,12 +12,15 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
     /// This script compont is attached to all the block shape on the game. This script will handles the actual game play and user interaction with the game.
@@ -25,13 +28,13 @@ namespace Hyperbyte
     /// </summary>
     public class BlockShape : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         //Row size of block shape grid.
         [SerializeField] int rowSize;
 
         //Column size of block shape grid.
         [SerializeField] int columnSize;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         // List of all blocks that are being highlighted. Will keep updating runtime.
         List<Block> highlightingBlocks = new List<Block>();
@@ -104,7 +107,7 @@ namespace Hyperbyte
 
             int index = 0;
 
-            float blockRotation = (360.0F - transform.localEulerAngles.z);
+            float blockRotation = 360.0F - transform.localEulerAngles.z;
 
             for (int row = 0; row < rowSize; row++)
             {
@@ -113,19 +116,21 @@ namespace Hyperbyte
                     // Sets the position and  size on block inside block shape.
                     RectTransform blockElement = GetBlockInsideGrid(index);
                     blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
-                    blockElement.localEulerAngles = new Vector3(0,0,blockRotation);
-                    
-                    currentPositionX += (blockSize + blockSpace);
+                    blockElement.localEulerAngles = new Vector3(0, 0, blockRotation);
+
+                    currentPositionX += blockSize + blockSpace;
                     blockElement.sizeDelta = Vector3.one * blockSize;
 
                     if (doUpdateSprite)
                     {
                         blockElement.GetComponent<Image>().sprite = thisBlockSprite;
                     }
+
                     index++;
                 }
+
                 currentPositionX = startPointX;
-                currentPositionY -= (blockSize + blockSpace);
+                currentPositionY -= blockSize + blockSpace;
             }
 
             // Will add all the actibve blocks to list that will be used during gameplay.
@@ -147,6 +152,7 @@ namespace Hyperbyte
         }
 
         #region Input Handling
+
         /// <summary>
         /// Pointer down on block shape.
         /// </summary>
@@ -165,13 +171,14 @@ namespace Hyperbyte
                     {
                         UIFeedback.Instance.PlayBlockShapePickEffect();
                         thisTransform.LocalScale(Vector3.one, 0.05F);
-                        thisTransform.Position(new Vector3(pos.x, (pos.y + dragOffset), 0), 0.05F);
+                        thisTransform.Position(new Vector3(pos.x, pos.y + dragOffset, 0), 0.05F);
                     }
                     else
                     {
                         thisTransform.localScale = Vector3.one;
                         pointerDownTime = Time.time;
                     }
+
                     // Shape can be dragged now.
                     shouldDrag = true;
                 }
@@ -189,7 +196,7 @@ namespace Hyperbyte
                 Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
                 pos.z = transform.localPosition.z;
                 thisTransform.localScale = Vector3.one;
-                thisTransform.position = new Vector3(pos.x, (pos.y + dragOffset), 0);
+                thisTransform.position = new Vector3(pos.x, pos.y + dragOffset, 0);
             }
         }
 
@@ -230,7 +237,7 @@ namespace Hyperbyte
         void CheckForShapeRotation()
         {
             float pointerUpTime = Time.time;
-            bool isRotationDetected = ((pointerUpTime - pointerDownTime) < 0.3F);
+            bool isRotationDetected = pointerUpTime - pointerDownTime < 0.3F;
 
             if (isRotationDetected)
             {
@@ -250,30 +257,33 @@ namespace Hyperbyte
             if (shouldDrag)
             {
                 Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
-                pos = new Vector3(pos.x, (pos.y + dragOffset), 0F);
+                pos = new Vector3(pos.x, pos.y + dragOffset, 0F);
                 thisTransform.position = pos;
                 CheckCanPlaceShape();
             }
         }
+
         #endregion
-        
-        
+
+
         /// <summary>
         // Returns the horizontal starting point from where grid should start.
         /// </summary>
         public float GetStartPointX(float blockSize, int rowSize)
         {
-            float totalWidth = (blockSize * rowSize) + ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
-            return -((totalWidth / 2) - (blockSize / 2));
+            float totalWidth = blockSize * rowSize +
+                               (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return -(totalWidth / 2 - blockSize / 2);
         }
 
         /// <summary>
         // Returns the vertical starting point from where grid should start.
-         /// </summary>
+        /// </summary>
         public float GetStartPointY(float blockSize, int columnSize)
         {
-            float totalHeight = (blockSize * columnSize) + ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
-            return ((totalHeight / 2) - (blockSize / 2));
+            float totalHeight = blockSize * columnSize +
+                                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return totalHeight / 2 - blockSize / 2;
         }
 
         /// <summary>
@@ -302,6 +312,7 @@ namespace Hyperbyte
                     GamePlay.Instance.StopHighlight();
                     return false;
                 }
+
                 hittingBlocks.Add(hittingBlock);
 
                 // Row Id of block which is interacting with block shape will be added to list. Used to highlight lines that can be completed by placing block shape at current position.
@@ -329,6 +340,7 @@ namespace Hyperbyte
                     {
                         block.Highlight(thisBlockSprite);
                     }
+
                     GamePlay.Instance.HighlightAllRows(hittingRows, thisBlockSprite);
                     GamePlay.Instance.HighlightAllColmns(hittingColumns, thisBlockSprite);
 
@@ -343,6 +355,7 @@ namespace Hyperbyte
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -364,6 +377,7 @@ namespace Hyperbyte
                     GamePlay.Instance.StopHighlight();
                     return false;
                 }
+
                 hittingBlocks.Add(hittingBlock);
 
                 // Row id of block will be added to list if entire row is goint to finish on placing current shape.
@@ -404,24 +418,31 @@ namespace Hyperbyte
                         GamePlay.Instance.ClearColumns(completedColumns);
                     }
 
-                    int linesCleared = (completedRows.Count + completedColumns.Count);
+                    int linesCleared = completedRows.Count + completedColumns.Count;
                     // Adds score based on the number of rows, columnd and blocks cleares. final calculation will be done in score manager.
                     GamePlayUI.Instance.scoreManager.AddScore(linesCleared, activeBlocks.Count);
 
-                    if(linesCleared > 0) {
+                    if (linesCleared > 0)
+                    {
                         AudioController.Instance.PlayLineBreakSound(completedRows.Count + completedColumns.Count);
                     }
 
                     #region TimeMode Specific
+
                     if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
                     {
                         // Will add line completion bonus time to timer.
-                        GamePlayUI.Instance.timeModeProgresssBar.AddTime((GamePlayUI.Instance.timeModeAddSecondsOnLineBreak * (completedRows.Count + completedColumns.Count)));
+                        GamePlayUI.Instance.timeModeProgresssBar.AddTime(
+                            GamePlayUI.Instance.timeModeAddSecondsOnLineBreak *
+                            (completedRows.Count + completedColumns.Count));
                     }
+
                     #endregion
+
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -435,6 +456,7 @@ namespace Hyperbyte
             {
                 return hit.collider.GetComponent<Block>();
             }
+
             return null;
         }
 
@@ -450,6 +472,7 @@ namespace Hyperbyte
                     b.Reset();
                 }
             }
+
             highlightingBlocks.Clear();
         }
 
@@ -462,6 +485,7 @@ namespace Hyperbyte
             {
                 b.Reset();
             }
+
             highlightingBlocks.Clear();
         }
 
@@ -471,7 +495,7 @@ namespace Hyperbyte
         void ResetShape()
         {
             thisTransform.LocalPosition(Vector3.zero, 0.25F);
-            thisTransform.LocalScale((Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize), 0.25F);
+            thisTransform.LocalScale(Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize, 0.25F);
         }
 
         /// <summary>
@@ -479,11 +503,9 @@ namespace Hyperbyte
         /// </summary>
         void ResetShapeWithAddRotation()
         {
-            float newRotation = (transform.localEulerAngles.z - 90);
+            float newRotation = transform.localEulerAngles.z - 90;
             InputManager.Instance.DisableTouchForDelay(0.2F);
-            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(() => {
-                ResetShape();
-            });
+            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(() => { ResetShape(); });
         }
     }
 }

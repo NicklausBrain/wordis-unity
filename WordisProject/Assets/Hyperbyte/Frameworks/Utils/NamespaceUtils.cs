@@ -14,7 +14,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
     /// <summary>
     /// This namespace utils works to detect the given namespace exists in the project or not.
@@ -24,7 +24,6 @@ namespace Hyperbyte.Utils
         /// <summary>
         /// Checks if given namespace exists or not.
         /// </summary>
-        
         public static bool CheckNamespacesExists(string requiredNameSpace)
         {
             HashSet<string> existingIdentifiers = new HashSet<string>();
@@ -43,7 +42,8 @@ namespace Hyperbyte.Utils
                     existingIdentifiers.Add(typeNamespace);
                 }
             }
-            return (existingIdentifiers.Contains(requiredNameSpace));
+
+            return existingIdentifiers.Contains(requiredNameSpace);
         }
 
 
@@ -52,7 +52,7 @@ namespace Hyperbyte.Utils
         /// </summary>
         public static void PrintAllNameSpaces()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             HashSet<string> existingIdentifiers = new HashSet<string>();
             System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
 
@@ -72,7 +72,7 @@ namespace Hyperbyte.Utils
                     Debug.Log(typeNamespace);
                 }
             }
-            #endif
+#endif
         }
     }
 
@@ -84,9 +84,9 @@ namespace Hyperbyte.Utils
 
         public SDKInfo(string _sdkName, string _sdkNameSpace, string _sdkScriptingDefineSymbol)
         {
-            this.sdkName = _sdkName;
-            this.sdkNameSpace = _sdkNameSpace;
-            this.sdkScriptingDefineSymbol = _sdkScriptingDefineSymbol;
+            sdkName = _sdkName;
+            sdkNameSpace = _sdkNameSpace;
+            sdkScriptingDefineSymbol = _sdkScriptingDefineSymbol;
         }
     }
 }

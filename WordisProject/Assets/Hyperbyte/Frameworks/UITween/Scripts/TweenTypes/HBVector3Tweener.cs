@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 {
     /// <summary>
     /// Vector 3 Type Tweener
@@ -27,8 +28,9 @@ namespace Hyperbyte.UITween
         // Returns Interpolation for the given ease type.
         public override object GetValue(float t)
         {
-            return new Vector3(Mathf.LerpUnclamped(fromValue.x, toValue.x, t), Mathf.LerpUnclamped(fromValue.y, toValue.y, t), Mathf.LerpUnclamped(fromValue.z, toValue.z, t));
-        }       
+            return new Vector3(Mathf.LerpUnclamped(fromValue.x, toValue.x, t),
+                Mathf.LerpUnclamped(fromValue.y, toValue.y, t), Mathf.LerpUnclamped(fromValue.z, toValue.z, t));
+        }
 
         // Start Tween after given delay.
         public HBVector3Tweener SetDelay(float _delay)
@@ -50,10 +52,11 @@ namespace Hyperbyte.UITween
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if (_loopType == LoopType.PingPong && (_loopCount > 1))
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
             {
-                loopCount = (_loopCount * 2);
+                loopCount = _loopCount * 2;
             }
+
             return this;
         }
 
@@ -82,8 +85,8 @@ namespace Hyperbyte.UITween
         // Set values to object property.
         public override void SetValues(object _fromValue, object _toValue)
         {
-            fromValue = ((Vector3)_fromValue);
-            toValue = ((Vector3)_toValue);
+            fromValue = (Vector3) _fromValue;
+            toValue = (Vector3) _toValue;
         }
 
         public override object GetStartPoint()

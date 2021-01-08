@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks._Common.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Editor
 {
     [CustomEditor(typeof(GamePlaySettings))]
     public class GamePlaySettingsEditor : CustomInspectorHelper

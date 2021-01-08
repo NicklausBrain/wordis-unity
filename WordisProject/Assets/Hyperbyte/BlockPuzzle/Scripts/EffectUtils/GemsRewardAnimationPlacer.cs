@@ -11,17 +11,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils
 {
     public class GemsRewardAnimationPlacer : MonoBehaviour
     {
         RewardAddAnimation rewardAddAnimation;
-        
-        #pragma warning disable 0649
+
+#pragma warning disable 0649
         [SerializeField] float animationDelay;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -29,13 +31,13 @@ namespace Hyperbyte
         private void OnEnable()
         {
             InputManager.Instance.DisableTouchForDelay(1F);
-            GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation")) as GameObject;
+            GameObject rewardAnim = (GameObject) Instantiate(Resources.Load("RewardAnimation")) as GameObject;
             rewardAnim.transform.SetParent(transform);
             rewardAnim.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
             rewardAnim.transform.localScale = Vector3.one;
             rewardAddAnimation = rewardAnim.GetComponent<RewardAddAnimation>();
 
-            Invoke("ShowAddRewardAnimation", (animationDelay +  0.2F));
+            Invoke("ShowAddRewardAnimation", animationDelay + 0.2F);
         }
 
         /// <summary>
@@ -51,8 +53,7 @@ namespace Hyperbyte
 
         void ShowAddRewardAnimation()
         {
-            rewardAddAnimation.PlayGemsBalanceUpdateAnimation(UIController.Instance.ShopButtonGemsIcon.position,0);
-            
+            rewardAddAnimation.PlayGemsBalanceUpdateAnimation(UIController.Instance.ShopButtonGemsIcon.position, 0);
         }
     }
 }

@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 {
     /// <summary>
     /// Vector 2 Type Tweener
@@ -27,7 +28,8 @@ namespace Hyperbyte.UITween
         // Returns Interpolation for the given ease type.
         public override object GetValue(float t)
         {
-            return new Vector2(Mathf.LerpUnclamped(fromValue.x, toValue.x, t), Mathf.LerpUnclamped(fromValue.y, toValue.y, t));
+            return new Vector2(Mathf.LerpUnclamped(fromValue.x, toValue.x, t),
+                Mathf.LerpUnclamped(fromValue.y, toValue.y, t));
         }
 
         // Start Tween after given delay.
@@ -35,7 +37,7 @@ namespace Hyperbyte.UITween
         {
             delay = _delay;
             return this;
-        }   
+        }
 
         // Set given ease type for the tween.
         public HBVector2Tweener SetEase(Ease ease)
@@ -50,10 +52,11 @@ namespace Hyperbyte.UITween
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if (_loopType == LoopType.PingPong && (_loopCount > 1))
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
             {
-                _loopCount = (_loopCount * 2);
+                _loopCount = _loopCount * 2;
             }
+
             return this;
         }
 
@@ -82,8 +85,8 @@ namespace Hyperbyte.UITween
         // Set values to object property.
         public override void SetValues(object _fromValue, object _toValue)
         {
-            fromValue = ((Vector2)_fromValue);
-            toValue = ((Vector2)_toValue);
+            fromValue = (Vector2) _fromValue;
+            toValue = (Vector2) _toValue;
         }
 
         public override object GetStartPoint()

@@ -11,12 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using UnityEngine;
 using System;
+using System.Collections;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
-{    
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
+{
     /// <summary>
     /// Sprite Tween.
     /// </summary>
@@ -38,10 +39,10 @@ namespace Hyperbyte.UITween
 
         bool isPlaying = false;
         bool isPaused = false;
-        
+
         float elapsedTime = 0;
         float duration = 1F;
-        
+
         int elapsedLoop = 0;
 
         AnimationCurve linearAnimationCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
@@ -55,51 +56,61 @@ namespace Hyperbyte.UITween
         }
 
         // Start Tween after given delay.
-        public HBSpriteAlpha SetDelay(float _delay) {
+        public HBSpriteAlpha SetDelay(float _delay)
+        {
             delay = _delay;
             return this;
-        } 
+        }
 
         // Set given ease type for the tween.
-        public HBSpriteAlpha SetEase(Ease ease) {
+        public HBSpriteAlpha SetEase(Ease ease)
+        {
             easeType = ease;
             return this;
         }
 
         // Set given loop type for the tween.
-        public HBSpriteAlpha SetLoop(int _loopCount, LoopType _loopType = LoopType.PingPong) {
+        public HBSpriteAlpha SetLoop(int _loopCount, LoopType _loopType = LoopType.PingPong)
+        {
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if(_loopType == LoopType.PingPong && (_loopCount > 1)) {
-                _loopCount = (_loopCount * 2);
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
+            {
+                _loopCount = _loopCount * 2;
             }
+
             return this;
         }
 
         // Set given animation curve for the tween.
-        public HBSpriteAlpha SetAnimation(AnimationCurve curve) {
+        public HBSpriteAlpha SetAnimation(AnimationCurve curve)
+        {
             easeType = Ease.Custom;
             animationCurve = curve;
             return this;
         }
 
         // Invokes Tween complete event callback.
-        public HBSpriteAlpha OnComplete(Action onComplete){
+        public HBSpriteAlpha OnComplete(Action onComplete)
+        {
             OnCompleteDeletegate = onComplete;
             return this;
         }
 
         // Invokes Tween loop complete event callback.
-        public HBSpriteAlpha OnLoopComplete(Action<int> onLoopComplete){
+        public HBSpriteAlpha OnLoopComplete(Action<int> onLoopComplete)
+        {
             OnLoopCompleteDelegate = onLoopComplete;
             return this;
         }
 
         // Destroy on tween completion.
-        IEnumerator DestroyThis() {
+        IEnumerator DestroyThis()
+        {
             yield return new WaitForEndOfFrame();
-            if(gameObject != null && this != null) {
+            if (gameObject != null && this != null)
+            {
                 Destroy(this);
             }
         }
@@ -107,43 +118,51 @@ namespace Hyperbyte.UITween
         // Returns interpolation for the given time.
         public float GetLerpT(float time)
         {
-            float timeValue = (time > duration) ? duration : time;
-            float t = (duration == 0) ? 1 : timeValue / duration;
+            float timeValue = time > duration ? duration : time;
+            float t = duration == 0 ? 1 : timeValue / duration;
 
-            switch(easeType) {
+            switch (easeType)
+            {
                 case Ease.Linear:
-                t = linearAnimationCurve.Evaluate(t);
-                break;
+                    t = linearAnimationCurve.Evaluate(t);
+                    break;
                 case Ease.EaseIn:
-                t = HBTweenUtility.EaseIn(t);
-                break;
+                    t = HBTweenUtility.EaseIn(t);
+                    break;
                 case Ease.EaseOut:
-                 t = HBTweenUtility.EaseOut(t);
-                break;
+                    t = HBTweenUtility.EaseOut(t);
+                    break;
                 case Ease.Custom:
-                t = animationCurve.Evaluate(t);
-                break;
+                    t = animationCurve.Evaluate(t);
+                    break;
             }
+
             return t;
         }
 
         // Starts Tween.
-        public void Play() {
+        public void Play()
+        {
             StartCoroutine(PlayAfterSkipFrame());
         }
 
         // Starts Tween after skipping first frame.
-        IEnumerator PlayAfterSkipFrame() {
+        IEnumerator PlayAfterSkipFrame()
+        {
             yield return new WaitForEndOfFrame();
-            if(delay <= 0) {
+            if (delay <= 0)
+            {
                 isPlaying = true;
-            } else {
-                Invoke("PlayAfterDelay",delay);
+            }
+            else
+            {
+                Invoke("PlayAfterDelay", delay);
             }
         }
 
         // Starts Tween after given delay.
-        public void PlayAfterDelay() {
+        public void PlayAfterDelay()
+        {
             isPlaying = true;
         }
 
@@ -160,33 +179,35 @@ namespace Hyperbyte.UITween
                     isPlaying = false;
 
                     elapsedLoop += 1;
-                    
-                    if((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)  
+
+                    if (loopCount > 1 && elapsedLoop < loopCount || loopCount < 0)
                     {
-                        switch(loopType) {
+                        switch (loopType)
+                        {
                             case LoopType.Loop:
-                            SetTweenParams(fromValue, toValue);
+                                SetTweenParams(fromValue, toValue);
 
-                            if(OnLoopCompleteDelegate != null) {
-                              OnLoopCompleteDelegate.Invoke(elapsedLoop);
-                            }
-                            break;
+                                OnLoopCompleteDelegate?.Invoke(elapsedLoop);
+
+                                break;
                             case LoopType.PingPong:
-                            SetTweenParams(toValue, fromValue);
+                                SetTweenParams(toValue, fromValue);
 
-                            if(elapsedLoop % 2 == 0) {
-                                if(OnLoopCompleteDelegate != null) {
-                                    OnLoopCompleteDelegate.Invoke((elapsedLoop /2));
+                                if (elapsedLoop % 2 == 0)
+                                {
+                                    OnLoopCompleteDelegate?.Invoke(elapsedLoop / 2);
                                 }
-                            }
-                            break;
+
+                                break;
                         }
+
                         PlayAfterDelay();
                         elapsedTime = 0;
-                    } else {
-                        if(OnCompleteDeletegate != null) {
-                            OnCompleteDeletegate.Invoke(); 
-                        }
+                    }
+                    else
+                    {
+                        OnCompleteDeletegate?.Invoke();
+
                         StartCoroutine(DestroyThis());
                     }
                 }
@@ -196,8 +217,8 @@ namespace Hyperbyte.UITween
         // Keep updating animation on each frame.
         private void UpdateAnimation(float time)
         {
-            float	t	= GetLerpT(time);
-            float	val	= GetValue(t);
+            float t = GetLerpT(time);
+            float val = GetValue(t);
 
             SetValue(val);
         }
@@ -205,11 +226,11 @@ namespace Hyperbyte.UITween
         // Set values to object property.
         private void SetValue(float val)
         {
-            thisImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b,  val);
+            thisImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, val);
         }
 
         // Set values of tween param.
-        public void SetTweenParams(AnimationType _animationType, float _fromValue, float _toValue, float _duration ) 
+        public void SetTweenParams(AnimationType _animationType, float _fromValue, float _toValue, float _duration)
         {
             thisImage = GetComponent<SpriteRenderer>();
             defaultColor = thisImage.color;
@@ -223,19 +244,21 @@ namespace Hyperbyte.UITween
         }
 
         // Set values of tween param.
-        public void SetTweenParams(float _fromValue, float _toValue) 
+        public void SetTweenParams(float _fromValue, float _toValue)
         {
             fromValue = _fromValue;
             toValue = _toValue;
         }
 
         // Pauses Tween.
-        public void Pause() {
+        public void Pause()
+        {
             isPaused = true;
         }
 
-         // Resumes tween.
-        public void Resume() {
+        // Resumes tween.
+        public void Resume()
+        {
             isPaused = false;
         }
     }

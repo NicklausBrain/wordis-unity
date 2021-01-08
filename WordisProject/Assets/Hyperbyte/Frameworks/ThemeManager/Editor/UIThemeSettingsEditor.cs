@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using UnityEditor;
 using System.IO;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
 {
     [CustomEditor(typeof(UIThemeSettings))]
     public class UIThemeSettingsEditor : CustomInspectorHelper
@@ -38,12 +40,16 @@ namespace Hyperbyte
                 uiThemeSettings = (UIThemeSettings)target;
                 allThemeSettings = serializedObject.FindProperty("allThemeConfigs");
 
-                labelStyle = new GUIStyle(GUI.skin.label);
-                labelStyle.fontStyle = FontStyle.Bold;
+                labelStyle = new GUIStyle(GUI.skin.label)
+                {
+                    fontStyle = FontStyle.Bold,
+                };
 
-                inputStyle = new GUIStyle(GUI.skin.textField);
-                inputStyle.fontStyle = FontStyle.Bold;
-                inputStyle.alignment = TextAnchor.MiddleCenter;
+                inputStyle = new GUIStyle(GUI.skin.textField)
+                {
+                    fontStyle = FontStyle.Bold,
+                    alignment = TextAnchor.MiddleCenter,
+                };
                 RefreshAllThemes();
                 cache = true;
             }
@@ -155,23 +161,24 @@ namespace Hyperbyte
                                 EditorGUILayout.BeginHorizontal();
                                 EditorGUILayout.LabelField("Default State : ", labelStyle, GUILayout.MaxWidth(100));
                                 EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
-                                defaultStatus.intValue = EditorGUILayout.Popup (defaultStatus.intValue, new string[]{"LOCKED", "UNLOCKED"}, GUILayout.Width(150));
+                                defaultStatus.intValue = EditorGUILayout.Popup(defaultStatus.intValue, new string[] { "LOCKED", "UNLOCKED" }, GUILayout.Width(150));
                                 EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
                                 EditorGUILayout.EndHorizontal();
 
-                                if(defaultStatus.intValue == 0) {
+                                if (defaultStatus.intValue == 0)
+                                {
                                     SerializedProperty unlockCost = list.GetArrayElementAtIndex(i).FindPropertyRelative("unlockCost");
                                     EditorGUILayout.BeginHorizontal();
                                     EditorGUILayout.LabelField("Unlock Cost (GEMS) : ", labelStyle, GUILayout.MaxWidth(150));
                                     EditorGUILayout.LabelField("", labelStyle, GUILayout.MinWidth(0));
-                                    unlockCost.intValue = EditorGUILayout.IntField (unlockCost.intValue, inputStyle, GUILayout.Width(150));
+                                    unlockCost.intValue = EditorGUILayout.IntField(unlockCost.intValue, inputStyle, GUILayout.Width(150));
                                     EditorGUILayout.LabelField("", labelStyle, GUILayout.Width(5));
                                     EditorGUILayout.EndHorizontal();
                                 }
-                                
+
                             }
 
-                        
+
                             DrawLine();
                             GUI.backgroundColor = Color.grey;
                             GUIStyle style = new GUIStyle(GUI.skin.button);
@@ -184,7 +191,7 @@ namespace Hyperbyte
                                 EditorGUIUtility.PingObject(uiTheme.objectReferenceValue);
                                 EditorUtility.FocusProjectWindow();
                             }
-                        
+
                             GUI.backgroundColor = Color.white;
 
                             EditorGUILayout.EndVertical();
@@ -241,31 +248,31 @@ namespace Hyperbyte
 
         void CreateNewTheme()
         {
-            string assetPath = "Assets/Hyperbyte/Resources/UIThemes";
-            string folderPath = Application.dataPath + "/" + "Hyperbyte/Resources/UIThemes";
+            string assetPath = $"Assets/{nameof(Hyperbyte)}/Resources/UIThemes";
+            string folderPath = $"{Application.dataPath}/{nameof(Hyperbyte)}/Resources/UIThemes";
 
             int existingThemes = new DirectoryInfo(folderPath).GetFiles("*.asset").Length;
-            string assetName = "Theme-" + existingThemes + ".asset";
+            string assetName = $"Theme-{existingThemes}.asset";
 
             UITheme asset;
 
-            if (!System.IO.Directory.Exists(assetPath))
+            if (!Directory.Exists(assetPath))
             {
-                System.IO.Directory.CreateDirectory(assetPath);
+                Directory.CreateDirectory(assetPath);
             }
 
-            if (System.IO.File.Exists(assetPath + "/" + assetName))
+            if (File.Exists($"{assetPath}/{assetName}"))
             {
-                asset = (UITheme)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (UITheme)Resources.Load(Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {
-                asset = ScriptableObject.CreateInstance<UITheme>();
-                AssetDatabase.CreateAsset(asset, assetPath + "/" + assetName);
+                asset = CreateInstance<UITheme>();
+                AssetDatabase.CreateAsset(asset, $"{assetPath}/{assetName}");
                 AssetDatabase.SaveAssets();
             }
 
-            UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(assetPath + "/" + assetName, typeof(UnityEngine.Object));
+            Object obj = AssetDatabase.LoadAssetAtPath($"{assetPath}/{assetName}", typeof(Object));
             Selection.activeObject = obj;
             EditorGUIUtility.PingObject(obj);
 

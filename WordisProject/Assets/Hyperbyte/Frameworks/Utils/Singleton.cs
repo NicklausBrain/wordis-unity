@@ -13,44 +13,53 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
-	/// <summary>
+    /// <summary>
     /// Creates a instance of monobehaviour of the given script component.static You can implement this singleton behaviour in generic 
-	/// form which in turn will create instance of the class in static form which can be accesses easily.
+    /// form which in turn will create instance of the class in static form which can be accesses easily.
     /// </summary>
-	public class Singleton<T> : MonoBehaviour where T : Component {
+    public class Singleton<T> : MonoBehaviour where T : Component
+    {
+        private static T instance;
 
-		private static T instance;
-		public static T Instance {
-			get{
-				if (instance == null) {
-					instance = FindObjectOfType<T> ();
+        public static T Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<T>();
 
-					if (instance == null) {
-						GameObject g = new GameObject ("Controller");
-						instance = g.AddComponent<T> ();
-						//g.hideFlags = HideFlags.HideInHierarchy;
+                    if (instance == null)
+                    {
+                        GameObject g = new GameObject("Controller");
+                        instance = g.AddComponent<T>();
+                        //g.hideFlags = HideFlags.HideInHierarchy;
+                    }
+                }
 
-					}
-				}
-				return instance;
-			}
-		}
+                return instance;
+            }
+        }
 
-		/// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
-		void Awake()
-		{
-			//DontDestroyOnLoad (gameObject);
-			if (instance == null ) {
-				instance = this as T;
-			} else {
-				if (instance != this) {
-					Destroy (gameObject);
-				}
-			}
-		}
-	}
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake()
+        {
+            //DontDestroyOnLoad (gameObject);
+            if (instance == null)
+            {
+                instance = this as T;
+            }
+            else
+            {
+                if (instance != this)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
 }

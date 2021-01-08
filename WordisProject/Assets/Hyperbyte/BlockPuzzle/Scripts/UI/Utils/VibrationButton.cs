@@ -11,19 +11,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
 {
     public class VibrationButton : MonoBehaviour
     {
         // The button to toggle Vibration, assigned from inspector.
         public Button btnVibration;
+
         // The image of the button.
         public Image btnVibrationImage;
+
         // The On sprite for Vibration.
         public Sprite VibrationOnSprite;
+
         // The off sprite for Vibration.
         public Sprite VibrationOffSprite;
 
@@ -38,7 +43,7 @@ namespace Hyperbyte
                 if (InputManager.Instance.canInput())
                 {
                     UIFeedback.Instance.PlayButtonPressEffect();
-                    ProfileManager.Instance.TogglVibrationStatus();
+                    ProfileManager.Instance.ToggleVibrationStatus();
                 }
             });
         }

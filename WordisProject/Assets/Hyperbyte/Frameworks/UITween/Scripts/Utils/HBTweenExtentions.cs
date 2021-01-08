@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace  Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 {
     /// <summary>
     /// Extentions for the tweens classes.
@@ -22,7 +23,8 @@ namespace  Hyperbyte.UITween
     public static class HBTweenExtentions
     {
         //Rect Transform
-        public static HBFloatTweener AnchorX(this RectTransform rectT, float endValue, float time) {
+        public static HBFloatTweener AnchorX(this RectTransform rectT, float endValue, float time)
+        {
             return HBTweenManager.AnchorX(rectT, rectT.anchoredPosition.x, endValue, time);
         }
 
@@ -140,12 +142,13 @@ namespace  Hyperbyte.UITween
             return HBTweenManager.LocalScaleY(transform, transform.localScale.y, endValue, time);
         }
 
-         //LocalScaleZ
+        //LocalScaleZ
         public static HBFloatTweener LocalScaleZ(this Transform transform, float endValue, float time)
         {
             return HBTweenManager.LocalScaleZ(transform, transform.localScale.z, endValue, time);
         }
-         //LocalScaleZ
+
+        //LocalScaleZ
         public static HBVector3Tweener LocalScale(this Transform transform, Vector3 endValue, float time)
         {
             return HBTweenManager.LocalScale(transform, transform.localScale, endValue, time);
@@ -153,81 +156,95 @@ namespace  Hyperbyte.UITween
 
 
         //Sprite Alpha
-        public static HBSpriteAlpha SetAlpha(this SpriteRenderer spriteR, float endValue, float time) {
+        public static HBSpriteAlpha SetAlpha(this SpriteRenderer spriteR, float endValue, float time)
+        {
             return HBTweenManager.SetAlpha(spriteR, endValue, time);
         }
 
         //Image Alpha
-        public static HBImageAlpha SetAlpha(this Image image, float endValue, float time) {
+        public static HBImageAlpha SetAlpha(this Image image, float endValue, float time)
+        {
             return HBTweenManager.SetAlpha(image, endValue, time);
         }
 
-         //Text Alpha
-        public static HBTextAlpha SetAlpha(this Text txt, float endValue, float time) {
+        //Text Alpha
+        public static HBTextAlpha SetAlpha(this Text txt, float endValue, float time)
+        {
             return HBTweenManager.SetAlpha(txt, endValue, time);
         }
 
         //CanvasGroup Alpha
-        public static HBCanvasGroupAlpha SetAlpha(this CanvasGroup canvasGroup, float endValue, float time) {
+        public static HBCanvasGroupAlpha SetAlpha(this CanvasGroup canvasGroup, float endValue, float time)
+        {
             return HBTweenManager.SetAlpha(canvasGroup, endValue, time);
         }
 
         //Sprite Color
-        public static HBSpriteColor SetColor(this SpriteRenderer spriteR, Color endValue, float time) {
-           return HBTweenManager.SetColor(spriteR, endValue, time);
+        public static HBSpriteColor SetColor(this SpriteRenderer spriteR, Color endValue, float time)
+        {
+            return HBTweenManager.SetColor(spriteR, endValue, time);
         }
 
         //Image Color
-        public static HBImageColor SetColor(this Image image, Color endValue, float time) {
+        public static HBImageColor SetColor(this Image image, Color endValue, float time)
+        {
             return HBTweenManager.SetColor(image, endValue, time);
         }
 
         //Image FillAmount
-        public static HBImageFillAmount FillAmount(this Image image, float endValue, float time) {
+        public static HBImageFillAmount FillAmount(this Image image, float endValue, float time)
+        {
             return HBTweenManager.FillAmount(image, endValue, time);
         }
 
         //Image Color
-        public static HBTextColor SetColor(this Text txt, Color endValue, float time) {
+        public static HBTextColor SetColor(this Text txt, Color endValue, float time)
+        {
             return HBTweenManager.SetColor(txt, endValue, time);
         }
 
         // Pauses the tween.
 
-        public static void Pause(this Transform transform) {
+        public static void Pause(this Transform transform)
+        {
             transform.SendMessage("Pause");
         }
 
-        public static void Pause(this Image image) {
-           image.SendMessage("Pause");
+        public static void Pause(this Image image)
+        {
+            image.SendMessage("Pause");
         }
 
-        public static void Pause(this SpriteRenderer spriteR) {
-           spriteR.SendMessage("Pause");
+        public static void Pause(this SpriteRenderer spriteR)
+        {
+            spriteR.SendMessage("Pause");
         }
 
-        public static void Pause(this CanvasGroup canvasGroup) {
-           canvasGroup.SendMessage("Pause");
+        public static void Pause(this CanvasGroup canvasGroup)
+        {
+            canvasGroup.SendMessage("Pause");
         }
 
         // Resumes the tween.
 
-        public static void Resume(this Transform transform) {
+        public static void Resume(this Transform transform)
+        {
             transform.SendMessage("Resume");
         }
 
-        public static void Resume(this Image image) {
-           image.SendMessage("Resume");
+        public static void Resume(this Image image)
+        {
+            image.SendMessage("Resume");
         }
 
-        public static void Resume(this SpriteRenderer spriteR) {
-           spriteR.SendMessage("Resume");
+        public static void Resume(this SpriteRenderer spriteR)
+        {
+            spriteR.SendMessage("Resume");
         }
 
-        public static void Resume(this CanvasGroup canvasGroup) {
-           canvasGroup.SendMessage("Resume");
+        public static void Resume(this CanvasGroup canvasGroup)
+        {
+            canvasGroup.SendMessage("Resume");
         }
-        
-        
     }
 }

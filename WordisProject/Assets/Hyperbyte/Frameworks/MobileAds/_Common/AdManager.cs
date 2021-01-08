@@ -14,10 +14,18 @@
 using System;
 using System.Collections;
 using System.Reflection;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.CustomAds;
+using Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 {
     /// <summary>
     /// AdManager is singleton class component to control ads during game. Typically this class will initialize, load and shows ads with selected ad network.
@@ -47,7 +55,7 @@ namespace Hyperbyte.Ads
         public static event Action OnRewardedClosedEvent;
         public static event Action<string> OnRewardedAdRewardedEvent;
 
-        [System.NonSerialized] public AdSettings adSettings;
+        [NonSerialized] public AdSettings.Scripts.AdSettings adSettings;
 
         // Time when last interstitial was shown, to handle min delay between 2 interstitials.
         float lastInterstitialShownTime = 0;
@@ -58,7 +66,7 @@ namespace Hyperbyte.Ads
         /// </summary>
         private void Start()
         {
-            adSettings = (AdSettings)Resources.Load("AdSettings");
+            adSettings = (AdSettings.Scripts.AdSettings) Resources.Load("AdSettings");
             VerifyConsent();
         }
 
@@ -66,12 +74,10 @@ namespace Hyperbyte.Ads
         void OnConsentVerificationCompleted()
         {
             consentVerified = PlayerPrefs.HasKey("consentVerified");
-            consentAllowed = (PlayerPrefs.GetInt("consentAllowed", 0) != 0);
+            consentAllowed = PlayerPrefs.GetInt("consentAllowed", 0) != 0;
 
-            if (OnConsentVerifiedEvent != null)
-            {
-                OnConsentVerifiedEvent.Invoke(consentVerified, consentAllowed);
-            }
+            OnConsentVerifiedEvent?.Invoke(consentVerified, consentAllowed);
+
             if (adSettings.adsEnabled)
             {
                 Initialise();
@@ -79,6 +85,7 @@ namespace Hyperbyte.Ads
         }
 
         #region  Initialise
+
         /// <summary>
         /// Initializes the selected ad network.
         /// </summary>
@@ -127,9 +134,11 @@ namespace Hyperbyte.Ads
                 }
             }
         }
+
         #endregion
 
         #region Component Method Calls
+
         /// <summary>
         /// Initializes the selected ad network.
         /// </summary>
@@ -137,7 +146,8 @@ namespace Hyperbyte.Ads
         {
             if (adSettings.adsEnabled)
             {
-                MethodInfo info = adComponentType.GetMethod("InitializeAdNetwork", BindingFlags.Public | BindingFlags.Instance);
+                MethodInfo info =
+                    adComponentType.GetMethod("InitializeAdNetwork", BindingFlags.Public | BindingFlags.Instance);
                 info.Invoke(adBehaviour, null);
             }
         }
@@ -159,7 +169,8 @@ namespace Hyperbyte.Ads
         /// </summary>
         public void HideBanner()
         {
-            if(adSettings.adsEnabled && adSettings.bannerAdsEnabled) {
+            if (adSettings.adsEnabled && adSettings.bannerAdsEnabled)
+            {
                 MethodInfo info = adComponentType.GetMethod("HideBanner", BindingFlags.Public | BindingFlags.Instance);
                 info.Invoke(adBehaviour, null);
             }
@@ -172,10 +183,12 @@ namespace Hyperbyte.Ads
         {
             if (adSettings.adsEnabled && adSettings.interstitialAdsEnabled)
             {
-                MethodInfo info = adComponentType.GetMethod("IsInterstitialAvailable", BindingFlags.Public | BindingFlags.Instance);
+                MethodInfo info = adComponentType.GetMethod("IsInterstitialAvailable",
+                    BindingFlags.Public | BindingFlags.Instance);
                 object isInterstitalAvailable = info.Invoke(adBehaviour, null);
-                return (bool)isInterstitalAvailable;
+                return (bool) isInterstitalAvailable;
             }
+
             return false;
         }
 
@@ -185,12 +198,14 @@ namespace Hyperbyte.Ads
         public void ShowInterstitial()
         {
             // Handles delay between 2 interstitial ads.
-            if(lastInterstitialShownTime <= 0 || ((Time.time - lastInterstitialShownTime) >= adSettings.delayBetweenIngerstitials)) 
-            {    
+            if (lastInterstitialShownTime <= 0 ||
+                Time.time - lastInterstitialShownTime >= adSettings.delayBetweenIngerstitials)
+            {
                 if (adSettings.adsEnabled && adSettings.interstitialAdsEnabled)
                 {
-                    MethodInfo info = adComponentType.GetMethod("ShowInterstitial", BindingFlags.Public | BindingFlags.Instance);
-                    info.Invoke(adBehaviour, null);        
+                    MethodInfo info = adComponentType.GetMethod("ShowInterstitial",
+                        BindingFlags.Public | BindingFlags.Instance);
+                    info.Invoke(adBehaviour, null);
                 }
             }
         }
@@ -202,14 +217,16 @@ namespace Hyperbyte.Ads
         {
             if (adSettings.adsEnabled && adSettings.rewardedAdsEnabled)
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 return true;
-                #else
-				MethodInfo info = adComponentType.GetMethod("IsRewardedAvailable", BindingFlags.Public | BindingFlags.Instance);
+#else
+				MethodInfo info =
+ adComponentType.GetMethod("IsRewardedAvailable", BindingFlags.Public | BindingFlags.Instance);
 				object isRewardedAvailable = info.Invoke(adBehaviour, null);
-				return (bool) isRewardedAvailable; 
-                #endif
+				return (bool) isRewardedAvailable;
+#endif
             }
+
             return false;
         }
 
@@ -221,45 +238,99 @@ namespace Hyperbyte.Ads
             rewardedVideoTag = _rewardedVideoTag;
             if (adSettings.adsEnabled && adSettings.rewardedAdsEnabled)
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 OnRewardedAdRewarded();
-                #else
-				MethodInfo info = adComponentType.GetMethod("ShowRewarded", BindingFlags.Public | BindingFlags.Instance);
+#else
+				MethodInfo info =
+ adComponentType.GetMethod("ShowRewarded", BindingFlags.Public | BindingFlags.Instance);
 				info.Invoke(adBehaviour, null);
-                #endif
+#endif
             }
         }
+
         #endregion
 
         #region Callback Integration
-        /// Invokes event callback of varient ad status.
 
-        public void OnSdkInitialised() { if (OnSdkInitialisedEvent != null) { OnSdkInitialisedEvent.Invoke(); } }
-        public void OnBannerLoaded() { if (OnBannerLoadedEvent != null) { OnBannerLoadedEvent.Invoke(); } }
-        public void OnBannerLoadFailed(string reason) { if (OnBannerLoadFailedEvent != null) { OnBannerLoadFailedEvent.Invoke(reason); } }
-        public void OnInterstitialLoaded() { if (OnInterstitialLoadedEvent != null) { OnInterstitialLoadedEvent.Invoke(); } }
-        public void OnInterstitialLoadFailed(string reason) { if (OnInterstitialLoadFailedEvent != null) { OnInterstitialLoadFailedEvent.Invoke(reason); } }
-        public void OnInterstitialShown() { if (OnInterstitialShownEvent != null) { OnInterstitialShownEvent.Invoke(); } }
-        public void OnInterstitialClosed() { lastInterstitialShownTime = Time.time; if (OnInterstitialClosedEvent != null) { OnInterstitialClosedEvent.Invoke(); } }
-        public void OnRewardedLoaded() { if (OnRewardedLoadedEvent != null) { OnRewardedLoadedEvent.Invoke(); } }
-        public void OnRewardedLoadFailed(string reason) { { if (OnRewardedLoadFailedEvent != null) { OnRewardedLoadFailedEvent.Invoke(reason); } } }
-        public void OnRewardedShown() { if (OnRewardedShownEvent != null) { OnRewardedShownEvent.Invoke(); } }
-        public void OnRewardedClosed() { if (OnRewardedClosedEvent != null) { OnRewardedClosedEvent.Invoke(); } }
-        public void OnRewardedAdRewarded() { if (OnRewardedAdRewardedEvent != null) { OnRewardedAdRewardedEvent.Invoke(rewardedVideoTag); } }
+        /// Invokes event callback of varient ad status.
+        public void OnSdkInitialised()
+        {
+            OnSdkInitialisedEvent?.Invoke();
+        }
+
+        public void OnBannerLoaded()
+        {
+            OnBannerLoadedEvent?.Invoke();
+        }
+
+        public void OnBannerLoadFailed(string reason)
+        {
+            OnBannerLoadFailedEvent?.Invoke(reason);
+        }
+
+        public void OnInterstitialLoaded()
+        {
+            OnInterstitialLoadedEvent?.Invoke();
+        }
+
+        public void OnInterstitialLoadFailed(string reason)
+        {
+            OnInterstitialLoadFailedEvent?.Invoke(reason);
+        }
+
+        public void OnInterstitialShown()
+        {
+            OnInterstitialShownEvent?.Invoke();
+        }
+
+        public void OnInterstitialClosed()
+        {
+            lastInterstitialShownTime = Time.time;
+            OnInterstitialClosedEvent?.Invoke();
+        }
+
+        public void OnRewardedLoaded()
+        {
+            OnRewardedLoadedEvent?.Invoke();
+        }
+
+        public void OnRewardedLoadFailed(string reason)
+        {
+            {
+                OnRewardedLoadFailedEvent?.Invoke(reason);
+            }
+        }
+
+        public void OnRewardedShown()
+        {
+            OnRewardedShownEvent?.Invoke();
+        }
+
+        public void OnRewardedClosed()
+        {
+            OnRewardedClosedEvent?.Invoke();
+        }
+
+        public void OnRewardedAdRewarded()
+        {
+            OnRewardedAdRewardedEvent?.Invoke(rewardedVideoTag);
+        }
+
         #endregion
 
         public static event Action<bool, bool> OnConsentVerifiedEvent;
 
-        [System.NonSerialized] public bool consentVerified = false;
-        [System.NonSerialized] public bool consentAllowed = false;
+        [NonSerialized] public bool consentVerified = false;
+        [NonSerialized] public bool consentAllowed = false;
 
-        #if HB_EEA_CONSENT
+#if HB_EEA_CONSENT
         UserLocation userLocation = UserLocation.Unknown;
-        #endif
-        
+#endif
+
         bool consentCheckAttempted = false;
 
         #region Consent Verification
+
         /// <summary>
         /// Verifies consent status and take consent if not taken.
         /// </summary>
@@ -268,7 +339,7 @@ namespace Hyperbyte.Ads
             if (PlayerPrefs.HasKey("consentVerified"))
             {
                 consentVerified = PlayerPrefs.HasKey("consentVerified");
-                consentAllowed = (PlayerPrefs.GetInt("consentAllowed", 0) != 0);
+                consentAllowed = PlayerPrefs.GetInt("consentAllowed", 0) != 0;
                 OnConsentVerificationCompleted();
             }
             else
@@ -306,7 +377,7 @@ namespace Hyperbyte.Ads
                     consentDialogueRequired = true;
                 }
 
-                #if HB_EEA_CONSENT
+#if HB_EEA_CONSENT
                 // If consent only required for EEA then user location will be fetched.
                 else if (adSettings.consentSelection == ConsentSelection.ReqiuredOnlyInEEA)
                 {
@@ -331,7 +402,7 @@ namespace Hyperbyte.Ads
                         return;
                     }
                 }
-                #endif
+#endif
                 if (consentDialogueRequired)
                 {
                     UIController.Instance.ShowConsentDialogue();
@@ -352,7 +423,7 @@ namespace Hyperbyte.Ads
         public void SetConsentStatus(bool allowed)
         {
             PlayerPrefs.SetInt("consentVerified", 1);
-            PlayerPrefs.SetInt("consentAllowed", (allowed) ? 1 : 0);
+            PlayerPrefs.SetInt("consentAllowed", allowed ? 1 : 0);
 
             OnConsentVerificationCompleted();
         }
@@ -378,7 +449,7 @@ namespace Hyperbyte.Ads
                     ConsentResponse response = JsonUtility.FromJson<ConsentResponse>(webRequest.downloadHandler.text);
                     response.is_request_in_eea_or_unknown = true;
                     PlayerPrefs.SetInt("userLocationVerified", 1);
-                    PlayerPrefs.SetInt("userLocation", (!response.is_request_in_eea_or_unknown) ? 2 : 1);
+                    PlayerPrefs.SetInt("userLocation", !response.is_request_in_eea_or_unknown ? 2 : 1);
                     GetUserConsent();
                 }
                 else
@@ -388,6 +459,7 @@ namespace Hyperbyte.Ads
                 }
             }
         }
+
         #endregion
     }
 }

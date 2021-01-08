@@ -13,14 +13,15 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     public class GamePlay : Singleton<GamePlay>
     {
-        [Header("Public Class Members")]
-        [Tooltip("BoardGenerator Script Reference")]
+        [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
         [Tooltip("BlockShapesController Script Reference")]
@@ -29,7 +30,9 @@ namespace Hyperbyte
         [Header("Other Public Members")]
 
         //List of all Blocks in Row X Column format.
-        [System.NonSerialized] public List<List<Block>> allRows = new List<List<Block>>();
+        [System.NonSerialized]
+        public List<List<Block>> allRows = new List<List<Block>>();
+
         [System.NonSerialized] public List<List<Block>> allColumns = new List<List<Block>>();
 
         //List of rows highlight while dragging shape. Will keep updating runtime. 
@@ -51,12 +54,15 @@ namespace Hyperbyte
         {
             int totalRows = allRows.Count;
 
-            for(int rowId = 0; rowId < allRows[0].Count; rowId++) {
-                 List<Block> thisColumn = new List<Block>();
-                 for (int columnId = 0; columnId < totalRows; columnId++) { 
-                     thisColumn.Add(allRows[columnId][rowId]);
-                 }
-                 allColumns.Add(thisColumn);
+            for (int rowId = 0; rowId < allRows[0].Count; rowId++)
+            {
+                List<Block> thisColumn = new List<Block>();
+                for (int columnId = 0; columnId < totalRows; columnId++)
+                {
+                    thisColumn.Add(allRows[columnId][rowId]);
+                }
+
+                allColumns.Add(thisColumn);
             }
         }
 
@@ -69,6 +75,7 @@ namespace Hyperbyte
             {
                 StartCoroutine(ClearAllBlocks(GetEntireRow(rowId)));
             }
+
             GamePlayUI.Instance.totalLinesCompleted += rowIds.Count;
         }
 
@@ -81,6 +88,7 @@ namespace Hyperbyte
             {
                 StartCoroutine(ClearAllBlocks(GetEntirColumn(columnId)));
             }
+
             GamePlayUI.Instance.totalLinesCompleted += columnIds.Count;
         }
 
@@ -90,8 +98,8 @@ namespace Hyperbyte
         IEnumerator ClearAllBlocks(List<Block> allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = (allBlocks.Count % 2 == 0) ? (allBlocks.Count / 2) : ((allBlocks.Count / 2) + 1);
-            int leftIndex = (middleIndex - 1);
+            int middleIndex = allBlocks.Count % 2 == 0 ? allBlocks.Count / 2 : allBlocks.Count / 2 + 1;
+            int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
             int totalBlocks = allBlocks.Count;
 
@@ -101,19 +109,23 @@ namespace Hyperbyte
                 {
                     allBlocks[leftIndex].Clear();
                 }
+
                 if (rightIndex < totalBlocks)
                 {
                     allBlocks[rightIndex].Clear();
                 }
+
                 yield return new WaitForSeconds(0.03F);
             }
+
             yield return 0;
         }
 
         /// <summary>
         /// Returns all blocks from the given row.
         /// </summary>
-        public List<Block> GetEntireRow(int rowId) {
+        public List<Block> GetEntireRow(int rowId)
+        {
             return allRows[rowId];
         }
 
@@ -128,15 +140,17 @@ namespace Hyperbyte
         /// <summary>
         /// Returns true if row is about to complete on current block shape being placed otherwise false.
         /// </summary>
-        public bool CanHighlightRow(int rowId) {
-            return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool CanHighlightRow(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
         /// Returns true if given row if all blocks in given row are filled. Otherwise false.
         /// </summary>
-        public bool IsRowCompleted(int rowId) {
-             return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool IsRowCompleted(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -144,7 +158,7 @@ namespace Hyperbyte
         /// </summary>
         public bool CanHighlightColumn(int columnId)
         {
-             return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -152,7 +166,7 @@ namespace Hyperbyte
         /// </summary>
         public bool IsColumnCompleted(int columnId)
         {
-            return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -162,9 +176,11 @@ namespace Hyperbyte
         {
             if (!cachedHighlightingRows.Contains(rowId))
             {
-                foreach(Block block in allRows[rowId]) {
+                foreach (Block block in allRows[rowId])
+                {
                     block.Highlight(sprite);
                 }
+
                 cachedHighlightingRows.Add(rowId);
             }
         }
@@ -176,9 +192,11 @@ namespace Hyperbyte
         {
             if (!cachedHighlightingColumns.Contains(columnId))
             {
-                foreach(Block block in GetEntirColumn(columnId)) {
+                foreach (Block block in GetEntirColumn(columnId))
+                {
                     block.Highlight(sprite);
                 }
+
                 cachedHighlightingColumns.Add(columnId);
             }
         }
@@ -244,6 +262,7 @@ namespace Hyperbyte
                     StopHighlightingColumn(column);
                 }
             }
+
             highlightingRows.Clear();
             highlightingColumns.Clear();
         }
@@ -253,11 +272,13 @@ namespace Hyperbyte
         /// </summary>
         void StopHighlightingRow(int rowId)
         {
-            foreach(Block block in GetEntireRow(rowId)) {
+            foreach (Block block in GetEntireRow(rowId))
+            {
                 block.Reset();
             }
 
-            if (cachedHighlightingRows.Contains(rowId)) {
+            if (cachedHighlightingRows.Contains(rowId))
+            {
                 cachedHighlightingRows.Remove(rowId);
             }
         }
@@ -267,10 +288,13 @@ namespace Hyperbyte
         /// </summary>
         void StopHighlightingColumn(int columnId)
         {
-            foreach(Block block in GetEntirColumn(columnId)) {
-                 block.Reset();
+            foreach (Block block in GetEntirColumn(columnId))
+            {
+                block.Reset();
             }
-            if (cachedHighlightingColumns.Contains(columnId)) {
+
+            if (cachedHighlightingColumns.Contains(columnId))
+            {
                 cachedHighlightingColumns.Remove(columnId);
             }
         }
@@ -285,108 +309,134 @@ namespace Hyperbyte
         }
 
         #region Rescue Specific Code
-        public void PerfromRescueAction(GameOverReason reason) {
-            switch(reason) {
+
+        public void PerfromRescueAction(GameOverReason reason)
+        {
+            switch (reason)
+            {
                 //Rescue for Grid Filled and no new shape can be placed. Below code will clear 3 lines horizontally and vertically from the grid.
                 case GameOverReason.GRID_FILLED:
-                ClearBoardLinesForRescue();
-                break;
+                    ClearBoardLinesForRescue();
+                    break;
 
                 case GameOverReason.TIME_OVER:
-                #region TimeMode Specific
-                if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
-                {
-                    // Will add 15 seconds to tmer and will rescue game.
-                    GamePlayUI.Instance.timeModeProgresssBar.AddTime(15);
 
-                    // If none of block shape can be placed then will clear lines for rescue.
-                    bool canAnyShapePlacedTimeRescue = blockShapeController.CheckBlockShapeCanPlaced();
-                    if(!canAnyShapePlacedTimeRescue) {
-                        ClearBoardLinesForRescue();
+                    #region TimeMode Specific
+
+                    if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
+                    {
+                        // Will add 15 seconds to tmer and will rescue game.
+                        GamePlayUI.Instance.timeModeProgresssBar.AddTime(15);
+
+                        // If none of block shape can be placed then will clear lines for rescue.
+                        bool canAnyShapePlacedTimeRescue = blockShapeController.CheckBlockShapeCanPlaced();
+                        if (!canAnyShapePlacedTimeRescue)
+                        {
+                            ClearBoardLinesForRescue();
+                        }
                     }
-                }
-                #endregion
-                break;
+
+                    #endregion
+
+                    break;
             }
         }
+
         #endregion
 
         /// <summary>
         /// Clear 3X3 lines from board.
         /// </summary>
-        void ClearBoardLinesForRescue() {
+        void ClearBoardLinesForRescue()
+        {
             List<int> linesToClear = GetMiddleLinesFromGrid(3);
 
-            GamePlay.Instance.ClearRows(linesToClear);
-            GamePlay.Instance.ClearColumns(linesToClear);
+            Instance.ClearRows(linesToClear);
+            Instance.ClearColumns(linesToClear);
 
-            int linesCleared = (linesToClear.Count + linesToClear.Count);
-            GamePlayUI.Instance.scoreManager.AddScore(linesCleared,0);
+            int linesCleared = linesToClear.Count + linesToClear.Count;
+            GamePlayUI.Instance.scoreManager.AddScore(linesCleared, 0);
 
-            if(linesCleared > 0) {
+            if (linesCleared > 0)
+            {
                 AudioController.Instance.PlayLineBreakSound(linesCleared);
             }
         }
 
         //Returns the middle lines index from the grid. 
         // This logic can be sorten. :D
-        List<int> GetMiddleLinesFromGrid(int noOfLines) 
+        List<int> GetMiddleLinesFromGrid(int noOfLines)
         {
             List<int> lines = new List<int>();
-            int totalLines =  (int)GamePlayUI.Instance.GetBoardSize();
+            int totalLines = (int) GamePlayUI.Instance.GetBoardSize();
             int middleIndex = 0;
 
-            if(totalLines % 2 == 0) 
+            if (totalLines % 2 == 0)
             {
-                middleIndex = ((totalLines / 2) - 1);
+                middleIndex = totalLines / 2 - 1;
 
-                if(noOfLines % 2 == 0) {
-                    int sideLines = (noOfLines / 2);
+                if (noOfLines % 2 == 0)
+                {
+                    int sideLines = noOfLines / 2;
 
-                    for(int lineIndex = (middleIndex - (sideLines-1)); lineIndex <= middleIndex; lineIndex++) {
-                        lines.Add(lineIndex);
-                    } 
-                    
-                    for(int lineIndex = (middleIndex+1); lineIndex <= (middleIndex + sideLines); lineIndex++) {
+                    for (int lineIndex = middleIndex - (sideLines - 1); lineIndex <= middleIndex; lineIndex++)
+                    {
                         lines.Add(lineIndex);
                     }
-                } else {
-                    int sideLines = (noOfLines / 2);
 
-                    for(int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++) {
-                        lines.Add(lineIndex);
-                    } 
-                    
-                    for(int lineIndex = (middleIndex+1); lineIndex <= (middleIndex + sideLines); lineIndex++) {
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
+                    {
                         lines.Add(lineIndex);
                     }
                 }
+                else
+                {
+                    int sideLines = noOfLines / 2;
 
-            } 
-            else {
-                middleIndex = (totalLines / 2);
-                if(noOfLines % 2 == 0) {
-                    int sideLines = (noOfLines / 2);
-
-                    for(int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++) {
-                        lines.Add(lineIndex);
-                    } 
-                    
-                    for(int lineIndex = (middleIndex+1); lineIndex < (middleIndex + sideLines); lineIndex++) {
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
+                    {
                         lines.Add(lineIndex);
                     }
-                } else {
-                    int sideLines = (noOfLines / 2);
 
-                    for(int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++) {
-                        lines.Add(lineIndex);
-                    } 
-                    
-                    for(int lineIndex = (middleIndex+1); lineIndex <= (middleIndex + sideLines); lineIndex++) {
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
+                    {
                         lines.Add(lineIndex);
                     }
                 }
             }
+            else
+            {
+                middleIndex = totalLines / 2;
+                if (noOfLines % 2 == 0)
+                {
+                    int sideLines = noOfLines / 2;
+
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
+                    {
+                        lines.Add(lineIndex);
+                    }
+
+                    for (int lineIndex = middleIndex + 1; lineIndex < middleIndex + sideLines; lineIndex++)
+                    {
+                        lines.Add(lineIndex);
+                    }
+                }
+                else
+                {
+                    int sideLines = noOfLines / 2;
+
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
+                    {
+                        lines.Add(lineIndex);
+                    }
+
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
+                    {
+                        lines.Add(lineIndex);
+                    }
+                }
+            }
+
             return lines;
         }
     }

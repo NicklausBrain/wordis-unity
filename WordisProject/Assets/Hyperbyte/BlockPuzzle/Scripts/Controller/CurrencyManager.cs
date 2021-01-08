@@ -12,13 +12,15 @@
 // THE SOFTWARE.
 
 using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
-    /// This script controlls and manages the ingame currecy, its balace, addition or subtraction of balance.
+    /// This script controls and manages the in-game currency, its balance, addition or subtraction of balance.
     /// </summary>
     public class CurrencyManager : Singleton<CurrencyManager>
     {
@@ -57,7 +59,6 @@ namespace Hyperbyte
         /// </summary>
         void Initialise()
         {
-
             if (PlayerPrefs.HasKey("currentBalance"))
             {
                 currentBalance = PlayerPrefs.GetInt("currentBalance");
@@ -65,8 +66,8 @@ namespace Hyperbyte
             else
             {
                 currentBalance = ProfileManager.Instance.GetAppSettings().defaultGemsAmount;
-
             }
+
             hasInitialised = true;
         }
 
@@ -79,6 +80,7 @@ namespace Hyperbyte
             {
                 Initialise();
             }
+
             return currentBalance;
         }
 
@@ -88,14 +90,14 @@ namespace Hyperbyte
         /// </summary>
         public void AddGems(int gemsAmount)
         {
-            if (gemsAmount > 0) {
+            if (gemsAmount > 0)
+            {
                 currentBalance += gemsAmount;
             }
+
             SaveCurrencyBalance();
-            if (OnCurrencyUpdated != null)
-            {
-                OnCurrencyUpdated.Invoke(currentBalance);
-            }
+            OnCurrencyUpdated?.Invoke(currentBalance);
+
             AudioController.Instance.PlayClip(AudioController.Instance.addGemsSound);
         }
 
@@ -109,11 +111,11 @@ namespace Hyperbyte
                 currentBalance -= gemsAmount;
                 SaveCurrencyBalance();
 
-                if (OnCurrencyUpdated != null) {
-                    OnCurrencyUpdated.Invoke(currentBalance);
-                }
+                OnCurrencyUpdated?.Invoke(currentBalance);
+
                 return true;
             }
+
             return false;
         }
 
@@ -130,11 +132,12 @@ namespace Hyperbyte
         /// </summary>
         void OnRewardedAdRewarded(string tag)
         {
-            switch(tag) {
+            switch (tag)
+            {
                 case "FreeGems":
-                AddGems(ProfileManager.Instance.GetAppSettings().watchVideoRewardAmount);
-                UIController.Instance.purchaseSuccessScreen.Activate();
-                break;
+                    AddGems(ProfileManager.Instance.GetAppSettings().watchVideoRewardAmount);
+                    UIController.Instance.purchaseSuccessScreen.Activate();
+                    break;
             }
         }
     }

@@ -11,19 +11,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// This script component is attached to game pauser screen.
     /// </summary>
-	public class PauseGame : MonoBehaviour {
-
+    public class PauseGame : MonoBehaviour
+    {
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable() {
+        private void OnEnable()
+        {
             /// Pauses the game when it gets enabled.
             GamePlayUI.Instance.PauseGame();
         }
@@ -31,7 +36,8 @@ namespace Hyperbyte
         /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-        private void OnDisable() {
+        private void OnDisable()
+        {
             /// Resumes the game when it gets enabled.
             GamePlayUI.Instance.ResumeGame();
         }
@@ -39,8 +45,10 @@ namespace Hyperbyte
         /// <summary>
         /// Resumes the game.
         /// </summary>
-        public void OnResumeButtonPressed() {
-            if (InputManager.Instance.canInput()) {
+        public void OnResumeButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 gameObject.Deactivate();
             }
@@ -49,8 +57,10 @@ namespace Hyperbyte
         /// <summary>
         /// Restarts the game.
         /// </summary>
-        public void OnRestartButtonPressed() {
-            if (InputManager.Instance.canInput()) {
+        public void OnRestartButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 GamePlayUI.Instance.RestartGame();
                 gameObject.Deactivate();
@@ -60,8 +70,10 @@ namespace Hyperbyte
         /// <summary>
         /// Closes the gameplay and navigates to home screen.
         /// </summary>
-        public void OnHomeButtonPressed() {
-            if (InputManager.Instance.canInput()) {
+        public void OnHomeButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.OpenHomeScreenFromPauseGame();
             }
@@ -70,8 +82,10 @@ namespace Hyperbyte
         /// <summary>
         /// Closes pause screen and resumes gameplay.
         /// </summary>
-        public void OnCloseButtonPressed() {
-            if (InputManager.Instance.canInput()) {
+        public void OnCloseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 gameObject.Deactivate();
             }

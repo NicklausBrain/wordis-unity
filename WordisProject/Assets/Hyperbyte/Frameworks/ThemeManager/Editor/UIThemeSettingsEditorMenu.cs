@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
 {
     public class UIThemeSettingsEditorMenu : MonoBehaviour
     {
@@ -32,7 +33,7 @@ namespace Hyperbyte
             }
 
             if (System.IO.File.Exists(assetPath + "/" + assetName)) {
-                asset = (UIThemeSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (UIThemeSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {

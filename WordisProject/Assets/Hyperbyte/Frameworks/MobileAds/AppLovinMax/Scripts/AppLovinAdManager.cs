@@ -11,26 +11,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts
 {
     /// <summary>
     /// This class component will be added to game dynamically if applovin selected as active ad network.
     /// All the callbacks will be forwarded to ad manager.
     /// </summary>
-	public class AppLovinAdManager : AdHelper
+    public class AppLovinAdManager : AdHelper
     {
         AppLovinAdsSettings settings;
 
         /// <summary>
         /// Initialized the ad network.
         /// </summary>
-		public override void InitializeAdNetwork()
+        public override void InitializeAdNetwork()
         {
-            settings = (AppLovinAdsSettings)(Resources.Load("AdNetworkSettings/AppLovinAdsSettings"));
+            settings = (AppLovinAdsSettings) Resources.Load("AdNetworkSettings/AppLovinAdsSettings");
 
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.SetSdkKey(settings.GetSDkKey());
             MaxSdk.InitializeSdk();
 
@@ -45,7 +46,7 @@ namespace Hyperbyte.Ads
                 MaxSdk.SetDoNotSell(!AdManager.Instance.consentAllowed);
                 StartLoadingAds();
             };
-            #endif
+#endif
         }
 
         /// <summary>
@@ -61,83 +62,83 @@ namespace Hyperbyte.Ads
         // Requests banner ad.        
         void RequestBannerAds()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.CreateBanner(settings.GetBannetAdUnitId(), settings.GetBannerPosition());
             MaxSdk.SetBannerBackgroundColor(settings.GetBannetAdUnitId(), ColorUtils.GetColorFromHexa(settings.GetBannerBgColor()));
-            #endif
+#endif
         }
 
         // Requests intestitial ad.
         void RequestInterstitial()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.LoadInterstitial(settings.GetInterstitialAdUnityId());
-            #endif
+#endif
         }
 
         // Requests rewarded ad.
         void RequestRewarded()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.LoadRewardedAd(settings.GetRewardedAdUnitId());
-            #endif
+#endif
         }
 
         // Shows banner ad.
         public override void ShowBanner()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.ShowBanner(settings.GetBannetAdUnitId());
-            #endif
+#endif
         }
 
         // Hides banner ad.
         public override void HideBanner()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             MaxSdk.HideBanner(settings.GetBannetAdUnitId());
-            #endif
+#endif
         }
 
         // Check if interstial ad ready to show.
         public override bool IsInterstitialAvailable()
         {
-            #if HB_APPLOVINMAX
-            return MaxSdk.IsInterstitialReady(settings.GetInterstitialAdUnityId()); 
-            #endif
+#if HB_APPLOVINMAX
+            return MaxSdk.IsInterstitialReady(settings.GetInterstitialAdUnityId());
+#endif
             return false;
         }
 
         // Shows interstitial ad if available.
         public override void ShowInterstitial()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             if (MaxSdk.IsInterstitialReady(settings.GetInterstitialAdUnityId())) {
                 MaxSdk.ShowInterstitial(settings.GetInterstitialAdUnityId());
             }
-            #endif
+#endif
         }
 
         // Checks if rewarded ad ready to show.
         public override bool IsRewardedAvailable()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             return MaxSdk.IsRewardedAdReady(settings.GetRewardedAdUnitId());
-            #endif
+#endif
             return false;
         }
 
         // Shows rewarded ad if loaded.
         public override void ShowRewarded()
         {
-            #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
             if (MaxSdk.IsRewardedAdReady(settings.GetRewardedAdUnitId())) {
                 MaxSdk.ShowRewardedAd(settings.GetRewardedAdUnitId());
             }
-            #endif
+#endif
         }
 
-        #if HB_APPLOVINMAX
+#if HB_APPLOVINMAX
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
@@ -246,6 +247,6 @@ namespace Hyperbyte.Ads
            AdManager.Instance.OnRewardedAdRewarded();
         }
         #endregion
-        #endif
+#endif
     }
 }

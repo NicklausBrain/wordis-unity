@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
     /// <summary>
     /// Extention class for color related methods.
@@ -77,7 +77,8 @@ namespace Hyperbyte.Utils
         }
 
         // Converts hex value to color.
-        public static Color GetColorFromHexa(string hexa) {
+        public static Color GetColorFromHexa(string hexa)
+        {
             Color newColor;
             ColorUtility.TryParseHtmlString(hexa, out newColor);
             return newColor;

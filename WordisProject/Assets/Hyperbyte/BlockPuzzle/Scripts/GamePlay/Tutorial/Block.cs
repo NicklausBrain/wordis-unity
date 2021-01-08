@@ -11,21 +11,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Utils;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
     /// This class component is attached to all blocks in the grid. 
     /// </summary>
-	public class Block : MonoBehaviour
+    public class Block : MonoBehaviour
     {
-
         // Returns rowId 
         public int RowId { get; private set; }
 
@@ -69,7 +68,7 @@ namespace Hyperbyte.Tutorial
         /// </summary>
         private void Awake()
         {
-            /// Initializes the collider component on Awake.
+            // Initializes the collider component on Awake.
             thisCollider = GetComponent<BoxCollider2D>();
         }
 

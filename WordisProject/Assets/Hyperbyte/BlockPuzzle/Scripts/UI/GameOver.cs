@@ -12,31 +12,36 @@
 // THE SOFTWARE.
 
 using System.Collections;
-using Hyperbyte.Localization;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     public class GameOver : MonoBehaviour
     {
 #pragma warning disable 0649
 
-        [Tooltip("Game Over reason text")]
-        [SerializeField] Text txtGameOveTitle;
+        [Tooltip("Game Over reason text")] [SerializeField]
+        Text txtGameOveTitle;
 
-        [Tooltip("Score text from game over screen")]
-        [SerializeField] Text txtScore;
+        [Tooltip("Score text from game over screen")] [SerializeField]
+        Text txtScore;
 
-        [Tooltip("BestScore text from game over screen")]
-        [SerializeField] Text txtBestScore;
+        [Tooltip("BestScore text from game over screen")] [SerializeField]
+        Text txtBestScore;
 
-        [Tooltip("Reward Penel")]
-        [SerializeField] GameObject rewardPanel;
+        [Tooltip("Reward Penel")] [SerializeField]
+        GameObject rewardPanel;
 
-        [Tooltip("Reward text from game over screen")]
-        [SerializeField] Text txtReward;
+        [Tooltip("Reward text from game over screen")] [SerializeField]
+        Text txtReward;
+
         [SerializeField] GameObject gemImage;
         [SerializeField] GameObject rewardAnimation;
         [SerializeField] GameObject highScoreParticle;
@@ -108,6 +113,7 @@ namespace Hyperbyte
                 bestScore = score;
                 ProfileManager.Instance.SetBestScore(bestScore, gameMode);
             }
+
             txtBestScore.text = bestScore.ToString("N0");
             ProgressGameReward();
 
@@ -126,7 +132,6 @@ namespace Hyperbyte
 
         public void ProgressGameReward()
         {
-
             if (GamePlayUI.Instance.rewardOnGameOver)
             {
                 if (!rewardPanel.activeSelf)
@@ -141,8 +146,9 @@ namespace Hyperbyte
                 }
                 else
                 {
-                    rewardAmount = ((int)(GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
+                    rewardAmount = (int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted);
                 }
+
                 txtReward.text = rewardAmount.ToString();
 
                 if (rewardAmount > 0)

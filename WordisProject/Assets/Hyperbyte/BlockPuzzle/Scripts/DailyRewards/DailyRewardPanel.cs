@@ -11,12 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Utils;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
 {
     /// <summary>
     /// This script component is attached to all buttons daily reward poppup. It handles, displays rewards and giveaway.
@@ -26,13 +27,13 @@ namespace Hyperbyte
     {
         int rewardAmount = 0;
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] Text txtDay;
         [SerializeField] Text txtReward;
         [SerializeField] Image imgCheckmark;
         [SerializeField] Image imgCollectedBorder;
         [SerializeField] RectTransform GemsRewardPlacement;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Prepares daily reward for the day.
@@ -68,6 +69,7 @@ namespace Hyperbyte
                 imgCollectedBorder.gameObject.SetActive(false);
                 GetComponent<CanvasGroup>().alpha = 1F;
             }
+
             rewardAmount = reward;
         }
 

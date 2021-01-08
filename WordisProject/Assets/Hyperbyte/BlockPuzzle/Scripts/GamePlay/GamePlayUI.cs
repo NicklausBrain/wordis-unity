@@ -15,21 +15,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     public enum GameOverReason
     {
-        GRID_FILLED,    // If there is no enough space to place existing blocks. Applies to all game mode.
-        TIME_OVER,      // If timer finishing. Applied only to time mode.
+        GRID_FILLED, // If there is no enough space to place existing blocks. Applies to all game mode.
+        TIME_OVER, // If timer finishing. Applied only to time mode.
     }
 
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-
-        [Header("Public Class Members")]
-        [Tooltip("GamePlay Script Reference")]
+        [Header("Public Class Members")] [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
         [Tooltip("ScoreManager Script Reference")]
@@ -44,15 +48,16 @@ namespace Hyperbyte
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
-        [System.NonSerialized] public GameModeSettings currentModeSettings;
+        [NonSerialized] public GameModeSettings currentModeSettings;
 
         // Stores current playing mode.
-        [System.NonSerialized] public GameMode currentGameMode;
+        [NonSerialized] public GameMode currentGameMode;
 
         // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [System.NonSerialized] GamePlaySettings gamePlaySettings;
+        [NonSerialized] GamePlaySettings gamePlaySettings;
 
         #region  Game Status event callbacks.
+
         //Event action for game start callback.
         public static event Action<GameMode> OnGameStartedEvent;
 
@@ -64,7 +69,8 @@ namespace Hyperbyte
 
         //Event action for game pause callback.
         public static event Action<GameMode, bool> OnGamePausedEvent;
-        #endregion 
+
+        #endregion
 
         // Total lines clear during gameplay.
         [HideInInspector] public int totalLinesCompleted = 0;
@@ -76,14 +82,14 @@ namespace Hyperbyte
         [HideInInspector] public GameOverReason currentGameOverReason;
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
             }
         }
 
@@ -99,7 +105,7 @@ namespace Hyperbyte
             bool hasPreviosSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
             if (hasPreviosSessionProgress)
             {
-                progressData = GameProgressTracker.Instance.GetGameProgress(GamePlayUI.Instance.currentGameMode);
+                progressData = GameProgressTracker.Instance.GetGameProgress(Instance.currentGameMode);
             }
 
             // Enables gameplay screen if not active.
@@ -115,11 +121,14 @@ namespace Hyperbyte
             gamePlay.blockShapeController.PrepareShapeContainer(progressData);
 
             #region Time Mode Specific
+
             // Will enable timer start seeking it. If there is previos session data then timer will start from remaining duration.
             if (gameMode == GameMode.Timed)
             {
                 timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer((progressData != null) ? progressData.remainingTimer : timeModeInitialTimer);
+                timeModeProgresssBar.SetTimer(progressData != null
+                    ? progressData.remainingTimer
+                    : timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
             }
             else
@@ -135,6 +144,7 @@ namespace Hyperbyte
                 totalLinesCompleted = progressData.totalLinesCompleted;
                 rescueDone = progressData.rescueDone;
             }
+
             #endregion
 
             // Invokes Game Start Event Callback.
@@ -145,7 +155,6 @@ namespace Hyperbyte
 
         void ShowInitialTip()
         {
-
             switch (currentGameMode)
             {
                 case GameMode.Timed:
@@ -177,6 +186,7 @@ namespace Hyperbyte
                 case GameMode.Advance:
                     return gamePlaySettings.advancedModeSettings;
             }
+
             return gamePlaySettings.classicModeSettings;
         }
 
@@ -202,6 +212,7 @@ namespace Hyperbyte
         public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
 
         #region Time Mode Specific
+
         // Returns Intial timer for time mode.
         public float timeModeInitialTimer => gamePlaySettings.initialTime;
 
@@ -230,6 +241,7 @@ namespace Hyperbyte
             {
                 return true;
             }
+
             return false;
         }
 
@@ -240,7 +252,6 @@ namespace Hyperbyte
         {
             currentGameOverReason = reason;
             StartCoroutine(TryRescueGameEnumerator(reason));
-
         }
 
         IEnumerator TryRescueGameEnumerator(GameOverReason reason)
@@ -285,12 +296,16 @@ namespace Hyperbyte
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
+
                 #region Time Mode Specific
+
                 if (currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F)
                 {
                     return;
                 }
+
                 #endregion
+
                 UIController.Instance.pauseGameScreen.Activate();
             }
         }
@@ -325,14 +340,16 @@ namespace Hyperbyte
         }
 
         #region Time Mode Specific
+
         /// <summary>
         /// Returns Remaining Timer.
         /// </summary>
         public int GetRemainingTimer()
         {
-            return (currentGameMode == GameMode.Timed) ? timeModeProgresssBar.GetRemainingTimer() : 0;
+            return currentGameMode == GameMode.Timed ? timeModeProgresssBar.GetRemainingTimer() : 0;
         }
-        #endregion  
+
+        #endregion
 
         /// <summary>
         /// Pauses game.

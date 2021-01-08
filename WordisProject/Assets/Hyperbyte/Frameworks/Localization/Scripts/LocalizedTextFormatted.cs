@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
     /// <summary>
     /// This script can be attached to any UI Text component with text tag.
@@ -22,13 +22,13 @@ namespace Hyperbyte.Localization
     [RequireComponent(typeof(Text))]
     public class LocalizedTextFormatted : MonoBehaviour
     {
-        #pragma warning disable 0649
-        [Tooltip("Assign Text tag containing localized text.")]
-        [SerializeField] string txtTag;
+#pragma warning disable 0649
+        [Tooltip("Assign Text tag containing localized text.")] [SerializeField]
+        string txtTag;
 
         [SerializeField] string formattedValue1;
         [SerializeField] string formattedValue2;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         Text thisText;
 
@@ -39,7 +39,8 @@ namespace Hyperbyte.Localization
         {
             thisText = GetComponent<Text>();
 
-            if (txtTag == null) {
+            if (txtTag == null)
+            {
                 enabled = false;
                 return;
             }
@@ -70,7 +71,8 @@ namespace Hyperbyte.Localization
         /// </summary>
         void OnLocalizationInitialized(LocalizedLanguage lang, bool isLocalizationSupported)
         {
-            if (isLocalizationSupported) {
+            if (isLocalizationSupported)
+            {
                 LocalizeContent();
             }
         }
