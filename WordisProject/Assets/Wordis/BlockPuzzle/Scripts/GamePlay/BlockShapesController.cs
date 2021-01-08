@@ -241,7 +241,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         BlockShape GetBlockShape(BlockShapeInfo info, float rotation)
         {
-            GameObject upcomingShape = (GameObject) Instantiate(info.blockShape);
+            GameObject upcomingShape = (GameObject)Instantiate(info.blockShape);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
             upcomingShape.transform.localEulerAngles = Vector3.zero.WithNewZ(rotation);
             return upcomingShape.GetComponent<BlockShape>();
@@ -258,7 +258,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Takes a block shape instance from pool and instantiates it.
-            GameObject upcomingShape = (GameObject) Instantiate(_upcomingBlockShapes[0]);
+            GameObject upcomingShape = (GameObject)Instantiate(_upcomingBlockShapes[0]);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
             // Will add initial rotation to block shape.
@@ -296,7 +296,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 }
             }
 
-            Invoke("CheckAllShapesCanbePlaced", 0.5F);
+            Invoke(nameof(CheckAllShapesCanBePlaced), 0.5F);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Checks if any block shape from all containers can be placed on board. Game will go to rescue or gameover state upon returning false.
         /// </summary>
-        void CheckAllShapesCanbePlaced()
+        void CheckAllShapesCanBePlaced()
         {
             bool canAnyShapePlaced = CheckBlockShapeCanPlaced();
 
@@ -387,10 +387,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 if (shapeContainer.blockShape != null)
                 {
-                    bool shapeCanbePlaced = blockShapePlacementChecker.CheckShapeCanbePlaced(shapeContainer.blockShape);
-                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanbePlaced ? 1F : 0.5F;
+                    bool shapeCanBePlaced = blockShapePlacementChecker.CheckShapeCanBePlaced(shapeContainer.blockShape);
+                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanBePlaced ? 1F : 0.5F;
 
-                    if (shapeCanbePlaced)
+                    if (shapeCanBePlaced)
                     {
                         canAnyShapePlaced = true;
                     }
@@ -413,8 +413,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (shapeContainer.blockShape != null)
                 {
                     bool isAdvanceShape = shapeContainer.blockShape.isAdvanceShape;
-                    allShapesInfo[shapeIndex] = new ShapeInfo(shapeContainer.blockShape.isAdvanceShape,
-                        shapeContainer.blockShape.name, shapeContainer.blockShape.transform.localEulerAngles.z);
+                    allShapesInfo[shapeIndex] = new ShapeInfo(
+                        isAdvanceShape: shapeContainer.blockShape.isAdvanceShape,
+                        shapeName: shapeContainer.blockShape.name,
+                        shapeRotation: shapeContainer.blockShape.transform.localEulerAngles.z);
                 }
                 else
                 {

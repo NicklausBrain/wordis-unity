@@ -19,7 +19,7 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
-    /// This script controlls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.
+    /// This script controls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.
     /// </summary>
     public class BlockShapesController : MonoBehaviour
     {
@@ -179,7 +179,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
             }
 
             // Takes a block shape instance from pool and instantiates it.
-            GameObject upcomingShape = (GameObject) Instantiate(upcomingBlockShapes[0]);
+            GameObject upcomingShape = (GameObject)Instantiate(upcomingBlockShapes[0]);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
             if (currentTutorialStep > 1)
@@ -218,7 +218,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
                 }
             }
 
-            Invoke("CheckAllShapesCanbePlaced", 0.5F);
+            Invoke(nameof(CheckAllShapesCanBePlaced), 0.5F);
         }
 
         /// <summary>
@@ -287,9 +287,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
         #endregion
 
         /// <summary>
-        /// Checks if any block shape from all containers can be placed on board. Game will go to rescue or gameover state upon returning false.
+        /// Checks if any block shape from all containers can be placed on board.
+        /// Game will go to rescue or gameover state upon returning false.
         /// </summary>
-        void CheckAllShapesCanbePlaced()
+        void CheckAllShapesCanBePlaced()
         {
             bool canAnyShapePlaced = CheckBlockShapeCanPlaced();
 
@@ -299,7 +300,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
         }
 
         /// <summary>
-        /// Checks if any block shape from all containers can be placed on board. Shapes that can't placed will have lesser opacity.
+        /// Checks if any block shape from all containers can be placed on board.
+        /// Shapes that can't placed will have lesser opacity.
         /// </summary>
         public bool CheckBlockShapeCanPlaced()
         {
@@ -308,10 +310,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
             {
                 if (shapeContainer.blockShape != null)
                 {
-                    bool shapeCanbePlaced = blockShapePlacementChecker.CheckShapeCanbePlaced(shapeContainer.blockShape);
-                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanbePlaced ? 1F : 0.5F;
+                    bool shapeCanBePlaced = blockShapePlacementChecker.CheckShapeCanBePlaced(
+                        shapeContainer.blockShape);
+                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha =
+                        shapeCanBePlaced
+                            ? 1F
+                            : 0.5F;
 
-                    if (shapeCanbePlaced)
+                    if (shapeCanBePlaced)
                     {
                         canAnyShapePlaced = true;
                     }
@@ -349,7 +355,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
         }
 
         /// <summary>
-        /// Returns total nuber of block shapes placed during gameplay.
+        /// Returns total number of block shapes placed during gameplay.
         /// </summary>
         public int GetTotalShapesPlaced()
         {
