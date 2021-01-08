@@ -18,18 +18,18 @@ using Hyperbyte.Localization;
 
 namespace Hyperbyte
 {
-	/// <summary>
-	/// Settings screen controlls different user selection like sound, music, langauge etc.
-	/// </summary>
+    /// <summary>
+    /// Settings screen controls different user selection like sound, music, language etc.
+    /// </summary>
     public class SettingsScreen : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] GameObject dataSettingsOption;
         [SerializeField] GameObject supportButton;
         [SerializeField] GameObject vibrationToggleButton;
         [SerializeField] GameObject selectLanguageButton;
         [SerializeField] Text txtVersion;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -37,9 +37,9 @@ namespace Hyperbyte
         /// </summary>
         private void Start()
         {
-            dataSettingsOption.SetActive((PlayerPrefs.GetInt("ConsentRequired", 0) == 0) ? false : true);
-            supportButton.SetActive((ProfileManager.Instance.GetAppSettings().enableSupportURL) ? true : false);
-            vibrationToggleButton.SetActive((ProfileManager.Instance.GetAppSettings().enableVibrations) ? true : false);
+            dataSettingsOption.SetActive(PlayerPrefs.GetInt("ConsentRequired", 0) != 0);
+            supportButton.SetActive(ProfileManager.Instance.GetAppSettings().enableSupportURL ? true : false);
+            vibrationToggleButton.SetActive(ProfileManager.Instance.GetAppSettings().enableVibrations ? true : false);
 
             int activeLanguages = 0;
             foreach (LocalizedLanguage lang in LocalizationManager.Instance.allLocalizedLanaguages)
@@ -53,9 +53,9 @@ namespace Hyperbyte
             txtVersion.text = "Version : " + Application.version;
         }
 
-		/// <summary>
-		/// Close button click listener.
-		/// </summary>
+        /// <summary>
+        /// Close button click listener.
+        /// </summary>
         public void OnCloseButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -65,9 +65,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Support button click listener.
-		/// </summary>
+        /// <summary>
+        /// Support button click listener.
+        /// </summary>
         public void OnSupportButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -77,9 +77,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Privacy policy button click listener.
-		/// </summary>
+        /// <summary>
+        /// Privacy policy button click listener.
+        /// </summary>
         public void OnPrivacyPolicyButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -89,9 +89,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Data privacy button click listener.
-		/// </summary>
+        /// <summary>
+        /// Data privacy button click listener.
+        /// </summary>
         public void OnDataSettingsButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -101,22 +101,22 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Lanaguage select button click listener.
-		/// </summary>
+        /// <summary>
+        /// Language select button click listener.
+        /// </summary>
         public void OnSelectLanguageButtonPressed()
         {
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.lanagueSelectionScreen.Activate();
+                UIController.Instance.languageSelectionScreen.Activate();
                 gameObject.Deactivate();
             }
         }
 
-		/// <summary>
-		/// Navigate to given URL.
-		/// </summary>
+        /// <summary>
+        /// Navigate to given URL.
+        /// </summary>
         IEnumerator NavigateToUrl(string url)
         {
             yield return new WaitForSeconds(0.2F);

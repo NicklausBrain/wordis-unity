@@ -71,7 +71,7 @@ namespace Hyperbyte
             {
                 InputManager.Instance.DisableTouchForDelay();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.lanagueSelectionScreen.Activate();
+                UIController.Instance.languageSelectionScreen.Activate();
             }
         }
 

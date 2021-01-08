@@ -46,7 +46,7 @@ namespace Hyperbyte
         public GameObject commonMessageScreen;
         public GameObject dailyRewardScreen;
         public GameObject gameOverScreen;
-        public GameObject lanagueSelectionScreen;
+        public GameObject languageSelectionScreen;
         public GameObject currencyBalanceButton;
 
         public GameObject tipView;
@@ -255,7 +255,7 @@ namespace Hyperbyte
                     reviewScreen.Deactivate();
                     break;
                 case "SelectLangauge":
-                    lanagueSelectionScreen.Deactivate();
+                    languageSelectionScreen.Deactivate();
                     break;
 
                 case "PauseGame":
