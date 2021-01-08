@@ -12,7 +12,7 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
-using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +20,7 @@ using UnityEngine.UI;
 namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.
+    /// This script component will generate the board with given size and will also place blocks from previous session if there is progress.
     /// </summary>
     public class BoardGenerator : MonoBehaviour
     {
@@ -33,14 +33,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 #pragma warning restore 0649
 
         /// <summary>
-        /// Generates the block grid based on game settings and will also set progress from previoius session if any.
+        /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
         public void GenerateBoard(ProgressData progressData)
         {
             BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
 
-            int rowSize = (int) boardSize;
-            int columnSize = (int) boardSize;
+            int rowSize = (int)boardSize;
+            int columnSize = (int)boardSize;
 
             // Fetched the size of block that should be used.
             float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
@@ -120,7 +120,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Will set block status if there is any from previos session progress.
+        /// Will set block status if there is any from previous session progress.
         /// </summary>
         void SetBlockStatus(Block block, string statusData)
         {
@@ -159,7 +159,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject) (Instantiate(blockTemplate)) as GameObject;
+            GameObject block = (GameObject)(Instantiate(blockTemplate)) as GameObject;
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

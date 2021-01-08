@@ -17,7 +17,7 @@ using Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils;
 using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
 using Assets.Hyperbyte.BlockPuzzle.Scripts.Home;
 using Assets.Hyperbyte.BlockPuzzle.Scripts.UI;
-using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;

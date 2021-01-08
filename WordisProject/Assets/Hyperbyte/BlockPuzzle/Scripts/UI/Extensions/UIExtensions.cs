@@ -15,9 +15,9 @@ using System.Collections;
 using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 
-namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions
 {
-    public static class UIExtentions
+    public static class UIExtensions
     {
         // Clear all child gameobjects of the given gameobject.
         public static void ClearAllChild(this GameObject obj)

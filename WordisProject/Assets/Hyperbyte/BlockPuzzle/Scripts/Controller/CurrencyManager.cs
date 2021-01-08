@@ -12,7 +12,7 @@
 // THE SOFTWARE.
 
 using System;
-using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;

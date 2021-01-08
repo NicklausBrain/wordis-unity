@@ -13,7 +13,7 @@
 
 using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
 using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
-using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;

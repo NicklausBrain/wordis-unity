@@ -12,7 +12,7 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
-using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +20,7 @@ using UnityEngine.UI;
 namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
-    /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.
+    /// This script component will generate the board with given size and will also place blocks from previous session if there is progress.
     /// </summary>
     public class BoardGenerator : MonoBehaviour
     {
@@ -33,7 +33,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 #pragma warning restore 0649
 
         /// <summary>
-        /// Generates the block grid based on game settings and will also set progress from previoius session if any.
+        /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
         public void GenerateBoard()
         {
