@@ -20,18 +20,18 @@ using Hyperbyte.UITween;
 namespace Hyperbyte
 {
     /// <summary>
-    /// UIController controlls the entire UI Navigation of the game.
+    /// UIController controls the entire UI Navigation of the game.
     /// </summary>
     public class UIController : Singleton<UIController>
     {
-        List<string> screenStack = new List<string>();
+        readonly List<string> _screenStack = new List<string>();
 
         [SerializeField] Canvas UICanvas;
 
         [Header("UI Screens")]
         public HomeScreen homeScreen;
         public GamePlayUI gameScreen;
-        public Hyperbyte.Tutorial.GamePlayUI gameScreen_Tutorial;
+        public Hyperbyte.Tutorial.GamePlayUI gameScreenTutorial;
 
         [Header("Public Members.")]
         public GameObject shopScreen;
@@ -56,14 +56,14 @@ namespace Hyperbyte
         public Transform RuntimeEffectSpawnParent;
 
         // Ordered popup stack is used when another popup tries to open when already a popup is opened. Ordered stack will control it and add upcoming popups
-        // to queue so it will load automatically when alreay existing popup gets closed.
-        List<string> orderedPopupStack = new List<string>();
+        // to queue so it will load automatically when already existing popup gets closed.
+        readonly List<string> _orderedPopupStack = new List<string>();
 
         [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Classic;
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             Application.targetFrameRate = 60;
@@ -75,11 +75,9 @@ namespace Hyperbyte
         /// </summary>
         private void Start()
         {
-            /// Enables home screen on game start.
+            // Enables home screen on game start.
 
             homeScreen.gameObject.Activate();
-            
-           
         }
 
         /// <summary>
@@ -87,7 +85,7 @@ namespace Hyperbyte
         /// </summary>
         private void OnEnable()
         {
-            // Registeres session update callback.
+            // Registers session update callback.
             SessionManager.OnSessionUpdatedEvent += OnSessionUpdated;
         }
 
@@ -96,14 +94,15 @@ namespace Hyperbyte
         /// </summary>
         private void OnDisable()
         {
-            // Unregisteres session update callback.
+            // Un-registers session update callback.
             SessionManager.OnSessionUpdatedEvent -= OnSessionUpdated;
         }
 
         /// <summary>
         /// Session Updated callback.
         /// </summary>
-        private void OnSessionUpdated(SessionInfo info) {
+        private void OnSessionUpdated(SessionInfo info)
+        {
             CheckForReviewAppPopupOnLauch(info.currentSessionCount);
         }
 
@@ -126,7 +125,8 @@ namespace Hyperbyte
                 return;
             }
 
-            if (canShowReviewPopup && (ProfileManager.Instance.appLaunchReviewSessions.Contains(currentSessionCount))) {
+            if (canShowReviewPopup && (ProfileManager.Instance.appLaunchReviewSessions.Contains(currentSessionCount)))
+            {
                 ShowReviewPopup();
             }
         }
@@ -151,7 +151,8 @@ namespace Hyperbyte
                 return;
             }
 
-            if (canShowReviewPopup && (ProfileManager.Instance.gameOverReviewSessions.Contains(currentGameOver))) {
+            if (canShowReviewPopup && (ProfileManager.Instance.gameOverReviewSessions.Contains(currentGameOver)))
+            {
                 ShowReviewPopup();
             }
         }
@@ -165,7 +166,7 @@ namespace Hyperbyte
             {
                 if (InputManager.Instance.canInput())
                 {
-                    if (screenStack.Count > 0)
+                    if (_screenStack.Count > 0)
                     {
                         ProcessBackButton(Peek());
                     }
@@ -174,42 +175,43 @@ namespace Hyperbyte
         }
 
         /// <summary>
-        /// Adds the latest activated gameobject to stack.
+        /// Adds the latest activated GameObject to stack.
         /// </summary>
         public void Push(string screenName)
         {
-            if (!screenStack.Contains(screenName))
+            if (!_screenStack.Contains(screenName))
             {
-                screenStack.Add(screenName);
+                _screenStack.Add(screenName);
             }
         }
 
         /// <summary>
-        /// Returns the name of last activated gameobject from the stack.
+        /// Returns the name of last activated GameObject from the stack.
         /// </summary>
         public string Peek()
         {
-            if (screenStack.Count > 0)
+            if (_screenStack.Count > 0)
             {
-                return screenStack[screenStack.Count - 1];
+                return _screenStack[_screenStack.Count - 1];
             }
             return "";
         }
 
         /// <summary>
-        /// Removes the last gameobject name from the stack.
+        /// Removes the last GameObject name from the stack.
         /// </summary>
         public void Pop(string screenName)
         {
-            if (screenStack.Contains(screenName))
+            if (_screenStack.Contains(screenName))
             {
-                screenStack.Remove(screenName);
+                _screenStack.Remove(screenName);
 
-                if (orderedPopupStack.Contains(screenName))
+                if (_orderedPopupStack.Contains(screenName))
                 {
-                    orderedPopupStack.Remove(screenName);
+                    _orderedPopupStack.Remove(screenName);
 
-                    if (orderedPopupStack.Count > 0) {
+                    if (_orderedPopupStack.Count > 0)
+                    {
                         ShowDailogFromStack();
                     }
                 }
@@ -254,16 +256,16 @@ namespace Hyperbyte
                     break;
                 case "SelectLangauge":
                     lanagueSelectionScreen.Deactivate();
-                break;
+                    break;
 
                 case "PauseGame":
                     pauseGameScreen.Deactivate();
-                break;
+                    break;
 
                 case "RescueGame":
-                GamePlayUI.Instance.OnRescueCancelled();
-                rescueGameScreen.Deactivate();
-                break;
+                    GamePlayUI.Instance.OnRescueCancelled();
+                    rescueGameScreen.Deactivate();
+                    break;
             }
         }
 
@@ -277,7 +279,8 @@ namespace Hyperbyte
             SetPositiveButtomText(LocalizationManager.Instance.GetTextWithTag("txtNo")).
             SetNegativeButtonText(LocalizationManager.Instance.GetTextWithTag("txtYes")).
             SetMessageType(CommonDialogueMessageType.Confirmation).
-            SetOnPositiveButtonClickListener(() => {
+            SetOnPositiveButtonClickListener(() =>
+            {
                 UIController.Instance.commonMessageScreen.Deactivate();
 
             }).SetOnNegativeButtonClickListener(() =>
@@ -298,15 +301,15 @@ namespace Hyperbyte
         /// </summary>
         void QuitGameAfterDelay()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            #elif UNITY_ANDROID
-                //On Android, on quitting app, App actully won't quit but will be sent to background. So it can be load fast while reopening. 
-				AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-				activity.Call<bool>("moveTaskToBack" , true); 
-            #elif UNITY_IOS
-				Application.Quit();
-            #endif
+#elif UNITY_ANDROID
+                //On Android, on quitting app, App actually won't quit but will be sent to background. So it can be load fast while reopening. 
+                AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+                activity.Call<bool>("moveTaskToBack" , true); 
+#elif UNITY_IOS
+                Application.Quit();
+#endif
         }
 
         /// <summary>
@@ -317,7 +320,8 @@ namespace Hyperbyte
             new CommonDialogueInfo().SetTitle(title).
             SetMessage(message).
             SetMessageType(CommonDialogueMessageType.Info).
-            SetOnConfirmButtonClickListener(() => {
+            SetOnConfirmButtonClickListener(() =>
+            {
                 UIController.Instance.commonMessageScreen.Deactivate();
             }).Show();
         }
@@ -336,7 +340,7 @@ namespace Hyperbyte
         /// </summary>
         public void ShowConsentDialogue()
         {
-            orderedPopupStack.Add(consentScreen.name);
+            _orderedPopupStack.Add(consentScreen.name);
             ShowDailogFromStack();
         }
 
@@ -345,7 +349,7 @@ namespace Hyperbyte
         /// </summary>
         public void ShowDailyRewardsPopup()
         {
-            orderedPopupStack.Add(dailyRewardScreen.name);
+            _orderedPopupStack.Add(dailyRewardScreen.name);
             ShowDailogFromStack();
         }
 
@@ -355,18 +359,19 @@ namespace Hyperbyte
         private void ShowReviewPopup()
         {
             bool canShowReviewPopup = false;
-           
-            #if UNITY_IOS
+
+#if UNITY_IOS
             canShowReviewPopup = UnityEngine.iOS.Device.RequestStoreReview();
            
             if (canShowReviewPopup)
             {
                 PlayerPrefs.SetInt("AppRated", 1);
             }
-            #endif
+#endif
 
-            if (!canShowReviewPopup) {
-                orderedPopupStack.Add(reviewScreen.name);
+            if (!canShowReviewPopup)
+            {
+                _orderedPopupStack.Add(reviewScreen.name);
                 ShowDailogFromStack();
             }
         }
@@ -376,9 +381,9 @@ namespace Hyperbyte
         /// </summary>
         void ShowDailogFromStack()
         {
-            if (orderedPopupStack.Count > 0)
+            if (_orderedPopupStack.Count > 0)
             {
-                string screenName = orderedPopupStack[0];
+                string screenName = _orderedPopupStack[0];
 
                 switch (screenName)
                 {
@@ -419,19 +424,23 @@ namespace Hyperbyte
                 GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
                 showTutorial = gamePlaySettings.tutorialModeSettings.modeEnabled;
 
-                if (!showTutorial) {
+                if (!showTutorial)
+                {
                     PlayerPrefs.SetInt("tutorialShown", 1);
                 }
             }
 
             homeScreen.gameObject.Deactivate();
-            if(showTutorial) {
-                gameScreen_Tutorial.gameObject.Activate();
+            if (showTutorial)
+            {
+                gameScreenTutorial.gameObject.Activate();
                 cachedSelectedMode = gameMode;
-            } else {
+            }
+            else
+            {
                 gameScreen.gameObject.Activate();
                 gameScreen.GetComponent<GamePlayUI>().StartGamePlay(gameMode);
-            }            
+            }
         }
 
         public bool IsGamePlay()
@@ -463,7 +472,8 @@ namespace Hyperbyte
         /// <summary>
         /// Open Home screen when user presses home button from pause screen during gameplay.
         /// </summary>
-        public void OpenHomeScreenFromPauseGame() {
+        public void OpenHomeScreenFromPauseGame()
+        {
             StartCoroutine(OpenHomeScreenFromPauseGameCoroutine());
         }
 
@@ -476,10 +486,11 @@ namespace Hyperbyte
             homeScreen.gameObject.Activate();
         }
 
-         /// <summary>
+        /// <summary>
         /// Enables currency balance button. Currency balance button will be shown during shop screen, reward adding or reducing current only.
         /// </summary>
-        public void EnableCurrencyBalanceButton() {
+        public void EnableCurrencyBalanceButton()
+        {
             currencyBalanceButton.GetComponent<CanvasGroup>().SetAlpha(1, 0.3F);
         }
 
@@ -488,15 +499,21 @@ namespace Hyperbyte
         /// </summary>
         public void DisableCurrencyBalanceButton()
         {
-            if(! (selectThemeScreen.activeSelf || rescueGameScreen.activeSelf || gameOverScreen.activeSelf || shopScreen.activeSelf || purchaseSuccessScreen.activeSelf))
+            if (!(selectThemeScreen.activeSelf ||
+                  rescueGameScreen.activeSelf ||
+                  gameOverScreen.activeSelf ||
+                  shopScreen.activeSelf ||
+                  purchaseSuccessScreen.activeSelf))
             {
-                if (currencyBalanceButton != null && currencyBalanceButton.activeSelf) {
+                if (currencyBalanceButton != null &&
+                    currencyBalanceButton.activeSelf)
+                {
                     currencyBalanceButton.GetComponent<CanvasGroup>().SetAlpha(0, 0.3F);
                 }
             }
         }
 
-        public void PlayAddGemsAnimationAtPosition(Vector3 position, float delay) 
+        public void PlayAddGemsAnimationAtPosition(Vector3 position, float delay)
         {
             GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation")) as GameObject;
             rewardAnim.transform.SetParent(RuntimeEffectSpawnParent);
@@ -505,7 +522,8 @@ namespace Hyperbyte
             rewardAnim.GetComponent<RewardAddAnimation>().PlayGemsBalanceUpdateAnimation(ShopButtonGemsIcon.position, delay);
         }
 
-        public void PlayDeductGemsAnimation(Vector3 position, float delay) {
+        public void PlayDeductGemsAnimation(Vector3 position, float delay)
+        {
             GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation")) as GameObject;
             rewardAnim.transform.SetParent(RuntimeEffectSpawnParent);
             rewardAnim.GetComponent<RectTransform>().position = ShopButtonGemsIcon.position;
@@ -513,40 +531,81 @@ namespace Hyperbyte
             rewardAnim.GetComponent<RewardAddAnimation>().PlayGemsBalanceUpdateAnimation(position, delay);
         }
 
-        
-        public void ShowTipWithTextIdAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText) {
-			ShowTipAtPosition(tipPosition, anchor, LocalizationManager.Instance.GetTextWithTag(tipText));
-		}
+        public void ShowTipWithTextIdAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText)
+        {
+            ShowTipAtPosition(
+                tipPosition: tipPosition,
+                anchor: anchor,
+                tipText: LocalizationManager.Instance.GetTextWithTag(tipText));
+        }
 
-		public void ShowTipWithTextIdAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText, float duration) {
-            ShowTipAtPosition(tipPosition, anchor, LocalizationManager.Instance.GetTextWithTag(tipText), duration);
-		}
+        public void ShowTipWithTextIdAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText,
+            float duration)
+        {
+            ShowTipAtPosition(
+                tipPosition: tipPosition,
+                anchor: anchor,
+                tipText: LocalizationManager.Instance.GetTextWithTag(tipText),
+                duration: duration);
+        }
 
-        public void ShowTipAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText) {
-			tipView.GetComponent<TipView>().ShowTipAtPosition(tipPosition, anchor, tipText);
+        public void ShowTipAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText)
+        {
+            tipView.GetComponent<TipView>().ShowTipAtPosition(
+                tipPosition: tipPosition,
+                anchor: anchor,
+                tipText: tipText);
+
             tipView.Activate(false);
-		}
+        }
 
-		public void ShowTipAtPosition(Vector2 tipPosition, Vector2 anchor, string tipText, float duration) {
-            tipView.GetComponent<TipView>().ShowTipAtPosition(tipPosition, anchor, tipText, duration);
+        public void ShowTipAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText,
+            float duration)
+        {
+            tipView.GetComponent<TipView>().ShowTipAtPosition(
+                tipPosition: tipPosition,
+                anchor: anchor,
+                tipText: tipText,
+                duration: duration);
+
             tipView.Activate(false);
-		}
+        }
 
-        public void ShowTimeModeTip() {
-             if(!PlayerPrefs.HasKey("timeTip")) 
+        public void ShowTimeModeTip()
+        {
+            if (!PlayerPrefs.HasKey("timeTip"))
             {
-                UIController.Instance.ShowTipWithTextIdAtPosition(new Vector2(0,-350F), new Vector2(0.5F, 1), "txtTimeTip1", 6F);
-                Invoke("ShowTimeModeTip2",5F);
+                UIController.Instance.ShowTipWithTextIdAtPosition(
+                    tipPosition: new Vector2(0, -350F),
+                    anchor: new Vector2(0.5F, 1),
+                    tipText: "txtTimeTip1",
+                    duration: 6F);
+
+                Invoke(nameof(ShowTimeModeTip2), 5F);
             }
         }
 
-        void ShowTimeModeTip2() {
-            UIController.Instance.ShowTipWithTextIdAtPosition(new Vector2(0,-350F), new Vector2(0.5F, 1), "txtTimeTip2", 7F);
-            PlayerPrefs.SetInt("timeTip",1);
-        }
+        void ShowTimeModeTip2()
+        {
+            UIController.Instance.ShowTipWithTextIdAtPosition(
+                tipPosition: new Vector2(0, -350F),
+                anchor: new Vector2(0.5F, 1),
+                tipText: "txtTimeTip2",
+                duration: 7F);
 
-        public void ShowBombPlaceTip() {
-            UIController.Instance.ShowTipWithTextIdAtPosition(new Vector2(0,520F), new Vector2(0.5F, 0), "txtBombTip", 4.5F);
+            PlayerPrefs.SetInt("timeTip", 1);
         }
     }
 }
