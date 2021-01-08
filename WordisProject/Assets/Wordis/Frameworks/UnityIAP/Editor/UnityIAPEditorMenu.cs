@@ -22,7 +22,7 @@ namespace Assets.Wordis.Frameworks.UnityIAP.Editor
     public class UnityIAPEditorMenu : MonoBehaviour
     {
         #region MobileAdsSetting
-        [MenuItem("Hyperbyte/Unity IAP Settings", false, 14)]
+        [MenuItem("Wordis/Unity IAP Settings", false, 14)]
         public static void GenerateMobileAdsManager()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

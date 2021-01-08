@@ -20,7 +20,7 @@ namespace Assets.Wordis.Frameworks.Localization.Editor
     public class LocalizationSettingsEditorMenu : MonoBehaviour
     {
         #region LocalizationSettings
-        [MenuItem("Hyperbyte/Localization Settings", false, 15)]
+        [MenuItem("Wordis/Localization Settings", false, 15)]
         public static void GenerateLocalizationSettings()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

@@ -168,9 +168,9 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.hyperbyte.blockpuzzle
-    Standalone: com.hyperbyte.blockpuzzlegamekit
-    iPhone: com.hyperbyte.blockpuzzlegamekit
+    Android: com.wordis.blockpuzzle
+    Standalone: com.wordis.blockpuzzle
+    iPhone: com.wordis.blockpuzzle
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19

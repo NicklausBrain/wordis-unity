@@ -20,65 +20,74 @@ using UnityEngine;
 
 namespace Assets.Wordis.Frameworks.HapticFeedback.Editor
 {
-    public class HapticFeedbackEditorMenu  
+    public class HapticFeedbackEditorMenu
     {
         [InitializeOnLoad]
         public class AutorunNew
         {
-            static AutorunNew() {
+            static AutorunNew()
+            {
                 EditorApplication.update += RunOnce;
             }
 
-            static void RunOnce() {
+            static void RunOnce()
+            {
                 EditorApplication.update -= RunOnce;
 #if UNITY_ANDROID
 			VerifyAndroidManifest();
 #endif
-            }	
+            }
 
             /// <summary>
             /// Generates default AndroidManifest.xml if not available at Plugins -> Android path.
             /// </summary>
-            static void VerifyAndroidManifest() 
+            static void VerifyAndroidManifest()
             {
                 string androidManifestPath = Application.dataPath + "/Plugins/Android/";
-			
-                if(File.Exists(androidManifestPath + "AndroidManifest.xml")) {
+
+                if (File.Exists(androidManifestPath + "AndroidManifest.xml"))
+                {
                     CheckPermissionsInAndroidManifest(androidManifestPath + "AndroidManifest.xml", "android.permission.VIBRATE");
                 }
-                else {
-                    if(!Directory.Exists(androidManifestPath)) {
+                else
+                {
+                    if (!Directory.Exists(androidManifestPath))
+                    {
                         Directory.CreateDirectory(androidManifestPath);
                         AssetDatabase.Refresh();
                     }
-                    string defaultManifestPath = Application.dataPath + "/Hyperbyte/Frameworks/HapticFeedback/Plugins/Android/DefaultAndroidManifest.xml";
-                    if(File.Exists(defaultManifestPath)) {
+                    string defaultManifestPath = Application.dataPath + $"/{nameof(Wordis)}/Frameworks/HapticFeedback/Plugins/Android/DefaultAndroidManifest.xml";
+                    if (File.Exists(defaultManifestPath))
+                    {
                         File.Copy(defaultManifestPath, androidManifestPath + "AndroidManifest.xml");
                         AssetDatabase.Refresh();
                     }
                 }
-            }	
+            }
 
             /// <summary>
             /// Verifies if android vibration permission is added or not.
             /// </summary>
-            static void CheckPermissionsInAndroidManifest(string manifestPath, string permission) 
+            static void CheckPermissionsInAndroidManifest(string manifestPath, string permission)
             {
                 XDocument xDocument = XDocument.Parse(File.ReadAllText(manifestPath));
                 List<XElement> result = xDocument.Root.Elements("uses-permission").ToList();
                 bool vibrationPermissionExists = false;
 
-                foreach(XElement element in result) {
+                foreach (XElement element in result)
+                {
                     string permissionValue = element.Attribute("{http://schemas.android.com/apk/res/android}name").Value;
 
-                    if(permissionValue.ToLower().Equals(permission.ToLower())) {
+                    if (permissionValue.ToLower().Equals(permission.ToLower()))
+                    {
                         vibrationPermissionExists = true;
                     }
                 }
 
-                if(!vibrationPermissionExists) {
+                if (!vibrationPermissionExists)
+                {
                     XElement ele = new XElement("uses-permission");
-                    ele.Add(new XAttribute("{http://schemas.android.com/apk/res/android}name",permission));
+                    ele.Add(new XAttribute("{http://schemas.android.com/apk/res/android}name", permission));
                     xDocument.Root.Add(ele);
 
                     xDocument.Save(manifestPath);

@@ -20,7 +20,7 @@ namespace Assets.Wordis.Frameworks.ThemeManager.Editor
     public class UIThemeSettingsEditorMenu : MonoBehaviour
     {
         #region MobileAdsSetting
-        [MenuItem("Hyperbyte/UI Theme Settings", false, 16)]
+        [MenuItem("Wordis/UI Theme Settings", false, 16)]
         public static void GenerateUIThemeSettingsScriptable()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

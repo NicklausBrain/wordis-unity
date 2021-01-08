@@ -19,7 +19,7 @@ namespace Assets.Wordis.Frameworks.AppSettings.Editor
     public class AppSettingEditorMenu : MonoBehaviour
     {
         #region AppSetting
-        [MenuItem("Hyperbyte/App Settings", false, 12)]
+        [MenuItem("Wordis/App Settings", false, 12)]
         public static void GenerateAppSettingsScriptable()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

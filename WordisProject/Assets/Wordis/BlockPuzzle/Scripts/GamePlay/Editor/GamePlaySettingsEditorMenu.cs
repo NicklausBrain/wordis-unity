@@ -19,7 +19,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Editor
     public class GamePlaySettingsEditorMenu
     {
         #region AppSetting
-        [MenuItem("Hyperbyte/GamePlay Settings", false, 11)]
+        [MenuItem("Wordis/GamePlay Settings", false, 11)]
         public static void GenerateGameSettingsScriptable()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

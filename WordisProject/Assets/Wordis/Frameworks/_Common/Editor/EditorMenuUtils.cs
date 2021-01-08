@@ -19,13 +19,13 @@ namespace Assets.Wordis.Frameworks._Common.Editor
 {
     public static class EditorMenuUtils
     {
-        [MenuItem("Hyperbyte/Misc./Clear All PlayerPrefs")]
+        [MenuItem("Wordis/Misc./Clear All PlayerPrefs")]
         public static void ClearAllPlayerPrefs()
         {
             PlayerPrefs.DeleteAll();
         }
 
-        [MenuItem("Hyperbyte/Misc./Clear Define Symbol EditorPrefs")]
+        [MenuItem("Wordis/Misc./Clear Define Symbol EditorPrefs")]
         public static void ClearDefineSymbolEditorPrefs()
         {
             EditorPrefs.DeleteKey("userRemoved_" + "UnityIAP");
@@ -37,19 +37,19 @@ namespace Assets.Wordis.Frameworks._Common.Editor
         }
 
         #region CaptureScreenshot
-        [MenuItem("Hyperbyte/Misc./Capture Screenshot/1X")]
+        [MenuItem("Wordis/Misc./Capture Screenshot/1X")]
         private static void Capture1XScreenshot()
         {
             CaptureScreenshot(1);
         }
 
-        [MenuItem("Hyperbyte/Misc./Capture Screenshot/2X")]
+        [MenuItem("Wordis/Misc./Capture Screenshot/2X")]
         private static void Capture2XScreenshot()
         {
             CaptureScreenshot(2);
         }
 
-        [MenuItem("Hyperbyte/Misc./Capture Screenshot/3X")]
+        [MenuItem("Wordis/Misc./Capture Screenshot/3X")]
         private static void Capture3XScreenshot()
         {
             CaptureScreenshot(3);

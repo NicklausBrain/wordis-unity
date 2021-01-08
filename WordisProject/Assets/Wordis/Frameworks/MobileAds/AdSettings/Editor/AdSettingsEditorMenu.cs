@@ -21,7 +21,7 @@ namespace Assets.Wordis.Frameworks.MobileAds.AdSettings.Editor
     public class AdSettingsEditorMenu : MonoBehaviour
     {
         #region AppSetting
-        [MenuItem("Hyperbyte/Ad Settings", false, 13)]
+        [MenuItem("Wordis/Ad Settings", false, 13)]
         public static void GenerateAppSettingsScriptable()
         {
             string assetPath = $"Assets/{nameof(Wordis)}/Resources";

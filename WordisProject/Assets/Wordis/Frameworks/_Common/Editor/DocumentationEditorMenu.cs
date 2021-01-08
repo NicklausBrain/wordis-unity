@@ -24,27 +24,27 @@ namespace Assets.Wordis.Frameworks._Common.Editor
         static string localizationDocName = "https://drive.google.com/file/d/1Aw0e9W_alo2fei_LXYGM2CwZbVaAuM5U/preview"; 
         static string themeDocName = "https://drive.google.com/file/d/1161rAdjfXVfiMk_YccGUf2poTuYyIAW7/preview"; 
 
-        [MenuItem("Hyperbyte/Documentation/GamePlay Setup", false, 00)]
+        [MenuItem("Wordis/Documentation/GamePlay Setup", false, 00)]
         public static void OpenGameSettingDocumentation() {
             Application.OpenURL(gameDocName);
         }
 
-        [MenuItem("Hyperbyte/Documentation/Ad Network Setup", false, 10)]
+        [MenuItem("Wordis/Documentation/Ad Network Setup", false, 10)]
         public static void OpenAdSetUpDocumentation() {
             Application.OpenURL(adDocName);
         }
 
-        [MenuItem("Hyperbyte/Documentation/Unity IAP Setup", false, 11)]
+        [MenuItem("Wordis/Documentation/Unity IAP Setup", false, 11)]
         public static void OpenIAPSetUpDocumentation() {
             Application.OpenURL(iapDocName);
         }
 
-        [MenuItem("Hyperbyte/Documentation/Localization Setup", false, 20)]
+        [MenuItem("Wordis/Documentation/Localization Setup", false, 20)]
         public static void OpenLocalizationDocumentation() {
             Application.OpenURL(localizationDocName);
         }
 
-        [MenuItem("Hyperbyte/Documentation/UI Theme Setup", false, 21)]
+        [MenuItem("Wordis/Documentation/UI Theme Setup", false, 21)]
         public static void OpenUIThemeDocumentation() {
             Application.OpenURL(themeDocName);
         }
