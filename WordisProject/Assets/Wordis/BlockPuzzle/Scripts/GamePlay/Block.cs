@@ -63,7 +63,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void Awake()
         {
-            /// Initializes the collider component on Awake.
+            // Initializes the collider component on Awake.
             thisCollider = GetComponent<BoxCollider2D>();
         }
 
@@ -158,7 +158,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // Opacity of block image will set to 0 in 0.3 seconds. and will reset to 1 on animation completion.
             blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() => { blockImage.enabled = false; });
-
 
             isFilled = false;
             isAvailable = true;

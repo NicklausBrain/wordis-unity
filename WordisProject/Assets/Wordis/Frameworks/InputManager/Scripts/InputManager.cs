@@ -20,7 +20,7 @@ namespace Assets.Wordis.Frameworks.InputManager.Scripts
 {
     public class InputManager : Singleton<InputManager>
     {
-        static bool isTouchAvailable = true;
+        private static bool _isTouchAvailable = true;
         public EventSystem eventSystem;
 
         /// <summary>
@@ -36,14 +36,14 @@ namespace Assets.Wordis.Frameworks.InputManager.Scripts
 
         public bool canInput(float delay = 0.25F, bool disableOnAvailable = true)
         {
-            bool status = isTouchAvailable;
+            bool status = _isTouchAvailable;
             if (status && disableOnAvailable)
             {
-                isTouchAvailable = false;
+                _isTouchAvailable = false;
                 eventSystem.enabled = false;
 
-                StopCoroutine("EnableTouchAfterDelay");
-                StartCoroutine("EnableTouchAfterDelay", delay);
+                StopCoroutine(nameof(EnableTouchAfterDelay));
+                StartCoroutine(nameof(EnableTouchAfterDelay), delay);
             }
 
             return status;
@@ -51,22 +51,22 @@ namespace Assets.Wordis.Frameworks.InputManager.Scripts
 
         public void DisableTouch()
         {
-            isTouchAvailable = false;
+            _isTouchAvailable = false;
             eventSystem.enabled = false;
         }
 
         public void DisableTouchForDelay(float delay = 0.25F)
         {
-            isTouchAvailable = false;
+            _isTouchAvailable = false;
             eventSystem.enabled = false;
 
-            StopCoroutine("EnableTouchAfterDelay");
-            StartCoroutine("EnableTouchAfterDelay", delay);
+            StopCoroutine(nameof(EnableTouchAfterDelay));
+            StartCoroutine(nameof(EnableTouchAfterDelay), delay);
         }
 
         public void EnableTouch()
         {
-            isTouchAvailable = true;
+            _isTouchAvailable = true;
             eventSystem.enabled = true;
         }
 

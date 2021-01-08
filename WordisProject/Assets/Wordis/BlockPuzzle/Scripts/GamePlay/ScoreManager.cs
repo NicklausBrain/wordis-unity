@@ -101,7 +101,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             scoreAnimator.Animate(scoreToAdd);
         }
 
-
         void ShowScoreAnimation()
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -119,11 +118,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Set score with countetr animatio effect.
+        /// Set score with counter animation effect.
         /// </summary>
         IEnumerator SetScore(int lastScore, int currentScore)
         {
-            int IterationSize = (currentScore - lastScore) / 10;
+            int iterationSize = (currentScore - lastScore) / 10;
             txtScore.transform.LocalScale(Vector3.one * 1.2F, 0.2F).OnComplete(() =>
             {
                 txtScore.transform.LocalScale(Vector3.one, 0.2F);
@@ -131,7 +130,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             for (int index = 1; index < 10; index++)
             {
-                lastScore += IterationSize;
+                lastScore += iterationSize;
                 txtScore.text = lastScore.ToString("N0");
                 AudioController.Instance.PlayClipLow(AudioController.Instance.addScoreSoundChord, 0.15F);
                 yield return scoreIterationWait;

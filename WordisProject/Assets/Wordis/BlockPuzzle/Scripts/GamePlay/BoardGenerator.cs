@@ -59,8 +59,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
             GamePlayUI.Instance.gamePlay.allColumns = new List<List<Block>>();
 
-            Sprite blockBGSprite =
-                ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
+            Sprite blockBgSprite =
+                ThemeManager.Instance.GetBlockSpriteWithTag(
+                    blockTemplate.GetComponent<Block>().defaultSpriteTag);
 
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
@@ -71,19 +72,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 {
                     // Spawn a block instance and prepares it.
                     RectTransform blockElement = GetBlockInsideGrid();
-                    blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
+                    blockElement.localPosition = new Vector3(
+                        x: currentPositionX,
+                        y: currentPositionY,
+                        z: 0);
                     currentPositionX += blockSize + blockSpace;
                     blockElement.sizeDelta = Vector3.one * blockSize;
                     blockElement.GetComponent<BoxCollider2D>().size = Vector3.one * blockSize;
-                    blockElement.GetComponent<Image>().sprite = blockBGSprite;
-                    blockElement.name = "block-" + row + "" + column;
+                    blockElement.GetComponent<Image>().sprite = blockBgSprite;
+                    blockElement.name = $"block-{row}{column}";
 
                     // Sets blocks logical position inside grid and its default sprite.
                     Block block = blockElement.GetComponent<Block>();
                     block.gameObject.SetActive(true);
                     block.SetBlockLocation(row, column);
-                    blockRow.Add(block);
                     block.assignedSpriteTag = block.defaultSpriteTag;
+                    blockRow.Add(block);
                 }
 
                 currentPositionX = startPointX;
@@ -159,7 +163,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)Instantiate(blockTemplate) as GameObject;
+            GameObject block = Instantiate(blockTemplate);
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

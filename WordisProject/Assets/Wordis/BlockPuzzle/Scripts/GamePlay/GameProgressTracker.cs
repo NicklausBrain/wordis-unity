@@ -18,8 +18,9 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script component typically tracks and saves the progress of game. This is used to start game previos progress 
-    /// when user leaves game without completing/finishing it. The info of game progress is saved in playerpref in json format.
+    /// This script component typically tracks and saves the progress of game.
+    /// This is used to start game previous progress when user leaves game without completing/finishing it.
+    /// The info of game progress is saved in playerpref in json format.
     /// </summary>
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
@@ -143,14 +144,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
                 _currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
                 _currentProgressData.totalShapesPlaced = GamePlay.Instance.blockShapeController.GetTotalShapesPlaced();
-                PlayerPrefs.SetString("gameProgress_" + GamePlayUI.Instance.currentGameMode,
+                PlayerPrefs.SetString($"gameProgress_{GamePlayUI.Instance.currentGameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }
         }
 
         public bool HasGameProgress(GameMode gameMode)
         {
-            return PlayerPrefs.HasKey("gameProgress_" + gameMode);
+            return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void DeleteProgress(GameMode gameMode)
         {
-            PlayerPrefs.DeleteKey("gameProgress_" + gameMode);
+            PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
         }
     }
 

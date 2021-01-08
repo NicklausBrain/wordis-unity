@@ -33,7 +33,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-        [Header("Public Class Members")] [Tooltip("GamePlay Script Reference")]
+        [Header("Public Class Members")]
+        [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
         [Tooltip("ScoreManager Script Reference")]
@@ -75,7 +76,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Total lines clear during gameplay.
         [HideInInspector] public int totalLinesCompleted = 0;
 
-        // Resuce used for the game or not.
+        // Rescue used for the game or not.
         [HideInInspector] public bool rescueDone = false;
 
         // Reason for game over. Will Initialize at game over or rescue.
@@ -89,7 +90,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
             }
         }
 
@@ -102,8 +103,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             currentModeSettings = GetCurrentModeSettings();
 
             // Checks if the there is user progress from previous session.
-            bool hasPreviosSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
-            if (hasPreviosSessionProgress)
+            bool hasPreviousSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
+            if (hasPreviousSessionProgress)
             {
                 progressData = GameProgressTracker.Instance.GetGameProgress(Instance.currentGameMode);
             }
@@ -213,7 +214,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Time Mode Specific
 
-        // Returns Intial timer for time mode.
+        // Returns Initial timer for time mode.
         public float timeModeInitialTimer => gamePlaySettings.initialTime;
 
         // Returns seconds to be added 

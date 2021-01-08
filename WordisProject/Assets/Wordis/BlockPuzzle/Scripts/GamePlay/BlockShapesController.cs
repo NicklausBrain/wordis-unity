@@ -20,7 +20,8 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script controlls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.
+    /// This script controls the block shapes that being place/played on board grid.
+    /// It controls spawning of block shapes and organizing it.
     /// </summary>
     public class BlockShapesController : MonoBehaviour
     {
@@ -33,17 +34,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized] public BlockShapePlacementChecker blockShapePlacementChecker;
 
         // Pool of all block shape prepared with probability. Will stay unchanged during gameplay.
-        List<GameObject> blockShapesPool = new List<GameObject>();
+        private readonly List<GameObject> _blockShapesPool = new List<GameObject>();
 
-        // Upcoming block shapes pool copies elements from blockShapPool and keeps updating with game progress.
-        List<GameObject> upcomingBlockShapes = new List<GameObject>();
+        // Upcoming block shapes pool copies elements from blockShapePool and keeps updating with game progress.
+        private readonly List<GameObject> _upcomingBlockShapes = new List<GameObject>();
 
         // Size of block shape when its inactive and inside block shape container.
-        Vector3 shapeInactiveScale = Vector3.one;
+        Vector3 _shapeInactiveScale = Vector3.one;
 
-        bool hasInitialized = false;
+        bool _hasInitialized = false;
 
-        int totalShapesPlaced = 0;
+        int _totalShapesPlaced = 0;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -58,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnEnable()
         {
-            ///  Registers game status callbacks.
+            // Registers game status callbacks.
             GamePlayUI.OnShapePlacedEvent += GamePlayUI_OnShapePlacedEvent;
         }
 
@@ -67,7 +68,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            /// Unregisters game status callbacks.
+            // Unregisters game status callbacks.
             GamePlayUI.OnShapePlacedEvent -= GamePlayUI_OnShapePlacedEvent;
         }
 
@@ -76,7 +77,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PrepareShapeContainer()
         {
-            shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
+            _shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
             PrepareShapePool();
             PrepareUpcomingShapes();
             FillAllShapeContainers();
@@ -87,14 +88,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PrepareShapeContainer(ProgressData progressData)
         {
-            shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
+            _shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
             PrepareShapePool();
             PrepareUpcomingShapes();
 
             if (progressData != null)
             {
                 FillAllShapeContainers(progressData.currentShapesInfo);
-                totalShapesPlaced = progressData.totalShapesPlaced;
+                _totalShapesPlaced = progressData.totalShapesPlaced;
             }
             else
             {
@@ -107,7 +108,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void PrepareShapePool()
         {
-            if (!hasInitialized)
+            if (!_hasInitialized)
             {
                 if (GamePlayUI.Instance.currentModeSettings.standardShapeAllowed)
                 {
@@ -117,7 +118,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         for (int i = 0; i < info.spawnProbability; i++)
                         {
-                            blockShapesPool.Add(info.blockShape);
+                            _blockShapesPool.Add(info.blockShape);
                             info.blockShape.GetComponent<BlockShape>().SetSpriteTag(info.blockSpriteTag);
                         }
                     }
@@ -131,14 +132,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         for (int i = 0; i < info.spawnProbability; i++)
                         {
-                            blockShapesPool.Add(info.blockShape);
+                            _blockShapesPool.Add(info.blockShape);
                             info.blockShape.GetComponent<BlockShape>().SetSpriteTag(info.blockSpriteTag);
                             info.blockShape.GetComponent<BlockShape>().isAdvanceShape = true;
                         }
                     }
                 }
 
-                hasInitialized = true;
+                _hasInitialized = true;
             }
         }
 
@@ -163,7 +164,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 BlockShape blockShape = GetBlockShape();
                 blockShape.transform.SetParent(shapeContainer.blockParent);
                 shapeContainer.blockShape = blockShape;
-                blockShape.transform.localScale = shapeInactiveScale;
+                blockShape.transform.localScale = _shapeInactiveScale;
                 blockShape.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero.WithNewX(1500);
                 blockShape.GetComponent<RectTransform>().AnchorX(0, 0.5F).SetDelay(0.3F).SetEase(Ease.EaseOut);
             }
@@ -183,7 +184,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 BlockShape blockShape = GetBlockShape();
                 blockShape.transform.SetParent(shapeContainer.blockParent);
                 shapeContainer.blockShape = blockShape;
-                blockShape.transform.localScale = shapeInactiveScale;
+                blockShape.transform.localScale = _shapeInactiveScale;
                 blockShape.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero.WithNewX(300);
                 blockShape.GetComponent<RectTransform>().AnchorX(0, 0.3F).SetDelay(0.1F).SetEase(Ease.EaseOut);
             }
@@ -228,7 +229,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     BlockShape blockShape = GetBlockShape(info, rotation);
                     blockShape.transform.SetParent(shapeContainer.blockParent);
                     shapeContainer.blockShape = blockShape;
-                    blockShape.transform.localScale = shapeInactiveScale;
+                    blockShape.transform.localScale = _shapeInactiveScale;
                     blockShape.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero.WithNewX(1500);
                     blockShape.GetComponent<RectTransform>().AnchorX(0, 0.5F).SetDelay(0.3F).SetEase(Ease.EaseOut);
                 }
@@ -251,13 +252,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         BlockShape GetBlockShape()
         {
-            if (upcomingBlockShapes.Count <= 0)
+            if (_upcomingBlockShapes.Count <= 0)
             {
                 PrepareUpcomingShapes();
             }
 
             // Takes a block shape instance from pool and instantiates it.
-            GameObject upcomingShape = (GameObject) Instantiate(upcomingBlockShapes[0]);
+            GameObject upcomingShape = (GameObject) Instantiate(_upcomingBlockShapes[0]);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
             // Will add initial rotation to block shape.
@@ -265,7 +266,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             upcomingShape.transform.localEulerAngles = Vector3.zero.WithNewZ(90 * randomRotation);
 
             // Removes shapes from pool.
-            upcomingBlockShapes.RemoveAt(0);
+            _upcomingBlockShapes.RemoveAt(0);
             return upcomingShape.GetComponent<BlockShape>();
         }
 
@@ -274,8 +275,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void PrepareUpcomingShapes()
         {
-            upcomingBlockShapes.AddRange(blockShapesPool);
-            upcomingBlockShapes.Shuffle();
+            _upcomingBlockShapes.AddRange(_blockShapesPool);
+            _upcomingBlockShapes.Shuffle();
         }
 
         /// <summary>
@@ -358,7 +359,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void GamePlayUI_OnShapePlacedEvent()
         {
             Invoke("UpdateShapeContainers", 0.1F);
-            totalShapesPlaced += 1;
+            _totalShapesPlaced += 1;
         }
 
         #endregion
@@ -427,11 +428,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Returns total nuber of block shapes placed during gameplay.
+        /// Returns total number of block shapes placed during gameplay.
         /// </summary>
         public int GetTotalShapesPlaced()
         {
-            return totalShapesPlaced;
+            return _totalShapesPlaced;
         }
 
         /// <summary>
@@ -439,15 +440,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ResetGame()
         {
-            blockShapesPool.Clear();
-            upcomingBlockShapes.Clear();
+            _blockShapesPool.Clear();
+            _upcomingBlockShapes.Clear();
 
             foreach (ShapeContainer shapeContainer in allShapeContainers)
             {
                 shapeContainer.Reset();
             }
 
-            hasInitialized = false;
+            _hasInitialized = false;
         }
     }
 }
