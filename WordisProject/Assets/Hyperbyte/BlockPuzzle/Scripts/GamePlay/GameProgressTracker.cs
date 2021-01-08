@@ -22,14 +22,14 @@ namespace Hyperbyte
     /// </summary>
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
-        ProgressData currentProgressData;
+        ProgressData _currentProgressData;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         private void OnEnable()
         {
-            ///  Registers game status callbacks.
+            //  Registers game status callbacks.
             GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
             GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
             GamePlayUI.OnShapePlacedEvent += GamePlayUI_OnShapePlacedEvent;
@@ -40,7 +40,7 @@ namespace Hyperbyte
         /// </summary>
         private void OnDisable()
         {
-            ///  Registers game status callbacks.
+            //  Registers game status callbacks.
             GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
             GamePlayUI.OnShapePlacedEvent -= GamePlayUI_OnShapePlacedEvent;
             GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
@@ -51,11 +51,11 @@ namespace Hyperbyte
         /// </summary>
         private void GamePlayUI_OnGameStartedEvent(GameMode obj)
         {
-            currentProgressData = new ProgressData();
+            _currentProgressData = new ProgressData();
         }
 
         /// <summary>
-        /// Save progres on calling manually. Typically will be called after rescue done.
+        /// Save progress on calling manually. Typically will be called after rescue done.
         /// </summary>
         public void SaveProgressExplicitly()
         {
@@ -66,7 +66,7 @@ namespace Hyperbyte
         }
 
         /// <summary>
-        /// Save progres after block shape places.
+        /// Save progress after block shape places.
         /// </summary>
         private void GamePlayUI_OnShapePlacedEvent()
         {
@@ -89,7 +89,7 @@ namespace Hyperbyte
         /// </summary>
         public void ClearProgressData()
         {
-            currentProgressData = null;
+            _currentProgressData = null;
             DeleteProgress(GamePlayUI.Instance.currentGameMode);
         }
 
@@ -101,7 +101,7 @@ namespace Hyperbyte
         {
             if (pause)
             {
-                if (currentProgressData != null)
+                if (_currentProgressData != null)
                 {
 
                 }
@@ -109,12 +109,12 @@ namespace Hyperbyte
         }
 
         /// <summary>
-        /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, bombs, 
-        /// score etc and will save to progress data class which inturn will be saved to playerprefs in json format.
+        /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
+        /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
         /// </summary>
         private void SaveProgress()
         {
-            if (currentProgressData != null)
+            if (_currentProgressData != null)
             {
                 string[] gridData = new string[GamePlay.Instance.allRows.Count];
                 int rowIndex = 0;
@@ -127,22 +127,22 @@ namespace Hyperbyte
                     {
                         row = row == string.Empty
                             ? $"{b.isAvailable}-{b.assignedSpriteTag}"
-                            : (string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}"));
+                            : string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}");
                     }
                     gridData[rowIndex] = row;
                     rowIndex++;
                 }
 
-                currentProgressData.gridData = gridData;
-                currentProgressData.currentShapesInfo = GamePlay.Instance.blockShapeController.GetCurrentShapesInfo();
+                _currentProgressData.gridData = gridData;
+                _currentProgressData.currentShapesInfo = GamePlay.Instance.blockShapeController.GetCurrentShapesInfo();
 
                 // Attached all the fetched data to progress data class instance.
-                currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
-                currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
-                currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
-                currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
-                currentProgressData.totalShapesPlaced = GamePlay.Instance.blockShapeController.GetTotalShapesPlaced();
-                PlayerPrefs.SetString("gameProgress_" + GamePlayUI.Instance.currentGameMode, JsonUtility.ToJson(currentProgressData));
+                _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
+                _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
+                _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
+                _currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
+                _currentProgressData.totalShapesPlaced = GamePlay.Instance.blockShapeController.GetTotalShapesPlaced();
+                PlayerPrefs.SetString("gameProgress_" + GamePlayUI.Instance.currentGameMode, JsonUtility.ToJson(_currentProgressData));
             }
         }
 
@@ -211,13 +211,13 @@ namespace Hyperbyte
 
         // Class constructor with required parameters.
         public ShapeInfo(
-            bool _isAdvanceShape,
-            string _shapeName,
-            float _shapeRotation)
+            bool isAdvanceShape,
+            string shapeName,
+            float shapeRotation)
         {
-            isAdvanceShape = _isAdvanceShape;
-            shapeName = _shapeName;
-            shapeRotation = _shapeRotation;
+            this.isAdvanceShape = isAdvanceShape;
+            this.shapeName = shapeName;
+            this.shapeRotation = shapeRotation;
         }
     }
 }
