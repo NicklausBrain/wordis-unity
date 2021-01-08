@@ -80,14 +80,12 @@
 	<string name = "txtPurchaseFail" text = "Der gik noget galt med dit køb. Prøv igen senere."/>
 
 	<!-- Game Tips -->
-	<string name = "txtBombTip" text = "RENGØR BOMBEN FØR DET EKSPLODERER!"/>
 	<string name = "txtTimeTip1" text = "Hold en se på timeren!"/>
 	<string name = "txtTimeTip2" text = "RETTE FORSKRIFTER FOR AT ØGE TIMER!"/>
 
 	<!-- Game Over -->
 	<string name = "txtGameOver" text = "SPIL OVER"/>
 	<string name = "txtGameOver_gridfull" text = "Ude af bevægelse!"/>
-	<string name = "txtGameOver_bombexplode" text = "BOMB EXPLODERET!"/>
 	<string name = "txtGameOver_timeover" text = "TID UDLØBET!"/>
 
 	<!-- RESCUE -->

@@ -80,14 +80,12 @@
 	<string name = "txtPurchaseFail" text = "Při nákupu došlo k chybě. Prosím zkuste to znovu později."/>
 
 	<!-- Game Tips -->
-	<string name = "txtBombTip" text = "TIP: VYMAZTE BOMB PŘED VÝSLEDKY!"/>
 	<string name = "txtTimeTip1" text = "TIP: UDRŽUJTE HODINU NA ČASOVAČI!"/>
 	<string name = "txtTimeTip2" text = "TIP: VYMAZAT LINKY PRO ZVÝŠENÍ ČASU!"/>
 
 	<!-- Game Over -->
 	<string name = "txtGameOver" text = "KONEC HRY"/>
 	<string name = "txtGameOver_gridfull" text = "Z POHYBU!"/>
-	<string name = "txtGameOver_bombexplode" text = "BOMB EXPLODED!"/>
 	<string name = "txtGameOver_timeover" text = "ČAS VYPRŠEL!"/>
 
 	<!-- RESCUE -->

@@ -80,14 +80,12 @@
 	<string name = "txtPurchaseFail" text = "Something went wrong with your purchase. Please try again later."/>
 
 	<!-- Game Tips -->
-	<string name = "txtBombTip" text = "TIP : CLEAR BOMB BEFORE IT EXPLODES!"/>
 	<string name = "txtTimeTip1" text = "TIP : KEEP A WATCH ON TIMER!"/>
 	<string name = "txtTimeTip2" text = "TIP : CLEAR LINES TO INCREASE TIMER!"/>
 
 	<!-- Game Over -->
 	<string name = "txtGameOver" text = "GAME OVER"/>
 	<string name = "txtGameOver_gridfull" text = "OUT OF MOVE!"/>
-	<string name = "txtGameOver_bombexplode" text = "BOMB EXPLODED!"/>
 	<string name = "txtGameOver_timeover" text = "TIME OVER!"/>
 
 	<!-- RESCUE -->

@@ -81,14 +81,12 @@
 	<string name = "txtPurchaseFail" text = "Coś poszło nie tak z zakupem. Spróbuj ponownie później." />
 
 	<!-- Game Tips -->
-	<string name = "txtBombTip" text = "WSKAZÓWKA: WYCZYŚĆ BOMBĘ PRZED WYBUCHEM!" />
 	<string name = "txtTimeTip1" text = "WSKAZÓWKA: ZACHOWAJ ZEGAREK W CZASIE!" />
 	<string name = "txtTimeTip2" text = "WSKAZÓWKA: WYCZYŚĆ LINIE, ABY ZWIĘKSZYĆ TIMER!" />
 
 	<!-- Game Over -->
 	<string name = "txtGameOver" text = "KONIEC GRY" />
 	<string name = "txtGameOver_gridfull" text = "Z RUCHU!!" />
-	<string name = "txtGameOver_bombexplode" text = "BOMBA WYBUCHANA!" />
 	<string name = "txtGameOver_timeover" text = "KONIEC CZASU!" />
 
 	<!-- RESCUE -->
