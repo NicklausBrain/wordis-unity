@@ -65,7 +65,7 @@ namespace Hyperbyte
         /// <summary>
         /// Opens language selection popup.
         /// </summary>
-        public void OnSelectLangaugeButtonPressed()
+        public void OnSelectLanguageButtonPressed()
         {
             if (InputManager.Instance.canInput())
             {
