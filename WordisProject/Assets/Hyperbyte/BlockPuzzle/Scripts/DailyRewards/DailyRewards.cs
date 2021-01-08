@@ -93,8 +93,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
             }
             else
             {
-                int startIndex = (currentRewardDay - 2);
-                for (int index = startIndex; index <= (allDayRewards.Count + (startIndex - 1)); index++)
+                int startIndex = currentRewardDay - 2;
+                for (int index = startIndex; index <= allDayRewards.Count + (startIndex - 1); index++)
                 {
                     displayRewardDays.Add(index);
                 }

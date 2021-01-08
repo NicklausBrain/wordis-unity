@@ -37,7 +37,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils
             rewardAnim.transform.localScale = Vector3.one;
             rewardAddAnimation = rewardAnim.GetComponent<RewardAddAnimation>();
 
-            Invoke("ShowAddRewardAnimation", (animationDelay + 0.2F));
+            Invoke("ShowAddRewardAnimation", animationDelay + 0.2F);
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Editor
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))
             {
-                asset = (LocalizationSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (LocalizationSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {

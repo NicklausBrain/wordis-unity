@@ -26,7 +26,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions
             {
                 foreach (Transform child in obj.transform)
                 {
-                    GameObject.Destroy(child.gameObject);
+                    Object.Destroy(child.gameObject);
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions
             {
                 foreach (Transform child in obj)
                 {
-                    GameObject.Destroy(child.gameObject);
+                    Object.Destroy(child.gameObject);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extensions
             {
                 foreach (Transform child in obj)
                 {
-                    GameObject.Destroy(child.gameObject);
+                    Object.Destroy(child.gameObject);
                 }
             }
         }

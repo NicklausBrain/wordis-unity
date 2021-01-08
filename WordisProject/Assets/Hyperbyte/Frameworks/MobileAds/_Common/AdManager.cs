@@ -55,7 +55,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         public static event Action OnRewardedClosedEvent;
         public static event Action<string> OnRewardedAdRewardedEvent;
 
-        [System.NonSerialized] public AdSettings.Scripts.AdSettings adSettings;
+        [NonSerialized] public AdSettings.Scripts.AdSettings adSettings;
 
         // Time when last interstitial was shown, to handle min delay between 2 interstitials.
         float lastInterstitialShownTime = 0;
@@ -74,12 +74,9 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         void OnConsentVerificationCompleted()
         {
             consentVerified = PlayerPrefs.HasKey("consentVerified");
-            consentAllowed = (PlayerPrefs.GetInt("consentAllowed", 0) != 0);
+            consentAllowed = PlayerPrefs.GetInt("consentAllowed", 0) != 0;
 
-            if (OnConsentVerifiedEvent != null)
-            {
-                OnConsentVerifiedEvent.Invoke(consentVerified, consentAllowed);
-            }
+            OnConsentVerifiedEvent?.Invoke(consentVerified, consentAllowed);
 
             if (adSettings.adsEnabled)
             {
@@ -202,7 +199,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         {
             // Handles delay between 2 interstitial ads.
             if (lastInterstitialShownTime <= 0 ||
-                ((Time.time - lastInterstitialShownTime) >= adSettings.delayBetweenIngerstitials))
+                Time.time - lastInterstitialShownTime >= adSettings.delayBetweenIngerstitials)
             {
                 if (adSettings.adsEnabled && adSettings.interstitialAdsEnabled)
                 {
@@ -258,109 +255,73 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         /// Invokes event callback of varient ad status.
         public void OnSdkInitialised()
         {
-            if (OnSdkInitialisedEvent != null)
-            {
-                OnSdkInitialisedEvent.Invoke();
-            }
+            OnSdkInitialisedEvent?.Invoke();
         }
 
         public void OnBannerLoaded()
         {
-            if (OnBannerLoadedEvent != null)
-            {
-                OnBannerLoadedEvent.Invoke();
-            }
+            OnBannerLoadedEvent?.Invoke();
         }
 
         public void OnBannerLoadFailed(string reason)
         {
-            if (OnBannerLoadFailedEvent != null)
-            {
-                OnBannerLoadFailedEvent.Invoke(reason);
-            }
+            OnBannerLoadFailedEvent?.Invoke(reason);
         }
 
         public void OnInterstitialLoaded()
         {
-            if (OnInterstitialLoadedEvent != null)
-            {
-                OnInterstitialLoadedEvent.Invoke();
-            }
+            OnInterstitialLoadedEvent?.Invoke();
         }
 
         public void OnInterstitialLoadFailed(string reason)
         {
-            if (OnInterstitialLoadFailedEvent != null)
-            {
-                OnInterstitialLoadFailedEvent.Invoke(reason);
-            }
+            OnInterstitialLoadFailedEvent?.Invoke(reason);
         }
 
         public void OnInterstitialShown()
         {
-            if (OnInterstitialShownEvent != null)
-            {
-                OnInterstitialShownEvent.Invoke();
-            }
+            OnInterstitialShownEvent?.Invoke();
         }
 
         public void OnInterstitialClosed()
         {
             lastInterstitialShownTime = Time.time;
-            if (OnInterstitialClosedEvent != null)
-            {
-                OnInterstitialClosedEvent.Invoke();
-            }
+            OnInterstitialClosedEvent?.Invoke();
         }
 
         public void OnRewardedLoaded()
         {
-            if (OnRewardedLoadedEvent != null)
-            {
-                OnRewardedLoadedEvent.Invoke();
-            }
+            OnRewardedLoadedEvent?.Invoke();
         }
 
         public void OnRewardedLoadFailed(string reason)
         {
             {
-                if (OnRewardedLoadFailedEvent != null)
-                {
-                    OnRewardedLoadFailedEvent.Invoke(reason);
-                }
+                OnRewardedLoadFailedEvent?.Invoke(reason);
             }
         }
 
         public void OnRewardedShown()
         {
-            if (OnRewardedShownEvent != null)
-            {
-                OnRewardedShownEvent.Invoke();
-            }
+            OnRewardedShownEvent?.Invoke();
         }
 
         public void OnRewardedClosed()
         {
-            if (OnRewardedClosedEvent != null)
-            {
-                OnRewardedClosedEvent.Invoke();
-            }
+            OnRewardedClosedEvent?.Invoke();
         }
 
         public void OnRewardedAdRewarded()
         {
-            if (OnRewardedAdRewardedEvent != null)
-            {
-                OnRewardedAdRewardedEvent.Invoke(rewardedVideoTag);
-            }
+            OnRewardedAdRewardedEvent?.Invoke(rewardedVideoTag);
         }
 
         #endregion
 
         public static event Action<bool, bool> OnConsentVerifiedEvent;
 
-        [System.NonSerialized] public bool consentVerified = false;
-        [System.NonSerialized] public bool consentAllowed = false;
+        [NonSerialized] public bool consentVerified = false;
+        [NonSerialized] public bool consentAllowed = false;
 
 #if HB_EEA_CONSENT
         UserLocation userLocation = UserLocation.Unknown;
@@ -378,7 +339,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
             if (PlayerPrefs.HasKey("consentVerified"))
             {
                 consentVerified = PlayerPrefs.HasKey("consentVerified");
-                consentAllowed = (PlayerPrefs.GetInt("consentAllowed", 0) != 0);
+                consentAllowed = PlayerPrefs.GetInt("consentAllowed", 0) != 0;
                 OnConsentVerificationCompleted();
             }
             else
@@ -462,7 +423,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         public void SetConsentStatus(bool allowed)
         {
             PlayerPrefs.SetInt("consentVerified", 1);
-            PlayerPrefs.SetInt("consentAllowed", (allowed) ? 1 : 0);
+            PlayerPrefs.SetInt("consentAllowed", allowed ? 1 : 0);
 
             OnConsentVerificationCompleted();
         }
@@ -488,7 +449,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
                     ConsentResponse response = JsonUtility.FromJson<ConsentResponse>(webRequest.downloadHandler.text);
                     response.is_request_in_eea_or_unknown = true;
                     PlayerPrefs.SetInt("userLocationVerified", 1);
-                    PlayerPrefs.SetInt("userLocation", (!response.is_request_in_eea_or_unknown) ? 2 : 1);
+                    PlayerPrefs.SetInt("userLocation", !response.is_request_in_eea_or_unknown ? 2 : 1);
                     GetUserConsent();
                 }
                 else

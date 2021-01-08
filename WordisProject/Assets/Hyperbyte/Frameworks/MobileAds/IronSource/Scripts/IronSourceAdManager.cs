@@ -29,7 +29,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (IronSourceAdsSettings) (Resources.Load("AdNetworkSettings/IronSourceAdsSettings"));
+            settings = (IronSourceAdsSettings) Resources.Load("AdNetworkSettings/IronSourceAdsSettings");
 #if HB_IRONSOURCE
             IronSource.Agent.init (settings.GetAppId(), IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
             IronSource.Agent.setConsent(AdManager.Instance.consentAllowed);

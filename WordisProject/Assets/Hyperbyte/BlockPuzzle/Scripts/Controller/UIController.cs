@@ -110,17 +110,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         private void OnSessionUpdated(SessionInfo info)
         {
-            CheckForReviewAppPopupOnLauch(info.currentSessionCount);
+            CheckForReviewAppPopupOnLaunch(info.currentSessionCount);
         }
 
         /// <summary>
         /// Try to show review screen if app setting has review popup on current session id.
         /// </summary>
-        void CheckForReviewAppPopupOnLauch(int currentSessionCount)
+        void CheckForReviewAppPopupOnLaunch(int currentSessionCount)
         {
             bool canShowReviewPopup = true;
 
-            if ((!ProfileManager.Instance.GetAppSettings().showReviewPopupOnLaunch))
+            if (!ProfileManager.Instance.GetAppSettings().showReviewPopupOnLaunch)
             {
                 canShowReviewPopup = false;
                 return;
@@ -132,7 +132,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 return;
             }
 
-            if (canShowReviewPopup && (ProfileManager.Instance.appLaunchReviewSessions.Contains(currentSessionCount)))
+            if (canShowReviewPopup && ProfileManager.Instance.appLaunchReviewSessions.Contains(currentSessionCount))
             {
                 ShowReviewPopup();
             }
@@ -146,7 +146,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             bool canShowReviewPopup = true;
 
-            if ((!ProfileManager.Instance.GetAppSettings().showReviewPopupOnGameOver))
+            if (!ProfileManager.Instance.GetAppSettings().showReviewPopupOnGameOver)
             {
                 canShowReviewPopup = false;
                 return;
@@ -158,7 +158,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 return;
             }
 
-            if (canShowReviewPopup && (ProfileManager.Instance.gameOverReviewSessions.Contains(currentGameOver)))
+            if (canShowReviewPopup && ProfileManager.Instance.gameOverReviewSessions.Contains(currentGameOver))
             {
                 ShowReviewPopup();
             }
@@ -287,11 +287,11 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 .SetPositiveButtomText(LocalizationManager.Instance.GetTextWithTag("txtNo"))
                 .SetNegativeButtonText(LocalizationManager.Instance.GetTextWithTag("txtYes"))
                 .SetMessageType(CommonDialogueMessageType.Confirmation)
-                .SetOnPositiveButtonClickListener(() => { UIController.Instance.commonMessageScreen.Deactivate(); })
+                .SetOnPositiveButtonClickListener(() => { Instance.commonMessageScreen.Deactivate(); })
                 .SetOnNegativeButtonClickListener(() =>
                 {
                     QuitGame();
-                    UIController.Instance.commonMessageScreen.Deactivate();
+                    Instance.commonMessageScreen.Deactivate();
                 }).Show();
         }
 
@@ -324,7 +324,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         public void ShowMessage(string title, string message)
         {
             new CommonDialogueInfo().SetTitle(title).SetMessage(message).SetMessageType(CommonDialogueMessageType.Info)
-                .SetOnConfirmButtonClickListener(() => { UIController.Instance.commonMessageScreen.Deactivate(); })
+                .SetOnConfirmButtonClickListener(() => { Instance.commonMessageScreen.Deactivate(); })
                 .Show();
         }
 
@@ -593,7 +593,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             if (!PlayerPrefs.HasKey("timeTip"))
             {
-                UIController.Instance.ShowTipWithTextIdAtPosition(
+                Instance.ShowTipWithTextIdAtPosition(
                     tipPosition: new Vector2(0, -350F),
                     anchor: new Vector2(0.5F, 1),
                     tipText: "txtTimeTip1",
@@ -605,7 +605,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 
         void ShowTimeModeTip2()
         {
-            UIController.Instance.ShowTipWithTextIdAtPosition(
+            Instance.ShowTipWithTextIdAtPosition(
                 tipPosition: new Vector2(0, -350F),
                 anchor: new Vector2(0.5F, 1),
                 tipText: "txtTimeTip2",

@@ -48,7 +48,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
         // Returns Interpolation for the given ease type.
         public Color GetValue(float t)
         {
-            return UnityEngine.Color.Lerp(fromColor, toColor, t);
+            return Color.Lerp(fromColor, toColor, t);
         }
 
         // Start Tween after given delay.
@@ -71,9 +71,9 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if (_loopType == LoopType.PingPong && (_loopCount > 1))
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
             {
-                _loopCount = (_loopCount * 2);
+                _loopCount = _loopCount * 2;
             }
 
             return this;
@@ -114,8 +114,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
         // Returns interpolation for the given time.
         public float GetLerpT(float time)
         {
-            float timeValue = (time > duration) ? duration : time;
-            float t = (duration == 0) ? 1 : timeValue / duration;
+            float timeValue = time > duration ? duration : time;
+            float t = duration == 0 ? 1 : timeValue / duration;
 
             switch (easeType)
             {
@@ -176,17 +176,14 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 
                     elapsedLoop += 1;
 
-                    if ((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)
+                    if (loopCount > 1 && elapsedLoop < loopCount || loopCount < 0)
                     {
                         switch (loopType)
                         {
                             case LoopType.Loop:
                                 SetTweenParams(fromColor, toColor);
 
-                                if (OnLoopCompleteDelegate != null)
-                                {
-                                    OnLoopCompleteDelegate.Invoke(elapsedLoop);
-                                }
+                                OnLoopCompleteDelegate?.Invoke(elapsedLoop);
 
                                 break;
                             case LoopType.PingPong:
@@ -194,10 +191,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 
                                 if (elapsedLoop % 2 == 0)
                                 {
-                                    if (OnLoopCompleteDelegate != null)
-                                    {
-                                        OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
-                                    }
+                                    OnLoopCompleteDelegate?.Invoke(elapsedLoop / 2);
                                 }
 
                                 break;
@@ -208,10 +202,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                     }
                     else
                     {
-                        if (OnCompleteDeletegate != null)
-                        {
-                            OnCompleteDeletegate.Invoke();
-                        }
+                        OnCompleteDeletegate?.Invoke();
 
                         StartCoroutine(DestroyThis());
                     }

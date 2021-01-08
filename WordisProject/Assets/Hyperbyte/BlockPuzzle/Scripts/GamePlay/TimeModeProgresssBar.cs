@@ -175,7 +175,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         float GetFillAmount()
         {
-            return (remainingTime / maxTimer);
+            return remainingTime / maxTimer;
         }
     }
 }

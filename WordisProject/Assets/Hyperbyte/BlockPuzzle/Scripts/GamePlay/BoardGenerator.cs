@@ -72,7 +72,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     // Spawn a block instance and prepares it.
                     RectTransform blockElement = GetBlockInsideGrid();
                     blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
-                    currentPositionX += (blockSize + blockSpace);
+                    currentPositionX += blockSize + blockSpace;
                     blockElement.sizeDelta = Vector3.one * blockSize;
                     blockElement.GetComponent<BoxCollider2D>().size = Vector3.one * blockSize;
                     blockElement.GetComponent<Image>().sprite = blockBGSprite;
@@ -87,7 +87,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 }
 
                 currentPositionX = startPointX;
-                currentPositionY -= (blockSize + blockSpace);
+                currentPositionY -= blockSize + blockSpace;
 
                 GamePlayUI.Instance.gamePlay.allRows.Add(blockRow);
             }
@@ -149,9 +149,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         public float GetStartPointY(float blockSize, int columnSize)
         {
             float totalHeight =
-                (blockSize * columnSize) +
-                ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
-            return ((totalHeight / 2) - (blockSize / 2));
+                blockSize * columnSize +
+                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return totalHeight / 2 - blockSize / 2;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)(Instantiate(blockTemplate)) as GameObject;
+            GameObject block = (GameObject)Instantiate(blockTemplate) as GameObject;
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

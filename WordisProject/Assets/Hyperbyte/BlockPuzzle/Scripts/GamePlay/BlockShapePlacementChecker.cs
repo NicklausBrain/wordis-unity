@@ -53,7 +53,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    shapeClone.transform.localEulerAngles = new Vector3(0, 0, (90 * i));
+                    shapeClone.transform.localEulerAngles = new Vector3(0, 0, 90 * i);
                     foreach (List<Block> blockRow in GamePlay.Instance.allRows)
                     {
                         foreach (Block b in blockRow)
@@ -104,8 +104,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         bool CheckCanPlaceShapeAtPosition(Vector3 blockPosition)
         {
             Transform firstPoint = activeBlocks[0];
-            Vector3 positionOffset = (shapeClone.position - firstPoint.position);
-            shapeClone.position = (blockPosition + positionOffset);
+            Vector3 positionOffset = shapeClone.position - firstPoint.position;
+            shapeClone.position = blockPosition + positionOffset;
 
             List<Block> hittingBlocks = new List<Block>();
 

@@ -25,16 +25,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-        [Header("Public Class Members")] [Tooltip("GamePlay Script Reference")]
+        [Header("Public Class Members")]
+        [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
-        [System.NonSerialized] public GameModeSettings currentModeSettings;
+        [NonSerialized] public GameModeSettings currentModeSettings;
 
         // Stores current playing mode.
-        [System.NonSerialized] public GameMode currentGameMode;
+        [NonSerialized] public GameMode currentGameMode;
 
         // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [System.NonSerialized] GamePlaySettings gamePlaySettings;
+        [NonSerialized] GamePlaySettings gamePlaySettings;
 
         #region  Game Status event callbacks.
 
@@ -61,7 +62,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
             }
         }
 
@@ -154,14 +155,11 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         // Invokes callback for OnShapePlaced Event.
         public void OnShapePlaced()
         {
-            if (OnShapePlacedEvent != null)
-            {
-                OnShapePlacedEvent.Invoke();
-            }
+            OnShapePlacedEvent?.Invoke();
 
             if (tutorialStep == 1)
             {
-                if (txtTutorialText2.text == "")
+                if (string.IsNullOrWhiteSpace(txtTutorialText2.text))
                 {
                     txtTutorialText2.text = LocalizationManager.Instance.GetTextWithTag("txtTutorial2");
                     txtTutorialText2.SetAlpha(1, 0.3F);

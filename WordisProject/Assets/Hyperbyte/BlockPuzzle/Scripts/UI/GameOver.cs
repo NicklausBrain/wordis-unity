@@ -146,7 +146,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                 }
                 else
                 {
-                    rewardAmount = ((int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
+                    rewardAmount = (int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted);
                 }
 
                 txtReward.text = rewardAmount.ToString();

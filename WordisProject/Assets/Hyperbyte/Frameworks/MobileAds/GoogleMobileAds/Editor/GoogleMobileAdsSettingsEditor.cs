@@ -249,7 +249,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Editor
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

@@ -32,7 +32,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Editor
             }
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))  {
-                asset = (GamePlaySettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (GamePlaySettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else   {
                 asset = ScriptableObject.CreateInstance<GamePlaySettings>();

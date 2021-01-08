@@ -120,7 +120,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 
         private void Empty(int starIndex)
         {
-            for (int i = (allStars.Count - 1); i > starIndex; i--)
+            for (int i = allStars.Count - 1; i > starIndex; i--)
             {
                 Image starImage = allStars[i];
 

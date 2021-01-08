@@ -109,7 +109,7 @@ namespace Assets.Hyperbyte.Frameworks.Utils
         // Returns given number of random characters for given string.
         public static List<char> GetRandomCharactersFromString(String str, int noOfCharacters)
         {
-            List<char> charArray = (str.ToCharArray().ToList());
+            List<char> charArray = str.ToCharArray().ToList();
             charArray.Shuffle();
             return charArray.GetRange(0, noOfCharacters);
         }

@@ -29,10 +29,10 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 
         LocalizedLanguage currentLanaguage;
 
-        [System.NonSerialized] public List<LocalizedLanguage> allLocalizedLanaguages;
-        [System.NonSerialized] public bool hasInitialised = false;
-        [System.NonSerialized] public bool isLocalizationSupported = false;
-        [System.NonSerialized] public bool hasLanguageChanged = false;
+        [NonSerialized] public List<LocalizedLanguage> allLocalizedLanaguages;
+        [NonSerialized] public bool hasInitialised = false;
+        [NonSerialized] public bool isLocalizationSupported = false;
+        [NonSerialized] public bool hasLanguageChanged = false;
 
         public static event Action<LocalizedLanguage, bool> OnLocalizationInitializedEvent;
         public static event Action<LocalizedLanguage> OnLanguageChangedEvent;
@@ -92,10 +92,7 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
                 currentLanaguage.languageCode = "EN";
             }
 
-            if (OnLocalizationInitializedEvent != null)
-            {
-                OnLocalizationInitializedEvent.Invoke(currentLanaguage, isLocalizationSupported);
-            }
+            OnLocalizationInitializedEvent?.Invoke(currentLanaguage, isLocalizationSupported);
 
             hasInitialised = true;
         }
@@ -171,10 +168,7 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
                 PlayerPrefs.SetString("currentLang", lang.languageCode);
                 hasLanguageChanged = true;
 
-                if (OnLanguageChangedEvent != null)
-                {
-                    OnLanguageChangedEvent.Invoke(lang);
-                }
+                OnLanguageChangedEvent?.Invoke(lang);
             }
         }
 

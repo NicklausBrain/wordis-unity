@@ -96,10 +96,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             }
 
             SaveCurrencyBalance();
-            if (OnCurrencyUpdated != null)
-            {
-                OnCurrencyUpdated.Invoke(currentBalance);
-            }
+            OnCurrencyUpdated?.Invoke(currentBalance);
 
             AudioController.Instance.PlayClip(AudioController.Instance.addGemsSound);
         }
@@ -114,10 +111,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 currentBalance -= gemsAmount;
                 SaveCurrencyBalance();
 
-                if (OnCurrencyUpdated != null)
-                {
-                    OnCurrencyUpdated.Invoke(currentBalance);
-                }
+                OnCurrencyUpdated?.Invoke(currentBalance);
 
                 return true;
             }

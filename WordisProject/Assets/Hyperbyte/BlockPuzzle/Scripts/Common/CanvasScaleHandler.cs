@@ -27,21 +27,16 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Common
 
             if (Screen.height > Screen.width)
             {
-                screenAspect = (((float) Screen.height) / ((float) Screen.width));
+                screenAspect = (float) Screen.height / (float) Screen.width;
             }
             else
             {
-                screenAspect = (((float) Screen.width) / ((float) Screen.height));
+                screenAspect = (float) Screen.width / (float) Screen.height;
             }
 
-            if (screenAspect < 1.75F)
-            {
-                GetComponent<CanvasScaler>().matchWidthOrHeight = 1.0F;
-            }
-            else
-            {
-                GetComponent<CanvasScaler>().matchWidthOrHeight = 0.5F;
-            }
+            GetComponent<CanvasScaler>().matchWidthOrHeight = screenAspect < 1.75F
+                ? 1.0F
+                : 0.5F;
         }
     }
 }

@@ -128,10 +128,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                if (OnPositiveButtonPressedAction != null)
-                {
-                    OnPositiveButtonPressedAction.Invoke();
-                }
+                OnPositiveButtonPressedAction?.Invoke();
             }
         }
 
@@ -144,10 +141,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                if (OnNegativeButtonPressedAction != null)
-                {
-                    OnNegativeButtonPressedAction.Invoke();
-                }
+                OnNegativeButtonPressedAction?.Invoke();
             }
         }
 
@@ -160,10 +154,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                if (OnConfirmButtonPressedAction != null)
-                {
-                    OnConfirmButtonPressedAction.Invoke();
-                }
+                OnConfirmButtonPressedAction?.Invoke();
             }
         }
     }

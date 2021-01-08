@@ -112,7 +112,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Editor
                             if(overrideStoreIds.boolValue) 
                             {
                                 int subIndentLevel = EditorGUI.indentLevel;
-                                EditorGUI.indentLevel = (subIndentLevel+1);
+                                EditorGUI.indentLevel = subIndentLevel+1;
                             
                                 EditorGUILayout.BeginHorizontal();
                             
@@ -259,7 +259,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Editor
         }
 
         static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-            if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+            if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
                 ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
                 thisDefineSymbolExists = true;
             }

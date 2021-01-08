@@ -224,7 +224,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Editor
 
 		void AutoDetectSdk() 
 		{
-			thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/MaxSdk"));
+			thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/MaxSdk");
 			thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
 			VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
 		}
@@ -240,7 +240,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Editor
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

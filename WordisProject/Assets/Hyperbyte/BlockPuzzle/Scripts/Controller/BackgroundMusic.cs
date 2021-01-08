@@ -43,7 +43,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             ProfileManager.OnMusicStatusChangedEvent += OnMusicStatusChangedEvent;
         }
 
-
         void OnDisable()
         {
             //Unregister Audio status event

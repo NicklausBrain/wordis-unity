@@ -46,8 +46,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         // Returns Interpolation for the given ease type.
         public float GetLerpT(float time)
         {
-            float timeValue = (time > duration) ? duration : time;
-            float t = (duration == 0) ? 1 : timeValue / duration;
+            float timeValue = time > duration ? duration : time;
+            float t = duration == 0 ? 1 : timeValue / duration;
 
             switch (easeType)
             {
@@ -118,17 +118,14 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 
                     elapsedLoop += 1;
 
-                    if ((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)
+                    if (loopCount > 1 && elapsedLoop < loopCount || loopCount < 0)
                     {
                         switch (loopType)
                         {
                             case LoopType.Loop:
                                 SetTweenParams(GetStartPoint(), GetEndPoint());
 
-                                if (OnLoopCompleteDelegate != null)
-                                {
-                                    OnLoopCompleteDelegate.Invoke(elapsedLoop);
-                                }
+                                OnLoopCompleteDelegate?.Invoke(elapsedLoop);
 
                                 break;
                             case LoopType.PingPong:
@@ -136,10 +133,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 
                                 if (elapsedLoop % 2 == 0)
                                 {
-                                    if (OnLoopCompleteDelegate != null)
-                                    {
-                                        OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
-                                    }
+                                    OnLoopCompleteDelegate?.Invoke(elapsedLoop / 2);
                                 }
 
                                 break;
@@ -150,10 +144,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
                     }
                     else
                     {
-                        if (OnCompleteDeletegate != null)
-                        {
-                            OnCompleteDeletegate.Invoke();
-                        }
+                        OnCompleteDeletegate?.Invoke();
 
                         StartCoroutine(DestroyThis());
                     }

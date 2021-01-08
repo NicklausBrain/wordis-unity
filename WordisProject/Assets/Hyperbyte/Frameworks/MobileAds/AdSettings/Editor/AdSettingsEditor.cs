@@ -47,7 +47,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
                 labelStyle.fontStyle = FontStyle.Bold;
 
                 allNetworks = EnumUtils.GetValuesAsStringArray<AdNetworkSelection>();
-                selectedAdNetwork = ((int)adSettings.selectedAdNetwork);
+                selectedAdNetwork = (int)adSettings.selectedAdNetwork;
 
                 cache = true;
             }
@@ -201,7 +201,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
                 if (adSettings.selectedAdNetwork != AdNetworkSelection.Custom)
                 {
-                    string buttonText = "Configure " + ((adSettings.adsEnabled) ? ("<color=yellow>" + adSettings.selectedAdNetwork.ToString() + "</color>") : adSettings.selectedAdNetwork.ToString()) + " Settings";
+                    string buttonText = "Configure " + (adSettings.adsEnabled ? "<color=yellow>" + adSettings.selectedAdNetwork.ToString() + "</color>" : adSettings.selectedAdNetwork.ToString()) + " Settings";
 
                     if (GUILayout.Button(new GUIContent(buttonText), style2))
                     {
@@ -239,11 +239,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        unityAdsAsset = (UnityAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        unityAdsAsset = (UnityAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        unityAdsAsset = ScriptableObject.CreateInstance<UnityAdsSettings>();
+                        unityAdsAsset = CreateInstance<UnityAdsSettings>();
                         AssetDatabase.CreateAsset(unityAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -258,11 +258,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        googleAdsAsset = (GoogleMobileAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        googleAdsAsset = (GoogleMobileAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        googleAdsAsset = ScriptableObject.CreateInstance<GoogleMobileAdsSettings>();
+                        googleAdsAsset = CreateInstance<GoogleMobileAdsSettings>();
                         AssetDatabase.CreateAsset(googleAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -277,11 +277,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        ironsourceAdsAsset = (IronSourceAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        ironsourceAdsAsset = (IronSourceAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        ironsourceAdsAsset = ScriptableObject.CreateInstance<IronSourceAdsSettings>();
+                        ironsourceAdsAsset = CreateInstance<IronSourceAdsSettings>();
                         AssetDatabase.CreateAsset(ironsourceAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }
@@ -296,11 +296,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
                     if (System.IO.File.Exists(assetPath + "/" + assetName))
                     {
-                        applovinAdsAsset = (AppLovinAdsSettings)(Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                        applovinAdsAsset = (AppLovinAdsSettings)Resources.Load("AdNetworkSettings/" + System.IO.Path.GetFileNameWithoutExtension(assetName));
                     }
                     else
                     {
-                        applovinAdsAsset = ScriptableObject.CreateInstance<AppLovinAdsSettings>();
+                        applovinAdsAsset = CreateInstance<AppLovinAdsSettings>();
                         AssetDatabase.CreateAsset(applovinAdsAsset, assetPath + "/" + assetName);
                         AssetDatabase.SaveAssets();
                     }

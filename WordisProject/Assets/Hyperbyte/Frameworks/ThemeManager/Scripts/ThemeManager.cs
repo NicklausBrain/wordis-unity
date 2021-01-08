@@ -27,7 +27,7 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
         [SerializeField] UIThemeSettings uiThemeSettings;
 
         [SerializeField] UITheme currentUITheme;
-        [System.NonSerialized] public bool hasInitialised = false;
+        [NonSerialized] public bool hasInitialised = false;
 
         public static event Action<string> OnThemeInitializedEvent;
         public static event Action<string> OnThemeChangedEvent;
@@ -53,7 +53,7 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
             }
             else
             {
-                currentUITheme = (UITheme) (Resources.Load("UIThemes/DefaultTheme"));
+                currentUITheme = (UITheme) Resources.Load("UIThemes/DefaultTheme");
             }
         }
 
@@ -96,10 +96,7 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
                 uiThemeSettings = null;
                 hasInitialised = true;
 
-                if (OnThemeInitializedEvent != null)
-                {
-                    OnThemeInitializedEvent.Invoke(currentThemeName);
-                }
+                OnThemeInitializedEvent?.Invoke(currentThemeName);
             }
         }
 
@@ -112,10 +109,7 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
             currentThemeName = themeSetting.themeName;
             PlayerPrefs.SetString("currentThemeName", currentThemeName);
 
-            if (OnThemeChangedEvent != null)
-            {
-                OnThemeChangedEvent.Invoke(currentThemeName);
-            }
+            OnThemeChangedEvent?.Invoke(currentThemeName);
         }
 
         /// <summary>

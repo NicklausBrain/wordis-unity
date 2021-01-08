@@ -40,7 +40,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (GoogleMobileAdsSettings) (Resources.Load("AdNetworkSettings/GoogleMobileAdsSettings"));
+            settings = (GoogleMobileAdsSettings) Resources.Load("AdNetworkSettings/GoogleMobileAdsSettings");
 
 #if HB_ADMOB
             MobileAds.SetiOSAppPauseOnBackground(true);

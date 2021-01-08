@@ -36,7 +36,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 
             if (System.IO.File.Exists(assetPath + "/" + assetName))
             {
-                asset = (Scripts.AdSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (Scripts.AdSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {
@@ -93,14 +93,14 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
             #region IronSource
             thisSDKInfo = new SDKInfo("IronSource", "IronSourceJSON", "HB_IRONSOURCE");
             // thisSdkExists = NamespaceUtils.CheckNamespacesExists(thisSDKInfo.sdkNameSpace);
-            thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/IronSource"));
+            thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/IronSource");
             thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
             VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
             #endregion
 
             #region AppLovinMax
             thisSDKInfo = new SDKInfo("AppLovinMax", "AppLovinMax", "HB_APPLOVINMAX");
-            thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/MaxSdk"));
+            thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/MaxSdk");
             thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
             VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
             #endregion

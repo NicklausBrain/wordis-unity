@@ -37,7 +37,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Editor
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))
             {
-                asset = (IAPProducts)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (IAPProducts)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {

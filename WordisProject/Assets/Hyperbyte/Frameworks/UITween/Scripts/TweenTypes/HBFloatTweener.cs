@@ -48,9 +48,9 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             loopCount = _loopCount;
             loopType = _loopType;
 
-            if (_loopType == LoopType.PingPong && (_loopCount > 1))
+            if (_loopType == LoopType.PingPong && _loopCount > 1)
             {
-                _loopCount = (_loopCount * 2);
+                _loopCount = _loopCount * 2; // todo: bug?
             }
 
             return this;
@@ -81,8 +81,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
         // Set values to object property.
         public override void SetValues(object _fromValue, object _toValue)
         {
-            fromValue = ((float) _fromValue);
-            toValue = ((float) _toValue);
+            fromValue = (float) _fromValue;
+            toValue = (float) _toValue;
         }
 
         public override object GetStartPoint()

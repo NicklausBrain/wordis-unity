@@ -102,7 +102,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
                 if (totalDays == 1)
                 {
                     int lastRewardDay = PlayerPrefs.GetInt("lastRewardDay", 0);
-                    currentRewardDay = (lastRewardDay + 1);
+                    currentRewardDay = lastRewardDay + 1;
                     isDailyRewardAvailable = true;
                 }
                 else

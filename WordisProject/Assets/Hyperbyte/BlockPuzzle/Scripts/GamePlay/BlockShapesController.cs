@@ -261,7 +261,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
             // Will add initial rotation to block shape.
-            int randomRotation = UnityEngine.Random.Range(0, 4);
+            int randomRotation = Random.Range(0, 4);
             upcomingShape.transform.localEulerAngles = Vector3.zero.WithNewZ(90 * randomRotation);
 
             // Removes shapes from pool.
@@ -387,7 +387,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 if (shapeContainer.blockShape != null)
                 {
                     bool shapeCanbePlaced = blockShapePlacementChecker.CheckShapeCanbePlaced(shapeContainer.blockShape);
-                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = (shapeCanbePlaced) ? 1F : 0.5F;
+                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanbePlaced ? 1F : 0.5F;
 
                     if (shapeCanbePlaced)
                     {

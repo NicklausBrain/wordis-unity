@@ -175,7 +175,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Editor
 		void AutoDetectSdk() 
 		{
 			// thisSdkExists = NamespaceUtils.CheckNamespacesExists(thisSDKInfo.sdkNameSpace);
-			thisSdkExists = (System.IO.Directory.Exists(Application.dataPath + "/IronSource"));
+			thisSdkExists = System.IO.Directory.Exists(Application.dataPath + "/IronSource");
 			thisDefineSymbolExists = ScriptingDefineSymbolEditor.HasDefineSymbol(thisSDKInfo.sdkScriptingDefineSymbol);
 			VerifySDKImportInfo(thisSDKInfo, thisSdkExists, thisDefineSymbolExists);
 		}
@@ -191,7 +191,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Editor
 		}
 
 		static void AddScriptingDefineSymbol( string sdkName, string symbol, bool addForced = false) {
-			if((!EditorPrefs.HasKey("userRemoved_"+sdkName)) || addForced) {
+			if(!EditorPrefs.HasKey("userRemoved_"+sdkName) || addForced) {
 				ScriptingDefineSymbolEditor.AddScriptingDefineSymbol(symbol);
 				thisDefineSymbolExists = true;
 			}

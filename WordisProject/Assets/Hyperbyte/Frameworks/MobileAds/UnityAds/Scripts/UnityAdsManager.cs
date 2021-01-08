@@ -35,7 +35,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (UnityAdsSettings) (Resources.Load("AdNetworkSettings/UnityAdsSettings"));
+            settings = (UnityAdsSettings) Resources.Load("AdNetworkSettings/UnityAdsSettings");
 
 #if HB_UNITYADS
             Monetization.Initialize(settings.GetGameId(), settings.GetTestMode());

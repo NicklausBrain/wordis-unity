@@ -33,7 +33,7 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
             }
 
             if (System.IO.File.Exists(assetPath + "/" + assetName)) {
-                asset = (UIThemeSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (UIThemeSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else
             {

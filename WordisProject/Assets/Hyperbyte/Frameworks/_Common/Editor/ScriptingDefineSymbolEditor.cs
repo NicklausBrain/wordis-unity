@@ -26,7 +26,6 @@ namespace Assets.Hyperbyte.Frameworks._Common.Editor
             AddSymbolForTarget(BuildTargetGroup.iOS, defineSymbol);
         }
 
-
         private static void AddSymbolForTarget(BuildTargetGroup targetGroup, string defineSymbol)
         {
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
@@ -34,7 +33,7 @@ namespace Assets.Hyperbyte.Frameworks._Common.Editor
             {
                 return;
             }
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, (defines + ";" + defineSymbol));
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, defines + ";" + defineSymbol);
         }
         #endregion
 
@@ -58,7 +57,7 @@ namespace Assets.Hyperbyte.Frameworks._Common.Editor
             string newDefine = "";
             foreach (string symbol in allSymbols)
             {
-                newDefine = newDefine + ";" + symbol;
+                newDefine = $"{newDefine};{symbol}";
             }
             PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, newDefine);
         }

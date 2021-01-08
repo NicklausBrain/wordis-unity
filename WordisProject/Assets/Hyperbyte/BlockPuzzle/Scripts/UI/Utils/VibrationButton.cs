@@ -43,7 +43,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
                 if (InputManager.Instance.canInput())
                 {
                     UIFeedback.Instance.PlayButtonPressEffect();
-                    ProfileManager.Instance.TogglVibrationStatus();
+                    ProfileManager.Instance.ToggleVibrationStatus();
                 }
             });
         }

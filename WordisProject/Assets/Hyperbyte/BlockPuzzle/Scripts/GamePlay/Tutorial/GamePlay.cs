@@ -89,8 +89,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         IEnumerator ClearAllBlocks(List<Block> allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = (allBlocks.Count % 2 == 0) ? (allBlocks.Count / 2) : ((allBlocks.Count / 2) + 1);
-            int leftIndex = (middleIndex - 1);
+            int middleIndex = allBlocks.Count % 2 == 0 ? allBlocks.Count / 2 : allBlocks.Count / 2 + 1;
+            int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
             int totalBlocks = allBlocks.Count;
 

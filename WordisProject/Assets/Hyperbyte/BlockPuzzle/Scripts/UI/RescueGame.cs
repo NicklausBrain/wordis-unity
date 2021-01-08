@@ -35,7 +35,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 #pragma warning restore 0649
 
         bool attemptedRescueWithGems = false;
-        string rescueVideoTag = "RescueGame";
+        const string RescueVideoTag = "RescueGame";
 
         bool isRescueDone = false;
 
@@ -165,7 +165,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
         {
             if (AdManager.Instance.IsRewardedAvailable())
             {
-                AdManager.Instance.ShowRewardedWithTag(rescueVideoTag);
+                AdManager.Instance.ShowRewardedWithTag(RescueVideoTag);
             }
         }
 
@@ -174,7 +174,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
         /// </summary>
         void OnRewardedAdRewarded(string watchVidoTag)
         {
-            if (watchVidoTag == rescueVideoTag)
+            if (watchVidoTag == RescueVideoTag)
             {
                 isRescueDone = true;
                 GamePlayUI.Instance.OnRescueSuccessful();

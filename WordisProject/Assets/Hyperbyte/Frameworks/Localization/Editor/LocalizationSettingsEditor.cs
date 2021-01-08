@@ -137,7 +137,7 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Editor
                             if(isLanguageEnabled.boolValue) 
                             {
                                 int subIndentLevel = EditorGUI.indentLevel;
-                                EditorGUI.indentLevel = (subIndentLevel+1);
+                                EditorGUI.indentLevel = subIndentLevel+1;
                                 
                                 EditorGUILayout.BeginHorizontal();
                                 SerializedProperty langaugeDisplayName = list.GetArrayElementAtIndex(i).FindPropertyRelative("langaugeDisplayName");

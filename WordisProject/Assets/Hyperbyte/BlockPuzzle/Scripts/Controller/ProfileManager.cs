@@ -55,7 +55,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         public bool IsNotificationEnabled { get; private set; } = true;
 
         // Whether user will be served ads or not.
-        [System.NonSerialized] bool isUserAdFree = false;
+        [NonSerialized] bool isUserAdFree = false;
 
         // List of all sessions when review nad should be shown to user.
         [HideInInspector] public List<int> appLaunchReviewSessions = new List<int>();
@@ -81,7 +81,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             if (appSettings == null)
             {
-                appSettings = (AppSettings) Resources.Load("AppSettings");
+                appSettings = (AppSettings)Resources.Load("AppSettings");
                 if (appSettings.showReviewPopupOnLaunch && appSettings.reviewPopupAppLaunchCount != string.Empty)
                 {
                     appLaunchReviewSessions = appSettings.reviewPopupAppLaunchCount.Split(',')
@@ -96,7 +96,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             }
 
             hasInitialised = true;
-            initProfileStatus();
+            InitProfileStatus();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         private void OnEnable()
         {
-            /// Initiate haptic feedback generator.
+            // Initiate haptic feedback generator.
             HapticFeedbackGenerator.InitHapticFeedbackGenerator();
         }
 
@@ -113,35 +113,35 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         private void OnDisable()
         {
-            /// Releases haptic feedback generator.
+            // Releases haptic feedback generator.
             HapticFeedbackGenerator.ReleaseHapticFeedbackGenerator();
         }
 
         /// <summary>
         /// Inits the audio status.
         /// </summary>
-        public void initProfileStatus()
+        public void InitProfileStatus()
         {
             // Fetches the status of all user setting and invokes event callbacks for each settings.
 
-            IsMusicEnabled = (PlayerPrefs.GetInt("isMusicEnabled", 0) == 0) ? true : false;
-            IsVibrationEnabled = (PlayerPrefs.GetInt("isVibrationEnabled", 0) == 0) ? true : false;
-            IsNotificationEnabled = (PlayerPrefs.GetInt("isNotificationEnabled", 0) == 0) ? true : false;
-            IsSoundEnabled = (PlayerPrefs.GetInt("isSoundEnabled", 0) == 0) ? true : false;
+            IsMusicEnabled = PlayerPrefs.GetInt("isMusicEnabled", 0) == 0 ? true : false;
+            IsVibrationEnabled = PlayerPrefs.GetInt("isVibrationEnabled", 0) == 0 ? true : false;
+            IsNotificationEnabled = PlayerPrefs.GetInt("isNotificationEnabled", 0) == 0 ? true : false;
+            IsSoundEnabled = PlayerPrefs.GetInt("isSoundEnabled", 0) == 0 ? true : false;
 
-            if ((!IsSoundEnabled) && (OnSoundStatusChangedEvent != null))
+            if (!IsSoundEnabled)
             {
-                OnSoundStatusChangedEvent.Invoke(IsSoundEnabled);
+                OnSoundStatusChangedEvent?.Invoke(IsSoundEnabled);
             }
 
-            if ((!IsMusicEnabled) && (OnMusicStatusChangedEvent != null))
+            if (!IsMusicEnabled)
             {
-                OnMusicStatusChangedEvent.Invoke(IsMusicEnabled);
+                OnMusicStatusChangedEvent?.Invoke(IsMusicEnabled);
             }
 
-            if ((!IsVibrationEnabled) && (OnVibrationStatusChangedEvent != null))
+            if (!IsVibrationEnabled)
             {
-                OnVibrationStatusChangedEvent.Invoke(IsVibrationEnabled);
+                OnVibrationStatusChangedEvent?.Invoke(IsVibrationEnabled);
             }
 
             if (!appSettings.enableVibrations)
@@ -149,12 +149,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 IsVibrationEnabled = false;
             }
 
-            if ((!IsNotificationEnabled) && (OnNotificationStatusChangedEvent != null))
+            if (!IsNotificationEnabled)
             {
-                OnNotificationStatusChangedEvent.Invoke(IsNotificationEnabled);
+                OnNotificationStatusChangedEvent?.Invoke(IsNotificationEnabled);
             }
 
-            isUserAdFree = ((PlayerPrefs.GetInt("isUserAdFree", 0) == 1) ? true : false);
+            isUserAdFree = PlayerPrefs.GetInt("isUserAdFree", 0) == 1 ? true : false;
         }
 
         /// <summary>
@@ -162,13 +162,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void ToggleSoundStatus()
         {
-            IsSoundEnabled = (IsSoundEnabled) ? false : true;
-            PlayerPrefs.SetInt("isSoundEnabled", (IsSoundEnabled) ? 0 : 1);
+            IsSoundEnabled = !IsSoundEnabled;
+            PlayerPrefs.SetInt("isSoundEnabled", IsSoundEnabled ? 0 : 1);
 
-            if (OnSoundStatusChangedEvent != null)
-            {
-                OnSoundStatusChangedEvent.Invoke(IsSoundEnabled);
-            }
+            OnSoundStatusChangedEvent?.Invoke(IsSoundEnabled);
         }
 
         /// <summary>
@@ -176,27 +173,21 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void ToggleMusicStatus()
         {
-            IsMusicEnabled = (IsMusicEnabled) ? false : true;
-            PlayerPrefs.SetInt("isMusicEnabled", (IsMusicEnabled) ? 0 : 1);
+            IsMusicEnabled = !IsMusicEnabled;
+            PlayerPrefs.SetInt("isMusicEnabled", IsMusicEnabled ? 0 : 1);
 
-            if (OnMusicStatusChangedEvent != null)
-            {
-                OnMusicStatusChangedEvent.Invoke(IsMusicEnabled);
-            }
+            OnMusicStatusChangedEvent?.Invoke(IsMusicEnabled);
         }
 
         /// <summary>
         /// Toggles the vibration status.
         /// </summary>
-        public void TogglVibrationStatus()
+        public void ToggleVibrationStatus()
         {
-            IsVibrationEnabled = (IsVibrationEnabled) ? false : true;
-            PlayerPrefs.SetInt("isVibrationEnabled", (IsVibrationEnabled) ? 0 : 1);
+            IsVibrationEnabled = !IsVibrationEnabled;
+            PlayerPrefs.SetInt("isVibrationEnabled", IsVibrationEnabled ? 0 : 1);
 
-            if (OnVibrationStatusChangedEvent != null)
-            {
-                OnVibrationStatusChangedEvent.Invoke(IsVibrationEnabled);
-            }
+            OnVibrationStatusChangedEvent?.Invoke(IsVibrationEnabled);
         }
 
         /// <summary>
@@ -204,13 +195,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void ToggleNotificationStatus()
         {
-            IsNotificationEnabled = (IsNotificationEnabled) ? false : true;
-            PlayerPrefs.SetInt("isNotificationEnabled", (IsNotificationEnabled) ? 0 : 1);
+            IsNotificationEnabled = !IsNotificationEnabled;
+            PlayerPrefs.SetInt("isNotificationEnabled", IsNotificationEnabled ? 0 : 1);
 
-            if (OnNotificationStatusChangedEvent != null)
-            {
-                OnNotificationStatusChangedEvent.Invoke(IsNotificationEnabled);
-            }
+            OnNotificationStatusChangedEvent?.Invoke(IsNotificationEnabled);
         }
 
         // Returns the app setting scriptable instance.
@@ -244,7 +232,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public int GetBestScore(GameMode gameMode)
         {
-            return PlayerPrefs.GetInt("bestScore_" + gameMode, 0);
+            return PlayerPrefs.GetInt($"bestScore_{gameMode}", 0);
         }
 
         /// <summary>
@@ -252,7 +240,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void SetBestScore(int score, GameMode gameMode)
         {
-            PlayerPrefs.SetInt("bestScore_" + gameMode, score);
+            PlayerPrefs.SetInt($"bestScore_{gameMode}", score);
         }
     }
 }

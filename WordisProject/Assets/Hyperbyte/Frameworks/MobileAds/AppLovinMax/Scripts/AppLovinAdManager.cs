@@ -29,7 +29,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (AppLovinAdsSettings) (Resources.Load("AdNetworkSettings/AppLovinAdsSettings"));
+            settings = (AppLovinAdsSettings) Resources.Load("AdNetworkSettings/AppLovinAdsSettings");
 
 #if HB_APPLOVINMAX
             MaxSdk.SetSdkKey(settings.GetSDkKey());

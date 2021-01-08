@@ -91,8 +91,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void AddScore(int linesCleared, int clearedBlocks)
         {
-            int scorePerLine = singleLineBreakScore + ((linesCleared - 1) * multiLineScoreMultiplier);
-            int scoreToAdd = ((linesCleared * scorePerLine) + (clearedBlocks * blockScore));
+            int scorePerLine = singleLineBreakScore + (linesCleared - 1) * multiLineScoreMultiplier;
+            int scoreToAdd = linesCleared * scorePerLine + clearedBlocks * blockScore;
 
             int oldScore = Score;
             Score += scoreToAdd;

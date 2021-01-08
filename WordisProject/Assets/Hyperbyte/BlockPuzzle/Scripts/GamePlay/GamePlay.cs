@@ -98,8 +98,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         IEnumerator ClearAllBlocks(List<Block> allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = (allBlocks.Count % 2 == 0) ? (allBlocks.Count / 2) : ((allBlocks.Count / 2) + 1);
-            int leftIndex = (middleIndex - 1);
+            int middleIndex = allBlocks.Count % 2 == 0 ? allBlocks.Count / 2 : allBlocks.Count / 2 + 1;
+            int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
             int totalBlocks = allBlocks.Count;
 
@@ -351,10 +351,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
             List<int> linesToClear = GetMiddleLinesFromGrid(3);
 
-            GamePlay.Instance.ClearRows(linesToClear);
-            GamePlay.Instance.ClearColumns(linesToClear);
+            Instance.ClearRows(linesToClear);
+            Instance.ClearColumns(linesToClear);
 
-            int linesCleared = (linesToClear.Count + linesToClear.Count);
+            int linesCleared = linesToClear.Count + linesToClear.Count;
             GamePlayUI.Instance.scoreManager.AddScore(linesCleared, 0);
 
             if (linesCleared > 0)
@@ -373,32 +373,32 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 
             if (totalLines % 2 == 0)
             {
-                middleIndex = ((totalLines / 2) - 1);
+                middleIndex = totalLines / 2 - 1;
 
                 if (noOfLines % 2 == 0)
                 {
-                    int sideLines = (noOfLines / 2);
+                    int sideLines = noOfLines / 2;
 
-                    for (int lineIndex = (middleIndex - (sideLines - 1)); lineIndex <= middleIndex; lineIndex++)
+                    for (int lineIndex = middleIndex - (sideLines - 1); lineIndex <= middleIndex; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
 
-                    for (int lineIndex = (middleIndex + 1); lineIndex <= (middleIndex + sideLines); lineIndex++)
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
                 }
                 else
                 {
-                    int sideLines = (noOfLines / 2);
+                    int sideLines = noOfLines / 2;
 
-                    for (int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++)
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
 
-                    for (int lineIndex = (middleIndex + 1); lineIndex <= (middleIndex + sideLines); lineIndex++)
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
@@ -406,31 +406,31 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             }
             else
             {
-                middleIndex = (totalLines / 2);
+                middleIndex = totalLines / 2;
                 if (noOfLines % 2 == 0)
                 {
-                    int sideLines = (noOfLines / 2);
+                    int sideLines = noOfLines / 2;
 
-                    for (int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++)
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
 
-                    for (int lineIndex = (middleIndex + 1); lineIndex < (middleIndex + sideLines); lineIndex++)
+                    for (int lineIndex = middleIndex + 1; lineIndex < middleIndex + sideLines; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
                 }
                 else
                 {
-                    int sideLines = (noOfLines / 2);
+                    int sideLines = noOfLines / 2;
 
-                    for (int lineIndex = (middleIndex - (sideLines)); lineIndex <= middleIndex; lineIndex++)
+                    for (int lineIndex = middleIndex - sideLines; lineIndex <= middleIndex; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }
 
-                    for (int lineIndex = (middleIndex + 1); lineIndex <= (middleIndex + sideLines); lineIndex++)
+                    for (int lineIndex = middleIndex + 1; lineIndex <= middleIndex + sideLines; lineIndex++)
                     {
                         lines.Add(lineIndex);
                     }

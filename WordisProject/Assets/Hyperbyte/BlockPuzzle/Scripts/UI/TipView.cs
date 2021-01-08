@@ -57,7 +57,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             }
         }
 
-
         void HideTip()
         {
             gameObject.Deactivate();

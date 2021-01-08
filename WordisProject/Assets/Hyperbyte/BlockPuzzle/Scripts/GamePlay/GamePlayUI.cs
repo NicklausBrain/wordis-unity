@@ -48,13 +48,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
-        [System.NonSerialized] public GameModeSettings currentModeSettings;
+        [NonSerialized] public GameModeSettings currentModeSettings;
 
         // Stores current playing mode.
-        [System.NonSerialized] public GameMode currentGameMode;
+        [NonSerialized] public GameMode currentGameMode;
 
         // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [System.NonSerialized] GamePlaySettings gamePlaySettings;
+        [NonSerialized] GamePlaySettings gamePlaySettings;
 
         #region  Game Status event callbacks.
 
@@ -105,7 +105,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             bool hasPreviosSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
             if (hasPreviosSessionProgress)
             {
-                progressData = GameProgressTracker.Instance.GetGameProgress(GamePlayUI.Instance.currentGameMode);
+                progressData = GameProgressTracker.Instance.GetGameProgress(Instance.currentGameMode);
             }
 
             // Enables gameplay screen if not active.
@@ -126,7 +126,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             if (gameMode == GameMode.Timed)
             {
                 timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer((progressData != null)
+                timeModeProgresssBar.SetTimer(progressData != null
                     ? progressData.remainingTimer
                     : timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
@@ -346,7 +346,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public int GetRemainingTimer()
         {
-            return (currentGameMode == GameMode.Timed) ? timeModeProgresssBar.GetRemainingTimer() : 0;
+            return currentGameMode == GameMode.Timed ? timeModeProgresssBar.GetRemainingTimer() : 0;
         }
 
         #endregion

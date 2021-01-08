@@ -32,7 +32,7 @@ namespace Assets.Hyperbyte.Frameworks.AppSettings.Editor
             }
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))  {
-                asset = (Scripts.AppSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (Scripts.AppSettings)Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName));
             }
             else   {
                 asset = ScriptableObject.CreateInstance<Scripts.AppSettings>();

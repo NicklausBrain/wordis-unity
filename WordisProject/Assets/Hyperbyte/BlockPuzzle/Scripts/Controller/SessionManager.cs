@@ -19,10 +19,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
     public class SessionManager : MonoBehaviour
     {
         public static event Action<SessionInfo> OnSessionUpdatedEvent;
-        bool isFreshLauched = true;
 
-        TimeSpan backgroundThreshHoldTimeSpan = new TimeSpan(0, 0, 120);
-        SessionInfo currentSessionInfo = null;
+        bool _isFreshLauched = true;
+        readonly TimeSpan _backgroundThreshHoldTimeSpan = new TimeSpan(0, 0, 120);
+        SessionInfo _currentSessionInfo = null;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -42,13 +42,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             if (pauseStatus)
             {
-                isFreshLauched = false;
+                _isFreshLauched = false;
                 PlayerPrefs.SetString("lastPauseTime", DateTime.Now.ToBinary().ToString());
                 PlayerPrefs.SetString("lastAccessedDate", DateTime.Now.ToBinary().ToString());
             }
             else
             {
-                if (!isFreshLauched)
+                if (!_isFreshLauched)
                 {
                     bool doCheckForSessionChange = true;
 
@@ -56,9 +56,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                     {
                         DateTime lastOpenedTime =
                             DateTime.FromBinary(Convert.ToInt64(PlayerPrefs.GetString("lastPauseTime")));
-                        TimeSpan pauseDuration = (DateTime.Now - lastOpenedTime);
+                        TimeSpan pauseDuration = DateTime.Now - lastOpenedTime;
 
-                        if (pauseDuration.TotalSeconds < backgroundThreshHoldTimeSpan.TotalSeconds)
+                        if (pauseDuration.TotalSeconds < _backgroundThreshHoldTimeSpan.TotalSeconds)
                         {
                             doCheckForSessionChange = false;
                         }
@@ -97,21 +97,20 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             DateTime lastAccessedDate =
                 DateTime.FromBinary(
                     Convert.ToInt64(PlayerPrefs.GetString("lastAccessedDate", DateTime.Now.ToBinary().ToString())));
-            TimeSpan durationSinceLastAccessed = (DateTime.Now - lastAccessedDate);
+
+            TimeSpan durationSinceLastAccessed = DateTime.Now - lastAccessedDate;
 
             //Days Since Installed
             DateTime firstOpenDate =
                 DateTime.FromBinary(
                     Convert.ToInt64(PlayerPrefs.GetString("firstOpenDate", DateTime.Now.ToBinary().ToString())));
-            TimeSpan durationSinceFirstTimeAccessed = (DateTime.Now - firstOpenDate);
 
-            currentSessionInfo = new SessionInfo(currentSessionCount, currentSessionOfDay, durationSinceLastAccessed,
+            TimeSpan durationSinceFirstTimeAccessed = DateTime.Now - firstOpenDate;
+
+            _currentSessionInfo = new SessionInfo(currentSessionCount, currentSessionOfDay, durationSinceLastAccessed,
                 durationSinceFirstTimeAccessed);
 
-            if (OnSessionUpdatedEvent != null)
-            {
-                OnSessionUpdatedEvent.Invoke(currentSessionInfo);
-            }
+            OnSessionUpdatedEvent?.Invoke(_currentSessionInfo);
         }
 
         void OnApplicationQuit()
@@ -121,7 +120,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 
         public SessionInfo getCurrentSessionInfo()
         {
-            return currentSessionInfo;
+            return _currentSessionInfo;
         }
     }
 
@@ -132,13 +131,16 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         public TimeSpan durationSinceLastAccessed;
         public TimeSpan durationSinceFirstTimeAccessed;
 
-        public SessionInfo(int _currentSessionCount, int _currentSessionOfDay, TimeSpan _durationSinceLastAccessed,
-            TimeSpan _durationSinceFirstTimeAccessed)
+        public SessionInfo(
+            int currentSessionCount,
+            int currentSessionOfDay,
+            TimeSpan durationSinceLastAccessed,
+            TimeSpan durationSinceFirstTimeAccessed)
         {
-            this.currentSessionCount = _currentSessionCount;
-            this.currentSessionOfDay = _currentSessionOfDay;
-            this.durationSinceLastAccessed = _durationSinceLastAccessed;
-            this.durationSinceFirstTimeAccessed = _durationSinceFirstTimeAccessed;
+            this.currentSessionCount = currentSessionCount;
+            this.currentSessionOfDay = currentSessionOfDay;
+            this.durationSinceLastAccessed = durationSinceLastAccessed;
+            this.durationSinceFirstTimeAccessed = durationSinceFirstTimeAccessed;
         }
     }
 }

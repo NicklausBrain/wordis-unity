@@ -43,7 +43,7 @@ namespace Assets.Hyperbyte.Frameworks.Utils
                 }
             }
 
-            return (existingIdentifiers.Contains(requiredNameSpace));
+            return existingIdentifiers.Contains(requiredNameSpace);
         }
 
 
@@ -84,9 +84,9 @@ namespace Assets.Hyperbyte.Frameworks.Utils
 
         public SDKInfo(string _sdkName, string _sdkNameSpace, string _sdkScriptingDefineSymbol)
         {
-            this.sdkName = _sdkName;
-            this.sdkNameSpace = _sdkNameSpace;
-            this.sdkScriptingDefineSymbol = _sdkScriptingDefineSymbol;
+            sdkName = _sdkName;
+            sdkNameSpace = _sdkNameSpace;
+            sdkScriptingDefineSymbol = _sdkScriptingDefineSymbol;
         }
     }
 }

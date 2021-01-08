@@ -71,8 +71,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
         IEnumerator PlayCurrencyIncreaseCounter(int currentBalance)
         {
             int iterations = 10;
-            int balanceDifference = (currentBalance - lastBalance);
-            int balanceChangeEachIteration = (balanceDifference / iterations);
+            int balanceDifference = currentBalance - lastBalance;
+            int balanceChangeEachIteration = balanceDifference / iterations;
 
             int updatedBalance = lastBalance;
 

@@ -86,7 +86,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                 PlayerPrefs.SetInt("ThemeUnlockStatus_" + setting.themeName, 1);
             }
 
-            if ((PlayerPrefs.GetInt("ThemeUnlockStatus_" + setting.themeName, 0) == 1))
+            if (PlayerPrefs.GetInt("ThemeUnlockStatus_" + setting.themeName, 0) == 1)
             {
                 unlockStatus = true;
             }

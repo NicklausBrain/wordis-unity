@@ -51,7 +51,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// <param name="productInfo"></param>
         void OnPurchaseSuccessful(ProductInfo productInfo)
         {
-            RewardType rewardType = ((RewardType) productInfo.rewardType);
+            RewardType rewardType = (RewardType) productInfo.rewardType;
 
             switch (rewardType)
             {
@@ -90,7 +90,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             if (result)
             {
-                UIController.Instance.ShowMessage(("txtSuccess"),
+                UIController.Instance.ShowMessage("txtSuccess",
                     LocalizationManager.Instance.GetTextWithTag("txtInAppRestored"));
             }
             else

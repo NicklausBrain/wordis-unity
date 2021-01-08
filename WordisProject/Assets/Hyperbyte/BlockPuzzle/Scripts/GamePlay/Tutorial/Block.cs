@@ -68,7 +68,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         private void Awake()
         {
-            /// Initializes the collider component on Awake.
+            // Initializes the collider component on Awake.
             thisCollider = GetComponent<BoxCollider2D>();
         }
 

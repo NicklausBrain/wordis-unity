@@ -223,7 +223,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 #else
             //GameObject sandboxPuchaseScreen = (GameObject) Instantiate (Resources.Load("SandboxPurchaseScreen")) as GameObject;
             //sandboxPuchaseScreen.GetComponent<SandboxPurchaseScreen>().InitialiseSandboxPurchase(productInfo);
-            IAPManager.Instance.OnSandboxPurchaseSuccess(productInfo);
+            Instance.OnSandboxPurchaseSuccess(productInfo);
 #endif
         }
 
@@ -248,7 +248,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
         /// </summary>
         public void ProcessPurchaseRewards(string productName)
         {
-            ProductInfo productInfo = IAPManager.Instance.GetProductInfoByName(productName);
+            ProductInfo productInfo = Instance.GetProductInfoByName(productName);
             OnPurchaseSuccessfulEvent?.Invoke(productInfo);
         }
 
