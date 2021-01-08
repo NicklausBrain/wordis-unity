@@ -66,9 +66,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         bool hasInitialised = false;
 
         /// <summary>
-    	/// Start is called on the frame when a script is enabled just before
-    	/// any of the Update methods is called the first time.
-    	/// </summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
         private void Start()
         {
             Initialise();
@@ -81,17 +81,20 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         {
             if (appSettings == null)
             {
-                appSettings = (AppSettings)Resources.Load("AppSettings");
+                appSettings = (AppSettings) Resources.Load("AppSettings");
                 if (appSettings.showReviewPopupOnLaunch && appSettings.reviewPopupAppLaunchCount != string.Empty)
                 {
-                    appLaunchReviewSessions = appSettings.reviewPopupAppLaunchCount.Split(',').Select(n => Convert.ToInt32(n)).ToList();
+                    appLaunchReviewSessions = appSettings.reviewPopupAppLaunchCount.Split(',')
+                        .Select(n => Convert.ToInt32(n)).ToList();
                 }
 
                 if (appSettings.showReviewPopupOnGameOver && appSettings.reviewPopupGameOverCount != string.Empty)
                 {
-                    gameOverReviewSessions = appSettings.reviewPopupGameOverCount.Split(',').Select(n => Convert.ToInt32(n)).ToList();
+                    gameOverReviewSessions = appSettings.reviewPopupGameOverCount.Split(',')
+                        .Select(n => Convert.ToInt32(n)).ToList();
                 }
             }
+
             hasInitialised = true;
             initProfileStatus();
         }
@@ -130,15 +133,21 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             {
                 OnSoundStatusChangedEvent.Invoke(IsSoundEnabled);
             }
+
             if ((!IsMusicEnabled) && (OnMusicStatusChangedEvent != null))
             {
                 OnMusicStatusChangedEvent.Invoke(IsMusicEnabled);
             }
+
             if ((!IsVibrationEnabled) && (OnVibrationStatusChangedEvent != null))
             {
                 OnVibrationStatusChangedEvent.Invoke(IsVibrationEnabled);
             }
-            if (!appSettings.enableVibrations) { IsVibrationEnabled = false; }
+
+            if (!appSettings.enableVibrations)
+            {
+                IsVibrationEnabled = false;
+            }
 
             if ((!IsNotificationEnabled) && (OnNotificationStatusChangedEvent != null))
             {
@@ -211,6 +220,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             {
                 Initialise();
             }
+
             return appSettings;
         }
 

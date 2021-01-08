@@ -29,23 +29,23 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
     {
         GoogleMobileAdsSettings settings;
 
-        #if HB_ADMOB
+#if HB_ADMOB
         private BannerView bannerView;
         private InterstitialAd interstitial;
         private RewardedAd rewardedAd;
-        #endif
+#endif
 
         /// <summary>
         /// Initialized the ad network.
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (GoogleMobileAdsSettings)(Resources.Load("AdNetworkSettings/GoogleMobileAdsSettings"));
+            settings = (GoogleMobileAdsSettings) (Resources.Load("AdNetworkSettings/GoogleMobileAdsSettings"));
 
-            #if HB_ADMOB
+#if HB_ADMOB
             MobileAds.SetiOSAppPauseOnBackground(true);
             MobileAds.Initialize(settings.GetAppId());
-            #endif
+#endif
 
             Invoke("StartLoadingAds", 2F);
         }
@@ -63,7 +63,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
         // Requests banner ad.        
         public void RequestBannerAds()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.bannerView != null) {
                 this.bannerView.Destroy();
             }
@@ -82,13 +82,13 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
             if (AdManager.Instance.adSettings.showBannerOnLoad) {
                 bannerView.Show();
             }
-            #endif
+#endif
         }
 
         // Requests intestitial ad.
         public void RequestInterstitial()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.interstitial != null) {
                 this.interstitial.Destroy();
             }
@@ -104,13 +104,13 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
 
             // Load an interstitial ad.
             this.interstitial.LoadAd(this.CreateAdRequest());
-            #endif
+#endif
         }
 
         // Requests rewarded ad.
         public void RequestRewarded()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             // Create new rewarded ad instance.
             this.rewardedAd = new RewardedAd(settings.GetRewardedAdUnitId());
             // Called when an ad request has successfully loaded.
@@ -130,10 +130,10 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
             AdRequest request = this.CreateAdRequest();
             // Load the rewarded ad with the request.
             this.rewardedAd.LoadAd(request);
-            #endif
+#endif
         }
 
-        #if HB_ADMOB
+#if HB_ADMOB
         private AdRequest CreateAdRequest()
         {
             return new AdRequest.Builder()
@@ -148,67 +148,67 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
                 .Build();
 
         }
-        #endif
-        
+#endif
+
         // Shows banner ad.
         public override void ShowBanner()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.bannerView != null) {
                 this.bannerView.Show();
             }
-            #endif
+#endif
         }
-    
+
         // Hides banner ad.
         public override void HideBanner()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.bannerView != null) {
                 this.bannerView.Hide();
             }
-            #endif
+#endif
         }
 
         // Check if interstial ad ready to show.
         public override bool IsInterstitialAvailable()
         {
-            #if HB_ADMOB
-            return this.interstitial.IsLoaded(); 
-            #endif
+#if HB_ADMOB
+            return this.interstitial.IsLoaded();
+#endif
             return false;
         }
-        
+
         // Shows interstitial ad if available.
         public override void ShowInterstitial()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.interstitial.IsLoaded()) {
                 this.interstitial.Show();
             }
-            #endif
+#endif
         }
 
         // Checks if rewarded ad ready to show.
         public override bool IsRewardedAvailable()
         {
-            #if HB_ADMOB
-            return this.rewardedAd.IsLoaded(); 
-            #endif
+#if HB_ADMOB
+            return this.rewardedAd.IsLoaded();
+#endif
             return false;
         }
 
         // Shows rewarded ad if loaded.
         public override void ShowRewarded()
         {
-            #if HB_ADMOB
+#if HB_ADMOB
             if (this.rewardedAd.IsLoaded()) {
                 this.rewardedAd.Show();
             }
-            #endif
+#endif
         }
 
-        #if HB_ADMOB
+#if HB_ADMOB
         #region Banner callback handlers
         // Banner ad  event callbacks.
         public void HandleBannerAdLoaded(object sender, EventArgs args) {
@@ -284,6 +284,6 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
             AdManager.Instance.OnRewardedAdRewarded();
         }
         #endregion
-        #endif
+#endif
     }
 }

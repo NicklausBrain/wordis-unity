@@ -80,6 +80,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             {
                 _loopCount = (_loopCount * 2);
             }
+
             return this;
         }
 
@@ -113,7 +114,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             {
                 Destroy(this);
             }
-        }   
+        }
 
         // Returns interpolation for the given time.
         public float GetLerpT(float time)
@@ -136,11 +137,12 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                     t = animationCurve.Evaluate(t);
                     break;
             }
+
             return t;
         }
 
         // Starts Tween.
-        public void  Play()
+        public void Play()
         {
             StartCoroutine(PlayAfterSkipFrame());
         }
@@ -190,6 +192,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                                 {
                                     OnLoopCompleteDelegate.Invoke(elapsedLoop);
                                 }
+
                                 break;
                             case LoopType.PingPong:
                                 SetTweenParams(toValue, fromValue);
@@ -201,8 +204,10 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                                         OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
                                     }
                                 }
+
                                 break;
                         }
+
                         PlayAfterDelay();
                         elapsedTime = 0;
                     }
@@ -212,6 +217,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                         {
                             OnCompleteDeletegate.Invoke();
                         }
+
                         StartCoroutine(DestroyThis());
                     }
                 }

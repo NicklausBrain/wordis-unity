@@ -15,10 +15,10 @@ using UnityEngine;
 
 namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
-	/// <summary>
-	/// Scriptable instance of localization settings containing all info regarding in game localization. 
-	/// This settings can be configured from Hyperbyte -> Localization Settings menu item.
-	/// </summary>
+    /// <summary>
+    /// Scriptable instance of localization settings containing all info regarding in game localization. 
+    /// This settings can be configured from Hyperbyte -> Localization Settings menu item.
+    /// </summary>
     public class LocalizationSettings : ScriptableObject
     {
         public bool useLocalization = true;
@@ -27,28 +27,28 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
         public bool localizeToSystemDetectedLanguage;
     }
 
-	/// <summary>
-	/// Localization info and settings for langauge.
-	/// </summary>
+    /// <summary>
+    /// Localization info and settings for langauge.
+    /// </summary>
     [System.Serializable]
     public class LocalizedLanguage
     {
-		// Name of langauges.
+        // Name of langauges.
         public string languageName;
 
-		// Language enabled to use or not.
+        // Language enabled to use or not.
         public bool isLanguageEnabled = true;
 
-		// Disaply name of langauges. 
+        // Disaply name of langauges. 
         public string langaugeDisplayName;
 
-		// Langauge code.
+        // Langauge code.
         public string languageCode;
 
-		// Flag of langauge.
+        // Flag of langauge.
         public Sprite languageFlag;
 
-		// Localized string file for the configured langauge.
+        // Localized string file for the configured langauge.
         public TextAsset localizedTextFile;
     }
 }

@@ -16,8 +16,8 @@ using UnityEngine;
 namespace Assets.Hyperbyte.Frameworks.Utils
 {
     /// <summary>
-	/// Extention class for Vector operations.
-	/// </summary>
+    /// Extension class for Vector operations.
+    /// </summary>
     public static class VectorUtils
     {
         // Replace X value of Vector3 with given value.

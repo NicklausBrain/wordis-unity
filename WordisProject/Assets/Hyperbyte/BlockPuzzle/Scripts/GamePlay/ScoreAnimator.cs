@@ -16,20 +16,20 @@ using UnityEngine.UI;
 
 namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
-	/// <summary>
-	/// This script component will animate the new added score and will deappear after 1 second.
-	/// </summary>
+    /// <summary>
+    /// This script component will animate the new added score and will deappear after 1 second.
+    /// </summary>
     public class ScoreAnimator : MonoBehaviour
-    {	
-        #pragma warning disable 0649
-		// Animating text.
+    {
+#pragma warning disable 0649
+        // Animating text.
         [SerializeField] Text txtAnimatingScore;
 
-		// Animator controller for the text.
+        // Animator controller for the text.
         [SerializeField] Animator scoereAnim;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
-		// Plays animation effect with given score amount.
+        // Plays animation effect with given score amount.
         public void Animate(int score)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

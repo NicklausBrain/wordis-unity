@@ -50,6 +50,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 
         // List of advanced block shapes.
         public BlockShapeInfo[] advancedBlockShapesInfo;
+
         #endregion
 
         // Classic mode settings.
@@ -65,11 +66,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         public GameModeSettings advancedModeSettings;
 
         #region TimeMode Additional Settings
+
         // Initial timer amount in seconds.
         public int initialTime = 60;
 
         // Bonus secods on line break.
         public int addSecondsOnLineBreak = 10;
+
         #endregion
 
         // Should give reward on game over.

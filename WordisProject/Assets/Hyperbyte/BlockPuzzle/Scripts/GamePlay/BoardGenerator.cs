@@ -22,7 +22,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
     /// <summary>
     /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.
     /// </summary>
-	public class BoardGenerator : MonoBehaviour
+    public class BoardGenerator : MonoBehaviour
     {
 #pragma warning disable 0649
         // Prefab template of block.
@@ -39,8 +39,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
             BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
 
-            int rowSize = (int)boardSize;
-            int columnSize = (int)boardSize;
+            int rowSize = (int) boardSize;
+            int columnSize = (int) boardSize;
 
             // Fetched the size of block that should be used.
             float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
@@ -59,7 +59,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
             GamePlayUI.Instance.gamePlay.allColumns = new List<List<Block>>();
 
-            Sprite blockBGSprite = ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
+            Sprite blockBGSprite =
+                ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
 
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
@@ -84,6 +85,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     blockRow.Add(block);
                     block.assignedSpriteTag = block.defaultSpriteTag;
                 }
+
                 currentPositionX = startPointX;
                 currentPositionY -= (blockSize + blockSpace);
 
@@ -106,11 +108,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                                 block: GamePlay.Instance.allRows[rowIndex][columnIndex],
                                 statusData: blockData);
                         }
+
                         columnIndex++;
                     }
+
                     rowIndex++;
                 }
             }
+
             GamePlay.Instance.OnBoardGridReady();
         }
 
@@ -154,7 +159,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)(Instantiate(blockTemplate)) as GameObject;
+            GameObject block = (GameObject) (Instantiate(blockTemplate)) as GameObject;
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

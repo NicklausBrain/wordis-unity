@@ -22,15 +22,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
     /// <summary>
     /// Handled the game score.
     /// </summary>
-	public class ScoreManager : MonoBehaviour
+    public class ScoreManager : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // Text displays score.
         [SerializeField] private Text txtScore;
 
         // Text displays best score for selected mode.
         [SerializeField] private Text txtBestScore;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         int Score = 0;
         int blockScore = 0;
@@ -40,10 +40,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         // Yield instruction for the score countet iterations.
         WaitForSeconds scoreIterationWait = new WaitForSeconds(0.02F);
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] private ScoreAnimator scoreAnimator;
-        #pragma warning restore 0649
-        
+#pragma warning restore 0649
+
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -69,17 +69,21 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         private void GamePlayUI_OnGameStartedEvent(GameMode currentGameMode)
         {
             #region score data to local members
+
             blockScore = GamePlayUI.Instance.blockScore;
             singleLineBreakScore = GamePlayUI.Instance.singleLineBreakScore;
             multiLineScoreMultiplier = GamePlayUI.Instance.multiLineScoreMultiplier;
+
             #endregion
 
             if (GamePlayUI.Instance.progressData != null)
             {
                 Score += GamePlayUI.Instance.progressData.score;
             }
+
             txtScore.text = Score.ToString("N0");
-            txtBestScore.text = ProfileManager.Instance.GetBestScore(GamePlayUI.Instance.currentGameMode).ToString("N0");
+            txtBestScore.text = ProfileManager.Instance.GetBestScore(GamePlayUI.Instance.currentGameMode)
+                .ToString("N0");
         }
 
         /// <summary>
@@ -98,12 +102,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         }
 
 
-        void ShowScoreAnimation() {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        void ShowScoreAnimation()
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             scoreAnimator.transform.position = mousePos;
             // txtAnimatedText.text = "+" + 100.ToString ();
-            
         }
 
         /// <summary>
@@ -132,6 +136,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 AudioController.Instance.PlayClipLow(AudioController.Instance.addScoreSoundChord, 0.15F);
                 yield return scoreIterationWait;
             }
+
             txtScore.text = currentScore.ToString("N0");
         }
 

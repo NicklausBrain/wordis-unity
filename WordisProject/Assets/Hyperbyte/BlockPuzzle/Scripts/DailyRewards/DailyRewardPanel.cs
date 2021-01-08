@@ -27,13 +27,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
     {
         int rewardAmount = 0;
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] Text txtDay;
         [SerializeField] Text txtReward;
         [SerializeField] Image imgCheckmark;
         [SerializeField] Image imgCollectedBorder;
         [SerializeField] RectTransform GemsRewardPlacement;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Prepares daily reward for the day.
@@ -69,6 +69,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
                 imgCollectedBorder.gameObject.SetActive(false);
                 GetComponent<CanvasGroup>().alpha = 1F;
             }
+
             rewardAmount = reward;
         }
 

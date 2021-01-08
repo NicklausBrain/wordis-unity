@@ -25,14 +25,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils
     /// This script generates gems adding/deducting effect while any change any gems balance.
     /// </summary>
     public class RewardAddAnimation : MonoBehaviour
-    {   
-        #pragma warning disable 0649
+    {
+#pragma warning disable 0649
         [SerializeField] List<RectTransform> allElements;
-        #pragma warning restore 0649
+#pragma warning restore 0649
         Vector3 elementMovePosition = Vector3.zero;
 
         /// Starts Animation.
-        public void PlayGemsBalanceUpdateAnimation(Vector3 toPosition, float delay) {
+        public void PlayGemsBalanceUpdateAnimation(Vector3 toPosition, float delay)
+        {
             elementMovePosition = toPosition;
             StartCoroutine(PlayAddRewardAnimationCoroutine(delay));
         }
@@ -57,6 +58,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils
                     HapticFeedbackGenerator.Haptic(FeedbackType.LightImpact);
                 }
             }
+
             Invoke("DestroyAnim", 0.5F);
         }
 

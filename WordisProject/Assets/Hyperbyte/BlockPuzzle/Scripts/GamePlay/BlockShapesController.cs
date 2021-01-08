@@ -24,10 +24,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class BlockShapesController : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
         [SerializeField] List<ShapeContainer> allShapeContainers;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         // Instance of block shape placement checker script component to check if given block shape can be placed on board grid or not.
         [System.NonSerialized] public BlockShapePlacementChecker blockShapePlacementChecker;
@@ -46,8 +46,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         int totalShapesPlaced = 0;
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             blockShapePlacementChecker = GetComponent<BlockShapePlacementChecker>();
@@ -137,6 +137,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                         }
                     }
                 }
+
                 hasInitialized = true;
             }
         }
@@ -146,7 +147,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void FillAllShapeContainers()
         {
-            foreach (ShapeContainer shapeContainer in allShapeContainers) {
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
                 FillShapeInContainer(shapeContainer);
             }
         }
@@ -156,7 +158,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void FillShapeInContainer(ShapeContainer shapeContainer)
         {
-
             if (shapeContainer.blockShape == null)
             {
                 BlockShape blockShape = GetBlockShape();
@@ -199,11 +200,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 BlockShapeInfo info = null;
                 if (shapeInfo.isAdvanceShape)
                 {
-                    info = GamePlayUI.Instance.GetAdvancedBlockShapesInfo().ToList().Find(o => o.blockShape.name == shapeInfo.shapeName);
+                    info = GamePlayUI.Instance.GetAdvancedBlockShapesInfo().ToList()
+                        .Find(o => o.blockShape.name == shapeInfo.shapeName);
                 }
                 else
                 {
-                    info = GamePlayUI.Instance.GetStandardBlockShapesInfo().ToList().Find(o => o.blockShape.name == shapeInfo.shapeName);
+                    info = GamePlayUI.Instance.GetStandardBlockShapesInfo().ToList()
+                        .Find(o => o.blockShape.name == shapeInfo.shapeName);
                 }
 
                 FillShapeInContainer(allShapeContainers[shapeIndex], info, shapeInfo.shapeRotation);
@@ -237,7 +240,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         BlockShape GetBlockShape(BlockShapeInfo info, float rotation)
         {
-            GameObject upcomingShape = (GameObject)Instantiate(info.blockShape);
+            GameObject upcomingShape = (GameObject) Instantiate(info.blockShape);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
             upcomingShape.transform.localEulerAngles = Vector3.zero.WithNewZ(rotation);
             return upcomingShape.GetComponent<BlockShape>();
@@ -254,7 +257,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             }
 
             // Takes a block shape instance from pool and instantiates it.
-            GameObject upcomingShape = (GameObject)Instantiate(upcomingBlockShapes[0]);
+            GameObject upcomingShape = (GameObject) Instantiate(upcomingBlockShapes[0]);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
 
             // Will add initial rotation to block shape.
@@ -305,7 +308,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 
             for (int i = 0; i < allShapeContainers.Count; i++)
             {
-
                 if (allShapeContainers[i].blockShape != null)
                 {
                     if (emptyShapeContainer != null)
@@ -328,6 +330,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     }
                 }
             }
+
             FillLastShapeContainer();
         }
 
@@ -343,10 +346,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     return false;
                 }
             }
+
             return true;
         }
 
         #region Registered Events Callback
+
         /// <summary>
         /// Callback when any block shape places on board.
         /// </summary>
@@ -355,9 +360,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             Invoke("UpdateShapeContainers", 0.1F);
             totalShapesPlaced += 1;
         }
+
         #endregion
 
-         /// <summary>
+        /// <summary>
         /// Checks if any block shape from all containers can be placed on board. Game will go to rescue or gameover state upon returning false.
         /// </summary>
         void CheckAllShapesCanbePlaced()
@@ -389,6 +395,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     }
                 }
             }
+
             return canAnyShapePlaced;
         }
 
@@ -405,14 +412,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 if (shapeContainer.blockShape != null)
                 {
                     bool isAdvanceShape = shapeContainer.blockShape.isAdvanceShape;
-                    allShapesInfo[shapeIndex] = new ShapeInfo(shapeContainer.blockShape.isAdvanceShape, shapeContainer.blockShape.name, shapeContainer.blockShape.transform.localEulerAngles.z);
+                    allShapesInfo[shapeIndex] = new ShapeInfo(shapeContainer.blockShape.isAdvanceShape,
+                        shapeContainer.blockShape.name, shapeContainer.blockShape.transform.localEulerAngles.z);
                 }
                 else
                 {
                     allShapesInfo[shapeIndex] = new ShapeInfo(false, null, 0);
                 }
+
                 shapeIndex++;
             }
+
             return allShapesInfo;
         }
 
@@ -432,9 +442,11 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             blockShapesPool.Clear();
             upcomingBlockShapes.Clear();
 
-            foreach (ShapeContainer shapeContainer in allShapeContainers) {
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
                 shapeContainer.Reset();
             }
+
             hasInitialized = false;
         }
     }

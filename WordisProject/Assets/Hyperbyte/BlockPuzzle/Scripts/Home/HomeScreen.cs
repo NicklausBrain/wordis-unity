@@ -33,7 +33,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Home
         /// </summary>
         void Awake()
         {
-            GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+            GamePlaySettings gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
 
             if (!gamePlaySettings.classicModeSettings.modeEnabled)
             {

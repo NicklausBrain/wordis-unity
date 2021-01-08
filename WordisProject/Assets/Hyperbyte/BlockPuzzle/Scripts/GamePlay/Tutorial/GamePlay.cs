@@ -20,8 +20,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlay : Singleton<GamePlay>
     {
-        [Header("Public Class Members")]
-        [Tooltip("BoardGenerator Script Reference")]
+        [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
         [Tooltip("BlockShapesController Script Reference")]
@@ -50,12 +49,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         {
             int totalRows = allRows.Count;
 
-            for(int rowId = 0; rowId < allRows[0].Count; rowId++) {
-                 List<Block> thisColumn = new List<Block>();
-                 for (int columnId = 0; columnId < totalRows; columnId++) { 
-                     thisColumn.Add(allRows[columnId][rowId]);
-                 }
-                 allColumns.Add(thisColumn);
+            for (int rowId = 0; rowId < allRows[0].Count; rowId++)
+            {
+                List<Block> thisColumn = new List<Block>();
+                for (int columnId = 0; columnId < totalRows; columnId++)
+                {
+                    thisColumn.Add(allRows[columnId][rowId]);
+                }
+
+                allColumns.Add(thisColumn);
             }
         }
 
@@ -98,12 +100,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                 {
                     allBlocks[leftIndex].Clear();
                 }
+
                 if (rightIndex < totalBlocks)
                 {
                     allBlocks[rightIndex].Clear();
                 }
+
                 yield return new WaitForSeconds(0.03F);
             }
+
             yield return new WaitForSeconds(1);
             GamePlayUI.Instance.TutorialStepCompleted();
         }
@@ -111,7 +116,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// <summary>
         /// Returns all blocks from the given row.
         /// </summary>
-        public List<Block> GetEntireRow(int rowId) {
+        public List<Block> GetEntireRow(int rowId)
+        {
             return allRows[rowId];
         }
 
@@ -126,15 +132,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// <summary>
         /// Returns true if row is about to complete on current block shape being placed otherwise false.
         /// </summary>
-        public bool CanHighlightRow(int rowId) {
-            return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool CanHighlightRow(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
         /// Returns true if given row if all blocks in given row are filled. Otherwise false.
         /// </summary>
-        public bool IsRowCompleted(int rowId) {
-             return allRows[rowId].Find (o => o.isFilled == false) == null;
+        public bool IsRowCompleted(int rowId)
+        {
+            return allRows[rowId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -142,7 +150,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         public bool CanHighlightColumn(int columnId)
         {
-             return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -150,7 +158,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         public bool IsColumnCompleted(int columnId)
         {
-            return allColumns[columnId].Find (o => o.isFilled == false) == null;
+            return allColumns[columnId].Find(o => o.isFilled == false) == null;
         }
 
         /// <summary>
@@ -164,6 +172,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                 {
                     allRows[rowId][columnId].Highlight(sprite);
                 }
+
                 cachedHighlightingRows.Add(rowId);
             }
         }
@@ -175,9 +184,11 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         {
             if (!cachedHighlightingColumns.Contains(columnId))
             {
-                foreach(Block block in GetEntirColumn(columnId)) {
+                foreach (Block block in GetEntirColumn(columnId))
+                {
                     block.Highlight(sprite);
                 }
+
                 cachedHighlightingColumns.Add(columnId);
             }
         }
@@ -243,6 +254,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                     StopHighlightingColumn(column);
                 }
             }
+
             highlightingRows.Clear();
             highlightingColumns.Clear();
         }
@@ -252,11 +264,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         void StopHighlightingRow(int rowId)
         {
-            foreach(Block block in GetEntireRow(rowId)) {
+            foreach (Block block in GetEntireRow(rowId))
+            {
                 block.Reset();
             }
 
-            if (cachedHighlightingRows.Contains(rowId)) {
+            if (cachedHighlightingRows.Contains(rowId))
+            {
                 cachedHighlightingRows.Remove(rowId);
             }
         }
@@ -266,10 +280,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         void StopHighlightingColumn(int columnId)
         {
-            foreach(Block block in GetEntirColumn(columnId)) {
-                 block.Reset();
+            foreach (Block block in GetEntirColumn(columnId))
+            {
+                block.Reset();
             }
-            if (cachedHighlightingColumns.Contains(columnId)) {
+
+            if (cachedHighlightingColumns.Contains(columnId))
+            {
                 cachedHighlightingColumns.Remove(columnId);
             }
         }

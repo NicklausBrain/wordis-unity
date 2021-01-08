@@ -84,6 +84,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                 AudioController.Instance.PlayClipLow(AudioController.Instance.addGemsSoundChord, 0.15F);
                 yield return new WaitForSeconds(0.05F);
             }
+
             txtGemsBalance.text = currentBalance.ToString("N0");
             lastBalance = currentBalance;
         }

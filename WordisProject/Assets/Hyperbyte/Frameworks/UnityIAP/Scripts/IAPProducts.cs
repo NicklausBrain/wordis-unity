@@ -50,7 +50,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 
         // Type of reward.
         public int rewardType;
-    
+
         // Amount of reward if reward type is GEMS.
         public int rewardAmount;
     }

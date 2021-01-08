@@ -28,13 +28,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class BlockShape : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         //Row size of block shape grid.
         [SerializeField] int rowSize;
 
         //Column size of block shape grid.
         [SerializeField] int columnSize;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         // List of all blocks that are being highlighted. Will keep updating runtime.
         List<Block> highlightingBlocks = new List<Block>();
@@ -116,8 +116,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     // Sets the position and  size on block inside block shape.
                     RectTransform blockElement = GetBlockInsideGrid(index);
                     blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
-                    blockElement.localEulerAngles = new Vector3(0,0,blockRotation);
-                    
+                    blockElement.localEulerAngles = new Vector3(0, 0, blockRotation);
+
                     currentPositionX += (blockSize + blockSpace);
                     blockElement.sizeDelta = Vector3.one * blockSize;
 
@@ -125,8 +125,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     {
                         blockElement.GetComponent<Image>().sprite = thisBlockSprite;
                     }
+
                     index++;
                 }
+
                 currentPositionX = startPointX;
                 currentPositionY -= (blockSize + blockSpace);
             }
@@ -150,6 +152,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         }
 
         #region Input Handling
+
         /// <summary>
         /// Pointer down on block shape.
         /// </summary>
@@ -175,6 +178,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                         thisTransform.localScale = Vector3.one;
                         pointerDownTime = Time.time;
                     }
+
                     // Shape can be dragged now.
                     shouldDrag = true;
                 }
@@ -258,24 +262,27 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 CheckCanPlaceShape();
             }
         }
+
         #endregion
-        
-        
+
+
         /// <summary>
         // Returns the horizontal starting point from where grid should start.
         /// </summary>
         public float GetStartPointX(float blockSize, int rowSize)
         {
-            float totalWidth = (blockSize * rowSize) + ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
+            float totalWidth = (blockSize * rowSize) +
+                               ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
             return -((totalWidth / 2) - (blockSize / 2));
         }
 
         /// <summary>
         // Returns the vertical starting point from where grid should start.
-         /// </summary>
+        /// </summary>
         public float GetStartPointY(float blockSize, int columnSize)
         {
-            float totalHeight = (blockSize * columnSize) + ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
+            float totalHeight = (blockSize * columnSize) +
+                                ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
             return ((totalHeight / 2) - (blockSize / 2));
         }
 
@@ -305,6 +312,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     GamePlay.Instance.StopHighlight();
                     return false;
                 }
+
                 hittingBlocks.Add(hittingBlock);
 
                 // Row Id of block which is interacting with block shape will be added to list. Used to highlight lines that can be completed by placing block shape at current position.
@@ -332,6 +340,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     {
                         block.Highlight(thisBlockSprite);
                     }
+
                     GamePlay.Instance.HighlightAllRows(hittingRows, thisBlockSprite);
                     GamePlay.Instance.HighlightAllColmns(hittingColumns, thisBlockSprite);
 
@@ -346,6 +355,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -367,6 +377,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     GamePlay.Instance.StopHighlight();
                     return false;
                 }
+
                 hittingBlocks.Add(hittingBlock);
 
                 // Row id of block will be added to list if entire row is goint to finish on placing current shape.
@@ -411,20 +422,27 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     // Adds score based on the number of rows, columnd and blocks cleares. final calculation will be done in score manager.
                     GamePlayUI.Instance.scoreManager.AddScore(linesCleared, activeBlocks.Count);
 
-                    if(linesCleared > 0) {
+                    if (linesCleared > 0)
+                    {
                         AudioController.Instance.PlayLineBreakSound(completedRows.Count + completedColumns.Count);
                     }
 
                     #region TimeMode Specific
+
                     if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
                     {
                         // Will add line completion bonus time to timer.
-                        GamePlayUI.Instance.timeModeProgresssBar.AddTime((GamePlayUI.Instance.timeModeAddSecondsOnLineBreak * (completedRows.Count + completedColumns.Count)));
+                        GamePlayUI.Instance.timeModeProgresssBar.AddTime(
+                            (GamePlayUI.Instance.timeModeAddSecondsOnLineBreak *
+                             (completedRows.Count + completedColumns.Count)));
                     }
+
                     #endregion
+
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -438,6 +456,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             {
                 return hit.collider.GetComponent<Block>();
             }
+
             return null;
         }
 
@@ -453,6 +472,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     b.Reset();
                 }
             }
+
             highlightingBlocks.Clear();
         }
 
@@ -465,6 +485,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             {
                 b.Reset();
             }
+
             highlightingBlocks.Clear();
         }
 
@@ -484,9 +505,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
             float newRotation = (transform.localEulerAngles.z - 90);
             InputManager.Instance.DisableTouchForDelay(0.2F);
-            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(() => {
-                ResetShape();
-            });
+            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(() => { ResetShape(); });
         }
     }
 }

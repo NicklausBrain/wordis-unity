@@ -18,19 +18,18 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     public class AudioController : Singleton<AudioController>
     {
-        [Header("Audio Soureces")]
-        public AudioSource audioSource;
+        [Header("Audio Soureces")] public AudioSource audioSource;
         public AudioSource lowSoundSource;
 
         float lowAudioDefaultVolume = 0.1F;
 
-        [Header("Audio Clips")]
-        public AudioClip btnPressSound;
+        [Header("Audio Clips")] public AudioClip btnPressSound;
         public AudioClip addGemsSound;
         public AudioClip addScoreSoundChord;
         public AudioClip addGemsSoundChord;
 
         #region GamePlay Sounds
+
         public AudioClip blockPickSound;
         public AudioClip blockPlaceSound;
         public AudioClip blockResetSound;
@@ -39,6 +38,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         public AudioClip lineBreakSound2;
         public AudioClip lineBreakSound3;
         public AudioClip lineBreakSound4;
+
         #endregion
 
         public void PlayClip(AudioClip clip)
@@ -101,7 +101,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 
         public void PlayLineBreakSound(int lines)
         {
-
             if (ProfileManager.Instance.IsSoundEnabled)
             {
                 switch (lines)

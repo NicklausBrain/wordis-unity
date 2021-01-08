@@ -22,10 +22,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
     {
         // The button to toggle Vibration, assigned from inspector.
         public Button btnVibration;
+
         // The image of the button.
         public Image btnVibrationImage;
+
         // The On sprite for Vibration.
         public Sprite VibrationOnSprite;
+
         // The off sprite for Vibration.
         public Sprite VibrationOffSprite;
 

@@ -23,9 +23,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
     /// <summary>
     /// This class component is attached to all blocks in the grid. 
     /// </summary>
-	public class Block : MonoBehaviour
+    public class Block : MonoBehaviour
     {
-
         // Returns rowId 
         public int RowId { get; private set; }
 

@@ -21,14 +21,17 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts
     public class AdSettings : ScriptableObject
     {
         #region ConsentSettings
+
         // User consent required or not.
         public bool enableConsent = true;
 
         // Consent to required, not requird or only required to EEA users.
         public ConsentSelection consentSelection = ConsentSelection.RequiredAll;
+
         #endregion
 
         #region AdNetworkSelection
+
         // Ads enabled for game or not.
         public bool adsEnabled = true;
 
@@ -52,6 +55,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts
 
         // Rewarded ad should be used or not.
         public bool rewardedAdsEnabled = true;
+
         #endregion
     }
 
@@ -63,12 +67,12 @@ public enum ConsentSelection
     ReqiuredOnlyInEEA,  // Consent only required to users being to EEA.
     RequiredAll         // Consent required to all.
 }
-#else 
+#else
     [System.Serializable]
     public enum ConsentSelection
     {
-        NotRequired,        // Consent not required.
-        RequiredAll         // Consent required to all.
+        NotRequired, // Consent not required.
+        RequiredAll // Consent required to all.
     }
 #endif
 
@@ -78,7 +82,7 @@ public enum ConsentSelection
     [System.Serializable]
     public enum AdNetworkSelection
     {
-        UnityAds,       
+        UnityAds,
         GoogleMobileAds,
         IronSource,
         AppLovinMax,

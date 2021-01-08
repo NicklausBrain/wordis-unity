@@ -22,15 +22,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
     /// <summary>
     /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.
     /// </summary>
-	public class BoardGenerator : MonoBehaviour
+    public class BoardGenerator : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         // Prefab template of block.
         [SerializeField] GameObject blockTemplate;
 
         // Parent inside which all blocks will be generated. Typically root of block grid.
         [SerializeField] GameObject blockRoot;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Generates the block grid based on game settings and will also set progress from previoius session if any.
@@ -39,12 +39,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         {
             BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
 
-            int rowSize = (int)boardSize;
-            int columnSize = (int)boardSize;
+            int rowSize = (int) boardSize;
+            int columnSize = (int) boardSize;
 
             // Fetched the size of block that should be used.
             float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
-            
+
             // Fetched the space between blocks that should be used.
             float blockSpace = GamePlayUI.Instance.currentModeSettings.blockSpace;
 
@@ -57,7 +57,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
             float currentPositionY = startPointY;
 
             GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
-            Sprite blockBGSprite = ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
+            Sprite blockBGSprite =
+                ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
 
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
@@ -82,8 +83,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                     blockRow.Add(block);
                     block.assignedSpriteTag = block.defaultSpriteTag;
                     block.GetComponent<BoxCollider2D>().enabled = false;
-                    block.GetComponent<Image>().color = new Color(1,1,1,0.3F);
+                    block.GetComponent<Image>().color = new Color(1, 1, 1, 0.3F);
                 }
+
                 currentPositionX = startPointX;
                 currentPositionY -= (blockSize + blockSpace);
 
@@ -93,35 +95,40 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
             GamePlay.Instance.OnBoardGridReady();
         }
 
-        public void UpdateBoardForTutorial(int step) 
+        public void UpdateBoardForTutorial(int step)
         {
-            if(step == 1) {
+            if (step == 1)
+            {
                 List<Block> middleColumn = GamePlay.Instance.GetEntirColumn(2);
 
-                foreach(Block block in middleColumn) {
-                    block.GetComponent<BoxCollider2D>().enabled = true;
-                    block.GetComponent<Image>().color = new Color(1,1,1,1F);
-                }
-                GamePlayUI.Instance.boardHighlightImage.SetActive(true);
-                
-            } 
-            else if(step == 2)  {
-                List<Block> middleColumn = GamePlay.Instance.GetEntirColumn(2);
-                
-                foreach(Block block in middleColumn) 
+                foreach (Block block in middleColumn)
                 {
                     block.GetComponent<BoxCollider2D>().enabled = true;
-                    block.GetComponent<Image>().color = new Color(1,1,1,0.3F);
+                    block.GetComponent<Image>().color = new Color(1, 1, 1, 1F);
+                }
+
+                GamePlayUI.Instance.boardHighlightImage.SetActive(true);
+            }
+            else if (step == 2)
+            {
+                List<Block> middleColumn = GamePlay.Instance.GetEntirColumn(2);
+
+                foreach (Block block in middleColumn)
+                {
+                    block.GetComponent<BoxCollider2D>().enabled = true;
+                    block.GetComponent<Image>().color = new Color(1, 1, 1, 0.3F);
                     block.GetComponent<BoxCollider2D>().enabled = false;
                 }
 
                 List<Block> middleRow = GamePlay.Instance.GetEntireRow(2);
 
-                 foreach(Block block in middleRow) {
+                foreach (Block block in middleRow)
+                {
                     block.GetComponent<BoxCollider2D>().enabled = true;
-                    block.GetComponent<Image>().color = new Color(1,1,1,1F);
+                    block.GetComponent<Image>().color = new Color(1, 1, 1, 1F);
                 }
-                GamePlayUI.Instance.boardHighlightImage.transform.localEulerAngles = new Vector3(0,0,90);
+
+                GamePlayUI.Instance.boardHighlightImage.transform.localEulerAngles = new Vector3(0, 0, 90);
             }
         }
 
@@ -145,7 +152,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         public float GetStartPointX(float blockSize, int rowSize)
         {
-            float totalWidth = (blockSize * rowSize) + ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
+            float totalWidth = (blockSize * rowSize) +
+                               ((rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
             return -((totalWidth / 2) - (blockSize / 2));
         }
 
@@ -154,7 +162,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         public float GetStartPointY(float blockSize, int columnSize)
         {
-            float totalHeight = (blockSize * columnSize) + ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
+            float totalHeight = (blockSize * columnSize) +
+                                ((columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace);
             return ((totalHeight / 2) - (blockSize / 2));
         }
 
@@ -163,7 +172,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// </summary>
         public RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)(Instantiate(blockTemplate)) as GameObject;
+            GameObject block = (GameObject) (Instantiate(blockTemplate)) as GameObject;
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
             return block.GetComponent<RectTransform>();

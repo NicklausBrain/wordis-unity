@@ -31,7 +31,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
             }
         }
 
-		// Clear all child gameobjects of the given transform.
+        // Clear all child gameobjects of the given transform.
         public static void ClearAllChild(this Transform obj)
         {
             if (obj.childCount > 0)
@@ -43,7 +43,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
             }
         }
 
-		// Clear all child gameobjects of the given rect transform.
+        // Clear all child gameobjects of the given rect transform.
         public static void ClearAllChild(this RectTransform obj)
         {
             if (obj.childCount > 0)
@@ -61,7 +61,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
             target.gameObject.SetActive(true);
             target.transform.SetAsLastSibling();
 
-            if(addToStack) {
+            if (addToStack)
+            {
                 UIController.Instance.Push(target.name);
             }
         }
@@ -82,9 +83,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
             }
         }
 
-		/// <summary>
-		/// Disable given gameobject and removes it from stack added to any.
-		/// </summary>
+        /// <summary>
+        /// Disable given gameobject and removes it from stack added to any.
+        /// </summary>
         static IEnumerator DisableWindow(GameObject target)
         {
             yield return new WaitForSeconds(0.3F);

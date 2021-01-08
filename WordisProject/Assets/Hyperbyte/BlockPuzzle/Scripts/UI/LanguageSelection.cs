@@ -26,7 +26,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
     /// </summary>
     public class LanguageSelection : MonoBehaviour
     {
-
 #pragma warning disable 0649
         [SerializeField] GameObject languageButtonTemplate;
         [SerializeField] GameObject languageListContent;
@@ -67,7 +66,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
         /// <returns></returns>
         GameObject GetLanguageButton(LocalizedLanguage lang, bool isActive = false)
         {
-            GameObject langButton = (GameObject)Instantiate(languageButtonTemplate);
+            GameObject langButton = (GameObject) Instantiate(languageButtonTemplate);
             langButton.transform.SetParent(languageListContent.transform);
             langButton.name = lang.languageName;
             langButton.transform.localScale = Vector3.one;

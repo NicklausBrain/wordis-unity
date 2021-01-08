@@ -15,7 +15,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 {
     /// <summary>
     /// Abstract Tween behaviour will be dervied by tween classes.
@@ -33,63 +33,73 @@ namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 
         bool isPlaying = false;
         bool isPaused = false;
-        
+
         float elapsedTime = 0;
         float duration = 1F;
-        
+
         int elapsedLoop = 0;
 
         AnimationCurve linearAnimationCurve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
         AnimationType animationType;
         Transform thisTransform;
-    
+
         // Returns Interpolation for the given ease type.
         public float GetLerpT(float time)
         {
             float timeValue = (time > duration) ? duration : time;
             float t = (duration == 0) ? 1 : timeValue / duration;
 
-            switch(easeType) {
+            switch (easeType)
+            {
                 case Ease.Linear:
-                t = linearAnimationCurve.Evaluate(t);
-                break;
+                    t = linearAnimationCurve.Evaluate(t);
+                    break;
                 case Ease.EaseIn:
-                t = HBTweenUtility.EaseIn(t);
-                break;
+                    t = HBTweenUtility.EaseIn(t);
+                    break;
                 case Ease.EaseOut:
-                 t = HBTweenUtility.EaseOut(t);
-                break;
+                    t = HBTweenUtility.EaseOut(t);
+                    break;
                 case Ease.Custom:
-                t = animationCurve.Evaluate(t);
-                break;
+                    t = animationCurve.Evaluate(t);
+                    break;
             }
+
             return t;
         }
 
         // Starts Tween.
-        public void Play() {
+        public void Play()
+        {
             StartCoroutine(PlayAfterSkipFrame());
         }
 
         // Starts Tween after skipping first frame.
-        IEnumerator PlayAfterSkipFrame() {
+        IEnumerator PlayAfterSkipFrame()
+        {
             yield return new WaitForEndOfFrame();
-            if(delay <= 0) {
+            if (delay <= 0)
+            {
                 isPlaying = true;
-            } else {
-                Invoke("PlayAfterDelay",delay);
+            }
+            else
+            {
+                Invoke("PlayAfterDelay", delay);
             }
         }
 
         // Start Playing after given delay.
-        public void PlayAfterDelay() {
+        public void PlayAfterDelay()
+        {
             isPlaying = true;
         }
 
         // Destroy on tween completion.
-        IEnumerator DestroyThis() {
+        IEnumerator DestroyThis()
+        {
             yield return new WaitForEndOfFrame();
-            if(gameObject != null && this != null) {
+            if (gameObject != null && this != null)
+            {
                 Destroy(this);
             }
         }
@@ -107,33 +117,44 @@ namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
                     isPlaying = false;
 
                     elapsedLoop += 1;
-                    
-                    if((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)  
+
+                    if ((loopCount > 1 && elapsedLoop < loopCount) || loopCount < 0)
                     {
-                        switch(loopType) {
+                        switch (loopType)
+                        {
                             case LoopType.Loop:
-                            SetTweenParams(GetStartPoint(), GetEndPoint());
+                                SetTweenParams(GetStartPoint(), GetEndPoint());
 
-                            if(OnLoopCompleteDelegate != null) {
-                              OnLoopCompleteDelegate.Invoke(elapsedLoop);
-                            }
-                            break;
-                            case LoopType.PingPong:
-                            SetTweenParams(GetEndPoint(), GetStartPoint());
-
-                            if(elapsedLoop % 2 == 0) {
-                                if(OnLoopCompleteDelegate != null) {
-                                    OnLoopCompleteDelegate.Invoke((elapsedLoop /2));
+                                if (OnLoopCompleteDelegate != null)
+                                {
+                                    OnLoopCompleteDelegate.Invoke(elapsedLoop);
                                 }
-                            }
-                            break;
+
+                                break;
+                            case LoopType.PingPong:
+                                SetTweenParams(GetEndPoint(), GetStartPoint());
+
+                                if (elapsedLoop % 2 == 0)
+                                {
+                                    if (OnLoopCompleteDelegate != null)
+                                    {
+                                        OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
+                                    }
+                                }
+
+                                break;
                         }
+
                         PlayAfterDelay();
                         elapsedTime = 0;
-                    } else {
-                        if(OnCompleteDeletegate != null) {
-                            OnCompleteDeletegate.Invoke(); 
+                    }
+                    else
+                    {
+                        if (OnCompleteDeletegate != null)
+                        {
+                            OnCompleteDeletegate.Invoke();
                         }
+
                         StartCoroutine(DestroyThis());
                     }
                 }
@@ -143,12 +164,12 @@ namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         // Keep updating animation on each frame.
         private void UpdateAnimation(float time)
         {
-            float	t	= GetLerpT(time);
-            object	val	= GetValue(t);
+            float t = GetLerpT(time);
+            object val = GetValue(t);
 
             SetValue(val);
         }
-        
+
         // Abstact methods.
         public abstract object GetValue(float time);
         public abstract void SetValues(object fromValue, object toValue);
@@ -158,91 +179,109 @@ namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         // Set values to object property.
         private void SetValue(object val)
         {
-            switch(animationType) {
+            switch (animationType)
+            {
                 case AnimationType.AnchorX:
-                    ((RectTransform) thisTransform).anchoredPosition = new Vector2((float)val, ((RectTransform)thisTransform).anchoredPosition.y);
-                break;
+                    ((RectTransform) thisTransform).anchoredPosition = new Vector2((float) val,
+                        ((RectTransform) thisTransform).anchoredPosition.y);
+                    break;
                 case AnimationType.AnchorY:
-                    ((RectTransform)thisTransform).anchoredPosition = new Vector2(((RectTransform)thisTransform).anchoredPosition.x, (float)val);
-                break;
-                 case AnimationType.AnchorZ:
-                    ((RectTransform)thisTransform).anchoredPosition3D = new Vector3(((RectTransform)thisTransform).anchoredPosition3D.x, ((RectTransform)thisTransform).anchoredPosition3D.y, (float)val);
-                break;
+                    ((RectTransform) thisTransform).anchoredPosition =
+                        new Vector2(((RectTransform) thisTransform).anchoredPosition.x, (float) val);
+                    break;
+                case AnimationType.AnchorZ:
+                    ((RectTransform) thisTransform).anchoredPosition3D = new Vector3(
+                        ((RectTransform) thisTransform).anchoredPosition3D.x,
+                        ((RectTransform) thisTransform).anchoredPosition3D.y, (float) val);
+                    break;
                 case AnimationType.PositionX:
-                    thisTransform.position = new Vector3((float)val,thisTransform.position.y, thisTransform.position.z);
-                break;
+                    thisTransform.position =
+                        new Vector3((float) val, thisTransform.position.y, thisTransform.position.z);
+                    break;
                 case AnimationType.LocalPositionX:
-                    thisTransform.localPosition = new Vector3((float)val,thisTransform.localPosition.y, thisTransform.localPosition.z);
-                break;
+                    thisTransform.localPosition = new Vector3((float) val, thisTransform.localPosition.y,
+                        thisTransform.localPosition.z);
+                    break;
 
                 case AnimationType.PositionY:
-                    thisTransform.position = new Vector3(thisTransform.position.x, (float)val, thisTransform.position.z);
-                break;
+                    thisTransform.position =
+                        new Vector3(thisTransform.position.x, (float) val, thisTransform.position.z);
+                    break;
                 case AnimationType.LocalPositionY:
-                    thisTransform.localPosition = new Vector3(thisTransform.localPosition.x, (float)val, thisTransform.localPosition.z);
-                break;
+                    thisTransform.localPosition = new Vector3(thisTransform.localPosition.x, (float) val,
+                        thisTransform.localPosition.z);
+                    break;
 
                 case AnimationType.PositionZ:
-                    thisTransform.position = new Vector3(thisTransform.position.x,thisTransform.position.y, (float)val);
-                break;
+                    thisTransform.position =
+                        new Vector3(thisTransform.position.x, thisTransform.position.y, (float) val);
+                    break;
                 case AnimationType.LocalPositionZ:
-                    thisTransform.localPosition = new Vector3(thisTransform.localPosition.x, thisTransform.localPosition.y, (float)val);
-                break;
+                    thisTransform.localPosition = new Vector3(thisTransform.localPosition.x,
+                        thisTransform.localPosition.y, (float) val);
+                    break;
 
                 case AnimationType.LocalRotationToX:
-                    thisTransform.localEulerAngles = new Vector3((float)val, thisTransform.localEulerAngles.y, thisTransform.localEulerAngles.z);
+                    thisTransform.localEulerAngles = new Vector3((float) val, thisTransform.localEulerAngles.y,
+                        thisTransform.localEulerAngles.z);
                     break;
 
                 case AnimationType.LocalRotationToY:
-                    thisTransform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x, (float)val, thisTransform.localEulerAngles.z);
+                    thisTransform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x, (float) val,
+                        thisTransform.localEulerAngles.z);
                     break;
 
                 case AnimationType.LocalRotationToZ:
-                    thisTransform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x, thisTransform.localEulerAngles.y, (float)val);
+                    thisTransform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x,
+                        thisTransform.localEulerAngles.y, (float) val);
                     break;
 
                 case AnimationType.LocalScaleX:
-                    thisTransform.localScale = new Vector3( (float)val, thisTransform.localScale.y, thisTransform.localScale.z);
-                break;
+                    thisTransform.localScale =
+                        new Vector3((float) val, thisTransform.localScale.y, thisTransform.localScale.z);
+                    break;
 
                 case AnimationType.LocalScaleY:
-                    thisTransform.localScale = new Vector3( thisTransform.localScale.x,  (float)val, thisTransform.localScale.z);
-                break;
+                    thisTransform.localScale =
+                        new Vector3(thisTransform.localScale.x, (float) val, thisTransform.localScale.z);
+                    break;
 
                 case AnimationType.LocalScaleZ:
-                    thisTransform.localScale = new Vector3(thisTransform.localScale.x, thisTransform.localScale.y,  (float)val);
-                break;
+                    thisTransform.localScale =
+                        new Vector3(thisTransform.localScale.x, thisTransform.localScale.y, (float) val);
+                    break;
 
                 case AnimationType.AnchoredPosition3D:
-                    ((RectTransform)thisTransform).anchoredPosition3D = (Vector3)val;
-                break;
+                    ((RectTransform) thisTransform).anchoredPosition3D = (Vector3) val;
+                    break;
                 case AnimationType.Position:
-                    thisTransform.position = (Vector3)val;
-                break;
+                    thisTransform.position = (Vector3) val;
+                    break;
                 case AnimationType.LocalPosition:
-                    thisTransform.localPosition = (Vector3)val;
-                break;
+                    thisTransform.localPosition = (Vector3) val;
+                    break;
 
                 case AnimationType.LocalRotationTo:
-                    thisTransform.localEulerAngles = (Vector3)val;
-                break;
+                    thisTransform.localEulerAngles = (Vector3) val;
+                    break;
 
                 case AnimationType.LocalScale:
-                    thisTransform.localScale = (Vector3)val;
-                break;
+                    thisTransform.localScale = (Vector3) val;
+                    break;
 
                 case AnimationType.AnchoredPosition:
-                    ((RectTransform)thisTransform).anchoredPosition = (Vector2)val;
-                break;
+                    ((RectTransform) thisTransform).anchoredPosition = (Vector2) val;
+                    break;
 
                 case AnimationType.RotateByZ:
-                    transform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x, thisTransform.localEulerAngles.y, (float)val);
-                break;
+                    transform.localEulerAngles = new Vector3(thisTransform.localEulerAngles.x,
+                        thisTransform.localEulerAngles.y, (float) val);
+                    break;
             }
         }
 
         // Set values of tween param.
-        public void SetTweenParams(AnimationType _animationType, object _fromValue, object _toValue, float _duration ) 
+        public void SetTweenParams(AnimationType _animationType, object _fromValue, object _toValue, float _duration)
         {
             thisTransform = transform;
             animationType = _animationType;
@@ -251,18 +290,20 @@ namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Set values of tween param.
-        public void SetTweenParams(object _fromValue, object _toValue) 
+        public void SetTweenParams(object _fromValue, object _toValue)
         {
             SetValues(_fromValue, _toValue);
         }
 
         // Pauses Tween.
-        public void Pause() {
+        public void Pause()
+        {
             isPaused = true;
         }
 
         // Resumes tween.
-        public void Resume() {
+        public void Resume()
+        {
             isPaused = false;
         }
     }

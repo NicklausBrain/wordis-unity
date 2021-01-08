@@ -97,6 +97,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             {
                 GamePlayUI.Instance.ResumeGame();
             }
+
             isRescueDone = false;
         }
 

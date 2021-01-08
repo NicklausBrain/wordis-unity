@@ -22,13 +22,13 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
     [RequireComponent(typeof(Text))]
     public class LocalizedTextFormatted : MonoBehaviour
     {
-        #pragma warning disable 0649
-        [Tooltip("Assign Text tag containing localized text.")]
-        [SerializeField] string txtTag;
+#pragma warning disable 0649
+        [Tooltip("Assign Text tag containing localized text.")] [SerializeField]
+        string txtTag;
 
         [SerializeField] string formattedValue1;
         [SerializeField] string formattedValue2;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         Text thisText;
 
@@ -39,7 +39,8 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
         {
             thisText = GetComponent<Text>();
 
-            if (txtTag == null) {
+            if (txtTag == null)
+            {
                 enabled = false;
                 return;
             }
@@ -70,7 +71,8 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
         /// </summary>
         void OnLocalizationInitialized(LocalizedLanguage lang, bool isLocalizationSupported)
         {
-            if (isLocalizationSupported) {
+            if (isLocalizationSupported)
+            {
                 LocalizeContent();
             }
         }

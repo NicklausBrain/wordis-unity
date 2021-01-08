@@ -26,9 +26,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         float maxTimer = 0;
         float remainingTime = 0;
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] Image imgTimerBar;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
 
         [System.NonSerialized] public bool promptedTimeOver = false;
@@ -36,7 +36,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable() {
+        private void OnEnable()
+        {
             ///  Registers game status callbacks.
             GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
             GamePlayUI.OnGamePausedEvent += GamePlayUI_OnGamePausedEvent;
@@ -45,7 +46,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// This function is called when the behaviour becomes disabled or inactive.
         /// </summary>
-        private void OnDisable() {
+        private void OnDisable()
+        {
             ///  Unregisters game status callbacks.
             GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
             GamePlayUI.OnGamePausedEvent -= GamePlayUI_OnGamePausedEvent;
@@ -54,17 +56,22 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Gameover callback.
         /// </summary>
-        private void GamePlayUI_OnGameOverEvent(GameMode gameMode) {
+        private void GamePlayUI_OnGameOverEvent(GameMode gameMode)
+        {
             StopTimer();
         }
 
         /// <summary>
         /// Game pause callback.
         /// </summary>
-        private void GamePlayUI_OnGamePausedEvent(GameMode gameMode, bool paused) {
-            if(paused) {
+        private void GamePlayUI_OnGamePausedEvent(GameMode gameMode, bool paused)
+        {
+            if (paused)
+            {
                 PauseTimer();
-            } else {
+            }
+            else
+            {
                 ResumeTimer();
             }
         }
@@ -72,8 +79,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Starts the timer and will keep invoking each second in repeatative mode.
         /// </summary>
-        public void StartTimer() {
-            if(!IsInvoking("StartContinuousTimer")) {
+        public void StartTimer()
+        {
+            if (!IsInvoking("StartContinuousTimer"))
+            {
                 InvokeRepeating("StartContinuousTimer", 1, 1);
             }
         }
@@ -81,8 +90,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Paused the timer. Will act similar to stop timer.
         /// </summary>
-        public void PauseTimer() {
-            if(IsInvoking("StartContinuousTimer")) {
+        public void PauseTimer()
+        {
+            if (IsInvoking("StartContinuousTimer"))
+            {
                 CancelInvoke("StartContinuousTimer");
             }
         }
@@ -90,8 +101,10 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Stops the timer. 
         /// </summary>
-        public void StopTimer() {
-            if (IsInvoking("StartContinuousTimer")) {
+        public void StopTimer()
+        {
+            if (IsInvoking("StartContinuousTimer"))
+            {
                 CancelInvoke("StartContinuousTimer");
             }
         }
@@ -99,14 +112,16 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Resumes the timer from current state.
         /// </summary>
-        public void ResumeTimer() {
+        public void ResumeTimer()
+        {
             StartTimer();
         }
 
         /// <summary>
         /// Will be called on starting of game. Amount of time will be fetched from game setting and if game has previos progress then the time amount will be given from thr previous sesison progress data.
         /// </summary>
-        public void SetTimer(float seconds) {
+        public void SetTimer(float seconds)
+        {
             maxTimer = GamePlayUI.Instance.timeModeInitialTimer;
 
             remainingTime = seconds;
@@ -118,7 +133,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds given seconds to current running timer. Value will be clamped down to max possible time amount if exceeding after adding time.
         /// </summary>
-        public void AddTime(float seconds) {
+        public void AddTime(float seconds)
+        {
             remainingTime += seconds;
             remainingTime = Mathf.Clamp(remainingTime, 0, maxTimer);
         }
@@ -126,23 +142,29 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns remaining time amount.
         /// </summary>
-        public int GetRemainingTimer() {
-            return (int)remainingTime;
+        public int GetRemainingTimer()
+        {
+            return (int) remainingTime;
         }
 
         /// <summary>
         /// This method will be executed each second while timer is running.
         /// </summary>
-        void StartContinuousTimer() 
+        void StartContinuousTimer()
         {
-            if(remainingTime > 0) {
+            if (remainingTime > 0)
+            {
                 remainingTime -= 1;
             }
+
             imgTimerBar.FillAmount(GetFillAmount(), 1F).SetEase(Ease.Linear);
 
-            if(remainingTime <= 0) {
+            if (remainingTime <= 0)
+            {
                 StopTimer();
-                if(!(UIController.Instance.rescueGameScreen.activeSelf || UIController.Instance.gameOverScreen.activeSelf)) {
+                if (!(UIController.Instance.rescueGameScreen.activeSelf ||
+                      UIController.Instance.gameOverScreen.activeSelf))
+                {
                     GamePlayUI.Instance.TryRescueGame(GameOverReason.TIME_OVER);
                 }
             }
@@ -151,7 +173,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns the Image fill amount of progress bar based on remaining timer out of full timer.
         /// </summary>
-        float GetFillAmount() {
+        float GetFillAmount()
+        {
             return (remainingTime / maxTimer);
         }
     }

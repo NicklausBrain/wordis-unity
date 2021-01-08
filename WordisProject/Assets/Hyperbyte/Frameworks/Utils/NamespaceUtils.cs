@@ -24,7 +24,6 @@ namespace Assets.Hyperbyte.Frameworks.Utils
         /// <summary>
         /// Checks if given namespace exists or not.
         /// </summary>
-        
         public static bool CheckNamespacesExists(string requiredNameSpace)
         {
             HashSet<string> existingIdentifiers = new HashSet<string>();
@@ -43,6 +42,7 @@ namespace Assets.Hyperbyte.Frameworks.Utils
                     existingIdentifiers.Add(typeNamespace);
                 }
             }
+
             return (existingIdentifiers.Contains(requiredNameSpace));
         }
 
@@ -52,7 +52,7 @@ namespace Assets.Hyperbyte.Frameworks.Utils
         /// </summary>
         public static void PrintAllNameSpaces()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             HashSet<string> existingIdentifiers = new HashSet<string>();
             System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
 
@@ -72,7 +72,7 @@ namespace Assets.Hyperbyte.Frameworks.Utils
                     Debug.Log(typeNamespace);
                 }
             }
-            #endif
+#endif
         }
     }
 

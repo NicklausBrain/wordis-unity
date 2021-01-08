@@ -19,10 +19,10 @@ using UnityEngine;
 
 namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
-	/// <summary>
-	/// This scriptable class handles the ingame localization and store configurations.
-	/// Localization configuration can be edited from Hyperbyte -> Localization Settings menu item.
-	/// </summary>
+    /// <summary>
+    /// This scriptable class handles the ingame localization and store configurations.
+    /// Localization configuration can be edited from Hyperbyte -> Localization Settings menu item.
+    /// </summary>
     public class LocalizationManager : Singleton<LocalizationManager>
     {
         public LocalizationSettings localizationSettings;
@@ -47,20 +47,20 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             Invoke("Initialise", 0.1F);
         }
 
-		/// <summary>
-		/// Initialize and invokes required callback for the localization.
-		/// </summary>
+        /// <summary>
+        /// Initialize and invokes required callback for the localization.
+        /// </summary>
         void Initialise()
         {
             if (!hasInitialised)
             {
                 if (localizationSettings == null)
                 {
-					// Initalize the localization settings scriptable and loads its from resources.
-                    localizationSettings = (LocalizationSettings)Resources.Load("LocalizationSettings");
+                    // Initalize the localization settings scriptable and loads its from resources.
+                    localizationSettings = (LocalizationSettings) Resources.Load("LocalizationSettings");
                 }
 
-				// All only properly configured languages to active language list.
+                // All only properly configured languages to active language list.
                 if (localizationSettings != null && localizationSettings.useLocalization)
                 {
                     allLocalizedLanaguages = new List<LocalizedLanguage>();
@@ -73,7 +73,7 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
                         }
                     }
 
-					// If the there is more than 0 langauge means localization is active to be continu to localize ingame content.
+                    // If the there is more than 0 langauge means localization is active to be continu to localize ingame content.
                     if (allLocalizedLanaguages.Count > 0)
                     {
                         isLocalizationSupported = true;
@@ -100,9 +100,9 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             hasInitialised = true;
         }
 
-		/// <summary>
-		/// Returns current localized language configuration.
-		/// </summary>
+        /// <summary>
+        /// Returns current localized language configuration.
+        /// </summary>
         public LocalizedLanguage GetCurrentLanguage()
         {
             if (!isLocalizationSupported)
@@ -119,7 +119,8 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             {
                 if (localizationSettings.localizeToSystemDetectedLanguage)
                 {
-                    LocalizedLanguage autoDetectLang = allLocalizedLanaguages.Find(o => o.languageName.Contains(Application.systemLanguage.ToString()));
+                    LocalizedLanguage autoDetectLang = allLocalizedLanaguages.Find(o =>
+                        o.languageName.Contains(Application.systemLanguage.ToString()));
                     if (autoDetectLang != null)
                     {
                         SetLocalizedLanguageOnAutoDetect(autoDetectLang);
@@ -133,15 +134,16 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             {
                 defaultLang = allLocalizedLanaguages[localizationSettings.defaultLangauge];
             }
+
             string languageCode = PlayerPrefs.GetString("currentLang", defaultLang.languageCode);
             LocalizedLanguage lang = allLocalizedLanaguages.Find(o => o.languageCode.Equals(languageCode));
             SetLocalizedLanguageOnAutoDetect(lang);
             return lang;
         }
 
-		/// <summary>
-		/// Set detected system language as in-game language.
-		/// </summary>
+        /// <summary>
+        /// Set detected system language as in-game language.
+        /// </summary>
         void SetLocalizedLanguageOnAutoDetect(LocalizedLanguage lang)
         {
             if (lang != null)
@@ -150,15 +152,16 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
                 {
                     hasLanguageChanged = true;
                 }
+
                 currentLanaguage = lang;
                 InitLocalizedContent();
                 PlayerPrefs.SetString("currentLang", lang.languageCode);
             }
         }
 
-		/// <summary>
-		/// Sets given language as active in-game language.
-		/// </summary>
+        /// <summary>
+        /// Sets given language as active in-game language.
+        /// </summary>
         public void SetLocalizedLanguage(LocalizedLanguage lang)
         {
             if (lang != null)
@@ -175,9 +178,9 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             }
         }
 
-		/// <summary>
-		/// Initializes and saves all the localized tag for the active language.
-		/// </summary>
+        /// <summary>
+        /// Initializes and saves all the localized tag for the active language.
+        /// </summary>
         void InitLocalizedContent()
         {
             XDocument xDocLocalizedContent = XDocument.Parse(currentLanaguage.localizedTextFile.ToString());
@@ -191,9 +194,9 @@ namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
             }
         }
 
-		/// <summary>
-		/// Returns localized text for the given tag.
-		/// </summary>
+        /// <summary>
+        /// Returns localized text for the given tag.
+        /// </summary>
         public string GetTextWithTag(string key)
         {
             string val = "";

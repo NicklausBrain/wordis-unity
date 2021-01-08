@@ -23,8 +23,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
     public class ConsentSetting : MonoBehaviour
     {
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             PlayerPrefs.SetInt("ConsentRequired", 1);

@@ -57,9 +57,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
             imgBlockSample.sprite = settings.demoSprite;
             txtThemeName.color = settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "PopUpText").tagColor;
 
-            btnSelect.GetComponent<Image>().color = settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "PopUpButton").tagColor;
-            btnUnlock.GetComponent<Image>().color = settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "UnlockThemeButton").tagColor;
-            btnActive.GetComponent<Image>().color = settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "PopUpTitle").tagColor;
+            btnSelect.GetComponent<Image>().color =
+                settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "PopUpButton").tagColor;
+            btnUnlock.GetComponent<Image>().color = settings.uiTheme.colorTags
+                .FirstOrDefault(o => o.tagName == "UnlockThemeButton").tagColor;
+            btnActive.GetComponent<Image>().color =
+                settings.uiTheme.colorTags.FirstOrDefault(o => o.tagName == "PopUpTitle").tagColor;
 
             txtUnlockPrice.text = settings.unlockCost.ToString();
             isUnlockedTheme = unlockStatus;
@@ -169,6 +172,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
                         btnActive.gameObject.SetActive(false);
                         btnSelect.gameObject.SetActive(true);
                     }
+
                     isActiveTheme = false;
                 }
             }

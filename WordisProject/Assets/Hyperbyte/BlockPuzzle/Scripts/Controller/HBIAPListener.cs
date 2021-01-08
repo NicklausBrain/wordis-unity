@@ -51,13 +51,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// <param name="productInfo"></param>
         void OnPurchaseSuccessful(ProductInfo productInfo)
         {
-            RewardType rewardType = ((RewardType)productInfo.rewardType);
+            RewardType rewardType = ((RewardType) productInfo.rewardType);
 
             switch (rewardType)
             {
                 case RewardType.REMOVE_ADS:
                     ProfileManager.Instance.SetAppAsAdFree();
-                    UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtSuccess"), LocalizationManager.Instance.GetTextWithTag("txtInappSuccessMsg"));
+                    UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtSuccess"),
+                        LocalizationManager.Instance.GetTextWithTag("txtInappSuccessMsg"));
                     break;
                 case RewardType.GEMS:
                     int rewardAmount = productInfo.rewardAmount;
@@ -76,25 +77,26 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 
         void OnPurchaseFailed(string reason)
         {
-            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtOops")).
-            SetMessage(LocalizationManager.Instance.GetTextWithTag("txtPurchaseFail")).
-            SetMessageType(CommonDialogueMessageType.Info).
-            SetOnConfirmButtonClickListener(() =>
-            {
-                UIController.Instance.commonMessageScreen.Deactivate();
-                UIController.Instance.shopScreen.Activate();
-            }).Show();
+            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtOops"))
+                .SetMessage(LocalizationManager.Instance.GetTextWithTag("txtPurchaseFail"))
+                .SetMessageType(CommonDialogueMessageType.Info).SetOnConfirmButtonClickListener(() =>
+                {
+                    UIController.Instance.commonMessageScreen.Deactivate();
+                    UIController.Instance.shopScreen.Activate();
+                }).Show();
         }
 
         void OnRestoreCompleted(bool result)
         {
             if (result)
             {
-                UIController.Instance.ShowMessage(("txtSuccess"), LocalizationManager.Instance.GetTextWithTag("txtInAppRestored"));
+                UIController.Instance.ShowMessage(("txtSuccess"),
+                    LocalizationManager.Instance.GetTextWithTag("txtInAppRestored"));
             }
             else
             {
-                UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtAlert"), LocalizationManager.Instance.GetTextWithTag("txtNoRestore"));
+                UIController.Instance.ShowMessage(LocalizationManager.Instance.GetTextWithTag("txtAlert"),
+                    LocalizationManager.Instance.GetTextWithTag("txtNoRestore"));
             }
         }
     }

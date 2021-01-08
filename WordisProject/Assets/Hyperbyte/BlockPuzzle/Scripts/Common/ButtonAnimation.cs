@@ -51,6 +51,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Common
                 {
                     thisButton.GetComponent<Animator>().SetTrigger("Press");
                 }
+
                 UIFeedback.Instance.PlayButtonPressEffect();
             });
         }

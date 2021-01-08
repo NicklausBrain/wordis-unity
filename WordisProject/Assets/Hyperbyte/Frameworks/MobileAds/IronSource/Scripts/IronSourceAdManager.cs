@@ -20,7 +20,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
     /// This class component will be added to game dynamically if Ironsource is selected as active ad network.
     /// All the callbacks will be forwarded to ad manager.
     /// </summary>
-	public class IronSourceAdManager : AdHelper
+    public class IronSourceAdManager : AdHelper
     {
         IronSourceAdsSettings settings;
 
@@ -29,11 +29,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         /// </summary>
         public override void InitializeAdNetwork()
         {
-            settings = (IronSourceAdsSettings)(Resources.Load("AdNetworkSettings/IronSourceAdsSettings"));
-            #if HB_IRONSOURCE
+            settings = (IronSourceAdsSettings) (Resources.Load("AdNetworkSettings/IronSourceAdsSettings"));
+#if HB_IRONSOURCE
             IronSource.Agent.init (settings.GetAppId(), IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
             IronSource.Agent.setConsent(AdManager.Instance.consentAllowed);
-            #endif
+#endif
             Invoke("StartLoadingAds", 2F);
         }
 
@@ -50,17 +50,17 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         // Requests banner ad.        
         public void RequestBannerAds()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, settings.GetBannerPosition());
-            #endif
+#endif
         }
 
         // Requests intestitial ad.
         public void RequestInterstitial()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             IronSource.Agent.loadInterstitial();
-            #endif
+#endif
         }
 
         // Requests rewarded ad. Rewarded ad loading and caching is done automatically with ironsource sdk.
@@ -71,45 +71,46 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         // Shows banner ad.
         public override void ShowBanner()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             IronSource.Agent.displayBanner();
-            #endif
+#endif
         }
 
         // Hides banner ad.
         public override void HideBanner()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             IronSource.Agent.hideBanner();
-            #endif
+#endif
         }
 
         // Check if interstial ad ready to show.
         public override bool IsInterstitialAvailable()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             return IronSource.Agent.isInterstitialReady();
-            #endif
+#endif
             return false;
         }
 
         // Shows interstitial ad if available.
         public override void ShowInterstitial()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             if(IsInterstitialAvailable()) {
                 IronSource.Agent.showInterstitial();
             } else {
                 RequestInterstitial();
             }
-            #endif
+#endif
         }
+
         // Checks if rewarded ad ready to show.
         public override bool IsRewardedAvailable()
         {
-            #if HB_IRONSOURCE
+#if HB_IRONSOURCE
             return IronSource.Agent.isRewardedVideoAvailable();
-            #endif
+#endif
             return false;
         }
 
@@ -118,13 +119,13 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         {
             if (IsRewardedAvailable())
             {
-                #if HB_IRONSOURCE
+#if HB_IRONSOURCE
                 IronSource.Agent.showRewardedVideo();
-                #endif
+#endif
             }
         }
 
-        #if HB_IRONSOURCE
+#if HB_IRONSOURCE
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
@@ -276,6 +277,6 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
         void RewardedVideoAdShowFailedEvent (IronSourceError error){
         }
         #endregion
-        #endif
+#endif
     }
 }

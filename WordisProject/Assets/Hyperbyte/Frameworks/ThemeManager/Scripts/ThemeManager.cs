@@ -35,20 +35,24 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
         // List<ThemeConfig> allActiveThemes = new List<ThemeConfig>();
 
         [HideInInspector] public bool UIThemeEnabled = false;
+
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
-		private void Awake()
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
         {
-            if (uiThemeSettings == null) {
-                uiThemeSettings = (UIThemeSettings)Resources.Load("UIThemeSettings");
+            if (uiThemeSettings == null)
+            {
+                uiThemeSettings = (UIThemeSettings) Resources.Load("UIThemeSettings");
             }
 
-            if (uiThemeSettings.useUIThemes) {
+            if (uiThemeSettings.useUIThemes)
+            {
                 UIThemeEnabled = true;
                 Initialise();
-            }  
-            else {
+            }
+            else
+            {
                 currentUITheme = (UITheme) (Resources.Load("UIThemes/DefaultTheme"));
             }
         }
@@ -63,28 +67,37 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
             {
                 int defaultTheme = uiThemeSettings.defaultTheme;
 
-                if(!PlayerPrefs.HasKey("currentThemeName")) {
+                if (!PlayerPrefs.HasKey("currentThemeName"))
+                {
                     int themeIndex = 0;
-                    foreach (ThemeConfig theme in uiThemeSettings.allThemeConfigs) {
-                        if (theme.isEnabled && theme.themeName != "" && theme.uiTheme != null && theme.defaultStatus == 1) {
-
-                            if(themeIndex == defaultTheme) {
+                    foreach (ThemeConfig theme in uiThemeSettings.allThemeConfigs)
+                    {
+                        if (theme.isEnabled && theme.themeName != "" && theme.uiTheme != null &&
+                            theme.defaultStatus == 1)
+                        {
+                            if (themeIndex == defaultTheme)
+                            {
                                 PlayerPrefs.SetString("currentThemeName", theme.themeName);
                                 currentThemeName = theme.themeName;
                                 break;
                             }
+
                             themeIndex++;
                         }
                     }
-                } else {
+                }
+                else
+                {
                     currentThemeName = PlayerPrefs.GetString("currentThemeName");
                 }
 
-                currentUITheme = uiThemeSettings.allThemeConfigs.ToList().Find(o => o.themeName == currentThemeName).uiTheme;
+                currentUITheme = uiThemeSettings.allThemeConfigs.ToList().Find(o => o.themeName == currentThemeName)
+                    .uiTheme;
                 uiThemeSettings = null;
                 hasInitialised = true;
 
-                if (OnThemeInitializedEvent != null) {
+                if (OnThemeInitializedEvent != null)
+                {
                     OnThemeInitializedEvent.Invoke(currentThemeName);
                 }
             }
@@ -99,7 +112,8 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
             currentThemeName = themeSetting.themeName;
             PlayerPrefs.SetString("currentThemeName", currentThemeName);
 
-            if (OnThemeChangedEvent != null)  {
+            if (OnThemeChangedEvent != null)
+            {
                 OnThemeChangedEvent.Invoke(currentThemeName);
             }
         }
@@ -115,7 +129,8 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
         /// <summary>
         /// Returns current active theme id.
         /// </summary>
-        public string GetCurrentThemeName() {
+        public string GetCurrentThemeName()
+        {
             return currentThemeName;
         }
 
@@ -130,11 +145,13 @@ namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
         /// <summary>
         /// Returns Sprite for the given tag from selected theme scriptable.
         /// </summary>
-        public Sprite GetThemeSpriteWithTag(string spriteTag) {
+        public Sprite GetThemeSpriteWithTag(string spriteTag)
+        {
             return currentUITheme.spriteTags.FirstOrDefault(o => o.tagName == spriteTag).tagSprite;
         }
 
-        public Sprite GetBlockSpriteWithTag(string spriteTag) {
+        public Sprite GetBlockSpriteWithTag(string spriteTag)
+        {
             return currentUITheme.spriteTags.FirstOrDefault(o => o.tagName == spriteTag).tagSprite;
         }
     }

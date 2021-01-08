@@ -77,16 +77,16 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
         /// <summary>
         ///  Fetrched IAP product and assign to button which listener.
         /// </summary>
-        void InitIAPProduct() 
+        void InitIAPProduct()
         {
             thisProduct = IAPManager.Instance.GetProductInfoById(inAppProductIndex);
             thisButton.onClick.AddListener(OnPurchaseButtonPressed);
 
-            if(!hasInitialized) 
+            if (!hasInitialized)
             {
-                if(IAPManager.Instance.hasUnityIAPSdkInitialised) 
+                if (IAPManager.Instance.hasUnityIAPSdkInitialised)
                 {
-                    #if HB_UNITYIAP
+#if HB_UNITYIAP
                     Product product = IAPManager.Instance.GetProductFromSku(thisProduct.productName);
 
                     if(product != null) {
@@ -104,7 +104,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
                         }
                         hasInitialized = true;
                     }
-                    #endif
+#endif
                 }
             }
         }

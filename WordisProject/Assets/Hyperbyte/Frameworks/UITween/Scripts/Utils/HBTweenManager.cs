@@ -16,14 +16,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
-{    
+{
     /// <summary>
     /// UI Tween Managers.
     /// </summary>
     public class HBTweenManager : MonoBehaviour
     {
         // Anchor X.
-        public static HBFloatTweener AnchorX(RectTransform rectT,  float fromValue, float toValue, float duration) {
+        public static HBFloatTweener AnchorX(RectTransform rectT, float fromValue, float toValue, float duration)
+        {
             HBFloatTweener tweener = rectT.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.AnchorX, fromValue, toValue, duration);
             tweener.Play();
@@ -31,7 +32,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Anchor Y.
-        public static HBFloatTweener AnchorY(RectTransform rectT,  float fromValue, float toValue, float duration) {
+        public static HBFloatTweener AnchorY(RectTransform rectT, float fromValue, float toValue, float duration)
+        {
             HBFloatTweener tweener = rectT.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.AnchorY, fromValue, toValue, duration);
             tweener.Play();
@@ -39,7 +41,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Anchor Z.
-        public static HBFloatTweener AnchorZ(RectTransform rectT,  float fromValue, float toValue, float duration) {
+        public static HBFloatTweener AnchorZ(RectTransform rectT, float fromValue, float toValue, float duration)
+        {
             HBFloatTweener tweener = rectT.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.AnchorZ, fromValue, toValue, duration);
             tweener.Play();
@@ -47,7 +50,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Vector2 Tween.
-        public static HBVector2Tweener AnchoredPosition(RectTransform rectT, Vector2 fromValue, Vector2 toValue, float duration)
+        public static HBVector2Tweener AnchoredPosition(RectTransform rectT, Vector2 fromValue, Vector2 toValue,
+            float duration)
         {
             HBVector2Tweener tweener = rectT.gameObject.AddComponent<HBVector2Tweener>();
             tweener.SetTweenParams(AnimationType.AnchoredPosition, fromValue, toValue, duration);
@@ -56,7 +60,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Vector3 Tween.
-        public static HBVector3Tweener AnchoredPosition3D(RectTransform rectT, Vector3 fromValue, Vector3 toValue, float duration)
+        public static HBVector3Tweener AnchoredPosition3D(RectTransform rectT, Vector3 fromValue, Vector3 toValue,
+            float duration)
         {
             HBVector3Tweener tweener = rectT.gameObject.AddComponent<HBVector3Tweener>();
             tweener.SetTweenParams(AnimationType.AnchoredPosition3D, fromValue, toValue, duration);
@@ -128,7 +133,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local Position Tween.
-        public static HBVector3Tweener LocalPosition(Transform transform, Vector3 fromValue, Vector3 toValue, float duration)
+        public static HBVector3Tweener LocalPosition(Transform transform, Vector3 fromValue, Vector3 toValue,
+            float duration)
         {
             HBVector3Tweener tweener = transform.gameObject.AddComponent<HBVector3Tweener>();
             tweener.SetTweenParams(AnimationType.LocalPosition, fromValue, toValue, duration);
@@ -137,7 +143,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local RotationX Tween.
-        public static HBFloatTweener LocalRotationToX(Transform transform, float fromValue, float toValue, float duration)
+        public static HBFloatTweener LocalRotationToX(Transform transform, float fromValue, float toValue,
+            float duration)
         {
             HBFloatTweener tweener = transform.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.LocalRotationToX, fromValue, toValue, duration);
@@ -146,7 +153,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local RotationY Tween.
-        public static HBFloatTweener LocalRotationToY(Transform transform, float fromValue, float toValue, float duration)
+        public static HBFloatTweener LocalRotationToY(Transform transform, float fromValue, float toValue,
+            float duration)
         {
             HBFloatTweener tweener = transform.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.LocalRotationToY, fromValue, toValue, duration);
@@ -155,7 +163,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local RotationZ Tween.
-        public static HBFloatTweener LocalRotationToZ(Transform transform, float fromValue, float toValue, float duration)
+        public static HBFloatTweener LocalRotationToZ(Transform transform, float fromValue, float toValue,
+            float duration)
         {
             HBFloatTweener tweener = transform.gameObject.AddComponent<HBFloatTweener>();
             tweener.SetTweenParams(AnimationType.LocalRotationToZ, fromValue, toValue, duration);
@@ -164,7 +173,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local RotationTo Tween.
-        public static HBVector3Tweener LocalRotationTo(Transform transform, Vector3 fromValue, Vector3 toValue, float duration)
+        public static HBVector3Tweener LocalRotationTo(Transform transform, Vector3 fromValue, Vector3 toValue,
+            float duration)
         {
             HBVector3Tweener tweener = transform.gameObject.AddComponent<HBVector3Tweener>();
             tweener.SetTweenParams(AnimationType.LocalRotationTo, fromValue, toValue, duration);
@@ -200,7 +210,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Local Scale Tween.
-        public static HBVector3Tweener LocalScale(Transform transform, Vector3 fromValue, Vector3 toValue, float duration)
+        public static HBVector3Tweener LocalScale(Transform transform, Vector3 fromValue, Vector3 toValue,
+            float duration)
         {
             HBVector3Tweener tweener = transform.gameObject.AddComponent<HBVector3Tweener>();
             tweener.SetTweenParams(AnimationType.LocalScale, fromValue, toValue, duration);
@@ -209,7 +220,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Sprite Alpha.
-        public static HBSpriteAlpha SetAlpha(SpriteRenderer spriteR, float endValue, float time) { 
+        public static HBSpriteAlpha SetAlpha(SpriteRenderer spriteR, float endValue, float time)
+        {
             HBSpriteAlpha tweener = spriteR.gameObject.AddComponent<HBSpriteAlpha>();
             tweener.SetTweenParams(AnimationType.Color, spriteR.color.a, endValue, time);
             tweener.Play();
@@ -217,7 +229,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Image Alpha
-        public static HBImageAlpha SetAlpha(Image image, float endValue, float time) {
+        public static HBImageAlpha SetAlpha(Image image, float endValue, float time)
+        {
             HBImageAlpha tweener = image.gameObject.AddComponent<HBImageAlpha>();
             tweener.SetTweenParams(AnimationType.Color, image.color.a, endValue, time);
             tweener.Play();
@@ -225,7 +238,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Text Color
-        public static HBTextAlpha SetAlpha(Text image, float endValue, float time) {
+        public static HBTextAlpha SetAlpha(Text image, float endValue, float time)
+        {
             HBTextAlpha tweener = image.gameObject.AddComponent<HBTextAlpha>();
             tweener.SetTweenParams(AnimationType.Color, image.color.a, endValue, time);
             tweener.Play();
@@ -233,7 +247,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // CanvasGroup Alpha
-        public static HBCanvasGroupAlpha SetAlpha(CanvasGroup canvasGroup, float endValue, float time) {
+        public static HBCanvasGroupAlpha SetAlpha(CanvasGroup canvasGroup, float endValue, float time)
+        {
             HBCanvasGroupAlpha tweener = canvasGroup.gameObject.AddComponent<HBCanvasGroupAlpha>();
             tweener.SetTweenParams(AnimationType.Color, canvasGroup.alpha, endValue, time);
             tweener.Play();
@@ -242,7 +257,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 
 
         // Sprite Color
-        public static HBSpriteColor SetColor(SpriteRenderer spriteR, Color endValue, float time) {
+        public static HBSpriteColor SetColor(SpriteRenderer spriteR, Color endValue, float time)
+        {
             HBSpriteColor tweener = spriteR.gameObject.AddComponent<HBSpriteColor>();
             tweener.SetTweenParams(AnimationType.Color, spriteR.color, endValue, time);
             tweener.Play();
@@ -250,7 +266,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Image Color
-        public static HBImageColor SetColor(Image image, Color endValue, float time) {
+        public static HBImageColor SetColor(Image image, Color endValue, float time)
+        {
             HBImageColor tweener = image.gameObject.AddComponent<HBImageColor>();
             tweener.SetTweenParams(AnimationType.Color, image.color, endValue, time);
             tweener.Play();
@@ -258,7 +275,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Text Color
-        public static HBTextColor SetColor(Text text, Color endValue, float time) {
+        public static HBTextColor SetColor(Text text, Color endValue, float time)
+        {
             HBTextColor tweener = text.gameObject.AddComponent<HBTextColor>();
             tweener.SetTweenParams(AnimationType.Color, text.color, endValue, time);
             tweener.Play();
@@ -266,7 +284,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         }
 
         // Image Fill Amount
-        public static HBImageFillAmount FillAmount(Image image, float endValue, float time) {
+        public static HBImageFillAmount FillAmount(Image image, float endValue, float time)
+        {
             HBImageFillAmount tweener = image.gameObject.AddComponent<HBImageFillAmount>();
             tweener.SetTweenParams(AnimationType.Color, image.fillAmount, endValue, time);
             tweener.Play();

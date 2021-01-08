@@ -27,20 +27,21 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
     {
 #pragma warning disable 0649
 
-        [Tooltip("Game Over reason text")]
-        [SerializeField] Text txtGameOveTitle;
+        [Tooltip("Game Over reason text")] [SerializeField]
+        Text txtGameOveTitle;
 
-        [Tooltip("Score text from game over screen")]
-        [SerializeField] Text txtScore;
+        [Tooltip("Score text from game over screen")] [SerializeField]
+        Text txtScore;
 
-        [Tooltip("BestScore text from game over screen")]
-        [SerializeField] Text txtBestScore;
+        [Tooltip("BestScore text from game over screen")] [SerializeField]
+        Text txtBestScore;
 
-        [Tooltip("Reward Penel")]
-        [SerializeField] GameObject rewardPanel;
+        [Tooltip("Reward Penel")] [SerializeField]
+        GameObject rewardPanel;
 
-        [Tooltip("Reward text from game over screen")]
-        [SerializeField] Text txtReward;
+        [Tooltip("Reward text from game over screen")] [SerializeField]
+        Text txtReward;
+
         [SerializeField] GameObject gemImage;
         [SerializeField] GameObject rewardAnimation;
         [SerializeField] GameObject highScoreParticle;
@@ -112,6 +113,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                 bestScore = score;
                 ProfileManager.Instance.SetBestScore(bestScore, gameMode);
             }
+
             txtBestScore.text = bestScore.ToString("N0");
             ProgressGameReward();
 
@@ -130,7 +132,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 
         public void ProgressGameReward()
         {
-
             if (GamePlayUI.Instance.rewardOnGameOver)
             {
                 if (!rewardPanel.activeSelf)
@@ -145,8 +146,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                 }
                 else
                 {
-                    rewardAmount = ((int)(GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
+                    rewardAmount = ((int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted));
                 }
+
                 txtReward.text = rewardAmount.ToString();
 
                 if (rewardAmount > 0)

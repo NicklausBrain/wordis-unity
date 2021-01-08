@@ -28,16 +28,16 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
         /// Instance of current button's localize language.
         LocalizedLanguage currentButtonLanaguage;
 
-        #pragma warning disable 0649
-		// Name of langauge.
+#pragma warning disable 0649
+        // Name of langauge.
         [SerializeField] Text txtLangaugeName;
 
-		// Check mark enabled if current language is this.
+        // Check mark enabled if current language is this.
         [SerializeField] Image imgCheckMark;
 
-		// Line below localization button.
+        // Line below localization button.
         [SerializeField] Image imgLine;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
 
         // Language is active?
@@ -107,6 +107,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
                 {
                     imgCheckMark.enabled = false;
                 }
+
                 isActiveLangauge = false;
             }
         }

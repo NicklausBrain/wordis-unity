@@ -27,15 +27,13 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     public enum GameOverReason
     {
-        GRID_FILLED,    // If there is no enough space to place existing blocks. Applies to all game mode.
-        TIME_OVER,      // If timer finishing. Applied only to time mode.
+        GRID_FILLED, // If there is no enough space to place existing blocks. Applies to all game mode.
+        TIME_OVER, // If timer finishing. Applied only to time mode.
     }
 
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-
-        [Header("Public Class Members")]
-        [Tooltip("GamePlay Script Reference")]
+        [Header("Public Class Members")] [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
         [Tooltip("ScoreManager Script Reference")]
@@ -59,6 +57,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized] GamePlaySettings gamePlaySettings;
 
         #region  Game Status event callbacks.
+
         //Event action for game start callback.
         public static event Action<GameMode> OnGameStartedEvent;
 
@@ -70,7 +69,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 
         //Event action for game pause callback.
         public static event Action<GameMode, bool> OnGamePausedEvent;
-        #endregion 
+
+        #endregion
 
         // Total lines clear during gameplay.
         [HideInInspector] public int totalLinesCompleted = 0;
@@ -82,14 +82,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         [HideInInspector] public GameOverReason currentGameOverReason;
 
         /// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
             }
         }
 
@@ -121,11 +121,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             gamePlay.blockShapeController.PrepareShapeContainer(progressData);
 
             #region Time Mode Specific
+
             // Will enable timer start seeking it. If there is previos session data then timer will start from remaining duration.
             if (gameMode == GameMode.Timed)
             {
                 timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer((progressData != null) ? progressData.remainingTimer : timeModeInitialTimer);
+                timeModeProgresssBar.SetTimer((progressData != null)
+                    ? progressData.remainingTimer
+                    : timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
             }
             else
@@ -141,6 +144,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 totalLinesCompleted = progressData.totalLinesCompleted;
                 rescueDone = progressData.rescueDone;
             }
+
             #endregion
 
             // Invokes Game Start Event Callback.
@@ -151,7 +155,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 
         void ShowInitialTip()
         {
-
             switch (currentGameMode)
             {
                 case GameMode.Timed:
@@ -183,6 +186,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 case GameMode.Advance:
                     return gamePlaySettings.advancedModeSettings;
             }
+
             return gamePlaySettings.classicModeSettings;
         }
 
@@ -208,6 +212,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
 
         #region Time Mode Specific
+
         // Returns Intial timer for time mode.
         public float timeModeInitialTimer => gamePlaySettings.initialTime;
 
@@ -236,6 +241,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             {
                 return true;
             }
+
             return false;
         }
 
@@ -246,7 +252,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
             currentGameOverReason = reason;
             StartCoroutine(TryRescueGameEnumerator(reason));
-
         }
 
         IEnumerator TryRescueGameEnumerator(GameOverReason reason)
@@ -291,12 +296,16 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
+
                 #region Time Mode Specific
+
                 if (currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F)
                 {
                     return;
                 }
+
                 #endregion
+
                 UIController.Instance.pauseGameScreen.Activate();
             }
         }
@@ -331,6 +340,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         }
 
         #region Time Mode Specific
+
         /// <summary>
         /// Returns Remaining Timer.
         /// </summary>
@@ -338,7 +348,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
             return (currentGameMode == GameMode.Timed) ? timeModeProgresssBar.GetRemainingTimer() : 0;
         }
-        #endregion  
+
+        #endregion
 
         /// <summary>
         /// Pauses game.

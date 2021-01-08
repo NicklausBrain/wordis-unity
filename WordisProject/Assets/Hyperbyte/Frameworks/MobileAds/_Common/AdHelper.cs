@@ -25,19 +25,19 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 
         // Shows banner ad.
         public abstract void ShowBanner();
-        
+
         // Hides banner ad.
         public abstract void HideBanner();
-        
+
         //  Checks if interstitil ad is available.
         public abstract bool IsInterstitialAvailable();
-        
+
         // Shows interstitial ad.
         public abstract void ShowInterstitial();
-        
+
         // Checks if rewarded ad is available.
         public abstract bool IsRewardedAvailable();
-        
+
         // Shows rewarded ad.
         public abstract void ShowRewarded();
     }

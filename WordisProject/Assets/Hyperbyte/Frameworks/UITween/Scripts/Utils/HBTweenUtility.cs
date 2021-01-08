@@ -14,7 +14,7 @@
 using UnityEngine;
 
 namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
-{    
+{
     /// <summary>
     /// UI Tween Ease calculations.
     /// </summary>
@@ -24,7 +24,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
         {
             return 1.0f - (1.0f - t) * (1.0f - t) * (1.0f - t);
         }
-        
+
         public static float EaseIn(float t)
         {
             return t * t * t;

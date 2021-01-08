@@ -23,7 +23,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
     /// <summary>
     /// This class component is attached to all blocks in the grid. 
     /// </summary>
-	public class Block : MonoBehaviour
+    public class Block : MonoBehaviour
     {
         // Returns rowId 
         public int RowId { get; private set; }
@@ -157,10 +157,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             transform.GetComponent<Image>().SetAlpha(1, 0.35F).SetDelay(0.3F);
 
             // Opacity of block image will set to 0 in 0.3 seconds. and will reset to 1 on animation completion.
-            blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() =>
-            {
-                blockImage.enabled = false;
-            });
+            blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() => { blockImage.enabled = false; });
 
 
             isFilled = false;

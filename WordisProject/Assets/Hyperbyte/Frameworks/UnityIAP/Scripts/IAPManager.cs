@@ -41,6 +41,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 
         /// Purchase even callbacks.
         public static event Action<ProductInfo> OnPurchaseSuccessfulEvent;
+
         public static event Action<string> OnPurchaseFailedEvent;
         public static event Action<bool> OnRestoreCompletedEvent;
 
@@ -90,7 +91,6 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
         }
 
 #if HB_UNITYIAP
-
 		/// <summary>
 		/// IAP Initialize success callback from Unity IAP SDK.
 		/// </summary>
@@ -141,7 +141,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
         {
             if (!hasInitialised)
             {
-                iapManager = (IAPProducts)Resources.Load("IAPProducts");
+                iapManager = (IAPProducts) Resources.Load("IAPProducts");
                 hasInitialised = true;
             }
         }
@@ -165,6 +165,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
             {
                 Initialise();
             }
+
             return iapManager.productInfos[productIndex];
         }
 
@@ -175,6 +176,7 @@ namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
             {
                 Initialise();
             }
+
             ProductInfo productInfo = iapManager.productInfos.ToList().Find(o => o.productName == productName);
             return productInfo;
         }

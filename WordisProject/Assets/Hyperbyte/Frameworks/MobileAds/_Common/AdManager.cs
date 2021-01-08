@@ -66,7 +66,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         /// </summary>
         private void Start()
         {
-            adSettings = (AdSettings.Scripts.AdSettings)Resources.Load("AdSettings");
+            adSettings = (AdSettings.Scripts.AdSettings) Resources.Load("AdSettings");
             VerifyConsent();
         }
 
@@ -80,6 +80,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
             {
                 OnConsentVerifiedEvent.Invoke(consentVerified, consentAllowed);
             }
+
             if (adSettings.adsEnabled)
             {
                 Initialise();
@@ -87,6 +88,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         }
 
         #region  Initialise
+
         /// <summary>
         /// Initializes the selected ad network.
         /// </summary>
@@ -135,9 +137,11 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
                 }
             }
         }
+
         #endregion
 
         #region Component Method Calls
+
         /// <summary>
         /// Initializes the selected ad network.
         /// </summary>
@@ -145,7 +149,8 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         {
             if (adSettings.adsEnabled)
             {
-                MethodInfo info = adComponentType.GetMethod("InitializeAdNetwork", BindingFlags.Public | BindingFlags.Instance);
+                MethodInfo info =
+                    adComponentType.GetMethod("InitializeAdNetwork", BindingFlags.Public | BindingFlags.Instance);
                 info.Invoke(adBehaviour, null);
             }
         }
@@ -167,7 +172,8 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         /// </summary>
         public void HideBanner()
         {
-            if(adSettings.adsEnabled && adSettings.bannerAdsEnabled) {
+            if (adSettings.adsEnabled && adSettings.bannerAdsEnabled)
+            {
                 MethodInfo info = adComponentType.GetMethod("HideBanner", BindingFlags.Public | BindingFlags.Instance);
                 info.Invoke(adBehaviour, null);
             }
@@ -180,10 +186,12 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         {
             if (adSettings.adsEnabled && adSettings.interstitialAdsEnabled)
             {
-                MethodInfo info = adComponentType.GetMethod("IsInterstitialAvailable", BindingFlags.Public | BindingFlags.Instance);
+                MethodInfo info = adComponentType.GetMethod("IsInterstitialAvailable",
+                    BindingFlags.Public | BindingFlags.Instance);
                 object isInterstitalAvailable = info.Invoke(adBehaviour, null);
-                return (bool)isInterstitalAvailable;
+                return (bool) isInterstitalAvailable;
             }
+
             return false;
         }
 
@@ -193,12 +201,14 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         public void ShowInterstitial()
         {
             // Handles delay between 2 interstitial ads.
-            if(lastInterstitialShownTime <= 0 || ((Time.time - lastInterstitialShownTime) >= adSettings.delayBetweenIngerstitials)) 
-            {    
+            if (lastInterstitialShownTime <= 0 ||
+                ((Time.time - lastInterstitialShownTime) >= adSettings.delayBetweenIngerstitials))
+            {
                 if (adSettings.adsEnabled && adSettings.interstitialAdsEnabled)
                 {
-                    MethodInfo info = adComponentType.GetMethod("ShowInterstitial", BindingFlags.Public | BindingFlags.Instance);
-                    info.Invoke(adBehaviour, null);        
+                    MethodInfo info = adComponentType.GetMethod("ShowInterstitial",
+                        BindingFlags.Public | BindingFlags.Instance);
+                    info.Invoke(adBehaviour, null);
                 }
             }
         }
@@ -210,14 +220,16 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         {
             if (adSettings.adsEnabled && adSettings.rewardedAdsEnabled)
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 return true;
-                #else
-				MethodInfo info = adComponentType.GetMethod("IsRewardedAvailable", BindingFlags.Public | BindingFlags.Instance);
+#else
+				MethodInfo info =
+ adComponentType.GetMethod("IsRewardedAvailable", BindingFlags.Public | BindingFlags.Instance);
 				object isRewardedAvailable = info.Invoke(adBehaviour, null);
-				return (bool) isRewardedAvailable; 
-                #endif
+				return (bool) isRewardedAvailable;
+#endif
             }
+
             return false;
         }
 
@@ -229,31 +241,120 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
             rewardedVideoTag = _rewardedVideoTag;
             if (adSettings.adsEnabled && adSettings.rewardedAdsEnabled)
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 OnRewardedAdRewarded();
-                #else
-				MethodInfo info = adComponentType.GetMethod("ShowRewarded", BindingFlags.Public | BindingFlags.Instance);
+#else
+				MethodInfo info =
+ adComponentType.GetMethod("ShowRewarded", BindingFlags.Public | BindingFlags.Instance);
 				info.Invoke(adBehaviour, null);
-                #endif
+#endif
             }
         }
+
         #endregion
 
         #region Callback Integration
-        /// Invokes event callback of varient ad status.
 
-        public void OnSdkInitialised() { if (OnSdkInitialisedEvent != null) { OnSdkInitialisedEvent.Invoke(); } }
-        public void OnBannerLoaded() { if (OnBannerLoadedEvent != null) { OnBannerLoadedEvent.Invoke(); } }
-        public void OnBannerLoadFailed(string reason) { if (OnBannerLoadFailedEvent != null) { OnBannerLoadFailedEvent.Invoke(reason); } }
-        public void OnInterstitialLoaded() { if (OnInterstitialLoadedEvent != null) { OnInterstitialLoadedEvent.Invoke(); } }
-        public void OnInterstitialLoadFailed(string reason) { if (OnInterstitialLoadFailedEvent != null) { OnInterstitialLoadFailedEvent.Invoke(reason); } }
-        public void OnInterstitialShown() { if (OnInterstitialShownEvent != null) { OnInterstitialShownEvent.Invoke(); } }
-        public void OnInterstitialClosed() { lastInterstitialShownTime = Time.time; if (OnInterstitialClosedEvent != null) { OnInterstitialClosedEvent.Invoke(); } }
-        public void OnRewardedLoaded() { if (OnRewardedLoadedEvent != null) { OnRewardedLoadedEvent.Invoke(); } }
-        public void OnRewardedLoadFailed(string reason) { { if (OnRewardedLoadFailedEvent != null) { OnRewardedLoadFailedEvent.Invoke(reason); } } }
-        public void OnRewardedShown() { if (OnRewardedShownEvent != null) { OnRewardedShownEvent.Invoke(); } }
-        public void OnRewardedClosed() { if (OnRewardedClosedEvent != null) { OnRewardedClosedEvent.Invoke(); } }
-        public void OnRewardedAdRewarded() { if (OnRewardedAdRewardedEvent != null) { OnRewardedAdRewardedEvent.Invoke(rewardedVideoTag); } }
+        /// Invokes event callback of varient ad status.
+        public void OnSdkInitialised()
+        {
+            if (OnSdkInitialisedEvent != null)
+            {
+                OnSdkInitialisedEvent.Invoke();
+            }
+        }
+
+        public void OnBannerLoaded()
+        {
+            if (OnBannerLoadedEvent != null)
+            {
+                OnBannerLoadedEvent.Invoke();
+            }
+        }
+
+        public void OnBannerLoadFailed(string reason)
+        {
+            if (OnBannerLoadFailedEvent != null)
+            {
+                OnBannerLoadFailedEvent.Invoke(reason);
+            }
+        }
+
+        public void OnInterstitialLoaded()
+        {
+            if (OnInterstitialLoadedEvent != null)
+            {
+                OnInterstitialLoadedEvent.Invoke();
+            }
+        }
+
+        public void OnInterstitialLoadFailed(string reason)
+        {
+            if (OnInterstitialLoadFailedEvent != null)
+            {
+                OnInterstitialLoadFailedEvent.Invoke(reason);
+            }
+        }
+
+        public void OnInterstitialShown()
+        {
+            if (OnInterstitialShownEvent != null)
+            {
+                OnInterstitialShownEvent.Invoke();
+            }
+        }
+
+        public void OnInterstitialClosed()
+        {
+            lastInterstitialShownTime = Time.time;
+            if (OnInterstitialClosedEvent != null)
+            {
+                OnInterstitialClosedEvent.Invoke();
+            }
+        }
+
+        public void OnRewardedLoaded()
+        {
+            if (OnRewardedLoadedEvent != null)
+            {
+                OnRewardedLoadedEvent.Invoke();
+            }
+        }
+
+        public void OnRewardedLoadFailed(string reason)
+        {
+            {
+                if (OnRewardedLoadFailedEvent != null)
+                {
+                    OnRewardedLoadFailedEvent.Invoke(reason);
+                }
+            }
+        }
+
+        public void OnRewardedShown()
+        {
+            if (OnRewardedShownEvent != null)
+            {
+                OnRewardedShownEvent.Invoke();
+            }
+        }
+
+        public void OnRewardedClosed()
+        {
+            if (OnRewardedClosedEvent != null)
+            {
+                OnRewardedClosedEvent.Invoke();
+            }
+        }
+
+        public void OnRewardedAdRewarded()
+        {
+            if (OnRewardedAdRewardedEvent != null)
+            {
+                OnRewardedAdRewardedEvent.Invoke(rewardedVideoTag);
+            }
+        }
+
         #endregion
 
         public static event Action<bool, bool> OnConsentVerifiedEvent;
@@ -261,13 +362,14 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
         [System.NonSerialized] public bool consentVerified = false;
         [System.NonSerialized] public bool consentAllowed = false;
 
-        #if HB_EEA_CONSENT
+#if HB_EEA_CONSENT
         UserLocation userLocation = UserLocation.Unknown;
-        #endif
-        
+#endif
+
         bool consentCheckAttempted = false;
 
         #region Consent Verification
+
         /// <summary>
         /// Verifies consent status and take consent if not taken.
         /// </summary>
@@ -314,7 +416,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
                     consentDialogueRequired = true;
                 }
 
-                #if HB_EEA_CONSENT
+#if HB_EEA_CONSENT
                 // If consent only required for EEA then user location will be fetched.
                 else if (adSettings.consentSelection == ConsentSelection.ReqiuredOnlyInEEA)
                 {
@@ -339,7 +441,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
                         return;
                     }
                 }
-                #endif
+#endif
                 if (consentDialogueRequired)
                 {
                     UIController.Instance.ShowConsentDialogue();
@@ -396,6 +498,7 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
                 }
             }
         }
+
         #endregion
     }
 }

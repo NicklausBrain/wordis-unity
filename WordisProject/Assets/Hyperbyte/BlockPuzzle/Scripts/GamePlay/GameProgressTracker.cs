@@ -104,7 +104,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
             {
                 if (_currentProgressData != null)
                 {
-
                 }
             }
         }
@@ -130,6 +129,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                             ? $"{b.isAvailable}-{b.assignedSpriteTag}"
                             : string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}");
                     }
+
                     gridData[rowIndex] = row;
                     rowIndex++;
                 }
@@ -143,7 +143,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                 _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
                 _currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
                 _currentProgressData.totalShapesPlaced = GamePlay.Instance.blockShapeController.GetTotalShapesPlaced();
-                PlayerPrefs.SetString("gameProgress_" + GamePlayUI.Instance.currentGameMode, JsonUtility.ToJson(_currentProgressData));
+                PlayerPrefs.SetString("gameProgress_" + GamePlayUI.Instance.currentGameMode,
+                    JsonUtility.ToJson(_currentProgressData));
             }
         }
 
@@ -166,6 +167,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
                     return progressData;
                 }
             }
+
             return null;
         }
 
@@ -191,7 +193,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         public bool rescueDone;
 
         #region Time Mode Specific
+
         public int remainingTimer = 0;
+
         #endregion
 
         public int totalShapesPlaced = 0;
@@ -200,6 +204,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
         {
         }
     }
+
     /// <summary>
     /// Class that contains info of block shape.
     /// </summary>

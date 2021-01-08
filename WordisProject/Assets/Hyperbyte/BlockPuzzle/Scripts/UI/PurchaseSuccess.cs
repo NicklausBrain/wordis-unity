@@ -16,8 +16,8 @@ using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
 using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 
-namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI 
-{   
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
+{
     /// <summary>
     /// This script is attached to purchase success popup.
     /// </summary>
@@ -28,28 +28,33 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable() {
+        private void OnEnable()
+        {
             UIController.Instance.PlayAddGemsAnimationAtPosition(Vector3.zero, 0.2F);
         }
 
         /// <summary>
         /// Close button click listener.
         /// </summary>
-        public void OnCloseButtonPressed() {
-			if(InputManager.Instance.canInput()) {
+        public void OnCloseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
-				gameObject.Deactivate();
-			}
-		}
+                gameObject.Deactivate();
+            }
+        }
 
         /// <summary>
         /// Ok button click listener.
         /// </summary>
-        public void OnOkButtonPressed() {
-			if(InputManager.Instance.canInput()) {
+        public void OnOkButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
                 UIFeedback.Instance.PlayButtonPressEffect();
-				gameObject.Deactivate();
-			}
-		}
+                gameObject.Deactivate();
+            }
+        }
     }
 }

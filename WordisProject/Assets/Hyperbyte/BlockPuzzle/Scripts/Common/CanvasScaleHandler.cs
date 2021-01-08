@@ -16,26 +16,32 @@ using UnityEngine.UI;
 
 namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Common
 {
-	public class CanvasScaleHandler : MonoBehaviour 
-	{
-		/// <summary>
-		/// Awake is called when the script instance is being loaded.
-		/// </summary>
-		private void Awake() {
+    public class CanvasScaleHandler : MonoBehaviour
+    {
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            float screenAspect = 0.0F;
 
-			float screenAspect = 0.0F;
+            if (Screen.height > Screen.width)
+            {
+                screenAspect = (((float) Screen.height) / ((float) Screen.width));
+            }
+            else
+            {
+                screenAspect = (((float) Screen.width) / ((float) Screen.height));
+            }
 
-			if(Screen.height > Screen.width) {
-				screenAspect = (((float) Screen.height) / ((float) Screen.width));
-			} else {
-				screenAspect = (((float) Screen.width) / ((float) Screen.height));			
-			}
-
-			if(screenAspect < 1.75F) {
-				GetComponent<CanvasScaler>().matchWidthOrHeight = 1.0F;
-			} else {
+            if (screenAspect < 1.75F)
+            {
+                GetComponent<CanvasScaler>().matchWidthOrHeight = 1.0F;
+            }
+            else
+            {
                 GetComponent<CanvasScaler>().matchWidthOrHeight = 0.5F;
             }
-		}
-	}
+        }
+    }
 }

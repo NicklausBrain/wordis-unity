@@ -20,79 +20,83 @@ using GoogleMobileAds.Api;
 
 namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
 {
-	/// <summary>
-	/// Google Mobile Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
-	/// </summary>
-	public class GoogleMobileAdsSettings : ScriptableObject 
-	{
-		#pragma warning disable 0649
-		// Android keys.
-		[SerializeField] string appId_android;
-		[SerializeField] string bannerId_android;
-		[SerializeField] string interstitialId_android;
-		[SerializeField] string rewardedId_android;
-		
-		// iOS Keys.
-		[SerializeField] string appId_iOS;
-		[SerializeField] string bannerId_iOS;
-		[SerializeField] string interstitialId_iOS;
-		[SerializeField] string rewardedId_iOS;
+    /// <summary>
+    /// Google Mobile Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
+    /// </summary>
+    public class GoogleMobileAdsSettings : ScriptableObject
+    {
+#pragma warning disable 0649
+        // Android keys.
+        [SerializeField] string appId_android;
+        [SerializeField] string bannerId_android;
+        [SerializeField] string interstitialId_android;
+        [SerializeField] string rewardedId_android;
 
-		// Tag or child treatment reqiured or not.
-		[SerializeField] bool tagForChildTreatment = false;
+        // iOS Keys.
+        [SerializeField] string appId_iOS;
+        [SerializeField] string bannerId_iOS;
+        [SerializeField] string interstitialId_iOS;
+        [SerializeField] string rewardedId_iOS;
 
-		// Banner ad position.
-		[SerializeField] BannerAdPosition bannerAdPosition;
+        // Tag or child treatment reqiured or not.
+        [SerializeField] bool tagForChildTreatment = false;
 
-		// Banner ad bg color.
-		[SerializeField] string bannerBGColor;
-        #pragma warning restore 0649
+        // Banner ad position.
+        [SerializeField] BannerAdPosition bannerAdPosition;
 
-		// Returns app id for selected platform.
-		public string GetAppId() {
-			#if UNITY_ANDROID
+        // Banner ad bg color.
+        [SerializeField] string bannerBGColor;
+#pragma warning restore 0649
+
+        // Returns app id for selected platform.
+        public string GetAppId()
+        {
+#if UNITY_ANDROID
 			return appId_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return appId_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Returns banner unit id for selected platform.
-		public string GetBannetAdUnitId() {
-			#if UNITY_ANDROID
+        // Returns banner unit id for selected platform.
+        public string GetBannetAdUnitId()
+        {
+#if UNITY_ANDROID
 			return bannerId_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return bannerId_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Returns interstitial unit id for selected platform.
-		public string GetInterstitialAdUnityId() {
-			#if UNITY_ANDROID
+        // Returns interstitial unit id for selected platform.
+        public string GetInterstitialAdUnityId()
+        {
+#if UNITY_ANDROID
 			return interstitialId_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return interstitialId_iOS;
-			#else 
-			return "";
-			#endif
-		}
-		
-		// Returns rewarded unit id for selected platform.
-		public string GetRewardedAdUnitId() {
-			#if UNITY_ANDROID
-			return rewardedId_android;
-			#elif UNITY_IOS
-			return rewardedId_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		#if HB_ADMOB
+        // Returns rewarded unit id for selected platform.
+        public string GetRewardedAdUnitId()
+        {
+#if UNITY_ANDROID
+			return rewardedId_android;
+#elif UNITY_IOS
+			return rewardedId_iOS;
+#else
+            return "";
+#endif
+        }
+
+#if HB_ADMOB
 		// Returns banner ad position.
 		public AdPosition GetBannerPosition() 
 		{
@@ -123,16 +127,18 @@ namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
 			}
 			return position;
 		}
-		#endif
+#endif
 
-		// Tag for child treatmennt.
-		public bool GetTagForChildTreatment() {
-			return tagForChildTreatment;
-		}
+        // Tag for child treatmennt.
+        public bool GetTagForChildTreatment()
+        {
+            return tagForChildTreatment;
+        }
 
-		// Banner ad bg color.
-		public string GetBannerBgColor() {
-			return bannerBGColor;
-		}
-	}
+        // Banner ad bg color.
+        public string GetBannerBgColor()
+        {
+            return bannerBGColor;
+        }
+    }
 }

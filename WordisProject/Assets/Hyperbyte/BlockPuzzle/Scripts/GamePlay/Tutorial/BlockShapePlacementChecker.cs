@@ -22,7 +22,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
     /// and tries to place at all the block positions of the block grid to determine it can be placed or. Upon returning the result clone of block 
     /// shape will be destroyed.
     /// </summary>
-	public class BlockShapePlacementChecker : MonoBehaviour
+    public class BlockShapePlacementChecker : MonoBehaviour
     {
         List<Transform> activeBlocks = new List<Transform>();
         Transform shapeClone = null;
@@ -30,29 +30,39 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
         /// <summary>
         /// Checks whether the given block shape can be place on board.
         /// </summary>
-        public bool CheckShapeCanbePlaced(BlockShape blockShape) {
+        public bool CheckShapeCanbePlaced(BlockShape blockShape)
+        {
             activeBlocks = new List<Transform>();
-            shapeClone = ((GameObject) Instantiate(blockShape.gameObject, Vector3.zero, Quaternion.identity, transform) as GameObject).transform;
+            shapeClone =
+                ((GameObject) Instantiate(blockShape.gameObject, Vector3.zero, Quaternion.identity, transform) as
+                    GameObject).transform;
             shapeClone.localScale = Vector3.one;
             shapeClone.localEulerAngles = blockShape.transform.localEulerAngles;
 
-            foreach (Transform t in shapeClone) {
-                if (t.gameObject.activeSelf)  {
+            foreach (Transform t in shapeClone)
+            {
+                if (t.gameObject.activeSelf)
+                {
                     activeBlocks.Add(t);
                     t.GetComponent<Image>().enabled = false;
                 }
             }
 
             // Tries to place shape will rotations if rotation is allowed. Will Iterate through all the blocks inside the grid.
-            if(GamePlayUI.Instance.currentModeSettings.allowRotation) {
-                for(int i = 0; i < 4; i++) {
-                    shapeClone.transform.localEulerAngles = new Vector3(0,0, (90 * i));
-                    foreach (List<Block> blockRow in GamePlay.Instance.allRows) {
-                        foreach (Block b in blockRow) {
-                            if(b.isAvailable)
+            if (GamePlayUI.Instance.currentModeSettings.allowRotation)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    shapeClone.transform.localEulerAngles = new Vector3(0, 0, (90 * i));
+                    foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                    {
+                        foreach (Block b in blockRow)
+                        {
+                            if (b.isAvailable)
                             {
                                 bool result = CheckCanPlaceShapeAtPosition(b.transform.position);
-                                if (result) {
+                                if (result)
+                                {
                                     Destroy(shapeClone.gameObject);
                                     return true;
                                 }
@@ -60,13 +70,18 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                         }
                     }
                 }
-            } else {
-                foreach(List<Block> blockRow in GamePlay.Instance.allRows) {
-                    foreach(Block b in blockRow) {
-                        if(b.isAvailable)
+            }
+            else
+            {
+                foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                {
+                    foreach (Block b in blockRow)
+                    {
+                        if (b.isAvailable)
                         {
                             bool result = CheckCanPlaceShapeAtPosition(b.transform.position);
-                            if(result) {
+                            if (result)
+                            {
                                 Destroy(shapeClone.gameObject);
                                 return true;
                             }
@@ -74,12 +89,15 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
                     }
                 }
             }
-            if(shapeClone != null) {
+
+            if (shapeClone != null)
+            {
                 Destroy(shapeClone.gameObject);
             }
+
             return false;
         }
-        
+
         /// <summary>
         /// Checks whether shape can be placed at the current position. 
         /// </summary>
@@ -91,30 +109,37 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 
             List<Block> hittingBlocks = new List<Block>();
 
-            foreach (Transform t in activeBlocks) {
+            foreach (Transform t in activeBlocks)
+            {
                 Block hittingBlock = GetHittingBlock(t);
-                if (hittingBlock == null || hittingBlocks.Contains(hittingBlock)) {
+                if (hittingBlock == null || hittingBlocks.Contains(hittingBlock))
+                {
                     return false;
                 }
+
                 hittingBlocks.Add(hittingBlock);
 
-                if (hittingBlocks.Count == activeBlocks.Count) {
+                if (hittingBlocks.Count == activeBlocks.Count)
+                {
                     return true;
                 }
             }
+
             return false;
         }
 
         /// <summary>
         ///  Returns block that is interecting with current block shape. Returns null if not any.
         /// </summary>
-        Block GetHittingBlock(Transform draggingBlock) {
+        Block GetHittingBlock(Transform draggingBlock)
+        {
             RaycastHit2D hit = Physics2D.Raycast(draggingBlock.position, Vector2.zero, 1);
-            if (hit.collider != null && hit.collider.GetComponent<Block>() != null) {
+            if (hit.collider != null && hit.collider.GetComponent<Block>() != null)
+            {
                 return hit.collider.GetComponent<Block>();
             }
+
             return null;
         }
     }
 }
-

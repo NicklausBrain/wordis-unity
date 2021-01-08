@@ -28,36 +28,36 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
     public class CommonMessageScreen : MonoBehaviour
     {
         [Header("To be assigned from inspector")]
-
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [Tooltip("Popup Title")]
-        [SerializeField] Text txtTitle;
+        [SerializeField]
+        Text txtTitle;
 
-        [Tooltip("Message on the popup")]
-        [SerializeField] Text txtDescription;
+        [Tooltip("Message on the popup")] [SerializeField]
+        Text txtDescription;
 
-        [Tooltip("Confirm Button")]
-        [SerializeField] Button btnConfirm;
+        [Tooltip("Confirm Button")] [SerializeField]
+        Button btnConfirm;
 
-        [Tooltip("Positiove Button, Acts as yes button")]
-        [SerializeField] Button btnPositive;
+        [Tooltip("Positiove Button, Acts as yes button")] [SerializeField]
+        Button btnPositive;
 
-        [Tooltip("Negative Button, Acts as no button")]
-        [SerializeField] Button btnNegative;
+        [Tooltip("Negative Button, Acts as no button")] [SerializeField]
+        Button btnNegative;
 
-        [Tooltip("Text on confirm buttom")]
-        [SerializeField] Text btnConfirmText;
+        [Tooltip("Text on confirm buttom")] [SerializeField]
+        Text btnConfirmText;
 
-        [Tooltip("Text on positiove buttom")]
-        [SerializeField] Text btnPositiveText;
+        [Tooltip("Text on positiove buttom")] [SerializeField]
+        Text btnPositiveText;
 
-        [Tooltip("Text on negative buttom")]
-        [SerializeField] Text btnNegativeText;
-        #pragma warning restore 0649
+        [Tooltip("Text on negative buttom")] [SerializeField]
+        Text btnNegativeText;
+#pragma warning restore 0649
 
         // Action delegate for Positive button press callback.
         public Action OnPositiveButtonPressedAction;
-        
+
         // Action delegate for negative button press callback.
         public Action OnNegativeButtonPressedAction;
 
@@ -167,7 +167,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             }
         }
     }
-    
+
     /// <summary>
     /// Common dialogue info with constructor.
     /// </summary>
@@ -191,26 +191,98 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
             return this;
         }
 
-        public CommonDialogueMessageType GetMessageType() { return messageType; }
-        public string GetTitle() { return title; }
-        public string GetMessage() { return message; }
+        public CommonDialogueMessageType GetMessageType()
+        {
+            return messageType;
+        }
 
-        public string GetConfirmButtonText() { return txtConfirmButtonText; }
-        public string GetPositiveButtonText() { return txtPositiveButtonText; }
-        public string GetNegativeButtonText() { return txtNegativeButtonText; }
+        public string GetTitle()
+        {
+            return title;
+        }
 
-        public Action GetOnConfirmButtonClickListener() { return onConfirmButtonPressedAction; }
-        public Action GetOnPositiveButtonClickListener() { return onPositiveButtonPressedAction; }
-        public Action GetOnNegativeButtonClickListener() { return onNegativeButtonPressedAction; }
+        public string GetMessage()
+        {
+            return message;
+        }
 
-        public CommonDialogueInfo SetMessageType(CommonDialogueMessageType _messageType) { messageType = _messageType; return this; }
-        public CommonDialogueInfo SetMessage(string text) { message = text; return this; }
-        public CommonDialogueInfo SetOnConfirmButtonClickListener(Action listener) { onConfirmButtonPressedAction = listener; return this; }
-        public CommonDialogueInfo SetOnPositiveButtonClickListener(Action listener) { onPositiveButtonPressedAction = listener; return this; }
-        public CommonDialogueInfo SetOnNegativeButtonClickListener(Action listener) { onNegativeButtonPressedAction = listener; return this; }
-        public CommonDialogueInfo SetConfirmButtonText(string text) { txtConfirmButtonText = text; return this; }
-        public CommonDialogueInfo SetPositiveButtomText(string text) { txtPositiveButtonText = text; return this; }
-        public CommonDialogueInfo SetNegativeButtonText(string text) { txtNegativeButtonText = text; return this; }
+        public string GetConfirmButtonText()
+        {
+            return txtConfirmButtonText;
+        }
+
+        public string GetPositiveButtonText()
+        {
+            return txtPositiveButtonText;
+        }
+
+        public string GetNegativeButtonText()
+        {
+            return txtNegativeButtonText;
+        }
+
+        public Action GetOnConfirmButtonClickListener()
+        {
+            return onConfirmButtonPressedAction;
+        }
+
+        public Action GetOnPositiveButtonClickListener()
+        {
+            return onPositiveButtonPressedAction;
+        }
+
+        public Action GetOnNegativeButtonClickListener()
+        {
+            return onNegativeButtonPressedAction;
+        }
+
+        public CommonDialogueInfo SetMessageType(CommonDialogueMessageType _messageType)
+        {
+            messageType = _messageType;
+            return this;
+        }
+
+        public CommonDialogueInfo SetMessage(string text)
+        {
+            message = text;
+            return this;
+        }
+
+        public CommonDialogueInfo SetOnConfirmButtonClickListener(Action listener)
+        {
+            onConfirmButtonPressedAction = listener;
+            return this;
+        }
+
+        public CommonDialogueInfo SetOnPositiveButtonClickListener(Action listener)
+        {
+            onPositiveButtonPressedAction = listener;
+            return this;
+        }
+
+        public CommonDialogueInfo SetOnNegativeButtonClickListener(Action listener)
+        {
+            onNegativeButtonPressedAction = listener;
+            return this;
+        }
+
+        public CommonDialogueInfo SetConfirmButtonText(string text)
+        {
+            txtConfirmButtonText = text;
+            return this;
+        }
+
+        public CommonDialogueInfo SetPositiveButtomText(string text)
+        {
+            txtPositiveButtonText = text;
+            return this;
+        }
+
+        public CommonDialogueInfo SetNegativeButtonText(string text)
+        {
+            txtNegativeButtonText = text;
+            return this;
+        }
 
         public void Show()
         {
@@ -224,7 +296,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
     /// </summary>
     public enum CommonDialogueMessageType
     {
-        Info = 0,           
+        Info = 0,
         Confirmation = 1
     }
 }

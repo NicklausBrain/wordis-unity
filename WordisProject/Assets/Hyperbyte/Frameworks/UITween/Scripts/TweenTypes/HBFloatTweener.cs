@@ -52,6 +52,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             {
                 _loopCount = (_loopCount * 2);
             }
+
             return this;
         }
 
@@ -80,8 +81,8 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
         // Set values to object property.
         public override void SetValues(object _fromValue, object _toValue)
         {
-            fromValue = ((float)_fromValue);
-            toValue = ((float)_toValue);
+            fromValue = ((float) _fromValue);
+            toValue = ((float) _toValue);
         }
 
         public override object GetStartPoint()

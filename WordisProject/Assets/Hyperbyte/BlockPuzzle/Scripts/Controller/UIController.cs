@@ -201,6 +201,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             {
                 return _screenStack[_screenStack.Count - 1];
             }
+
             return "";
         }
 
@@ -281,20 +282,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         void QuitGamePopup()
         {
-            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtQuitTitle")).
-            SetMessage(LocalizationManager.Instance.GetTextWithTag("txtQuitConfirm")).
-            SetPositiveButtomText(LocalizationManager.Instance.GetTextWithTag("txtNo")).
-            SetNegativeButtonText(LocalizationManager.Instance.GetTextWithTag("txtYes")).
-            SetMessageType(CommonDialogueMessageType.Confirmation).
-            SetOnPositiveButtonClickListener(() =>
-            {
-                UIController.Instance.commonMessageScreen.Deactivate();
-
-            }).SetOnNegativeButtonClickListener(() =>
-            {
-                QuitGame();
-                UIController.Instance.commonMessageScreen.Deactivate();
-            }).Show();
+            new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtQuitTitle"))
+                .SetMessage(LocalizationManager.Instance.GetTextWithTag("txtQuitConfirm"))
+                .SetPositiveButtomText(LocalizationManager.Instance.GetTextWithTag("txtNo"))
+                .SetNegativeButtonText(LocalizationManager.Instance.GetTextWithTag("txtYes"))
+                .SetMessageType(CommonDialogueMessageType.Confirmation)
+                .SetOnPositiveButtonClickListener(() => { UIController.Instance.commonMessageScreen.Deactivate(); })
+                .SetOnNegativeButtonClickListener(() =>
+                {
+                    QuitGame();
+                    UIController.Instance.commonMessageScreen.Deactivate();
+                }).Show();
         }
 
         // Quits the game.
@@ -312,8 +310,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_ANDROID
                 //On Android, on quitting app, App actually won't quit but will be sent to background. So it can be load fast while reopening. 
-                AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-                activity.Call<bool>("moveTaskToBack" , true); 
+                AndroidJavaObject activity =
+ new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+                activity.Call<bool>("moveTaskToBack" , true);
 #elif UNITY_IOS
                 Application.Quit();
 #endif
@@ -324,13 +323,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void ShowMessage(string title, string message)
         {
-            new CommonDialogueInfo().SetTitle(title).
-            SetMessage(message).
-            SetMessageType(CommonDialogueMessageType.Info).
-            SetOnConfirmButtonClickListener(() =>
-            {
-                UIController.Instance.commonMessageScreen.Deactivate();
-            }).Show();
+            new CommonDialogueInfo().SetTitle(title).SetMessage(message).SetMessageType(CommonDialogueMessageType.Info)
+                .SetOnConfirmButtonClickListener(() => { UIController.Instance.commonMessageScreen.Deactivate(); })
+                .Show();
         }
 
         /// <summary>
@@ -399,6 +394,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                         {
                             consentScreen.Activate();
                         }
+
                         break;
 
                     case "DailyRewardScreen":
@@ -414,6 +410,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                         {
                             reviewScreen.Activate();
                         }
+
                         break;
                 }
             }
@@ -456,6 +453,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             {
                 return true;
             }
+
             return false;
         }
 
@@ -526,7 +524,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             rewardAnim.transform.SetParent(RuntimeEffectSpawnParent);
             rewardAnim.GetComponent<RectTransform>().position = position;
             rewardAnim.transform.localScale = Vector3.one;
-            rewardAnim.GetComponent<RewardAddAnimation>().PlayGemsBalanceUpdateAnimation(ShopButtonGemsIcon.position, delay);
+            rewardAnim.GetComponent<RewardAddAnimation>()
+                .PlayGemsBalanceUpdateAnimation(ShopButtonGemsIcon.position, delay);
         }
 
         public void PlayDeductGemsAnimation(Vector3 position, float delay)

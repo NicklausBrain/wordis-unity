@@ -52,7 +52,9 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
                     activeLanguages += 1;
                 }
             }
-            selectLanguageButton.SetActive(((LocalizationManager.Instance.isLocalizationSupported) && (activeLanguages > 1)));
+
+            selectLanguageButton.SetActive(((LocalizationManager.Instance.isLocalizationSupported) &&
+                                            (activeLanguages > 1)));
             txtVersion.text = "Version : " + Application.version;
         }
 

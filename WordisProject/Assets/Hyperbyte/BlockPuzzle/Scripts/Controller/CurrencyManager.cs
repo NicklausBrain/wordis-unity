@@ -20,7 +20,7 @@ using UnityEngine;
 namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
-    /// This script controlls and manages the ingame currecy, its balace, addition or subtraction of balance.
+    /// This script controls and manages the in-game currency, its balance, addition or subtraction of balance.
     /// </summary>
     public class CurrencyManager : Singleton<CurrencyManager>
     {
@@ -59,7 +59,6 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         void Initialise()
         {
-
             if (PlayerPrefs.HasKey("currentBalance"))
             {
                 currentBalance = PlayerPrefs.GetInt("currentBalance");
@@ -67,8 +66,8 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             else
             {
                 currentBalance = ProfileManager.Instance.GetAppSettings().defaultGemsAmount;
-
             }
+
             hasInitialised = true;
         }
 
@@ -81,6 +80,7 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
             {
                 Initialise();
             }
+
             return currentBalance;
         }
 
@@ -90,14 +90,17 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         public void AddGems(int gemsAmount)
         {
-            if (gemsAmount > 0) {
+            if (gemsAmount > 0)
+            {
                 currentBalance += gemsAmount;
             }
+
             SaveCurrencyBalance();
             if (OnCurrencyUpdated != null)
             {
                 OnCurrencyUpdated.Invoke(currentBalance);
             }
+
             AudioController.Instance.PlayClip(AudioController.Instance.addGemsSound);
         }
 
@@ -111,11 +114,14 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
                 currentBalance -= gemsAmount;
                 SaveCurrencyBalance();
 
-                if (OnCurrencyUpdated != null) {
+                if (OnCurrencyUpdated != null)
+                {
                     OnCurrencyUpdated.Invoke(currentBalance);
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -132,11 +138,12 @@ namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
         /// </summary>
         void OnRewardedAdRewarded(string tag)
         {
-            switch(tag) {
+            switch (tag)
+            {
                 case "FreeGems":
-                AddGems(ProfileManager.Instance.GetAppSettings().watchVideoRewardAmount);
-                UIController.Instance.purchaseSuccessScreen.Activate();
-                break;
+                    AddGems(ProfileManager.Instance.GetAppSettings().watchVideoRewardAmount);
+                    UIController.Instance.purchaseSuccessScreen.Activate();
+                    break;
             }
         }
     }

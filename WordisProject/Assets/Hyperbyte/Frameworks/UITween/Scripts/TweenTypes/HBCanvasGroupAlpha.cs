@@ -77,6 +77,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
             {
                 _loopCount = (_loopCount * 2);
             }
+
             return this;
         }
 
@@ -133,6 +134,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                     t = animationCurve.Evaluate(t);
                     break;
             }
+
             return t;
         }
 
@@ -190,6 +192,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                                 {
                                     OnLoopCompleteDelegate.Invoke(elapsedLoop);
                                 }
+
                                 break;
                             case LoopType.PingPong:
                                 SetTweenParams(toValue, fromValue);
@@ -201,8 +204,10 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                                         OnLoopCompleteDelegate.Invoke((elapsedLoop / 2));
                                     }
                                 }
+
                                 break;
                         }
+
                         PlayAfterDelay();
                         elapsedTime = 0;
                     }
@@ -212,6 +217,7 @@ namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
                         {
                             OnCompleteDeletegate.Invoke();
                         }
+
                         StartCoroutine(DestroyThis());
                     }
                 }
