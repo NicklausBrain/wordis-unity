@@ -212,7 +212,7 @@ namespace Hyperbyte
 
                     if (_orderedPopupStack.Count > 0)
                     {
-                        ShowDailogFromStack();
+                        ShowDialogFromStack();
                     }
                 }
             }
@@ -254,7 +254,7 @@ namespace Hyperbyte
                 case "ReviewAppScreen":
                     reviewScreen.Deactivate();
                     break;
-                case "SelectLangauge":
+                case "SelectLanguage":
                     languageSelectionScreen.Deactivate();
                     break;
 
@@ -341,7 +341,7 @@ namespace Hyperbyte
         public void ShowConsentDialogue()
         {
             _orderedPopupStack.Add(consentScreen.name);
-            ShowDailogFromStack();
+            ShowDialogFromStack();
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Hyperbyte
         public void ShowDailyRewardsPopup()
         {
             _orderedPopupStack.Add(dailyRewardScreen.name);
-            ShowDailogFromStack();
+            ShowDialogFromStack();
         }
 
         /// <summary>
@@ -372,14 +372,14 @@ namespace Hyperbyte
             if (!canShowReviewPopup)
             {
                 _orderedPopupStack.Add(reviewScreen.name);
-                ShowDailogFromStack();
+                ShowDialogFromStack();
             }
         }
 
         /// <summary>
-        /// Controlls the ordered stack.
+        /// Controls the ordered stack.
         /// </summary>
-        void ShowDailogFromStack()
+        void ShowDialogFromStack()
         {
             if (_orderedPopupStack.Count > 0)
             {

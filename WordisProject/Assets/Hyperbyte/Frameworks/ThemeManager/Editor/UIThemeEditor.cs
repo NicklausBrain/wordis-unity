@@ -16,7 +16,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(UITheme))]
-public class UIThemeSettingsEditor : CustomInspectorHelper
+public class UIThemeEditor : CustomInspectorHelper
 {
     private bool cache = false;
     private SerializedProperty colorTags;
@@ -25,29 +25,30 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
 
     public override void OnInspectorGUI()
     {
-		serializedObject.Update();
+        serializedObject.Update();
 
-		if (!cache)
-		{
+        if (!cache)
+        {
             uiTheme = (UITheme)target;
             colorTags = serializedObject.FindProperty("colorTags");
             spriteTags = serializedObject.FindProperty("spriteTags");
             cache = true;
         }
 
-        if(colorTags != null) {
+        if (colorTags != null)
+        {
             ShowColorTagsArray(colorTags);
             ShowImageTagsArray(spriteTags);
         }
 
-		serializedObject.ApplyModifiedProperties();
+        serializedObject.ApplyModifiedProperties();
 
-		// if (GUI.changed) {
-			EditorUtility.SetDirty(uiTheme);
-		//}
+        // if (GUI.changed) {
+        EditorUtility.SetDirty(uiTheme);
+        //}
     }
 
-   
+
 
     public void ShowColorTagsArray(SerializedProperty list, string label = "ColorThemeTags ")
     {
@@ -87,8 +88,10 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
                         EditorGUI.indentLevel = indentLevel + 1;
                         EditorGUILayout.BeginVertical();
 
-                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-                        labelStyle.fontStyle = FontStyle.Bold;
+                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
+                        {
+                            fontStyle = FontStyle.Bold,
+                        };
 
                         DrawLine();
                         EditorGUILayout.BeginHorizontal();
@@ -116,9 +119,11 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
 
             //GUILayout.Space(5);
             GUI.backgroundColor = Color.grey;
-            GUIStyle style2 = new GUIStyle(GUI.skin.button);
-            style2.richText = true;
-            style2.fixedHeight = 20;
+            GUIStyle style2 = new GUIStyle(GUI.skin.button)
+            {
+                richText = true,
+                fixedHeight = 20,
+            };
 
             if (GUILayout.Button(new GUIContent("<b>Add Color Tag</b>"), style2))
             {
@@ -168,8 +173,10 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
                         EditorGUI.indentLevel = indentLevel + 1;
                         EditorGUILayout.BeginVertical();
 
-                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-                        labelStyle.fontStyle = FontStyle.Bold;
+                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
+                        {
+                            fontStyle = FontStyle.Bold,
+                        };
 
                         DrawLine();
                         EditorGUILayout.BeginHorizontal();
@@ -199,9 +206,11 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
 
             //GUILayout.Space(5);
             GUI.backgroundColor = Color.grey;
-            GUIStyle style2 = new GUIStyle(GUI.skin.button);
-            style2.richText = true;
-            style2.fixedHeight = 20;
+            GUIStyle style2 = new GUIStyle(GUI.skin.button)
+            {
+                richText = true,
+                fixedHeight = 20
+            };
 
             if (GUILayout.Button(new GUIContent("<b>Add Image Tag</b>"), style2))
             {
@@ -213,4 +222,3 @@ public class UIThemeSettingsEditor : CustomInspectorHelper
         EndBox();
     }
 }
-
