@@ -11,14 +11,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hyperbyte.Ads;
-using Hyperbyte.HapticFeedback;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.Frameworks.AppSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.HapticFeedback.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
+using Assets.Hyperbyte.Frameworks.Utils;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
     /// This script compont manages and saves the basic status if user control including sound, music, haptic feedback, notification, ad status etc.

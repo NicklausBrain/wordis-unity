@@ -12,12 +12,15 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
     /// This script compont is attached to all the block shape on the game. This script will handles the actual game play and user interaction with the game.

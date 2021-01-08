@@ -18,7 +18,7 @@ using UnityEngine.UI;
 using UnityEngine.Purchasing;
 #endif
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 {
     /// <summary>
     /// Any UI Button with attached this script will work as IAP Button and request a IAP Purchase of selected SKU from the dropdown selection. 

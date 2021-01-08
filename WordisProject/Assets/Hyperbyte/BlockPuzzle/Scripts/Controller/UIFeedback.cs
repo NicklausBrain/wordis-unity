@@ -11,31 +11,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using Hyperbyte.HapticFeedback;
+using Assets.Hyperbyte.Frameworks.HapticFeedback.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 { 
 	public class UIFeedback : Singleton<UIFeedback>  
 	{
 		/// Play Haptic/Vibration Light.
 		public void PlayHapticLight() {
 			if(ProfileManager.Instance.IsVibrationEnabled) { 
-				HapticFeedbackGenerator.Haptic(HapticFeedback.FeedbackType.LightImpact);
+				HapticFeedbackGenerator.Haptic(FeedbackType.LightImpact);
 			}
 		}
 
 		/// Play Haptic/Vibration Medium.
 		public void PlayHapticMedium() {
 			if(ProfileManager.Instance.IsVibrationEnabled) { 
-				HapticFeedbackGenerator.Haptic(HapticFeedback.FeedbackType.MediumImpact);
+				HapticFeedbackGenerator.Haptic(FeedbackType.MediumImpact);
 			}
 		}
 
 		/// Play Haptic/Vibration Heavy.
 		public void PlayHapticHeavy() {
 			if(ProfileManager.Instance.IsVibrationEnabled) { 
-				HapticFeedbackGenerator.Haptic(HapticFeedback.FeedbackType.HeavyImpact);
+				HapticFeedbackGenerator.Haptic(FeedbackType.HeavyImpact);
 			}
 		}
 

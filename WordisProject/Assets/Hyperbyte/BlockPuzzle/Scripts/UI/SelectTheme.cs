@@ -11,9 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
 	public class SelectTheme : MonoBehaviour
 	{   

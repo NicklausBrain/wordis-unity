@@ -12,10 +12,13 @@
 // THE SOFTWARE.
 
 using System.Collections;
-using Hyperbyte.Ads;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     public class ConsentSetting : MonoBehaviour
     {

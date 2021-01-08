@@ -11,13 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEditor;
-using Hyperbyte.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Editor
 {    
     public class LocalizationSettingsEditorMenu : MonoBehaviour
     {

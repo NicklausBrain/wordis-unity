@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 
 #if HB_ADMOB
@@ -18,7 +19,7 @@ using GoogleMobileAds.Api;
 using System;
 #endif
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
 {
     /// <summary>
     /// This class component will be added to game dynamically if Google Ads is selected as active ad network.

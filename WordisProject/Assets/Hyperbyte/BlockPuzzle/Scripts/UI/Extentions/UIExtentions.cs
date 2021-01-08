@@ -12,9 +12,10 @@
 // THE SOFTWARE.
 
 using System.Collections;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions
 {
     public static class UIExtentions
     {

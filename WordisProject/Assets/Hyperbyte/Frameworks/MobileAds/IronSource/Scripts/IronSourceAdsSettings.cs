@@ -11,9 +11,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
 {
 	/// <summary>
 	/// Ironsource Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.

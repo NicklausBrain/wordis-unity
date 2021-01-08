@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 {
     /// <summary>
     /// Sandbox purchase will be used while Unity IAP SDK setup is not completed.

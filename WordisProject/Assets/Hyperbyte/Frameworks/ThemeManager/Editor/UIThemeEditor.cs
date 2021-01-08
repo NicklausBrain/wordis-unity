@@ -11,214 +11,218 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Hyperbyte;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(UITheme))]
-public class UIThemeEditor : CustomInspectorHelper
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
 {
-    private bool cache = false;
-    private SerializedProperty colorTags;
-    private SerializedProperty spriteTags;
-    UITheme uiTheme;
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(UITheme))]
+    public class UIThemeEditor : CustomInspectorHelper
     {
-        serializedObject.Update();
+        private bool cache = false;
+        private SerializedProperty colorTags;
+        private SerializedProperty spriteTags;
+        UITheme uiTheme;
 
-        if (!cache)
+        public override void OnInspectorGUI()
         {
-            uiTheme = (UITheme)target;
-            colorTags = serializedObject.FindProperty("colorTags");
-            spriteTags = serializedObject.FindProperty("spriteTags");
-            cache = true;
-        }
+            serializedObject.Update();
 
-        if (colorTags != null)
-        {
-            ShowColorTagsArray(colorTags);
-            ShowImageTagsArray(spriteTags);
-        }
-
-        serializedObject.ApplyModifiedProperties();
-
-        // if (GUI.changed) {
-        EditorUtility.SetDirty(uiTheme);
-        //}
-    }
-
-
-
-    public void ShowColorTagsArray(SerializedProperty list, string label = "ColorThemeTags ")
-    {
-        bool isExpanded = BeginFoldoutBox("Color Tags");
-
-        if (isExpanded)
-        {
-            if (list.arraySize > 0)
+            if (!cache)
             {
-                //BeginBox();
-                int indentLevel = EditorGUI.indentLevel;
-                EditorGUI.indentLevel = 1;
+                uiTheme = (UITheme)target;
+                colorTags = serializedObject.FindProperty("colorTags");
+                spriteTags = serializedObject.FindProperty("spriteTags");
+                cache = true;
+            }
+
+            if (colorTags != null)
+            {
+                ShowColorTagsArray(colorTags);
+                ShowImageTagsArray(spriteTags);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+
+            // if (GUI.changed) {
+            EditorUtility.SetDirty(uiTheme);
+            //}
+        }
+
+
+
+        public void ShowColorTagsArray(SerializedProperty list, string label = "ColorThemeTags ")
+        {
+            bool isExpanded = BeginFoldoutBox("Color Tags");
+
+            if (isExpanded)
+            {
+                if (list.arraySize > 0)
+                {
+                    //BeginBox();
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUI.indentLevel = 1;
+
+                    //GUILayout.Space(5);
+                    for (int i = 0; i < list.arraySize; i++)
+                    {
+                        BeginBox();
+                        EditorGUILayout.BeginHorizontal();
+
+                        SerializedProperty tagName = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagName");
+                        bool isOpened = BeginSimpleFoldoutBox(tagName.stringValue, "ColorTag : " + (i + 1));
+                        if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f)))
+                        {
+                            list.InsertArrayElementAtIndex(i);
+                        }
+
+                        if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f)))
+                        {
+                            list.DeleteArrayElementAtIndex(i);
+                            return;
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+                        if (isOpened)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUI.indentLevel = indentLevel + 1;
+                            EditorGUILayout.BeginVertical();
+
+                            GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
+                            {
+                                fontStyle = FontStyle.Bold,
+                            };
+
+                            DrawLine();
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Tag Name : ", labelStyle, GUILayout.MaxWidth(120));
+                            tagName.stringValue = EditorGUILayout.TextField(tagName.stringValue);
+                            EditorGUILayout.EndHorizontal();
+
+                            //GUILayout.Space(5);
+
+                            EditorGUILayout.BeginHorizontal();
+                            SerializedProperty tagColor = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagColor");
+                            EditorGUILayout.LabelField("Tag Color : ", labelStyle, GUILayout.MaxWidth(120));
+                            tagColor.colorValue = EditorGUILayout.ColorField(tagColor.colorValue);
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUILayout.EndVertical();
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        EndBox();
+                        //GUILayout.Space(5);
+                    }
+                    EditorGUI.indentLevel = indentLevel;
+                    //EndBox();
+                }
 
                 //GUILayout.Space(5);
-                for (int i = 0; i < list.arraySize; i++)
+                GUI.backgroundColor = Color.grey;
+                GUIStyle style2 = new GUIStyle(GUI.skin.button)
                 {
-                    BeginBox();
-                    EditorGUILayout.BeginHorizontal();
+                    richText = true,
+                    fixedHeight = 20,
+                };
 
-                    SerializedProperty tagName = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagName");
-                    bool isOpened = BeginSimpleFoldoutBox(tagName.stringValue, "ColorTag : " + (i + 1));
-                    if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f)))
-                    {
-                        list.InsertArrayElementAtIndex(i);
-                    }
-
-                    if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f)))
-                    {
-                        list.DeleteArrayElementAtIndex(i);
-                        return;
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    if (isOpened)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUI.indentLevel = indentLevel + 1;
-                        EditorGUILayout.BeginVertical();
-
-                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
-                        {
-                            fontStyle = FontStyle.Bold,
-                        };
-
-                        DrawLine();
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("Tag Name : ", labelStyle, GUILayout.MaxWidth(120));
-                        tagName.stringValue = EditorGUILayout.TextField(tagName.stringValue);
-                        EditorGUILayout.EndHorizontal();
-
-                        //GUILayout.Space(5);
-
-                        EditorGUILayout.BeginHorizontal();
-                        SerializedProperty tagColor = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagColor");
-                        EditorGUILayout.LabelField("Tag Color : ", labelStyle, GUILayout.MaxWidth(120));
-                        tagColor.colorValue = EditorGUILayout.ColorField(tagColor.colorValue);
-                        EditorGUILayout.EndHorizontal();
-
-                        EditorGUILayout.EndVertical();
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    EndBox();
-                    //GUILayout.Space(5);
+                if (GUILayout.Button(new GUIContent("<b>Add Color Tag</b>"), style2))
+                {
+                    list.arraySize += 1;
                 }
-                EditorGUI.indentLevel = indentLevel;
-                //EndBox();
+                GUI.backgroundColor = Color.white;
+                //GUILayout.Space(5);
             }
-
-            //GUILayout.Space(5);
-            GUI.backgroundColor = Color.grey;
-            GUIStyle style2 = new GUIStyle(GUI.skin.button)
-            {
-                richText = true,
-                fixedHeight = 20,
-            };
-
-            if (GUILayout.Button(new GUIContent("<b>Add Color Tag</b>"), style2))
-            {
-                list.arraySize += 1;
-            }
-            GUI.backgroundColor = Color.white;
-            //GUILayout.Space(5);
+            EndBox();
         }
-        EndBox();
-    }
 
-    public void ShowImageTagsArray(SerializedProperty list, string label = "ImageThemeTags ")
-    {
-        bool isExpanded = BeginFoldoutBox("Sprite Tags");
-
-        if (isExpanded)
+        public void ShowImageTagsArray(SerializedProperty list, string label = "ImageThemeTags ")
         {
-            if (list.arraySize > 0)
+            bool isExpanded = BeginFoldoutBox("Sprite Tags");
+
+            if (isExpanded)
             {
-                // BeginBox();
-                int indentLevel = EditorGUI.indentLevel;
-                EditorGUI.indentLevel = 1;
+                if (list.arraySize > 0)
+                {
+                    // BeginBox();
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUI.indentLevel = 1;
+
+                    //GUILayout.Space(5);
+                    for (int i = 0; i < list.arraySize; i++)
+                    {
+                        BeginBox();
+                        EditorGUILayout.BeginHorizontal();
+
+                        SerializedProperty tagName = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagName");
+                        bool isOpened = BeginSimpleFoldoutBox(tagName.stringValue, "ImageTag : " + (i + 1));
+                        if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f)))
+                        {
+                            list.InsertArrayElementAtIndex(i);
+                        }
+
+                        if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f)))
+                        {
+                            list.DeleteArrayElementAtIndex(i);
+                            return;
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+                        if (isOpened)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUI.indentLevel = indentLevel + 1;
+                            EditorGUILayout.BeginVertical();
+
+                            GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
+                            {
+                                fontStyle = FontStyle.Bold,
+                            };
+
+                            DrawLine();
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Tag Name : ", labelStyle, GUILayout.MaxWidth(120));
+                            tagName.stringValue = EditorGUILayout.TextField(tagName.stringValue);
+                            EditorGUILayout.EndHorizontal();
+
+                            //GUILayout.Space(5);
+
+                            EditorGUILayout.BeginHorizontal();
+                            SerializedProperty tagSprite = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagSprite");
+                            EditorGUILayout.LabelField("Tag Sprite : ", labelStyle, GUILayout.MaxWidth(120));
+                            //EditorGUILayout.ObjectField(tagSprite, typeof(Sprite));
+                            tagSprite.objectReferenceValue = EditorGUILayout.ObjectField(tagSprite.objectReferenceValue, typeof(Sprite), false);
+                            EditorGUILayout.EndHorizontal();
+
+
+                            EditorGUILayout.EndVertical();
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        EndBox();
+                        //GUILayout.Space(5);
+                    }
+                    EditorGUI.indentLevel = indentLevel;
+                    // EndBox();
+                }
 
                 //GUILayout.Space(5);
-                for (int i = 0; i < list.arraySize; i++)
+                GUI.backgroundColor = Color.grey;
+                GUIStyle style2 = new GUIStyle(GUI.skin.button)
                 {
-                    BeginBox();
-                    EditorGUILayout.BeginHorizontal();
+                    richText = true,
+                    fixedHeight = 20
+                };
 
-                    SerializedProperty tagName = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagName");
-                    bool isOpened = BeginSimpleFoldoutBox(tagName.stringValue, "ImageTag : " + (i + 1));
-                    if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(20f)))
-                    {
-                        list.InsertArrayElementAtIndex(i);
-                    }
-
-                    if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(20f)))
-                    {
-                        list.DeleteArrayElementAtIndex(i);
-                        return;
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    if (isOpened)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUI.indentLevel = indentLevel + 1;
-                        EditorGUILayout.BeginVertical();
-
-                        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
-                        {
-                            fontStyle = FontStyle.Bold,
-                        };
-
-                        DrawLine();
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField("Tag Name : ", labelStyle, GUILayout.MaxWidth(120));
-                        tagName.stringValue = EditorGUILayout.TextField(tagName.stringValue);
-                        EditorGUILayout.EndHorizontal();
-
-                        //GUILayout.Space(5);
-
-                        EditorGUILayout.BeginHorizontal();
-                        SerializedProperty tagSprite = list.GetArrayElementAtIndex(i).FindPropertyRelative("tagSprite");
-                        EditorGUILayout.LabelField("Tag Sprite : ", labelStyle, GUILayout.MaxWidth(120));
-                        //EditorGUILayout.ObjectField(tagSprite, typeof(Sprite));
-                        tagSprite.objectReferenceValue = EditorGUILayout.ObjectField(tagSprite.objectReferenceValue, typeof(Sprite), false);
-                        EditorGUILayout.EndHorizontal();
-
-
-                        EditorGUILayout.EndVertical();
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    EndBox();
-                    //GUILayout.Space(5);
+                if (GUILayout.Button(new GUIContent("<b>Add Image Tag</b>"), style2))
+                {
+                    list.arraySize += 1;
                 }
-                EditorGUI.indentLevel = indentLevel;
-                // EndBox();
+                GUI.backgroundColor = Color.white;
+                //GUILayout.Space(5);
             }
-
-            //GUILayout.Space(5);
-            GUI.backgroundColor = Color.grey;
-            GUIStyle style2 = new GUIStyle(GUI.skin.button)
-            {
-                richText = true,
-                fixedHeight = 20
-            };
-
-            if (GUILayout.Button(new GUIContent("<b>Add Image Tag</b>"), style2))
-            {
-                list.arraySize += 1;
-            }
-            GUI.backgroundColor = Color.white;
-            //GUILayout.Space(5);
+            EndBox();
         }
-        EndBox();
     }
 }

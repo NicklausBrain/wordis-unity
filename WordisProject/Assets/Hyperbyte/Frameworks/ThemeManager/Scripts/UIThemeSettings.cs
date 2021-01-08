@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
 {
 	/// <summary>
 	/// Theme settings scriptable instance for all the ingame themes.

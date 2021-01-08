@@ -12,11 +12,10 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System.Linq;
+using UnityEditor;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks._Common.Editor
 {
     public static class ScriptingDefineSymbolEditor
     {

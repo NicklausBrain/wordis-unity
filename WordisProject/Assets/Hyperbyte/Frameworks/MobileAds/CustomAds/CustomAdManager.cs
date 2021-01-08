@@ -11,9 +11,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.CustomAds
 {
     /// <summary>
     /// This script component is required only in case when you want to use different ad network then available to select from ad manager. 

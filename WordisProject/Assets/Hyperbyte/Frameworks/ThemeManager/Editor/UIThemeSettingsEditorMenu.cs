@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
 {
     public class UIThemeSettingsEditorMenu : MonoBehaviour
     {

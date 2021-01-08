@@ -12,10 +12,13 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
 {
     /// <summary>
     /// This script component is attached to all buttons daily reward poppup. It handles, displays rewards and giveaway.

@@ -12,10 +12,12 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
     /// This script component will generte the board with given size and will also place blocks from previos session if there is progress.

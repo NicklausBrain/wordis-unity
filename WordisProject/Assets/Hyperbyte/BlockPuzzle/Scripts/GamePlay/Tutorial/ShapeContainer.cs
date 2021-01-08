@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
     /// This script component is attached to all block shape containers.

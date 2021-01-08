@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils
 {
     /// <summary>
     /// Attach this script to any UI Image type to associate it with color tag.

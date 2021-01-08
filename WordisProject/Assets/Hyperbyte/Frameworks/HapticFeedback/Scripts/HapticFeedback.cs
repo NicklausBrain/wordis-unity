@@ -12,16 +12,11 @@
 // THE SOFTWARE.
 
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
-using System;
 #if UNITY_IOS
 using UnityEngine.iOS;
 #endif
 
-namespace Hyperbyte.HapticFeedback
+namespace Assets.Hyperbyte.Frameworks.HapticFeedback.Scripts
 {	
 	// Haptic feedback type.
     public enum FeedbackType

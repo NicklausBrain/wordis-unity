@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace  Hyperbyte.UITween
+namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 {
     /// <summary>
     /// Extentions for the tweens classes.

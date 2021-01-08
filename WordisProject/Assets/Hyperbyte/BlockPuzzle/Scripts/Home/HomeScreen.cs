@@ -11,10 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Home
 {
     public class HomeScreen : MonoBehaviour
     {

@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
 {
     /// <summary>
     /// This script is attached to each langauge selection button. This script will change app language to

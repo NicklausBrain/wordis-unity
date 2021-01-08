@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils
 {
     /// <summary>
     /// Theme manager extentions to make theme releted call easy.

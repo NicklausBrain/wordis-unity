@@ -11,12 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Utils;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
     /// This class component is attached to all blocks in the grid. 

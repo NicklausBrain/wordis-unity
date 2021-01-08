@@ -11,9 +11,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts
 {
 	/// <summary>
 	/// AppLovin configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.

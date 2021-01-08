@@ -11,12 +11,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.AppSettings.Editor
 {
     public class AppSettingEditorMenu : MonoBehaviour
     {
@@ -27,17 +25,17 @@ namespace Hyperbyte
             string assetPath = "Assets/Hyperbyte/Resources";
             string assetName = "AppSettings.asset";
 
-            AppSettings asset;
+            Scripts.AppSettings asset;
 
             if (!System.IO.Directory.Exists(assetPath)) {
                 System.IO.Directory.CreateDirectory(assetPath);
             }
 
             if (System.IO.File.Exists(assetPath + "/"+ assetName))  {
-                asset = (AppSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
+                asset = (Scripts.AppSettings)(Resources.Load(System.IO.Path.GetFileNameWithoutExtension(assetName)));
             }
             else   {
-                asset = ScriptableObject.CreateInstance<AppSettings>();
+                asset = ScriptableObject.CreateInstance<Scripts.AppSettings>();
                 AssetDatabase.CreateAsset(asset, assetPath + "/" + assetName);
                 AssetDatabase.SaveAssets();
             }

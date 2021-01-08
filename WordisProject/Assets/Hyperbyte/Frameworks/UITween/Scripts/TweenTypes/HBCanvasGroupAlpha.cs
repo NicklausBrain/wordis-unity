@@ -11,11 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using UnityEngine;
 using System;
+using System.Collections;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 {
     /// <summary>
     /// Canvas Group Tween.

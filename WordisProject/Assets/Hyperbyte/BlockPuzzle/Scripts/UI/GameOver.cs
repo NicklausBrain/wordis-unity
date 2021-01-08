@@ -12,12 +12,16 @@
 // THE SOFTWARE.
 
 using System.Collections;
-using Hyperbyte.Localization;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     public class GameOver : MonoBehaviour
     {

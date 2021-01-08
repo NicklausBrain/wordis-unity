@@ -12,9 +12,10 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
     /// This script component typically tracks and saves the progress of game. This is used to start game previos progress 

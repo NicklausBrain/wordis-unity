@@ -11,9 +11,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts
 {
     /// <summary>
     /// This class component will be added to game dynamically if Ironsource is selected as active ad network.

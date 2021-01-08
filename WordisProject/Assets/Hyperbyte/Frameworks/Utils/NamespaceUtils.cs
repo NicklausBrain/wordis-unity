@@ -14,7 +14,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
     /// <summary>
     /// This namespace utils works to detect the given namespace exists in the project or not.

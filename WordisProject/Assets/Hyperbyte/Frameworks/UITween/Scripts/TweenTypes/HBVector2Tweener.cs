@@ -11,10 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.TweenTypes
 {
     /// <summary>
     /// Vector 2 Type Tweener

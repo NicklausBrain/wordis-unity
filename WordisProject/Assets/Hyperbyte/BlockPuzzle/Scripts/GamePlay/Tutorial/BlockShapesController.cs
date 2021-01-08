@@ -12,11 +12,11 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
-using Hyperbyte.Utils;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     /// <summary>
     /// This script controlls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.

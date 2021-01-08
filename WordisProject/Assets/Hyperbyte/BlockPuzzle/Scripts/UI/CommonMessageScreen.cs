@@ -12,11 +12,14 @@
 // THE SOFTWARE.
 
 using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// This script component is attched to common dialogue popup. This script will prepare a delegate based button click event callbacks

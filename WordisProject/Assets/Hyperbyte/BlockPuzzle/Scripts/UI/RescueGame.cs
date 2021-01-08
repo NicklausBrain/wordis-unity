@@ -11,12 +11,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// This script is used to rescue game using coins or watching video.

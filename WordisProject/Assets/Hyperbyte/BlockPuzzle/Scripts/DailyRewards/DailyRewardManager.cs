@@ -11,10 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;   
+using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte 
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards 
 {
     /// <summary>
     /// This sigletion class will track and handles daily reward during game.

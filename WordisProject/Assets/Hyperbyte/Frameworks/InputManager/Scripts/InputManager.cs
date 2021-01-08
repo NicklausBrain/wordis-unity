@@ -11,12 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Collections;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using System.Collections;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.InputManager.Scripts
 {
 	public class InputManager : Singleton<InputManager>
 	{

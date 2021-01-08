@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 {
     /// <summary>
     /// Abstract class for invoking ads.

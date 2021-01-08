@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using UnityEditor;
 using System.IO;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Editor
 {
     [CustomEditor(typeof(UIThemeSettings))]
     public class UIThemeSettingsEditor : CustomInspectorHelper

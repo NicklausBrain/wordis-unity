@@ -12,11 +12,11 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts
 {
     /// <summary>
     /// Theme manager contrll game themes, returns requires images, colors attached to tags and controlls the event callbacks.

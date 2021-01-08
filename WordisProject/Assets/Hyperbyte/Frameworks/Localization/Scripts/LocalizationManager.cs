@@ -14,9 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
 	/// <summary>
 	/// This scriptable class handles the ingame localization and store configurations.

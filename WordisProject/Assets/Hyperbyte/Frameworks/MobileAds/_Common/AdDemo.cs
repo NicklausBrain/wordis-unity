@@ -13,9 +13,8 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 {
     /// <summary>
     /// This script is a demo script to test ad.

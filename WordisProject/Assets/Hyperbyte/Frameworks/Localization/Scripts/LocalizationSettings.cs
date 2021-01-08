@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
 	/// <summary>
 	/// Scriptable instance of localization settings containing all info regarding in game localization. 

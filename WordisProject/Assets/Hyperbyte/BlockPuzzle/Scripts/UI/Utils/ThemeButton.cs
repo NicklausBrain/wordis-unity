@@ -11,12 +11,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Linq;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using Hyperbyte.Utils;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Utils
 {
     /// <summary>
     /// Theme button is attached to all theme selection buttons.

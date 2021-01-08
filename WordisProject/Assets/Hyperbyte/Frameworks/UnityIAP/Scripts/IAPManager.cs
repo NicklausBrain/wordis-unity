@@ -13,13 +13,14 @@
 
 using System;
 using System.Linq;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
 #if HB_UNITYIAP
 using UnityEngine.Purchasing;
 #endif
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Scripts
 {
     /// <summary>
     /// This class controls in-game purchased and its reward. This sdk typically leverages the official unity iap sdk and used as wrapper to make workflow

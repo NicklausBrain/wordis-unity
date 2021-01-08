@@ -12,12 +12,16 @@
 // THE SOFTWARE.
 
 using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlayUI : Singleton<GamePlayUI>
     {

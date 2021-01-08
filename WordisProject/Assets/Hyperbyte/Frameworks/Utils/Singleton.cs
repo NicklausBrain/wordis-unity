@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
 	/// <summary>
     /// Creates a instance of monobehaviour of the given script component.static You can implement this singleton behaviour in generic 

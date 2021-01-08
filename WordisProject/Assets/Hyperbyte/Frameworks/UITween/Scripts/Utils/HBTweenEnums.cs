@@ -11,9 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-
-namespace Hyperbyte.UITween 
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils 
 {
     // Ease type.
     public enum Ease

@@ -12,12 +12,12 @@
 // THE SOFTWARE.
 
 using System.Collections;
-using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
     /// Handled the game score.

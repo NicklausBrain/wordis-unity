@@ -11,12 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks._Common.Editor
 {
-    public class CustomInspectorHelper : Editor
+    public class CustomInspectorHelper : UnityEditor.Editor
     {
         private Texture2D lineTexture;
         private Texture2D LineTexture

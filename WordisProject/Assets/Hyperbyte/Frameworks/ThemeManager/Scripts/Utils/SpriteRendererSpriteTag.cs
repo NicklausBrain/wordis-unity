@@ -14,7 +14,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils
 {
     /// <summary>
     /// Attach this script to any sprite renderer to associalte it with sprite tag.

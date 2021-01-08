@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.UITween
+namespace Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 {    
     /// <summary>
     /// UI Tween Ease calculations.

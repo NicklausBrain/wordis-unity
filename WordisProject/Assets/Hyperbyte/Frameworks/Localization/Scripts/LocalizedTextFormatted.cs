@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte.Localization
+namespace Assets.Hyperbyte.Frameworks.Localization.Scripts
 {
     /// <summary>
     /// This script can be attached to any UI Text component with text tag.

@@ -11,18 +11,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Hyperbyte.Ads;
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Editor
 {
-    [CustomEditor(typeof(AdSettings))]
+    [CustomEditor(typeof(Scripts.AdSettings))]
     public class AdSettingsEditor : CustomInspectorHelper
     {
         private bool cache = false;
-        AdSettings adSettings;
+        Scripts.AdSettings adSettings;
         GUIStyle labelStyle;
 
         #region AdNetworkSelectionSpecific
@@ -36,7 +41,7 @@ namespace Hyperbyte
 
             if (!cache)
             {
-                adSettings = (AdSettings)target;
+                adSettings = (Scripts.AdSettings)target;
 
                 labelStyle = new GUIStyle(GUI.skin.label);
                 labelStyle.fontStyle = FontStyle.Bold;

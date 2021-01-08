@@ -13,95 +13,94 @@
 
 using UnityEngine;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.AppSettings.Scripts
 {
-	/// <summary>
-	/// Scriptable for ad settings. Can be configured from Hyperbye -> Ad Settings menu item.
-	/// </summary>
-	public class AppSettings : ScriptableObject
-	{
-		#region CommonSettings
+    /// <summary>
+    /// Scriptable for ad settings. Can be configured from Hyperbye -> Ad Settings menu item.
+    /// </summary>
+    public class AppSettings : ScriptableObject
+    {
+        #region CommonSettings
 		
-		// Android store like google, amazon, samsung etc.
-		public int currentAndroidStore = 0;
+        // Android store like google, amazon, samsung etc.
+        public int currentAndroidStore = 0;
 
-		// Privacy policy url.
-		public string privacyPolicyURL;
+        // Privacy policy url.
+        public string privacyPolicyURL;
 
-		// Support url need to be enabled and need to show in settings screen or not.
-		public bool enableSupportURL = true;
+        // Support url need to be enabled and need to show in settings screen or not.
+        public bool enableSupportURL = true;
 
-		// Support url is support is enabled.
-		public string supportURL;
+        // Support url is support is enabled.
+        public string supportURL;
 
-		// Apple Id to nevigate to store.
-		public string appleID;
+        // Apple Id to nevigate to store.
+        public string appleID;
 		
-		#endregion
+        #endregion
 
 
-		#region ReviewSettings
+        #region ReviewSettings
 
-		// Review popup should be enabled or not.
-		public bool showReviewPopupOnLaunch = true;
+        // Review popup should be enabled or not.
+        public bool showReviewPopupOnLaunch = true;
 
-		// At which launch count review request should be made. enter numbers seperated by comma.
-		public string reviewPopupAppLaunchCount;
+        // At which launch count review request should be made. enter numbers seperated by comma.
+        public string reviewPopupAppLaunchCount;
 
-		// Review popup should be enabled or not.
-		public bool showReviewPopupOnGameOver = true;
+        // Review popup should be enabled or not.
+        public bool showReviewPopupOnGameOver = true;
 
-		// At which launch count review request should be made. enter numbers seperated by comma.
-		public string reviewPopupGameOverCount;
+        // At which launch count review request should be made. enter numbers seperated by comma.
+        public string reviewPopupGameOverCount;
 
-		// Navigate to store for review if user selected minimum star from review popup.
-		public float minRatingToNavigateToStore = 4.5F;
+        // Navigate to store for review if user selected minimum star from review popup.
+        public float minRatingToNavigateToStore = 4.5F;
 
-		// Apple native store review request should be made instead of popup.
-		public bool showAppleStoreReviewPopupOniOS = true;
+        // Apple native store review request should be made instead of popup.
+        public bool showAppleStoreReviewPopupOniOS = true;
 
-		// Should show review popup if already rated.
-		public bool neverShowReviewPopupIfRated = true;
+        // Should show review popup if already rated.
+        public bool neverShowReviewPopupIfRated = true;
 
-		// Store revire url amazon store.
-		public string amazonReviewURL = "";
+        // Store revire url amazon store.
+        public string amazonReviewURL = "";
 
-		// Store revire url samsung store.
-		public string samsungReviewURL = "";
+        // Store revire url samsung store.
+        public string samsungReviewURL = "";
 		
-		#endregion
+        #endregion
 
-		// Vibration permission should be added to android manifest.
-		public bool enableVibrations = true;
+        // Vibration permission should be added to android manifest.
+        public bool enableVibrations = true;
 		
-		#region InventorySettings
+        #region InventorySettings
 
-		// Default amount of gems at starting of game.
-		public int defaultGemsAmount = 240;
+        // Default amount of gems at starting of game.
+        public int defaultGemsAmount = 240;
 		
-		// Free gems reward on watching rewaerded video.
-		public int watchVideoRewardAmount = 35;
+        // Free gems reward on watching rewaerded video.
+        public int watchVideoRewardAmount = 35;
 
-		// Gems amout to rescue game.
-		public int rescueGameGemsAmount = 35;
+        // Gems amout to rescue game.
+        public int rescueGameGemsAmount = 35;
 		
-		#endregion
+        #endregion
 
-		#region DailyRewards
+        #region DailyRewards
 
-		// Daily reward should be enabled or not.
-		public bool useDailyRewards = true;
+        // Daily reward should be enabled or not.
+        public bool useDailyRewards = true;
 
-		// Scriptable instance for daily reward settings.
-		public DailyRewardSettings dailyRewardsSettings;
-		#endregion
-	}
-}	
+        // Scriptable instance for daily reward settings.
+        public DailyRewardSettings dailyRewardsSettings;
+        #endregion
+    }
 
-[System.Serializable]
-public class DailyRewardSettings {
+    [System.Serializable]
+    public class DailyRewardSettings {
 	
-	// Reward on each days. Add as many days as you want with reward amount. Will keep repeating.
-	public int[] allDayRewards;
+        // Reward on each days. Add as many days as you want with reward amount. Will keep repeating.
+        public int[] allDayRewards;
+    }
 }
-

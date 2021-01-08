@@ -11,11 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Editor
 {	
 	[CustomEditor(typeof(UnityAdsSettings))]
 	public class UnityAdsSettingsEditor : CustomInspectorHelper 

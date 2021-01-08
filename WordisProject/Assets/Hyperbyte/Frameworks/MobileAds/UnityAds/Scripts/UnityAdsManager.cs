@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
 using UnityEngine;
 
 #if HB_UNITYADS 
@@ -18,7 +19,7 @@ using UnityEngine.Advertisements;
 using UnityEngine.Monetization;
 #endif
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts
 {
     /// <summary>
     /// This class component will be added to game dynamically if Unity Ads selected as active ad network.

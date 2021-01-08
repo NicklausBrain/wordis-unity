@@ -12,21 +12,21 @@
 // THE SOFTWARE.
 
 using System.Collections;
-using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte 
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// This script displays the balance of currency and keeps updating on change of it during game.
     /// </summary>
     public class CurrencyDisplay : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] Text txtGemsBalance;
         [SerializeField] GameObject rewardAnimation;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         int lastBalance = 0;
 
@@ -36,27 +36,30 @@ namespace Hyperbyte
         /// </summary>
         void Start()
         {
-            CurrencyManager.OnCurrencyUpdated += OnCurrencyUpdatedEvent;   
+            CurrencyManager.OnCurrencyUpdated += OnCurrencyUpdatedEvent;
         }
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable() {
-            RefreshCurrencyBalance(); 
+        private void OnEnable()
+        {
+            RefreshCurrencyBalance();
         }
 
         /// <summary>
-        /// Event callback for currecy balance change.
+        /// Event callback for currency balance change.
         /// </summary>
-        private void OnCurrencyUpdatedEvent(int currencyBalance) {
+        private void OnCurrencyUpdatedEvent(int currencyBalance)
+        {
             StartCoroutine(PlayCurrencyIncreaseCounter(currencyBalance));
         }
 
         /// <summary>
         /// Refreshes currency balance on enable.
         /// </summary>
-        private void RefreshCurrencyBalance() {
+        private void RefreshCurrencyBalance()
+        {
             int currencyBalance = CurrencyManager.Instance.GetCurrentGemsBalance();
             txtGemsBalance.text = currencyBalance.ToString("N0");
             lastBalance = currencyBalance;
@@ -65,7 +68,7 @@ namespace Hyperbyte
         /// <summary>
         /// Currency amount update animation.
         /// </summary>
-        IEnumerator PlayCurrencyIncreaseCounter(int currentBalance) 
+        IEnumerator PlayCurrencyIncreaseCounter(int currentBalance)
         {
             int iterations = 10;
             int balanceDifference = (currentBalance - lastBalance);
@@ -74,7 +77,8 @@ namespace Hyperbyte
             int updatedBalance = lastBalance;
 
             yield return new WaitForSeconds(0.75F);
-            for(int i = 0; i < iterations; i++) {
+            for (int i = 0; i < iterations; i++)
+            {
                 updatedBalance += balanceChangeEachIteration;
                 txtGemsBalance.text = updatedBalance.ToString("N0");
                 AudioController.Instance.PlayClipLow(AudioController.Instance.addGemsSoundChord, 0.15F);
@@ -82,7 +86,6 @@ namespace Hyperbyte
             }
             txtGemsBalance.text = currentBalance.ToString("N0");
             lastBalance = currentBalance;
-        } 
+        }
     }
 }
-                            

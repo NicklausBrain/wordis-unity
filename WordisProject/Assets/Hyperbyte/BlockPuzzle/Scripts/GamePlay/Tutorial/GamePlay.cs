@@ -13,9 +13,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 
-namespace Hyperbyte.Tutorial
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay.Tutorial
 {
     public class GamePlay : Singleton<GamePlay>
     {

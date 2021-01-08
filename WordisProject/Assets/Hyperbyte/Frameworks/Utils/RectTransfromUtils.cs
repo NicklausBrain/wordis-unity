@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {    
     /// <summary>
     /// Extention class Rect Transform.

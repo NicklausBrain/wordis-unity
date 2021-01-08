@@ -11,13 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
 using UnityEngine;
 
 #if HB_ADMOB
 using GoogleMobileAds.Api;
 #endif
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts
 {
 	/// <summary>
 	/// Google Mobile Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.

@@ -11,11 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
 using UnityEngine;
-using System;
 
-namespace  Hyperbyte.UITween
+namespace  Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils
 {
     /// <summary>
     /// Abstract Tween behaviour will be dervied by tween classes.

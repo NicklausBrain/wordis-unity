@@ -11,11 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.UnityIAP.Scripts;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.Frameworks.UnityIAP.Editor
 {
 	[CustomEditor(typeof(UnityIAPButton))]
 	public class UnityIAPButtonEditor : CustomInspectorHelper 

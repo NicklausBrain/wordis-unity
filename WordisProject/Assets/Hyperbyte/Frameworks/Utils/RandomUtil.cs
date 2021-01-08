@@ -14,7 +14,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
 	/// <summary>
     /// Extention class generating random nummbers.

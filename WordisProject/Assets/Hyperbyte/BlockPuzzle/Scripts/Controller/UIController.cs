@@ -13,11 +13,18 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.EffectUtils;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.GamePlay;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Home;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.UITween.Scripts.Utils;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
-using Hyperbyte.Localization;
-using Hyperbyte.UITween;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
     /// UIController controls the entire UI Navigation of the game.
@@ -31,7 +38,7 @@ namespace Hyperbyte
         [Header("UI Screens")]
         public HomeScreen homeScreen;
         public GamePlayUI gameScreen;
-        public Hyperbyte.Tutorial.GamePlayUI gameScreenTutorial;
+        public GamePlay.Tutorial.GamePlayUI gameScreenTutorial;
 
         [Header("Public Members.")]
         public GameObject shopScreen;

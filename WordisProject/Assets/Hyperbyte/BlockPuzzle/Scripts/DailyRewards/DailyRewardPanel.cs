@@ -11,12 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
+using Assets.Hyperbyte.Frameworks.ThemeManager.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Utils;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.DailyRewards
 {
     /// <summary>
     /// This script component is attached to all buttons daily reward poppup. It handles, displays rewards and giveaway.

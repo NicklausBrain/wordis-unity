@@ -12,11 +12,14 @@
 // THE SOFTWARE.
 
 using System.Collections;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.InputManager.Scripts;
+using Assets.Hyperbyte.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Hyperbyte.Localization;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.UI
 {
     /// <summary>
     /// Settings screen controls different user selection like sound, music, language etc.

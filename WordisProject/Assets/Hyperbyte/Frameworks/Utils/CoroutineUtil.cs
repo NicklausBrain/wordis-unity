@@ -14,7 +14,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
 	/// <summary>
     /// Extention class for wait coroutine for real seconds.

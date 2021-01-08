@@ -12,10 +12,12 @@
 // THE SOFTWARE.
 
 using System;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.UI.Extentions;
+using Assets.Hyperbyte.Frameworks.MobileAds._Common;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
-using Hyperbyte.Ads;
 
-namespace Hyperbyte
+namespace Assets.Hyperbyte.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
     /// This script controlls and manages the ingame currecy, its balace, addition or subtraction of balance.

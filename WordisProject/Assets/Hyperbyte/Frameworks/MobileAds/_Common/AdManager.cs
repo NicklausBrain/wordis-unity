@@ -14,10 +14,18 @@
 using System;
 using System.Collections;
 using System.Reflection;
+using Assets.Hyperbyte.BlockPuzzle.Scripts.Controller;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.AppLovinMax.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.CustomAds;
+using Assets.Hyperbyte.Frameworks.MobileAds.GoogleMobileAds.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.UnityAds.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds._Common
 {
     /// <summary>
     /// AdManager is singleton class component to control ads during game. Typically this class will initialize, load and shows ads with selected ad network.
@@ -47,7 +55,7 @@ namespace Hyperbyte.Ads
         public static event Action OnRewardedClosedEvent;
         public static event Action<string> OnRewardedAdRewardedEvent;
 
-        [System.NonSerialized] public AdSettings adSettings;
+        [System.NonSerialized] public AdSettings.Scripts.AdSettings adSettings;
 
         // Time when last interstitial was shown, to handle min delay between 2 interstitials.
         float lastInterstitialShownTime = 0;
@@ -58,7 +66,7 @@ namespace Hyperbyte.Ads
         /// </summary>
         private void Start()
         {
-            adSettings = (AdSettings)Resources.Load("AdSettings");
+            adSettings = (AdSettings.Scripts.AdSettings)Resources.Load("AdSettings");
             VerifyConsent();
         }
 

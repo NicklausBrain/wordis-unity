@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hyperbyte.Utils
+namespace Assets.Hyperbyte.Frameworks.Utils
 {
 	/// <summary>
 	/// Extention class for string operations.

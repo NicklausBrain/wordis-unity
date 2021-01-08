@@ -11,16 +11,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using Hyperbyte.Utils;
+using Assets.Hyperbyte.Frameworks._Common.Editor;
+using Assets.Hyperbyte.Frameworks.MobileAds.AdSettings.Scripts;
+using Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Scripts;
+using Assets.Hyperbyte.Frameworks.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hyperbyte.Ads
+namespace Assets.Hyperbyte.Frameworks.MobileAds.IronSource.Editor
 {	
 	[CustomEditor(typeof(IronSourceAdsSettings))]
 	public class IronSourceAdsSettingsEditor : CustomInspectorHelper 
