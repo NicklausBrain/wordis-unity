@@ -19,89 +19,96 @@ using UnityEngine.Advertisements;
 
 namespace Hyperbyte.Ads
 {
-	/// <summary>
-	/// Unity Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
-	/// </summary>
-	public class UnityAdsSettings : ScriptableObject 
-	{
-		#pragma warning disable 0649
-		// Android keys.
-		[SerializeField] string gameId_android;
-		[SerializeField] string bannerPlacement_android;
-		[SerializeField] string interstitialPlacement_android;
-		[SerializeField] string rewardedPlacement_android;
-		
-		// iOS Keys.
-		[SerializeField] string gameId_iOS;
-		[SerializeField] string bannerPlacement_iOS;
-		[SerializeField] string interstitialPlacement_iOS;
-		[SerializeField] string rewardedPlacement_iOS;
+    /// <summary>
+    /// Unity Ads configuration. All details can be filled from scriptable instance inspector via Hyperbyte -> Ad Settings menu item.
+    /// </summary>
+    public class UnityAdsSettings : ScriptableObject
+    {
+#pragma warning disable 0649
+        // Android keys.
+        [SerializeField] string gameId_android;
+        [SerializeField] string bannerPlacement_android;
+        [SerializeField] string interstitialPlacement_android;
+        [SerializeField] string rewardedPlacement_android;
 
-		// Test ads enable or not.
-		#pragma warning disable 0169
-		[SerializeField] bool enableTestAds = false;
-		#pragma warning restore 0169
+        // iOS Keys.
+        [SerializeField] string gameId_iOS;
+        [SerializeField] string bannerPlacement_iOS;
+        [SerializeField] string interstitialPlacement_iOS;
+        [SerializeField] string rewardedPlacement_iOS;
 
-		// Banner ad position.
-		[SerializeField] BannerAdPosition bannerAdPosition;
+        // Test ads enable or not.
+#pragma warning disable 0169
+#pragma warning disable 414
+        [SerializeField] bool enableTestAds = false;
+#pragma warning restore 414
+#pragma warning restore 0169
 
-		// Banner ad bf color.
-		[SerializeField] string bannerBGColor;
-        #pragma warning restore 0649
+        // Banner ad position.
+        [SerializeField] BannerAdPosition bannerAdPosition;
 
-		public string GetGameId() {
-			#if UNITY_ANDROID
+        // Banner ad bf color.
+        [SerializeField] string bannerBGColor;
+#pragma warning restore 0649
+
+        public string GetGameId()
+        {
+#if UNITY_ANDROID
 			return gameId_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return gameId_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Returns banner placement id for selected platform.
-		public string GetBannerPlacement() {
-			#if UNITY_ANDROID
+        // Returns banner placement id for selected platform.
+        public string GetBannerPlacement()
+        {
+#if UNITY_ANDROID
 			return bannerPlacement_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return bannerPlacement_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Returns interstitial placement id for selected platform.
-		public string GetInterstitialPlacement() {
-			#if UNITY_ANDROID
+        // Returns interstitial placement id for selected platform.
+        public string GetInterstitialPlacement()
+        {
+#if UNITY_ANDROID
 			return interstitialPlacement_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return interstitialPlacement_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Returns rewarded placement id for selected platform.
-		public string GetRewardedPlacement() {
-			#if UNITY_ANDROID
+        // Returns rewarded placement id for selected platform.
+        public string GetRewardedPlacement()
+        {
+#if UNITY_ANDROID
 			return rewardedPlacement_android;
-			#elif UNITY_IOS
+#elif UNITY_IOS
 			return rewardedPlacement_iOS;
-			#else 
-			return "";
-			#endif
-		}
+#else
+            return "";
+#endif
+        }
 
-		// Test mode enabled or not.
-		public bool GetTestMode() {
-			#if UNITY_EDITOR
-			return true;
-			#else
+        // Test mode enabled or not.
+        public bool GetTestMode()
+        {
+#if UNITY_EDITOR
+            return true;
+#else
 			return enableTestAds;
-			#endif
-		}
+#endif
+        }
 
-		#if HB_UNITYADS
+#if HB_UNITYADS
 		// Returns banner ad position.
 		public BannerPosition GetBannerPosition() 
 		{
@@ -132,6 +139,6 @@ namespace Hyperbyte.Ads
 			}
 			return position;
 		}
-		#endif
-	}
+#endif
+    }
 }
