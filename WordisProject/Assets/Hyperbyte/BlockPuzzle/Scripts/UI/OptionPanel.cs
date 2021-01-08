@@ -15,14 +15,14 @@ using UnityEngine;
 
 namespace Hyperbyte
 {
-	/// <summary>
-	/// Varies option button listner attached to this on home screen.
-	/// </summary>
+    /// <summary>
+    /// Varies option button listener attached to this on home screen.
+    /// </summary>
     public class OptionPanel : MonoBehaviour
     {
-        #pragma warning disable 0649
+#pragma warning disable 0649
         [SerializeField] GameObject themeSettingButton;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -30,14 +30,15 @@ namespace Hyperbyte
         /// </summary>
         void Start()
         {
-            if(!ThemeManager.Instance.UIThemeEnabled) {
+            if (!ThemeManager.Instance.UIThemeEnabled)
+            {
                 themeSettingButton.SetActive(false);
             }
         }
 
-		/// <summary>
-		/// Opens setting screen.
-		/// </summary>
+        /// <summary>
+        /// Opens setting screen.
+        /// </summary>
         public void OnSettingsButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -48,9 +49,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Opens shop popup.
-		/// </summary>
+        /// <summary>
+        /// Opens shop popup.
+        /// </summary>
         public void OnShopButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -61,9 +62,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Opens language selection popup.
-		/// </summary>
+        /// <summary>
+        /// Opens language selection popup.
+        /// </summary>
         public void OnSelectLangaugeButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -74,9 +75,9 @@ namespace Hyperbyte
             }
         }
 
-		/// <summary>
-		/// Opens review popup or store review nag.
-		/// </summary>
+        /// <summary>
+        /// Opens review popup or store review nag.
+        /// </summary>
         public void OnRateButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -85,11 +86,11 @@ namespace Hyperbyte
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.reviewScreen.Activate();
             }
-        }	
+        }
 
-		/// <summary>
-		/// Open theme selection popup.
-		/// </summary>
+        /// <summary>
+        /// Open theme selection popup.
+        /// </summary>
         public void OnThemeButtonPressed()
         {
             if (InputManager.Instance.canInput())
@@ -101,4 +102,3 @@ namespace Hyperbyte
         }
     }
 }
-
