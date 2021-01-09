@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -207,6 +208,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             GameObject block = Instantiate(blockTemplate);
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
+
+            //var text = block.GetComponentInChildren<TextMeshProUGUI>()
             return block.GetComponent<RectTransform>();
         }
     }

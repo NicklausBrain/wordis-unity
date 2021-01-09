@@ -21,6 +21,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -378,7 +379,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         // TODO: REMOVE IT SOON, JUST TEST:
-        #region My Custom Key Input
+        #region My Custom UI Interaction
 
         private Block _currentTestBlock;
 
@@ -399,13 +400,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 _currentTestBlock = gamePlay.allRows[0][3];
                 _currentTestBlock.PlaceBlock(shape.spriteTag);
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 _currentTestBlock.PlaceBlock(_currentTestBlock.defaultSpriteTag); // reset
-                _currentTestBlock = gamePlay.allRows[_currentTestBlock.RowId+1][3];
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty; // reset
+                _currentTestBlock = gamePlay.allRows[_currentTestBlock.RowId + 1][3];
                 _currentTestBlock.PlaceBlock(shape.spriteTag);
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
             }
         }
 
