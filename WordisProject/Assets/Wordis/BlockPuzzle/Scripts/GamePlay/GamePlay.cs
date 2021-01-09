@@ -49,6 +49,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         /// <summary>
         /// Will get called when board grid gets initialized.
+        /// TODO: nasty design: class below directly knows the class above (NM)
         /// </summary>
         public void OnBoardGridReady()
         {

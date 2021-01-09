@@ -21,7 +21,7 @@ using UnityEngine.UI;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This class component is attached to all blocks in the grid. 
+    /// This class component is attached to all blocks in the grid 
     /// </summary>
     public class Block : MonoBehaviour
     {
