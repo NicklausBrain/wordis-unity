@@ -435,7 +435,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Editor
                 }
                 else
                 {
-                    standardBlockShapesInfo = serializedObject.FindProperty("standardBlockShapesInfo");
+                    standardBlockShapesInfo = serializedObject.FindProperty(nameof(standardBlockShapesInfo));
                 }
 
                 if (advancedBlockShapesInfo != null)
@@ -450,7 +450,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Editor
                 }
                 else
                 {
-                    advancedBlockShapesInfo = serializedObject.FindProperty("advancedBlockShapesInfo");
+                    advancedBlockShapesInfo = serializedObject.FindProperty(nameof(advancedBlockShapesInfo));
                 }
 
                 if (isStandardShapesExpanded || isAdvanceShapesExpanded)

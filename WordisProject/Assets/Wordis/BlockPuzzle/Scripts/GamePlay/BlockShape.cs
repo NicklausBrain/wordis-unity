@@ -31,20 +31,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
 #pragma warning disable 0649
         //Row size of block shape grid.
-        [SerializeField] int rowSize;
+        [SerializeField] private int rowSize;
 
         //Column size of block shape grid.
-        [SerializeField] int columnSize;
+        [SerializeField] private int columnSize;
 #pragma warning restore 0649
 
         // List of all blocks that are being highlighted. Will keep updating runtime.
-        readonly List<Block> highlightingBlocks = new List<Block>();
+        private readonly List<Block> highlightingBlocks = new List<Block>();
 
         // Will set to true after slight time of user touches the block shape.
-        bool shouldDrag = false;
+        private bool shouldDrag = false;
 
         // Cached instance of this block shape.
-        Transform thisTransform;
+        private Transform thisTransform;
 
         // Sprite tag represents image sprite on the block shape. You can configure sprite tag from inspector. You can also look UITheme for sprite tag and its associated sprite settings.
         public string spriteTag = "";
@@ -52,15 +52,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Type of block shape is advance or standard. Only used for saving progress and add to required pool in forming level from previous progress.
         public bool isAdvanceShape = false;
 
-        Sprite thisBlockSprite = null;
+        private Sprite thisBlockSprite = null;
 
         // Time until user can rotate shape on taking pointer up to rotate shape. will work only if rotation of shape is allowed.
-        float pointerDownTime;
+        private float pointerDownTime;
 
         // List of all active blocks inside block shape.
-        readonly List<Transform> _activeBlocks = new List<Transform>();
+        private readonly List<Transform> _activeBlocks = new List<Transform>();
 
-        float dragOffset = 1.0F;
+        private float dragOffset = 1.0F;
 
         /// <summary>
         /// Awakes the instance and initializes and prepare block shape.
@@ -75,7 +75,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             PrepareBlockShape();
         }
@@ -236,7 +236,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Will check if shape should be rotated or not on pointer up. Rotating of shape is allowed only for 0.3 seconds after pointer down and if not dragged.
         /// </summary>
-        void CheckForShapeRotation()
+        private void CheckForShapeRotation()
         {
             float pointerUpTime = Time.time;
             bool isRotationDetected = pointerUpTime - pointerDownTime < 0.3F;
@@ -304,7 +304,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Checks whether shape can be placed at the current position while dragging it. 
         /// </summary>
-        bool CheckCanPlaceShape()
+        private bool CheckCanPlaceShape()
         {
             List<Block> hittingBlocks = new List<Block>();
             List<int> hittingRows = new List<int>();
@@ -344,7 +344,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 // Will be called when user ends touch/mouse from the block shape
                 // and block shape will try to place on grid.
-                // Will go back to original if block shape cann not be placed.
+                // Will go back to original if block shape cannot not be placed.
                 if (hittingBlocks.Count == _activeBlocks.Count)
                 {
                     foreach (Block block in hittingBlocks)
@@ -375,7 +375,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// and block shape will try to place on grid.
         /// Will go back to original if block shape can not be placed.
         /// </summary>
-        bool TryPlacingShape()
+        private bool TryPlacingShape()
         {
             List<Block> hittingBlocks = new List<Block>();
             List<int> completedRows = new List<int>();
@@ -464,7 +464,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         ///  Returns block that is intersecting with the current block shape. Returns null if not any.
         /// </summary>
-        Block GetHittingBlock(Transform draggingBlock)
+        private Block GetHittingBlock(Transform draggingBlock)
         {
             RaycastHit2D hit = Physics2D.Raycast(draggingBlock.position, Vector2.zero, 1);
             if (hit.collider != null && hit.collider.GetComponent<Block>() != null)
@@ -478,7 +478,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Stops highlighting all blocks from highlightingBlocks list except for given blocks.
         /// </summary>
-        void StopHighlight(List<Block> excludingList)
+        private void StopHighlight(List<Block> excludingList)
         {
             foreach (Block b in highlightingBlocks)
             {
@@ -494,7 +494,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Stops highlighting all blocks.
         /// </summary>
-        void StopHighlight()
+        private void StopHighlight()
         {
             foreach (Block b in highlightingBlocks)
             {
@@ -507,7 +507,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Reset shape and will move it to its original position. Typically called when it fails to place on grid.
         /// </summary>
-        void ResetShape()
+        private void ResetShape()
         {
             thisTransform.LocalPosition(
                 endValue: Vector3.zero,
@@ -520,7 +520,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds rotation to block shape at its original position.
         /// </summary>
-        void ResetShapeWithAddRotation()
+        private void ResetShapeWithAddRotation()
         {
             float newRotation = transform.localEulerAngles.z - 90;
             InputManager.Instance.DisableTouchForDelay(0.2F);

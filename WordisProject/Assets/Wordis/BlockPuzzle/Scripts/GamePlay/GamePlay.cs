@@ -33,7 +33,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized]
         public List<List<Block>> allRows = new List<List<Block>>();
 
-        [System.NonSerialized] public List<List<Block>> allColumns = new List<List<Block>>();
+        [System.NonSerialized]
+        public List<List<Block>> allColumns = new List<List<Block>>();
 
         //List of rows highlight while dragging shape. Will keep updating runtime. 
         [System.NonSerialized] public List<int> highlightingRows = new List<int>();

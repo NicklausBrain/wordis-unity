@@ -37,6 +37,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void GenerateBoard(ProgressData progressData)
         {
+            progressData = null; // TODO: tmp
+
             BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
 
             int rowSize = (int)boardSize;

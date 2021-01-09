@@ -376,5 +376,39 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             ResetGame();
             StartGamePlay(currentGameMode);
         }
+
+        // TODO: REMOVE IT SOON, JUST TEST:
+        #region My Custom Key Input
+
+        private Block _currentTestBlock;
+
+        void Update()
+        {
+            BlockShape GetBasicBlockShape()
+            {
+                var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
+                var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
+                basicBlockShape.SetSpriteTag(basicBlockInfo.blockSpriteTag);
+                return basicBlockShape;
+            }
+
+            var shape = GetBasicBlockShape();
+
+            // Press Q to close the Listener
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _currentTestBlock = gamePlay.allRows[0][3];
+                _currentTestBlock.PlaceBlock(shape.spriteTag);
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _currentTestBlock.PlaceBlock(_currentTestBlock.defaultSpriteTag); // reset
+                _currentTestBlock = gamePlay.allRows[_currentTestBlock.RowId+1][3];
+                _currentTestBlock.PlaceBlock(shape.spriteTag);
+            }
+        }
+
+        #endregion
     }
 }

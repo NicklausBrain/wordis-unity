@@ -65,6 +65,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         /// <summary>
         /// Assignes logical position on block on the grid.
+        /// TODO: seems like should be make in constructor and should not be change ever
         /// </summary>
         public void SetBlockLocation(int rowIndex, int columnIndex)
         {
@@ -115,7 +116,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Places block from the block shape. Typically will be called when game starting with progress from previous session.
+        /// Places block from the block shape.
+        /// Typically will be called when game starting with progress from previous session.
         /// </summary>
         public void PlaceBlock(string spriteTag)
         {
