@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,10 +27,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
 #pragma warning disable 0649
         // Prefab template of block.
-        [SerializeField] GameObject blockTemplate;
+        [SerializeField] public GameObject blockTemplate;
 
         // Parent inside which all blocks will be generated. Typically root of block grid.
-        [SerializeField] GameObject blockRoot;
+        [SerializeField] public GameObject blockRoot;
 #pragma warning restore 0649
 
         /// <summary>
@@ -37,6 +38,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void GenerateBoard(ProgressData progressData)
         {
+            progressData = null; // TODO: tmp
+
             BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
 
             int rowSize = (int)boardSize;
@@ -59,9 +62,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
             GamePlayUI.Instance.gamePlay.allColumns = new List<List<Block>>();
 
-            Sprite blockBGSprite =
-                ThemeManager.Instance.GetBlockSpriteWithTag(blockTemplate.GetComponent<Block>().defaultSpriteTag);
-
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
             {
@@ -70,20 +70,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 for (int column = 0; column < columnSize; column++)
                 {
                     // Spawn a block instance and prepares it.
-                    RectTransform blockElement = GetBlockInsideGrid();
-                    blockElement.localPosition = new Vector3(currentPositionX, currentPositionY, 0);
-                    currentPositionX += blockSize + blockSpace;
-                    blockElement.sizeDelta = Vector3.one * blockSize;
-                    blockElement.GetComponent<BoxCollider2D>().size = Vector3.one * blockSize;
-                    blockElement.GetComponent<Image>().sprite = blockBGSprite;
-                    blockElement.name = "block-" + row + "" + column;
+                    Block block = SpawnBlock(currentPositionX, currentPositionY, blockSize, row, column);
 
-                    // Sets blocks logical position inside grid and its default sprite.
-                    Block block = blockElement.GetComponent<Block>();
-                    block.gameObject.SetActive(true);
-                    block.SetBlockLocation(row, column);
                     blockRow.Add(block);
-                    block.assignedSpriteTag = block.defaultSpriteTag;
+
+                    currentPositionX += blockSize + blockSpace;
                 }
 
                 currentPositionX = startPointX;
@@ -93,6 +84,52 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Sets progress and status to each blocks if there is any from previous session.
+            if (progressData != null)
+            {
+                RestoreBoard(progressData, rowSize, columnSize);
+            }
+
+            GamePlay.Instance.OnBoardGridReady();
+        }
+
+        /// <summary>
+        /// Resets Grid and removes all blocks from it.
+        /// </summary>
+        public void ResetGame()
+        {
+            blockRoot.ClearAllChild();
+        }
+
+        /// <summary>
+        /// Horizontal position from where block grid will start.
+        /// </summary>
+        private float GetStartPointX(float blockSize, int rowSize)
+        {
+            float totalWidth =
+                blockSize * rowSize +
+                (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return -(totalWidth / 2 - blockSize / 2);
+        }
+
+        /// <summary>
+        /// Vertical position from where block grid will start.
+        /// </summary>
+        private float GetStartPointY(float blockSize, int columnSize)
+        {
+            float totalHeight =
+                blockSize * columnSize +
+                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            return totalHeight / 2 - blockSize / 2;
+        }
+
+        /// <summary>
+        /// Restores the saved board state.
+        /// </summary>
+        private void RestoreBoard(
+            ProgressData progressData,
+            int rowSize,
+            int columnSize)
+        {
             if (progressData != null)
             {
                 int rowIndex = 0;
@@ -115,14 +152,45 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     rowIndex++;
                 }
             }
+        }
 
-            GamePlay.Instance.OnBoardGridReady();
+        /// <summary>
+        /// Spawns a new block.
+        /// </summary>
+        private Block SpawnBlock(
+            float currentPositionX,
+            float currentPositionY,
+            float blockSize,
+            int row,
+            int column)
+        {
+            Sprite blockBgSprite =
+                ThemeManager.Instance.GetBlockSpriteWithTag(
+                    blockTemplate.GetComponent<Block>().defaultSpriteTag);
+
+            RectTransform blockElement = GetBlockInsideGrid();
+            blockElement.localPosition = new Vector3(
+                x: currentPositionX,
+                y: currentPositionY,
+                z: 0);
+
+            blockElement.sizeDelta = Vector3.one * blockSize;
+            blockElement.GetComponent<BoxCollider2D>().size = Vector3.one * blockSize;
+            blockElement.GetComponent<Image>().sprite = blockBgSprite;
+            blockElement.name = $"block-{row}{column}";
+
+            // Sets blocks logical position inside grid and its default sprite.
+            Block block = blockElement.GetComponent<Block>();
+            block.gameObject.SetActive(true);
+            block.SetBlockLocation(row, column);
+            block.assignedSpriteTag = block.defaultSpriteTag;
+            return block;
         }
 
         /// <summary>
         /// Will set block status if there is any from previous session progress.
         /// </summary>
-        void SetBlockStatus(Block block, string statusData)
+        private void SetBlockStatus(Block block, string statusData)
         {
             bool.TryParse(statusData.Split('-')[0], out var isAvailable);
 
@@ -133,44 +201,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Horizontal position from where block grid will start.
-        /// </summary>
-        public float GetStartPointX(float blockSize, int rowSize)
-        {
-            float totalWidth =
-                blockSize * rowSize +
-                (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
-            return -(totalWidth / 2 - blockSize / 2);
-        }
-
-        /// <summary>
-        /// Vertical position from where block grid will start.
-        /// </summary>
-        public float GetStartPointY(float blockSize, int columnSize)
-        {
-            float totalHeight =
-                blockSize * columnSize +
-                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
-            return totalHeight / 2 - blockSize / 2;
-        }
-
-        /// <summary>
         /// Spawn a new block instance and sets its block root as its parent.
         /// </summary>
-        public RectTransform GetBlockInsideGrid()
+        private RectTransform GetBlockInsideGrid()
         {
-            GameObject block = (GameObject)Instantiate(blockTemplate) as GameObject;
+            GameObject block = Instantiate(blockTemplate);
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
-            return block.GetComponent<RectTransform>();
-        }
 
-        /// <summary>
-        /// Resets Grid and removes all blocks from it.
-        /// </summary>
-        public void ResetGame()
-        {
-            blockRoot.ClearAllChild();
+            //var text = block.GetComponentInChildren<TextMeshProUGUI>()
+            return block.GetComponent<RectTransform>();
         }
     }
 }

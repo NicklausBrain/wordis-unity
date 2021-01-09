@@ -20,7 +20,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class ShapeContainer : MonoBehaviour
     {
-        // Rect transfrom of the container inside which block shape spawns.
+        // Rect transform of the container inside which block shape spawns.
         [System.NonSerialized] public RectTransform blockParent;
 
         // Assigned block shape.

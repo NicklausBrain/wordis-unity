@@ -21,19 +21,21 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     public enum GameOverReason
     {
-        GRID_FILLED, // If there is no enough space to place existing blocks. Applies to all game mode.
-        TIME_OVER, // If timer finishing. Applied only to time mode.
+        GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
+        TimeOver, // If timer finishing. Applied only to time mode.
     }
 
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-        [Header("Public Class Members")] [Tooltip("GamePlay Script Reference")]
+        [Header("Public Class Members")]
+        [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
 
         [Tooltip("ScoreManager Script Reference")]
@@ -75,7 +77,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Total lines clear during gameplay.
         [HideInInspector] public int totalLinesCompleted = 0;
 
-        // Resuce used for the game or not.
+        // Rescue used for the game or not.
         [HideInInspector] public bool rescueDone = false;
 
         // Reason for game over. Will Initialize at game over or rescue.
@@ -89,7 +91,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
             }
         }
 
@@ -102,8 +104,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             currentModeSettings = GetCurrentModeSettings();
 
             // Checks if the there is user progress from previous session.
-            bool hasPreviosSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
-            if (hasPreviosSessionProgress)
+            bool hasPreviousSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
+            if (hasPreviousSessionProgress)
             {
                 progressData = GameProgressTracker.Instance.GetGameProgress(Instance.currentGameMode);
             }
@@ -122,13 +124,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             #region Time Mode Specific
 
-            // Will enable timer start seeking it. If there is previos session data then timer will start from remaining duration.
+            // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
             if (gameMode == GameMode.Timed)
             {
                 timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer(progressData != null
-                    ? progressData.remainingTimer
-                    : timeModeInitialTimer);
+                timeModeProgresssBar.SetTimer(
+                    progressData?.remainingTimer ?? timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
             }
             else
@@ -213,7 +214,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Time Mode Specific
 
-        // Returns Intial timer for time mode.
+        // Returns Initial timer for time mode.
         public float timeModeInitialTimer => gamePlaySettings.initialTime;
 
         // Returns seconds to be added 
@@ -376,5 +377,42 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             ResetGame();
             StartGamePlay(currentGameMode);
         }
+
+        // TODO: REMOVE IT SOON, JUST TEST:
+        #region My Custom UI Interaction
+
+        private Block _currentTestBlock;
+
+        void Update()
+        {
+            BlockShape GetBasicBlockShape()
+            {
+                var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
+                var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
+                basicBlockShape.SetSpriteTag(basicBlockInfo.blockSpriteTag);
+                return basicBlockShape;
+            }
+
+            var shape = GetBasicBlockShape();
+
+            // Press Q to close the Listener
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _currentTestBlock = gamePlay.allRows[0][3];
+                _currentTestBlock.PlaceBlock(shape.spriteTag);
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _currentTestBlock.PlaceBlock(_currentTestBlock.defaultSpriteTag); // reset
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty; // reset
+                _currentTestBlock = gamePlay.allRows[_currentTestBlock.RowId + 1][3];
+                _currentTestBlock.PlaceBlock(shape.spriteTag);
+                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
+            }
+        }
+
+        #endregion
     }
 }

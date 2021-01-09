@@ -33,7 +33,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized]
         public List<List<Block>> allRows = new List<List<Block>>();
 
-        [System.NonSerialized] public List<List<Block>> allColumns = new List<List<Block>>();
+        [System.NonSerialized]
+        public List<List<Block>> allColumns = new List<List<Block>>();
 
         //List of rows highlight while dragging shape. Will keep updating runtime. 
         [System.NonSerialized] public List<int> highlightingRows = new List<int>();
@@ -42,13 +43,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized] public List<int> highlightingColumns = new List<int>();
 
         // Saves highlighting rows as cached to reduce iterations . Will keep updating runtime. 
-        List<int> cachedHighlightingRows = new List<int>();
+        readonly List<int> _cachedHighlightingRows = new List<int>();
 
         // Saves highlighting columns as cached to reduce iterations . Will keep updating runtime. 
-        List<int> cachedHighlightingColumns = new List<int>();
+        readonly List<int> _cachedHighlightingColumns = new List<int>();
 
         /// <summary>
         /// Will get called when board grid gets initialized.
+        /// TODO: nasty design: class below directly knows the class above (NM)
         /// </summary>
         public void OnBoardGridReady()
         {
@@ -86,7 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             foreach (int columnId in columnIds)
             {
-                StartCoroutine(ClearAllBlocks(GetEntirColumn(columnId)));
+                StartCoroutine(ClearAllBlocks(GetEntireColumn(columnId)));
             }
 
             GamePlayUI.Instance.totalLinesCompleted += columnIds.Count;
@@ -132,7 +134,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns all blocks from the given column.
         /// </summary>
-        public List<Block> GetEntirColumn(int columnId)
+        public List<Block> GetEntireColumn(int columnId)
         {
             return allColumns[columnId];
         }
@@ -174,14 +176,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void HighlightRow(int rowId, Sprite sprite)
         {
-            if (!cachedHighlightingRows.Contains(rowId))
+            if (!_cachedHighlightingRows.Contains(rowId))
             {
                 foreach (Block block in allRows[rowId])
                 {
                     block.Highlight(sprite);
                 }
 
-                cachedHighlightingRows.Add(rowId);
+                _cachedHighlightingRows.Add(rowId);
             }
         }
 
@@ -190,14 +192,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void HighlightColumn(int columnId, Sprite sprite)
         {
-            if (!cachedHighlightingColumns.Contains(columnId))
+            if (!_cachedHighlightingColumns.Contains(columnId))
             {
-                foreach (Block block in GetEntirColumn(columnId))
+                foreach (Block block in GetEntireColumn(columnId))
                 {
                     block.Highlight(sprite);
                 }
 
-                cachedHighlightingColumns.Add(columnId);
+                _cachedHighlightingColumns.Add(columnId);
             }
         }
 
@@ -215,7 +217,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Highlights all columns with given sprite.
         /// </summary>
-        public void HighlightAllColmns(List<int> hittingColumns, Sprite sprite)
+        public void HighlightAllColumns(List<int> hittingColumns, Sprite sprite)
         {
             foreach (int column in hittingColumns)
             {
@@ -277,9 +279,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 block.Reset();
             }
 
-            if (cachedHighlightingRows.Contains(rowId))
+            if (_cachedHighlightingRows.Contains(rowId))
             {
-                cachedHighlightingRows.Remove(rowId);
+                _cachedHighlightingRows.Remove(rowId);
             }
         }
 
@@ -288,14 +290,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void StopHighlightingColumn(int columnId)
         {
-            foreach (Block block in GetEntirColumn(columnId))
+            foreach (Block block in GetEntireColumn(columnId))
             {
                 block.Reset();
             }
 
-            if (cachedHighlightingColumns.Contains(columnId))
+            if (_cachedHighlightingColumns.Contains(columnId))
             {
-                cachedHighlightingColumns.Remove(columnId);
+                _cachedHighlightingColumns.Remove(columnId);
             }
         }
 
@@ -315,17 +317,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             switch (reason)
             {
                 //Rescue for Grid Filled and no new shape can be placed. Below code will clear 3 lines horizontally and vertically from the grid.
-                case GameOverReason.GRID_FILLED:
+                case GameOverReason.GridFilled:
                     ClearBoardLinesForRescue();
                     break;
 
-                case GameOverReason.TIME_OVER:
+                case GameOverReason.TimeOver:
 
                     #region TimeMode Specific
 
                     if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
                     {
-                        // Will add 15 seconds to tmer and will rescue game.
+                        // Will add 15 seconds to timer and will rescue game.
                         GamePlayUI.Instance.timeModeProgresssBar.AddTime(15);
 
                         // If none of block shape can be placed then will clear lines for rescue.
@@ -364,7 +366,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         //Returns the middle lines index from the grid. 
-        // This logic can be sorten. :D
+        // This logic can be shorten. :D
         List<int> GetMiddleLinesFromGrid(int noOfLines)
         {
             List<int> lines = new List<int>();

@@ -21,7 +21,7 @@ using UnityEngine.UI;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This class component is attached to all blocks in the grid. 
+    /// This class component is attached to all blocks in the grid 
     /// </summary>
     public class Block : MonoBehaviour
     {
@@ -30,10 +30,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         //Returns columnId
         public int ColumnId { get; private set; }
-
-        // Represents row id of block in the grid.
-
-        // Represents columnId id of block in the grid.
 
         // Block is filled  with current playing block shape.
         [System.NonSerialized] public bool isFilled = false;
@@ -63,12 +59,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void Awake()
         {
-            /// Initializes the collider component on Awake.
+            // Initializes the collider component on Awake.
             thisCollider = GetComponent<BoxCollider2D>();
         }
 
         /// <summary>
         /// Assignes logical position on block on the grid.
+        /// TODO: seems like should be make in constructor and should not be change ever
         /// </summary>
         public void SetBlockLocation(int rowIndex, int columnIndex)
         {
@@ -119,7 +116,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Places block from the block shape. Typically will be called when game starting with progress from previos session.
+        /// Places block from the block shape.
+        /// Typically will be called when game starting with progress from previous session.
         /// </summary>
         public void PlaceBlock(string spriteTag)
         {
@@ -158,7 +156,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // Opacity of block image will set to 0 in 0.3 seconds. and will reset to 1 on animation completion.
             blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() => { blockImage.enabled = false; });
-
 
             isFilled = false;
             isAvailable = true;

@@ -23,22 +23,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class TimeModeProgresssBar : MonoBehaviour
     {
-        float maxTimer = 0;
-        float remainingTime = 0;
-
 #pragma warning disable 0649
-        [SerializeField] Image imgTimerBar;
+        [SerializeField] public Image imgTimerBar;
 #pragma warning restore 0649
 
 
         [System.NonSerialized] public bool promptedTimeOver = false;
+
+        private float _maxTimer = 0;
+        private float _remainingTime = 0;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         private void OnEnable()
         {
-            ///  Registers game status callbacks.
+            //  Registers game status callbacks.
             GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
             GamePlayUI.OnGamePausedEvent += GamePlayUI_OnGamePausedEvent;
         }
@@ -48,13 +48,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            ///  Unregisters game status callbacks.
+            //  Un-registers game status callbacks.
             GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
             GamePlayUI.OnGamePausedEvent -= GamePlayUI_OnGamePausedEvent;
         }
 
         /// <summary>
-        /// Gameover callback.
+        /// Game-over callback.
         /// </summary>
         private void GamePlayUI_OnGameOverEvent(GameMode gameMode)
         {
@@ -92,9 +92,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PauseTimer()
         {
-            if (IsInvoking("StartContinuousTimer"))
+            if (IsInvoking(nameof(StartContinuousTimer)))
             {
-                CancelInvoke("StartContinuousTimer");
+                CancelInvoke(nameof(StartContinuousTimer));
             }
         }
 
@@ -103,9 +103,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void StopTimer()
         {
-            if (IsInvoking("StartContinuousTimer"))
+            if (IsInvoking(nameof(StartContinuousTimer)))
             {
-                CancelInvoke("StartContinuousTimer");
+                CancelInvoke(nameof(StartContinuousTimer));
             }
         }
 
@@ -122,10 +122,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void SetTimer(float seconds)
         {
-            maxTimer = GamePlayUI.Instance.timeModeInitialTimer;
+            _maxTimer = GamePlayUI.Instance.timeModeInitialTimer;
 
-            remainingTime = seconds;
-            remainingTime = Mathf.Clamp(remainingTime, 0, maxTimer);
+            _remainingTime = seconds;
+            _remainingTime = Mathf.Clamp(_remainingTime, 0, _maxTimer);
             imgTimerBar.fillAmount = GetFillAmount();
             promptedTimeOver = false;
         }
@@ -135,8 +135,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void AddTime(float seconds)
         {
-            remainingTime += seconds;
-            remainingTime = Mathf.Clamp(remainingTime, 0, maxTimer);
+            _remainingTime += seconds;
+            _remainingTime = Mathf.Clamp(_remainingTime, 0, _maxTimer);
         }
 
         /// <summary>
@@ -144,28 +144,28 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public int GetRemainingTimer()
         {
-            return (int) remainingTime;
+            return (int)_remainingTime;
         }
 
         /// <summary>
         /// This method will be executed each second while timer is running.
         /// </summary>
-        void StartContinuousTimer()
+        private void StartContinuousTimer()
         {
-            if (remainingTime > 0)
+            if (_remainingTime > 0)
             {
-                remainingTime -= 1;
+                _remainingTime -= 1;
             }
 
             imgTimerBar.FillAmount(GetFillAmount(), 1F).SetEase(Ease.Linear);
 
-            if (remainingTime <= 0)
+            if (_remainingTime <= 0)
             {
                 StopTimer();
                 if (!(UIController.Instance.rescueGameScreen.activeSelf ||
                       UIController.Instance.gameOverScreen.activeSelf))
                 {
-                    GamePlayUI.Instance.TryRescueGame(GameOverReason.TIME_OVER);
+                    GamePlayUI.Instance.TryRescueGame(GameOverReason.TimeOver);
                 }
             }
         }
@@ -173,9 +173,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns the Image fill amount of progress bar based on remaining timer out of full timer.
         /// </summary>
-        float GetFillAmount()
+        private float GetFillAmount()
         {
-            return remainingTime / maxTimer;
+            return _remainingTime / _maxTimer;
         }
     }
 }

@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
-// Game Modes.
+    // Game Modes.
     public enum GameMode
     {
         Tutorial,
@@ -24,7 +24,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         Advance
     }
 
-// Grid size of playing board.
+    // Grid size of playing board.
     public enum BoardSize
     {
         BoardSize_5X5 = 5,
@@ -38,7 +38,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     }
 
     /// <summary>
-    /// This scriptable object instace contains all the info regarding the game setting for each game mode.static
+    /// This scriptable object instance contains all the info regarding the game setting for each game mode.static
     /// This settings can be updated from Hyperbyte -> Gameplay Setting menu item.
     /// </summary>
     public class GamePlaySettings : ScriptableObject
@@ -70,7 +70,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Initial timer amount in seconds.
         public int initialTime = 60;
 
-        // Bonus secods on line break.
+        // Bonus seconds on line break.
         public int addSecondsOnLineBreak = 10;
 
         #endregion

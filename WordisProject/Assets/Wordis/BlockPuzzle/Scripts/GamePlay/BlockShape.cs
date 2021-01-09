@@ -23,45 +23,47 @@ using UnityEngine.UI;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script compont is attached to all the block shape on the game. This script will handles the actual game play and user interaction with the game.
-    /// Each block shapes represents a grid format where unrequired blocks will be disabled to form a required shape.
+    /// This script component is attached to all the block shape on the game.
+    /// This script will handles the actual game play and user interaction with the game.
+    /// Each block shapes represents a grid format where un-required blocks will be disabled to form a required shape.
     /// </summary>
     public class BlockShape : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler
     {
 #pragma warning disable 0649
         //Row size of block shape grid.
-        [SerializeField] int rowSize;
+        [SerializeField] private int rowSize;
 
         //Column size of block shape grid.
-        [SerializeField] int columnSize;
+        [SerializeField] private int columnSize;
 #pragma warning restore 0649
 
         // List of all blocks that are being highlighted. Will keep updating runtime.
-        List<Block> highlightingBlocks = new List<Block>();
+        private readonly List<Block> highlightingBlocks = new List<Block>();
 
         // Will set to true after slight time of user touches the block shape.
-        bool shouldDrag = false;
+        private bool shouldDrag = false;
 
         // Cached instance of this block shape.
-        Transform thisTransform;
+        private Transform thisTransform;
 
         // Sprite tag represents image sprite on the block shape. You can configure sprite tag from inspector. You can also look UITheme for sprite tag and its associated sprite settings.
         public string spriteTag = "";
 
-        // Type of block shape is adavce or standard. Only used for saving progress and add to required pool in forming level from previous progress.
+        // Type of block shape is advance or standard. Only used for saving progress and add to required pool in forming level from previous progress.
         public bool isAdvanceShape = false;
-        Sprite thisBlockSprite = null;
 
-        // Time untill user can rotate shape on taking pointer up to rotate shape. will work onyl if rotation of shape is allowed.
-        float pointerDownTime;
+        private Sprite thisBlockSprite = null;
+
+        // Time until user can rotate shape on taking pointer up to rotate shape. will work only if rotation of shape is allowed.
+        private float pointerDownTime;
 
         // List of all active blocks inside block shape.
-        List<Transform> activeBlocks = new List<Transform>();
+        private readonly List<Transform> _activeBlocks = new List<Transform>();
 
-        float dragOffset = 1.0F;
+        private float dragOffset = 1.0F;
 
         /// <summary>
-        /// Awakes the instance and inintializes and prepare block shape.
+        /// Awakes the instance and initializes and prepare block shape.
         /// </summary>
         private void Awake()
         {
@@ -73,13 +75,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             PrepareBlockShape();
         }
 
         /// <summary>
-        /// Prepared block shape based on the settings user has selecyted in game settings scriptable. Typically handles size of blocks and space inbetween blocks inside block shape.
+        /// Prepared block shape based on the settings user has selected in game settings scriptable.
+        /// Typically handles size of blocks and space in-between blocks inside block shape.
         /// </summary>
         public void PrepareBlockShape()
         {
@@ -133,12 +136,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 currentPositionY -= blockSize + blockSpace;
             }
 
-            // Will add all the actibve blocks to list that will be used during gameplay.
+            // Will add all the active blocks to list that will be used during gameplay.
             foreach (Transform t in thisTransform)
             {
                 if (t.gameObject.activeSelf)
                 {
-                    activeBlocks.Add(t);
+                    _activeBlocks.Add(t);
                 }
             }
         }
@@ -184,7 +187,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 }
             }
         }
-
 
         /// <summary>
         /// Begins dragging of block shape.
@@ -234,7 +236,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Will check if shape should be rotated or not on pointer up. Rotating of shape is allowed only for 0.3 seconds after pointer down and if not dragged.
         /// </summary>
-        void CheckForShapeRotation()
+        private void CheckForShapeRotation()
         {
             float pointerUpTime = Time.time;
             bool isRotationDetected = pointerUpTime - pointerDownTime < 0.3F;
@@ -265,29 +267,34 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #endregion
 
-
         /// <summary>
-        // Returns the horizontal starting point from where grid should start.
+        /// Returns the horizontal starting point from where grid should start.
         /// </summary>
         public float GetStartPointX(float blockSize, int rowSize)
         {
-            float totalWidth = blockSize * rowSize +
-                               (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            float totalWidth =
+                blockSize *
+                rowSize + (rowSize - 1) *
+                GamePlayUI.Instance.currentModeSettings.blockSpace;
+
             return -(totalWidth / 2 - blockSize / 2);
         }
 
         /// <summary>
-        // Returns the vertical starting point from where grid should start.
+        /// Returns the vertical starting point from where grid should start.
         /// </summary>
         public float GetStartPointY(float blockSize, int columnSize)
         {
-            float totalHeight = blockSize * columnSize +
-                                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+            float totalHeight =
+                blockSize * columnSize +
+                (columnSize - 1) *
+                GamePlayUI.Instance.currentModeSettings.blockSpace;
+
             return totalHeight / 2 - blockSize / 2;
         }
 
         /// <summary>
-        /// Returns recttransfrom component of the block at the given index. 
+        /// Returns <see cref="RectTransform "/> component of the block at the given index.
         /// </summary>
         public RectTransform GetBlockInsideGrid(int index)
         {
@@ -297,13 +304,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Checks whether shape can be placed at the current position while dragging it. 
         /// </summary>
-        bool CheckCanPlaceShape()
+        private bool CheckCanPlaceShape()
         {
             List<Block> hittingBlocks = new List<Block>();
             List<int> hittingRows = new List<int>();
             List<int> hittingColumns = new List<int>();
 
-            foreach (Transform t in activeBlocks)
+            foreach (Transform t in _activeBlocks)
             {
                 Block hittingBlock = GetHittingBlock(t);
                 if (hittingBlock == null || hittingBlocks.Contains(hittingBlock))
@@ -315,7 +322,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 hittingBlocks.Add(hittingBlock);
 
-                // Row Id of block which is interacting with block shape will be added to list. Used to highlight lines that can be completed by placing block shape at current position.
+                // Row Id of block which is interacting with block shape will be added to list.
+                // Used to highlight lines that can be completed by placing block shape at current position.
                 if (!hittingRows.Contains(hittingBlock.RowId))
                 {
                     if (GamePlay.Instance.CanHighlightRow(hittingBlock.RowId))
@@ -324,7 +332,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
                 }
 
-                // Column Id of block which is interacting with block shape will be added to list. Used to highlight lines that can be completed by placing block shape at current position.
+                // Column Id of block which is interacting with block shape will be added to list.
+                // Used to highlight lines that can be completed by placing block shape at current position.
                 if (!hittingColumns.Contains(hittingBlock.ColumnId))
                 {
                     if (GamePlay.Instance.CanHighlightColumn(hittingBlock.ColumnId))
@@ -333,8 +342,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
                 }
 
-                // Will be called when user ends touch/mouse from the block shape and block shape will try to place on grid. Will go back to original if block shape cann not be placed.
-                if (hittingBlocks.Count == activeBlocks.Count)
+                // Will be called when user ends touch/mouse from the block shape
+                // and block shape will try to place on grid.
+                // Will go back to original if block shape cannot not be placed.
+                if (hittingBlocks.Count == _activeBlocks.Count)
                 {
                     foreach (Block block in hittingBlocks)
                     {
@@ -342,7 +353,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
 
                     GamePlay.Instance.HighlightAllRows(hittingRows, thisBlockSprite);
-                    GamePlay.Instance.HighlightAllColmns(hittingColumns, thisBlockSprite);
+                    GamePlay.Instance.HighlightAllColumns(hittingColumns, thisBlockSprite);
 
                     StopHighlight(hittingBlocks);
 
@@ -360,15 +371,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Will be called when user ends touch/mouse from the block shape and block shape will try to place on grid. Will go back to original if block shape cann not be placed.
+        /// Will be called when user ends touch/mouse from the block shape
+        /// and block shape will try to place on grid.
+        /// Will go back to original if block shape can not be placed.
         /// </summary>
-        bool TryPlacingShape()
+        private bool TryPlacingShape()
         {
             List<Block> hittingBlocks = new List<Block>();
             List<int> completedRows = new List<int>();
             List<int> completedColumns = new List<int>();
 
-            foreach (Transform t in activeBlocks)
+            foreach (Transform t in _activeBlocks)
             {
                 Block hittingBlock = GetHittingBlock(t);
                 if (hittingBlock == null || hittingBlocks.Contains(hittingBlock))
@@ -380,7 +393,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 hittingBlocks.Add(hittingBlock);
 
-                // Row id of block will be added to list if entire row is goint to finish on placing current shape.
+                // Row id of block will be added to list if entire row is going to finish on placing current shape.
                 if (!completedRows.Contains(hittingBlock.RowId))
                 {
                     if (GamePlay.Instance.IsRowCompleted(hittingBlock.RowId))
@@ -389,7 +402,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
                 }
 
-                // Column id of block will be added to list if entire column is goint to finish on placing current shape.
+                // Column id of block will be added to list if entire column is going to finish on placing current shape.
                 if (!completedColumns.Contains(hittingBlock.ColumnId))
                 {
                     if (GamePlay.Instance.IsColumnCompleted(hittingBlock.ColumnId))
@@ -398,8 +411,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
                 }
 
-                // Amount of blocks on grid that are interacting with block shape should be excact to amount of active blocks in the the blockshape. All the hitting blocks should be unique.
-                if (hittingBlocks.Count == activeBlocks.Count)
+                // Amount of blocks on grid that are interacting with the block shape
+                // should be exact to amount of active blocks in the the blockshape.
+                // All the hitting blocks should be unique.
+                if (hittingBlocks.Count == _activeBlocks.Count)
                 {
                     foreach (Block block in hittingBlocks)
                     {
@@ -419,8 +434,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
 
                     int linesCleared = completedRows.Count + completedColumns.Count;
-                    // Adds score based on the number of rows, columnd and blocks cleares. final calculation will be done in score manager.
-                    GamePlayUI.Instance.scoreManager.AddScore(linesCleared, activeBlocks.Count);
+                    // Adds score based on the number of rows, columns and blocks cleares. final calculation will be done in score manager.
+                    GamePlayUI.Instance.scoreManager.AddScore(linesCleared, _activeBlocks.Count);
 
                     if (linesCleared > 0)
                     {
@@ -447,9 +462,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        ///  Returns block that is interecting with current block shape. Returns null if not any.
+        ///  Returns block that is intersecting with the current block shape. Returns null if not any.
         /// </summary>
-        Block GetHittingBlock(Transform draggingBlock)
+        private Block GetHittingBlock(Transform draggingBlock)
         {
             RaycastHit2D hit = Physics2D.Raycast(draggingBlock.position, Vector2.zero, 1);
             if (hit.collider != null && hit.collider.GetComponent<Block>() != null)
@@ -463,7 +478,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Stops highlighting all blocks from highlightingBlocks list except for given blocks.
         /// </summary>
-        void StopHighlight(List<Block> excludingList)
+        private void StopHighlight(List<Block> excludingList)
         {
             foreach (Block b in highlightingBlocks)
             {
@@ -479,7 +494,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Stops highlighting all blocks.
         /// </summary>
-        void StopHighlight()
+        private void StopHighlight()
         {
             foreach (Block b in highlightingBlocks)
             {
@@ -492,20 +507,24 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Reset shape and will move it to its original position. Typically called when it fails to place on grid.
         /// </summary>
-        void ResetShape()
+        private void ResetShape()
         {
-            thisTransform.LocalPosition(Vector3.zero, 0.25F);
-            thisTransform.LocalScale(Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize, 0.25F);
+            thisTransform.LocalPosition(
+                endValue: Vector3.zero,
+                time: 0.25F);
+            thisTransform.LocalScale(
+                endValue: Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize,
+                time: 0.25F);
         }
 
         /// <summary>
         /// Adds rotation to block shape at its original position.
         /// </summary>
-        void ResetShapeWithAddRotation()
+        private void ResetShapeWithAddRotation()
         {
             float newRotation = transform.localEulerAngles.z - 90;
             InputManager.Instance.DisableTouchForDelay(0.2F);
-            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(() => { ResetShape(); });
+            transform.LocalRotationToZ(newRotation, 0.2F).OnComplete(ResetShape);
         }
     }
 }

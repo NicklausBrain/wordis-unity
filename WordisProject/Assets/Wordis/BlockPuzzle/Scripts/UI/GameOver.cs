@@ -95,11 +95,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             switch (reason)
             {
-                case GameOverReason.GRID_FILLED:
+                case GameOverReason.GridFilled:
                     txtGameOveTitle.SetTextWithTag("txtGameOver_gridfull");
                     break;
 
-                case GameOverReason.TIME_OVER:
+                case GameOverReason.TimeOver:
                     txtGameOveTitle.SetTextWithTag("txtGameOver_timeover");
                     break;
             }
