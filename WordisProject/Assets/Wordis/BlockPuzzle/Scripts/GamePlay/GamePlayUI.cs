@@ -123,13 +123,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             #region Time Mode Specific
 
-            // Will enable timer start seeking it. If there is previos session data then timer will start from remaining duration.
+            // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
             if (gameMode == GameMode.Timed)
             {
                 timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer(progressData != null
-                    ? progressData.remainingTimer
-                    : timeModeInitialTimer);
+                timeModeProgresssBar.SetTimer(
+                    progressData?.remainingTimer ?? timeModeInitialTimer);
                 timeModeProgresssBar.StartTimer();
             }
             else

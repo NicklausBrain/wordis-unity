@@ -31,10 +31,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         //Returns columnId
         public int ColumnId { get; private set; }
 
-        // Represents row id of block in the grid.
-
-        // Represents columnId id of block in the grid.
-
         // Block is filled  with current playing block shape.
         [System.NonSerialized] public bool isFilled = false;
 
@@ -119,7 +115,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Places block from the block shape. Typically will be called when game starting with progress from previos session.
+        /// Places block from the block shape. Typically will be called when game starting with progress from previous session.
         /// </summary>
         public void PlaceBlock(string spriteTag)
         {
