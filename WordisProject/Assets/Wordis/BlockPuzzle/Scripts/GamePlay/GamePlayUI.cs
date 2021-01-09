@@ -27,8 +27,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     public enum GameOverReason
     {
-        GRID_FILLED, // If there is no enough space to place existing blocks. Applies to all game mode.
-        TIME_OVER, // If timer finishing. Applied only to time mode.
+        GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
+        TimeOver, // If timer finishing. Applied only to time mode.
     }
 
     public class GamePlayUI : Singleton<GamePlayUI>

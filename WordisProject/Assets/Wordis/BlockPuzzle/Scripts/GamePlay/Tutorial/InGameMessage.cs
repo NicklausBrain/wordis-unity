@@ -40,10 +40,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
         {
             switch (reason)
             {
-                case GameOverReason.GRID_FILLED:
+                case GameOverReason.GridFilled:
                     return LocalizationManager.Instance.GetTextWithTag("txtGameOver_gridfull");
 
-                case GameOverReason.TIME_OVER:
+                case GameOverReason.TimeOver:
                     return LocalizationManager.Instance.GetTextWithTag("txtGameOver_timeover");
 
                 default:

@@ -27,7 +27,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
 #pragma warning disable 0649
         // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
-        [SerializeField] List<ShapeContainer> allShapeContainers;
+        [SerializeField] public List<ShapeContainer> allShapeContainers;
 #pragma warning restore 0649
 
         // Instance of block shape placement checker script component to check if given block shape can be placed on board grid or not.
@@ -40,11 +40,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private readonly List<GameObject> _upcomingBlockShapes = new List<GameObject>();
 
         // Size of block shape when its inactive and inside block shape container.
-        Vector3 _shapeInactiveScale = Vector3.one;
+        private Vector3 _shapeInactiveScale = Vector3.one;
 
-        bool _hasInitialized = false;
+        private bool _hasInitialized = false;
 
-        int _totalShapesPlaced = 0;
+        private int _totalShapesPlaced = 0;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -75,17 +75,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Prepares all block shapes based on gameplay settings.
         /// </summary>
-        public void PrepareShapeContainer()
-        {
-            _shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
-            PrepareShapePool();
-            PrepareUpcomingShapes();
-            FillAllShapeContainers();
-        }
-
-        /// <summary>
-        /// Prepares all block shapes based on gameplay settings.
-        /// </summary>
         public void PrepareShapeContainer(ProgressData progressData)
         {
             _shapeInactiveScale = Vector3.one * GamePlayUI.Instance.currentModeSettings.shapeInactiveSize;
@@ -104,9 +93,140 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
+        /// Checks status of all block shape containers and fill or reorder based on gameplay settings and status.
+        /// </summary>
+        public void UpdateShapeContainers()
+        {
+            if (IsAllShapeContainerEmpty())
+            {
+                FillAllShapeContainers();
+            }
+            else
+            {
+                if (GamePlayUI.Instance.currentModeSettings.alwaysKeepFilled)
+                {
+                    ReorderShapeContainer();
+                }
+            }
+
+            Invoke(nameof(CheckAllShapesCanBePlaced), 0.5F);
+        }
+
+        /// <summary>
+        /// Checks if any block shape from all containers can be placed on board. Shapes that can't placed will have lesser opacity.
+        /// </summary>
+        public bool CheckBlockShapeCanPlaced()
+        {
+            bool canAnyShapePlaced = false;
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
+                if (shapeContainer.blockShape != null)
+                {
+                    bool shapeCanBePlaced = blockShapePlacementChecker.CheckShapeCanBePlaced(shapeContainer.blockShape);
+                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanBePlaced ? 1F : 0.5F;
+
+                    if (shapeCanBePlaced)
+                    {
+                        canAnyShapePlaced = true;
+                    }
+                }
+            }
+
+            return canAnyShapePlaced;
+        }
+
+        /// <summary>
+        /// Returns status of all block shape containers. Typically called when saving board progress.
+        /// </summary>
+        public ShapeInfo[] GetCurrentShapesInfo()
+        {
+            ShapeInfo[] allShapesInfo = new ShapeInfo[allShapeContainers.Count];
+            int shapeIndex = 0;
+
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
+                if (shapeContainer.blockShape != null)
+                {
+                    allShapesInfo[shapeIndex] = new ShapeInfo(
+                        isAdvanceShape: shapeContainer.blockShape.isAdvanceShape,
+                        shapeName: shapeContainer.blockShape.name,
+                        shapeRotation: shapeContainer.blockShape.transform.localEulerAngles.z);
+                }
+                else
+                {
+                    allShapesInfo[shapeIndex] = new ShapeInfo(false, null, 0);
+                }
+
+                shapeIndex++;
+            }
+
+            return allShapesInfo;
+        }
+
+        /// <summary>
+        /// Returns total number of block shapes placed during gameplay.
+        /// </summary>
+        public int GetTotalShapesPlaced()
+        {
+            return _totalShapesPlaced;
+        }
+
+        /// <summary>
+        /// Resets all block shape containers.
+        /// </summary>
+        public void ResetGame()
+        {
+            _blockShapesPool.Clear();
+            _upcomingBlockShapes.Clear();
+
+            foreach (ShapeContainer shapeContainer in allShapeContainers)
+            {
+                shapeContainer.Reset();
+            }
+
+            _hasInitialized = false;
+        }
+
+        /// <summary>
+        /// Reorders all shape containers after any block shape placed on the board.
+        /// </summary>
+        private void ReorderShapeContainer()
+        {
+            ShapeContainer emptyShapeContainer = null;
+            int emptyBlockIndex = 0;
+
+            for (int i = 0; i < allShapeContainers.Count; i++)
+            {
+                if (allShapeContainers[i].blockShape != null)
+                {
+                    if (emptyShapeContainer != null)
+                    {
+                        BlockShape blockShape = allShapeContainers[i].blockShape;
+                        blockShape.transform.SetParent(emptyShapeContainer.blockParent);
+                        emptyShapeContainer.blockShape = blockShape;
+                        allShapeContainers[i].blockShape = null;
+                        blockShape.GetComponent<RectTransform>().AnchorX(0, 0.3F).SetDelay(0.1F).SetEase(Ease.EaseOut);
+                        i = emptyBlockIndex;
+                        emptyShapeContainer = null;
+                    }
+                }
+                else
+                {
+                    if (emptyShapeContainer == null)
+                    {
+                        emptyShapeContainer = allShapeContainers[i];
+                        emptyBlockIndex = i;
+                    }
+                }
+            }
+
+            FillLastShapeContainer();
+        }
+
+        /// <summary>
         /// Prepares a block shape pool with given probability amount as logical blocks shape references based on gameplay settings.
         /// </summary>
-        void PrepareShapePool()
+        private void PrepareShapePool()
         {
             if (!_hasInitialized)
             {
@@ -146,7 +266,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds a block shape on all the block containers.
         /// </summary>
-        void FillAllShapeContainers()
+        private void FillAllShapeContainers()
         {
             foreach (ShapeContainer shapeContainer in allShapeContainers)
             {
@@ -157,7 +277,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds a block shape in the given shape container with animation effect.
         /// </summary>
-        void FillShapeInContainer(ShapeContainer shapeContainer)
+        private void FillShapeInContainer(ShapeContainer shapeContainer)
         {
             if (shapeContainer.blockShape == null)
             {
@@ -174,7 +294,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// Adds a block shape to last shape container. Typically will be called when gameplay setting have always keep all shapes filled.
         /// Upon placing a shape, all shapes will reorder and last shape container needs to add new block shape.
         /// </summary>
-        void FillLastShapeContainer()
+        private void FillLastShapeContainer()
         {
             ShapeContainer shapeContainer = allShapeContainers[allShapeContainers.Count - 1];
 
@@ -193,7 +313,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds blocks to all shape containers from the previous session progress. Typically called when there is progress from previos session.
         /// </summary>
-        void FillAllShapeContainers(ShapeInfo[] currentShapesInfo)
+        private void FillAllShapeContainers(ShapeInfo[] currentShapesInfo)
         {
             int shapeIndex = 0;
             foreach (ShapeInfo shapeInfo in currentShapesInfo)
@@ -220,7 +340,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds block shapes to shape container with given info. Typically called when there is progress from previos session.
         /// </summary>
-        void FillShapeInContainer(ShapeContainer shapeContainer, BlockShapeInfo info, float rotation)
+        private void FillShapeInContainer(ShapeContainer shapeContainer, BlockShapeInfo info, float rotation)
         {
             if (shapeContainer.blockShape == null)
             {
@@ -239,7 +359,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns a specific block shape with given rotation. Typically used when placing block shapes from previous session.
         /// </summary>
-        BlockShape GetBlockShape(BlockShapeInfo info, float rotation)
+        private BlockShape GetBlockShape(BlockShapeInfo info, float rotation)
         {
             GameObject upcomingShape = (GameObject)Instantiate(info.blockShape);
             upcomingShape.name = upcomingShape.name.Replace("(Clone)", "");
@@ -250,7 +370,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Gets a block shape from the upcoming block shape pool. will handle empty state and fill upcoming shapes pool if detected empty.
         /// </summary>
-        BlockShape GetBlockShape()
+        private BlockShape GetBlockShape()
         {
             if (_upcomingBlockShapes.Count <= 0)
             {
@@ -273,72 +393,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Prepares a pool of upcoming shapes.
         /// </summary>
-        void PrepareUpcomingShapes()
+        private void PrepareUpcomingShapes()
         {
             _upcomingBlockShapes.AddRange(_blockShapesPool);
             _upcomingBlockShapes.Shuffle();
         }
 
         /// <summary>
-        /// Checks status of all block shape containers and fill or reorder based on gameplay settings and status.
-        /// </summary>
-        public void UpdateShapeContainers()
-        {
-            if (IsAllShapeContainerEmpty())
-            {
-                FillAllShapeContainers();
-            }
-            else
-            {
-                if (GamePlayUI.Instance.currentModeSettings.alwaysKeepFilled)
-                {
-                    ReorderShapeContainer();
-                }
-            }
-
-            Invoke(nameof(CheckAllShapesCanBePlaced), 0.5F);
-        }
-
-        /// <summary>
-        /// Reorders all shape containers after any block shape placed on the board.
-        /// </summary>
-        void ReorderShapeContainer()
-        {
-            ShapeContainer emptyShapeContainer = null;
-            int emptyBlockIndex = 0;
-
-            for (int i = 0; i < allShapeContainers.Count; i++)
-            {
-                if (allShapeContainers[i].blockShape != null)
-                {
-                    if (emptyShapeContainer != null)
-                    {
-                        BlockShape blockShape = allShapeContainers[i].blockShape;
-                        blockShape.transform.SetParent(emptyShapeContainer.blockParent);
-                        emptyShapeContainer.blockShape = blockShape;
-                        allShapeContainers[i].blockShape = null;
-                        blockShape.GetComponent<RectTransform>().AnchorX(0, 0.3F).SetDelay(0.1F).SetEase(Ease.EaseOut);
-                        i = emptyBlockIndex;
-                        emptyShapeContainer = null;
-                    }
-                }
-                else
-                {
-                    if (emptyShapeContainer == null)
-                    {
-                        emptyShapeContainer = allShapeContainers[i];
-                        emptyBlockIndex = i;
-                    }
-                }
-            }
-
-            FillLastShapeContainer();
-        }
-
-        /// <summary>
         /// Whether all block shape containers are empty or not.
         /// </summary>
-        bool IsAllShapeContainerEmpty()
+        private bool IsAllShapeContainerEmpty()
         {
             foreach (ShapeContainer rect in allShapeContainers)
             {
@@ -351,106 +415,26 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             return true;
         }
 
-        #region Registered Events Callback
-
         /// <summary>
         /// Callback when any block shape places on board.
         /// </summary>
         private void GamePlayUI_OnShapePlacedEvent()
         {
-            Invoke("UpdateShapeContainers", 0.1F);
+            Invoke(nameof(UpdateShapeContainers), 0.1F);
             _totalShapesPlaced += 1;
         }
-
-        #endregion
 
         /// <summary>
         /// Checks if any block shape from all containers can be placed on board. Game will go to rescue or gameover state upon returning false.
         /// </summary>
-        void CheckAllShapesCanBePlaced()
+        private void CheckAllShapesCanBePlaced()
         {
             bool canAnyShapePlaced = CheckBlockShapeCanPlaced();
 
             if (!canAnyShapePlaced)
             {
-                GamePlayUI.Instance.TryRescueGame(GameOverReason.GRID_FILLED);
+                GamePlayUI.Instance.TryRescueGame(GameOverReason.GridFilled);
             }
-        }
-
-        /// <summary>
-        /// Checks if any block shape from all containers can be placed on board. Shapes that can't placed will have lesser opacity.
-        /// </summary>
-        public bool CheckBlockShapeCanPlaced()
-        {
-            bool canAnyShapePlaced = false;
-            foreach (ShapeContainer shapeContainer in allShapeContainers)
-            {
-                if (shapeContainer.blockShape != null)
-                {
-                    bool shapeCanBePlaced = blockShapePlacementChecker.CheckShapeCanBePlaced(shapeContainer.blockShape);
-                    shapeContainer.blockShape.GetComponent<CanvasGroup>().alpha = shapeCanBePlaced ? 1F : 0.5F;
-
-                    if (shapeCanBePlaced)
-                    {
-                        canAnyShapePlaced = true;
-                    }
-                }
-            }
-
-            return canAnyShapePlaced;
-        }
-
-        /// <summary>
-        /// Returns status of all block shape containers. Typically called when saving board progress.
-        /// </summary>
-        public ShapeInfo[] GetCurrentShapesInfo()
-        {
-            ShapeInfo[] allShapesInfo = new ShapeInfo[allShapeContainers.Count];
-            int shapeIndex = 0;
-
-            foreach (ShapeContainer shapeContainer in allShapeContainers)
-            {
-                if (shapeContainer.blockShape != null)
-                {
-                    bool isAdvanceShape = shapeContainer.blockShape.isAdvanceShape;
-                    allShapesInfo[shapeIndex] = new ShapeInfo(
-                        isAdvanceShape: shapeContainer.blockShape.isAdvanceShape,
-                        shapeName: shapeContainer.blockShape.name,
-                        shapeRotation: shapeContainer.blockShape.transform.localEulerAngles.z);
-                }
-                else
-                {
-                    allShapesInfo[shapeIndex] = new ShapeInfo(false, null, 0);
-                }
-
-                shapeIndex++;
-            }
-
-            return allShapesInfo;
-        }
-
-        /// <summary>
-        /// Returns total number of block shapes placed during gameplay.
-        /// </summary>
-        public int GetTotalShapesPlaced()
-        {
-            return _totalShapesPlaced;
-        }
-
-        /// <summary>
-        /// Resets all block shape containers.
-        /// </summary>
-        public void ResetGame()
-        {
-            _blockShapesPool.Clear();
-            _upcomingBlockShapes.Clear();
-
-            foreach (ShapeContainer shapeContainer in allShapeContainers)
-            {
-                shapeContainer.Reset();
-            }
-
-            _hasInitialized = false;
         }
     }
 }

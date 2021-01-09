@@ -316,11 +316,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             switch (reason)
             {
                 //Rescue for Grid Filled and no new shape can be placed. Below code will clear 3 lines horizontally and vertically from the grid.
-                case GameOverReason.GRID_FILLED:
+                case GameOverReason.GridFilled:
                     ClearBoardLinesForRescue();
                     break;
 
-                case GameOverReason.TIME_OVER:
+                case GameOverReason.TimeOver:
 
                     #region TimeMode Specific
 
