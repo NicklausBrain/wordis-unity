@@ -114,6 +114,30 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void HandleDown_WhenActiveCharHasObstacle_ItStopsBeforeIt()
+        {
+            /* Initial state:
+             * [-] [W] [-]
+             * [-] [-] [-]
+             * [-] [X] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 2, 'X'))
+                .Handle(GameEvent.Down);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [W] [-]
+             * [-] [X] [-] */
+            Assert.Contains(
+                new ActiveChar(1, 1, 'W'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(1, 2, 'X'),
+                game.GameObjects.ToArray());
+        }
+
+        [Test]
         public void Settings_ReturnsPassedObject()
         {
             var settings = new WordisSettings(

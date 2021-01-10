@@ -1,4 +1,6 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
+﻿using System.Linq;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
 {
     /// <summary>
     /// Character controlled by a player.
@@ -24,7 +26,7 @@
                 case GameEvent.Step:
                     return HandleStep();
                 case GameEvent.Down:
-                    return HandleDown(game.Settings.Height);
+                    return HandleDown(game);
                 case GameEvent.Left:
                     return HandleLeft();
                 case GameEvent.Right:
@@ -38,7 +40,25 @@
         private WordisObj HandleStep() => With(y: Y + 1);
 
         // todo: incomplete
-        private WordisObj HandleDown(int height) => With(y: height - 1);
+        /// <summary>
+        /// Moves the char down. Stops on obstacle.
+        /// </summary>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private WordisObj HandleDown(WordisGame game)
+        {
+            var firstObjBelow = game.GameObjects
+                .FirstOrDefault(o =>
+                    o.X == X &&
+                    o.Y > Y);
+
+            if (firstObjBelow == null)
+            {
+                return With(y: game.Settings.Height - 1);
+            }
+
+            return With(y: firstObjBelow.Y - 1);
+        }
 
         /// <summary>
         /// Moves this char left.
