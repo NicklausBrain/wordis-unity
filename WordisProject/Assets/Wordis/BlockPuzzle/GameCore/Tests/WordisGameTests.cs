@@ -45,9 +45,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             /* Expected state:
              * [-] [-] [-]
              * [-] [W] [-] */
-            Assert.AreEqual(
+            Assert.Contains(
                 new StaticChar(1, 1, 'W'),
-                game.GameObjects.Single());
+                game.GameObjects.ToArray());
         }
 
         [Test]
@@ -66,9 +66,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
              * [-] [-] [-]
              * [-] [W] [-]
              * [-] [X] [-] */
-            Assert.AreEqual(
+            Assert.Contains(
                 new StaticChar(1, 1, 'W'),
-                game.GameObjects.Single());
+                game.GameObjects.ToArray());
         }
 
         [Test]

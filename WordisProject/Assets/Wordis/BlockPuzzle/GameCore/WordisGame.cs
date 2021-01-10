@@ -62,17 +62,27 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns></returns>
         public WordisGame Handle(GameEvent gameEvent)
         {
-            var updatedGameObjects = GameObjects.Select(gameObject => gameObject.Handle(this, gameEvent));
+            var updatedGameObjects = GameObjects.Select(
+                gameObject => gameObject.Handle(this, gameEvent));
             var updatedEvents = GameEvents.Append(gameEvent);
 
             switch (gameEvent)
             {
                 case GameEvent.Step:
-                    // todo: determine matches
-                    return With(
-                        gameObjects: updatedGameObjects,
-                        gameEvents: updatedEvents,
-                        matches: Matches);
+                    {
+                        // todo: determine matches
+
+                        var hasActiveObjects = updatedGameObjects.Any(o => o is ActiveChar);
+                        var updatedGame = With(
+                            gameObjects: updatedGameObjects,
+                            gameEvents: updatedEvents,
+                            matches: Matches);
+
+                        // todo: make testable and test
+                        return hasActiveObjects
+                            ? updatedGame
+                            : updatedGame.With(GenerateActiveChar());
+                    }
                 default:
                     return With(
                         gameObjects: updatedGameObjects,
@@ -101,5 +111,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns>An updated game instance.</returns>
         public WordisGame With(WordisObj gameObj) =>
             With(GameObjects.Append(gameObj));
+
+        private ActiveChar GenerateActiveChar()
+        {
+            var rn = new Random();
+
+            var randomChar = rn.Next('A', 'Z');
+
+            return new ActiveChar(Settings.Width / 2, 0, (char)randomChar);
+        }
     }
 }

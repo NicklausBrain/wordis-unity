@@ -62,7 +62,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         }
 
         /// <summary>
-        /// Moves the char down. Stops on obstacle.
+        /// Moves the char down to the limit. Stops on obstacle.
         /// </summary>
         private WordisObj HandleDown(WordisGame game)
         {
