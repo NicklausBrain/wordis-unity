@@ -348,6 +348,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     currentGameMode);
 
             UIController.Instance.gameOverScreen.Activate();
+            CancelInvoke(nameof(GameStep));
         }
 
         /// <summary>
@@ -381,6 +382,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PauseGame()
         {
+            CancelInvoke(nameof(GameStep));
             OnGamePausedEvent?.Invoke(currentGameMode, true);
         }
 
@@ -404,7 +406,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Wordis
 
-        BlockShape GetBasicBlockShape()
+        private BlockShape GetBasicBlockShape()
         {
             var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
             var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
@@ -425,7 +427,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         var basicShape = GetBasicBlockShape();
                         block.PlaceBlock(basicShape.spriteTag);
-                        block.GetComponentInChildren<TextMeshProUGUI>().text = $"{(woridsObjs[blockKey] as WordisChar)?.Value}";
+                        block.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{(woridsObjs[blockKey] as WordisChar)?.Value}";
                     }
                     else // reset
                     {
