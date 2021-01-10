@@ -15,11 +15,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             WordisSettings settings,
             IEnumerable<WordisObj> gameObjects = null,
             IEnumerable<GameEvent> inputs = null,
-            IEnumerable<WordMatch> matches = null,
-            int step = 0)
+            IEnumerable<WordMatch> matches = null)
         {
             Settings = settings;
-            Step = step;
             _matches = new Lazy<WordMatch[]>(
                 () => matches?.ToArray() ?? Array.Empty<WordMatch>());
             _gameObjects = new Lazy<WordisObj[]>(
@@ -30,7 +28,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         public WordisSettings Settings { get; }
 
-        public int Step { get; }
+        /// <summary>
+        /// The current step of the game
+        /// </summary>
+        public int Step => GameEvents.Count(e => e == GameEvent.Step);
 
         /// <summary>
         /// State of the game.
@@ -54,24 +55,32 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns></returns>
         public WordisGame Handle(GameEvent gameEvent)
         {
+            var updatedGameObjects = GameObjects.Select(gameObject => gameObject.Handle(gameEvent));
+            var updatedEvents = GameEvents.Append(gameEvent);
+
             switch (gameEvent)
             {
                 case GameEvent.Step:
-                    return new WordisGame(
-                        Settings,
-                        GameObjects.Select(gameObject => gameObject.Handle(gameEvent)),
-                        GameEvents.Append(gameEvent),
-                        Matches,
-                        Step + 1);
-                case GameEvent.Down:
-                    return this;
-                case GameEvent.Left:
-                    return this;
-                case GameEvent.Right:
-                    return this;
+                    // todo: determine matches
+                    return With(
+                        gameObjects: updatedGameObjects,
+                        gameEvents: updatedEvents,
+                        matches: Matches);
                 default:
-                    return this;
+                    return With(
+                        gameObjects: updatedGameObjects,
+                        gameEvents: updatedEvents);
             }
         }
+
+        private WordisGame With(
+            IEnumerable<WordisObj> gameObjects,
+            IEnumerable<GameEvent> gameEvents,
+            IEnumerable<WordMatch> matches = null) =>
+            new WordisGame(
+                Settings,
+                gameObjects,
+                gameEvents,
+                matches ?? Matches);
     }
 }

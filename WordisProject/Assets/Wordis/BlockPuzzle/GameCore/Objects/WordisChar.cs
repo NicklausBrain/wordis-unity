@@ -3,9 +3,9 @@
     /// <summary>
     /// Represents a single character.
     /// </summary>
-    public class WordisChar : WordisObj
+    public abstract class WordisChar : WordisObj
     {
-        public WordisChar(
+        protected WordisChar(
             WordisGame wordisGame,
             int x,
             int y,
@@ -18,14 +18,5 @@
         }
 
         public char Value { get; }
-
-        public override WordisObj Handle(GameEvent gameEvent)
-        {
-            switch (gameEvent)
-            {
-                default:
-                    return this;
-            }
-        }
     }
 }
