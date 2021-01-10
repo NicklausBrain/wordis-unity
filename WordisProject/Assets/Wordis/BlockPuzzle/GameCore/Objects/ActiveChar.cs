@@ -24,7 +24,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
             switch (gameEvent)
             {
                 case GameEvent.Step:
-                    return HandleStep();
+                    return HandleStep(game);
                 case GameEvent.Down:
                     return HandleDown(game);
                 case GameEvent.Left:
@@ -36,15 +36,34 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
             }
         }
 
-        // todo: incomplete
-        private WordisObj HandleStep() => With(y: Y + 1);
+        /// <summary>
+        /// Moves the char down. Converts it to static on obstacle.
+        /// </summary>
+        private WordisObj HandleStep(WordisGame game)
+        {
+            // on reaching the bottom:
+            if (Y == game.Settings.Height - 1)
+            {
+                return new StaticChar(X, Y, Value);
+            }
 
-        // todo: incomplete
+            var objectBelow = game.GameObjects
+                .FirstOrDefault(o =>
+                    o.X == X &&
+                    o.Y == Y + 1);
+
+            // on obstacle:
+            if (objectBelow != null)
+            {
+                return new StaticChar(X, Y, Value);
+            }
+
+            return With(y: Y + 1);
+        }
+
         /// <summary>
         /// Moves the char down. Stops on obstacle.
         /// </summary>
-        /// <param name="height"></param>
-        /// <returns></returns>
         private WordisObj HandleDown(WordisGame game)
         {
             var firstObjBelow = game.GameObjects

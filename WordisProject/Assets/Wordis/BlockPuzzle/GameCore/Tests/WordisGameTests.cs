@@ -16,16 +16,58 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         {
             /* Initial state:
              * [-] [W] [-]
+             * [-] [-] [-]
+             * [-] [-] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .With(new ActiveChar(1, 0, 'W'))
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [W] [-]
+             * [-] [-] [-] */
+            Assert.AreEqual(
+                new ActiveChar(1, 1, 'W'),
+                game.GameObjects.Single());
+        }
+
+        [Test]
+        public void HandleStep_ForActiveCharOnBottom_MakesItStatic()
+        {
+            /* Initial state:
+             * [-] [W] [-]
              * [-] [-] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
                 .With(new ActiveChar(1, 0, 'W'))
+                .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step);
 
             /* Expected state:
              * [-] [-] [-]
              * [-] [W] [-] */
             Assert.AreEqual(
-                new ActiveChar(1, 1, 'W'),
+                new StaticChar(1, 1, 'W'),
+                game.GameObjects.Single());
+        }
+
+        [Test]
+        public void HandleStep_ForActiveCharOnObstacle_MakesItStatic()
+        {
+            /* Initial state:
+             * [-] [W] [-]
+             * [-] [-] [-]
+             * [-] [X] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 2))
+                .With(new ActiveChar(1, 0, 'W'))
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [W] [-]
+             * [-] [X] [-] */
+            Assert.AreEqual(
+                new StaticChar(1, 1, 'W'),
                 game.GameObjects.Single());
         }
 
