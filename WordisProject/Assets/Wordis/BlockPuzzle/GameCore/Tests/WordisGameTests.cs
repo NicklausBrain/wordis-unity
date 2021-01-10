@@ -94,6 +94,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void HandleDown_WhenActiveCharHasNoObstacles_ItDropsToTheBottom()
+        {
+            /* Initial state:
+             * [-] [W] [-]
+             * [-] [-] [-]
+             * [-] [-] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .With(new ActiveChar(1, 0, 'W'))
+                .Handle(GameEvent.Down);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [-] [-]
+             * [-] [W] [-] */
+            Assert.AreEqual(
+                new ActiveChar(1, 2, 'W'),
+                game.GameObjects.Single());
+        }
+
+        [Test]
         public void Settings_ReturnsPassedObject()
         {
             var settings = new WordisSettings(
