@@ -81,9 +81,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void StartTimer()
         {
-            if (!IsInvoking("StartContinuousTimer"))
+            if (!IsInvoking(nameof(StartContinuousTimer)))
             {
-                InvokeRepeating("StartContinuousTimer", 1, 1);
+                InvokeRepeating(nameof(StartContinuousTimer), 1, 1);
             }
         }
 
