@@ -6,19 +6,12 @@
     public abstract class WordisObj
     {
         protected WordisObj(
-            WordisGame wordisGame,
             int x,
             int y)
         {
-            WordisGame = wordisGame;
             X = x;
             Y = y;
         }
-
-        /// <summary>
-        /// Reference to a game this game object belongs to.
-        /// </summary>
-        protected WordisGame WordisGame { get; }
 
         /// <summary>
         /// zero based column index.
@@ -33,6 +26,36 @@
         /// <summary>
         /// Handles game event, transforming the object if necessary.
         /// </summary>
-        public abstract WordisObj Handle(GameEvent gameEvent);
+        /// <param name="wordisGame">Reference to a game this game object belongs to.</param>
+        /// <param name="gameEvent">Event to be handled.</param>
+        /// <returns></returns>
+        public abstract WordisObj Handle(
+            WordisGame wordisGame,
+            GameEvent gameEvent);
+
+        #region Equality members
+
+        protected bool Equals(WordisObj other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((WordisObj)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X * 397) ^ Y;
+            }
+        }
+
+        #endregion
     }
 }

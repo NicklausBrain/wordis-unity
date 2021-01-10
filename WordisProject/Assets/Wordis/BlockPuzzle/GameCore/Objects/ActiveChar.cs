@@ -6,25 +6,25 @@
     public class ActiveChar : WordisChar
     {
         public ActiveChar(
-            WordisGame wordisGame,
             int x,
             int y,
             char value) : base(
-            wordisGame,
             x,
             y,
             value)
         {
         }
 
-        public override WordisObj Handle(GameEvent gameEvent)
+        public override WordisObj Handle(
+            WordisGame game,
+            GameEvent gameEvent)
         {
             switch (gameEvent)
             {
                 case GameEvent.Step:
                     return HandleStep();
                 case GameEvent.Down:
-                    return HandleDown();
+                    return HandleDown(game.Settings.Height);
                 case GameEvent.Left:
                     return HandleLeft();
                 case GameEvent.Right:
@@ -35,10 +35,10 @@
         }
 
         // todo: incomplete
-        private WordisObj HandleStep() => With(y: Y - 1);
+        private WordisObj HandleStep() => With(y: Y + 1);
 
         // todo: incomplete
-        private WordisObj HandleDown() => With(y: WordisGame.Settings.Height - 1);
+        private WordisObj HandleDown(int height) => With(y: height - 1);
 
         // todo: incomplete
         private WordisObj HandleLeft() => With(x: X - 1);
@@ -50,7 +50,6 @@
             int? x = null,
             int? y = null) =>
             new ActiveChar(
-                WordisGame,
                 x ?? X,
                 y ?? Y,
                 Value);

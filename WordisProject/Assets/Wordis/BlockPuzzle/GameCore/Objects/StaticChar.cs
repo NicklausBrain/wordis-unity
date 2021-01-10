@@ -6,18 +6,16 @@
     public class StaticChar : WordisChar
     {
         public StaticChar(
-            WordisGame wordisGame,
             int x,
             int y,
             char value) : base(
-            wordisGame,
             x: x,
             y: y,
             value: value)
         {
         }
 
-        public override WordisObj Handle(GameEvent gameEvent)
+        public override WordisObj Handle(WordisGame game, GameEvent gameEvent)
         {
             switch (gameEvent)
             {

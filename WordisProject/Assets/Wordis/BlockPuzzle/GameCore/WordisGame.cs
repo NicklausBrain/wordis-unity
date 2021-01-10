@@ -9,12 +9,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     {
         private readonly Lazy<WordMatch[]> _matches;
         private readonly Lazy<GameEvent[]> _events;
+
+        /// <summary>
+        ///  x:y
+        /// [0:0][1:0][2:0]
+        /// [0:1][1:1][2:1]
+        /// [0:2][1:2][2:2]
+        /// </summary>
         private readonly Lazy<WordisObj[]> _gameObjects;
 
         public WordisGame(
             WordisSettings settings,
             IEnumerable<WordisObj> gameObjects = null,
-            IEnumerable<GameEvent> inputs = null,
+            IEnumerable<GameEvent> events = null,
             IEnumerable<WordMatch> matches = null)
         {
             Settings = settings;
@@ -23,7 +30,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             _gameObjects = new Lazy<WordisObj[]>(
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
             _events = new Lazy<GameEvent[]>(
-                () => inputs?.ToArray() ?? Array.Empty<GameEvent>());
+                () => events?.ToArray() ?? Array.Empty<GameEvent>());
         }
 
         public WordisSettings Settings { get; }
@@ -55,7 +62,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns></returns>
         public WordisGame Handle(GameEvent gameEvent)
         {
-            var updatedGameObjects = GameObjects.Select(gameObject => gameObject.Handle(gameEvent));
+            var updatedGameObjects = GameObjects.Select(gameObject => gameObject.Handle(this, gameEvent));
             var updatedEvents = GameEvents.Append(gameEvent);
 
             switch (gameEvent)
@@ -73,14 +80,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             }
         }
 
-        private WordisGame With(
+        /// <summary>
+        /// Updates a game with the refreshed properties.
+        /// </summary>
+        /// <returns>An updated game instance.</returns>
+        public WordisGame With(
             IEnumerable<WordisObj> gameObjects,
-            IEnumerable<GameEvent> gameEvents,
+            IEnumerable<GameEvent> gameEvents = null,
             IEnumerable<WordMatch> matches = null) =>
             new WordisGame(
                 Settings,
                 gameObjects,
-                gameEvents,
+                gameEvents ?? GameEvents,
                 matches ?? Matches);
+
+        /// <summary>
+        /// Spawns a new game object inside a game.
+        /// </summary>
+        /// <param name="gameObj">Game object.</param>
+        /// <returns>An updated game instance.</returns>
+        public WordisGame With(WordisObj gameObj) =>
+            With(GameObjects.Append(gameObj));
     }
 }
