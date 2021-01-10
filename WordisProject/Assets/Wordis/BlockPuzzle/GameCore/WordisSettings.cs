@@ -26,5 +26,15 @@
         /// Minimum word to be counted as match.
         /// </summary>
         public int MinWordMatch { get; }
+
+        /// <summary>
+        /// Creates a new instance with the given properties.
+        /// </summary>
+        public WordisSettings With(
+            int? width,
+            int? height) =>
+            new WordisSettings(
+                width ?? Width,
+                height ?? Height);
     }
 }

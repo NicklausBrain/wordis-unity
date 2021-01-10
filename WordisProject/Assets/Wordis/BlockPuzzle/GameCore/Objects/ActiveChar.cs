@@ -28,7 +28,7 @@
                 case GameEvent.Left:
                     return HandleLeft();
                 case GameEvent.Right:
-                    return HandleRight();
+                    return HandleRight(game.Settings.Width);
                 default:
                     return this;
             }
@@ -40,11 +40,21 @@
         // todo: incomplete
         private WordisObj HandleDown(int height) => With(y: height - 1);
 
-        // todo: incomplete
-        private WordisObj HandleLeft() => With(x: X - 1);
+        /// <summary>
+        /// Moves this char left.
+        /// </summary>
+        private WordisObj HandleLeft() => With(
+            x: X == 0
+                ? 0
+                : X - 1);
 
-        // todo: incomplete
-        private WordisObj HandleRight() => With(x: X + 1);
+        /// <summary>
+        /// Moves this char right.
+        /// </summary>
+        private WordisObj HandleRight(int width) => With(
+            x: X == width - 1
+                ? X
+                : X + 1);
 
         private ActiveChar With(
             int? x = null,
