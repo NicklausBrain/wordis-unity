@@ -8,13 +8,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     public class WordisGame
     {
         private readonly Lazy<WordMatch[]> _matches;
-        private readonly Lazy<PlayerInput[]> _inputs;
+        private readonly Lazy<GameEvent[]> _events;
         private readonly Lazy<WordisObj[]> _gameObjects;
 
         public WordisGame(
             WordisSettings settings,
             IEnumerable<WordisObj> gameObjects = null,
-            IEnumerable<PlayerInput> inputs = null,
+            IEnumerable<GameEvent> inputs = null,
             IEnumerable<WordMatch> matches = null,
             int step = 0)
         {
@@ -24,8 +24,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 () => matches?.ToArray() ?? Array.Empty<WordMatch>());
             _gameObjects = new Lazy<WordisObj[]>(
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
-            _inputs = new Lazy<PlayerInput[]>(
-                () => inputs?.ToArray() ?? Array.Empty<PlayerInput>());
+            _events = new Lazy<GameEvent[]>(
+                () => inputs?.ToArray() ?? Array.Empty<GameEvent>());
         }
 
         public WordisSettings Settings { get; }
@@ -38,9 +38,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public IReadOnlyList<WordisObj> GameObjects => _gameObjects.Value;
 
         /// <summary>
-        /// Log of the player inputs.
+        /// Log of the game events.
         /// </summary>
-        public IReadOnlyList<PlayerInput> PlayerInputs => _inputs.Value;
+        public IReadOnlyList<GameEvent> GameEvents => _events.Value;
 
         /// <summary>
         /// Words matched.
@@ -50,30 +50,28 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <summary>
         /// Transforms the game into the next state.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="gameEvent"></param>
         /// <returns></returns>
-        public WordisGame Next(PlayerInput input)
+        public WordisGame Handle(GameEvent gameEvent)
         {
-            switch (input)
+            switch (gameEvent)
             {
-                case PlayerInput.None:
-                    break;
-                case PlayerInput.Down:
-                    break;
-                case PlayerInput.Left:
-                    break;
-                case PlayerInput.Right:
-                    break;
+                case GameEvent.Step:
+                    return new WordisGame(
+                        Settings,
+                        GameObjects.Select(gameObject => gameObject.Handle(gameEvent)),
+                        GameEvents.Append(gameEvent),
+                        Matches,
+                        Step + 1);
+                case GameEvent.Down:
+                    return this;
+                case GameEvent.Left:
+                    return this;
+                case GameEvent.Right:
+                    return this;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(input), input, null);
+                    return this;
             }
-
-            return new WordisGame(
-                Settings,
-                GameObjects,
-                PlayerInputs.Append(input),
-                Matches,
-                Step + 1);
         }
     }
 }

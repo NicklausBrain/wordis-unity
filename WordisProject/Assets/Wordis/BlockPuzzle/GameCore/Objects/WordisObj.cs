@@ -5,11 +5,20 @@
     /// </summary>
     public abstract class WordisObj
     {
-        protected WordisObj(int x, int y)
+        protected WordisObj(
+            WordisGame wordisGame,
+            int x,
+            int y)
         {
+            WordisGame = wordisGame;
             X = x;
             Y = y;
         }
+
+        /// <summary>
+        /// Reference to a game this game object belongs to.
+        /// </summary>
+        protected WordisGame WordisGame { get; }
 
         /// <summary>
         /// zero based column index.
@@ -20,5 +29,10 @@
         /// zero based row index.
         /// </summary>
         public int Y { get; }
+
+        /// <summary>
+        /// Handles game event, transforming the object if necessary.
+        /// </summary>
+        public abstract WordisObj Handle(GameEvent gameEvent);
     }
 }

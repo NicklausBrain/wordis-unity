@@ -6,9 +6,11 @@
     public class WordisChar : WordisObj
     {
         public WordisChar(
-            char value,
+            WordisGame wordisGame,
             int x,
-            int y) : base(
+            int y,
+            char value) : base(
+            wordisGame,
             x: x,
             y: y)
         {
@@ -16,5 +18,14 @@
         }
 
         public char Value { get; }
+
+        public override WordisObj Handle(GameEvent gameEvent)
+        {
+            switch (gameEvent)
+            {
+                default:
+                    return this;
+            }
+        }
     }
 }

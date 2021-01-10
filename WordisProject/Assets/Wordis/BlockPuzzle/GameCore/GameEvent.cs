@@ -5,12 +5,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     /// <summary>
     /// Represents possible in-game input made by the player.
     /// </summary>
-    public enum PlayerInput
+    public enum GameEvent
     {
         /// <summary>
-        /// Player has no input.
+        /// No input.
         /// </summary>
         None,
+
+        /// <summary>
+        /// This is a primary event commanding the game to proceed to the next step.
+        /// Evaluates success and failure conditions.
+        /// </summary>
+        Step,
 
         /// <summary>
         /// Speed up the current <see cref="WordisObj"/> to be processed.
