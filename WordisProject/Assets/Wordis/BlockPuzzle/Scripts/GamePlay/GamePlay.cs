@@ -24,8 +24,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
-        [Tooltip("BlockShapesController Script Reference")]
-        public BlockShapesController blockShapeController;
+        [Tooltip("GamingButtonsController Script Reference")]
+        public GamingButtonsController blockShapeController;
 
         [Header("Other Public Members")]
 
@@ -307,7 +307,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResetGame()
         {
             boardGenerator.ResetGame();
-            blockShapeController.ResetGame();
         }
 
         #region Rescue Specific Code
@@ -329,13 +328,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         // Will add 15 seconds to timer and will rescue game.
                         GamePlayUI.Instance.timeModeProgresssBar.AddTime(15);
-
-                        // If none of block shape can be placed then will clear lines for rescue.
-                        bool canAnyShapePlacedTimeRescue = blockShapeController.CheckBlockShapeCanPlaced();
-                        if (!canAnyShapePlacedTimeRescue)
-                        {
-                            ClearBoardLinesForRescue();
-                        }
+                        ClearBoardLinesForRescue();
                     }
 
                     #endregion

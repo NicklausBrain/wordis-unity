@@ -21177,7 +21177,7 @@ GameObject:
   - component: {fileID: 1093981467}
   - component: {fileID: 1093981468}
   m_Layer: 0
-  m_Name: ShapeContainer-1
+  m_Name: ArrowLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32417,9 +32417,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1424944132}
   - component: {fileID: 1424944133}
-  - component: {fileID: 1424944134}
   m_Layer: 0
-  m_Name: BlockShapeController
+  m_Name: GamingButtonsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32463,18 +32462,6 @@ MonoBehaviour:
   - {fileID: 1093981467}
   - {fileID: 1667601865}
   - {fileID: 1785016444}
---- !u!114 &1424944134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424944131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54a538a71e2f7472dac3e8a2d8aef324, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1424972107
 GameObject:
   m_ObjectHideFlags: 0
@@ -33512,7 +33499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1501201904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36899,7 +36886,7 @@ GameObject:
   - component: {fileID: 1667601865}
   - component: {fileID: 1667601866}
   m_Layer: 0
-  m_Name: ShapeContainer-2
+  m_Name: ArrowDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38440,7 +38427,7 @@ GameObject:
   - component: {fileID: 1785016444}
   - component: {fileID: 1785016445}
   m_Layer: 0
-  m_Name: ShapeContainer-3
+  m_Name: ArrowRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39442,6 +39429,11 @@ MonoBehaviour:
   - {fileID: 4139759097913452292, guid: e4a6be799f86946a39fd04f9cc8120a9, type: 3}
   - {fileID: 4139759097913452292, guid: e4a6be799f86946a39fd04f9cc8120a9, type: 3}
   tutorialBlockShapes_2: []
+  blockShapesPool: []
+  upcomingBlockShapes: []
+  shapeInactiveScale: {x: 1, y: 1, z: 1}
+  totalShapesPlaced: 0
+  currentTutorialStep: 1
 --- !u!1 &1872583841
 GameObject:
   m_ObjectHideFlags: 0

@@ -136,14 +136,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 }
 
                 _currentProgressData.gridData = gridData;
-                _currentProgressData.currentShapesInfo = GamePlay.Instance.blockShapeController.GetCurrentShapesInfo();
 
                 // Attached all the fetched data to progress data class instance.
                 _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
                 _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
                 _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
                 _currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
-                _currentProgressData.totalShapesPlaced = GamePlay.Instance.blockShapeController.GetTotalShapesPlaced();
                 PlayerPrefs.SetString($"gameProgress_{GamePlayUI.Instance.currentGameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }

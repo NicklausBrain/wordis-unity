@@ -41,6 +41,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public WordisSettings wordisSettings = new WordisSettings(9, 9, 3);
         public WordisGame wordisGame;
 
+        // public SwipeManager swipeControls;
+
         private void GameStep()
         {
             lock (_gameLock)
@@ -142,8 +144,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.boardGenerator.GenerateBoard(progressData);
 
             // Board Generator will create and initialize board with progress data if available.
-            gamePlay.blockShapeController.PrepareShapeContainer(progressData);
-
             #region Time Mode Specific
 
             // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
@@ -308,7 +308,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             rescueDone = true;
 
             GameProgressTracker.Instance.SaveProgressExplicitly();
-            gamePlay.blockShapeController.UpdateShapeContainers();
         }
 
         /// <summary>
@@ -416,19 +415,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         void Update()
         {
-            var woridsObjs = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
+            var wordisObjects = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
 
             foreach (var row in gamePlay.allRows)
             {
                 foreach (var block in row)
                 {
                     var blockKey = (block.ColumnId, block.RowId);
-                    if (woridsObjs.ContainsKey(blockKey))
+                    if (wordisObjects.ContainsKey(blockKey))
                     {
                         var basicShape = GetBasicBlockShape();
                         block.PlaceBlock(basicShape.spriteTag);
                         block.GetComponentInChildren<TextMeshProUGUI>().text =
-                            $"{(woridsObjs[blockKey] as WordisChar)?.Value}";
+                            $"{(wordisObjects[blockKey] as WordisChar)?.Value}";
                     }
                     else // reset
                     {
