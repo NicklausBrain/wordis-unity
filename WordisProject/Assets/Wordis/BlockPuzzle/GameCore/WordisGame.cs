@@ -62,8 +62,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns></returns>
         public WordisGame Handle(GameEvent gameEvent)
         {
-            var updatedGameObjects = GameObjects.Select(
-                gameObject => gameObject.Handle(this, gameEvent));
+            var updatedGameObjects = GameObjects
+                .Select(gameObject => gameObject.Handle(this, gameEvent))
+                .ToArray();
+
             var updatedEvents = GameEvents.Append(gameEvent);
 
             switch (gameEvent)
