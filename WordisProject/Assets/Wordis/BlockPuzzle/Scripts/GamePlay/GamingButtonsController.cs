@@ -11,8 +11,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections.Generic;
-using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,15 +29,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [SerializeField] Button btnArrowRight;
 #pragma warning disable 0649
 
-        /// <summary>
-        /// listener
-        /// </summary>
         public void OnRightButtonPressed()
         {
             if (InputManager.Instance.canInput())
             {
                 //UIFeedback.Instance.PlayButtonPressEffect();
-                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+
+                GamePlayUI.Instance.RightEvent();
             }
         }
 
@@ -48,7 +44,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (InputManager.Instance.canInput())
             {
                 //UIFeedback.Instance.PlayButtonPressEffect();
-                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+                GamePlayUI.Instance.DownEvent();
             }
         }
 
@@ -60,7 +56,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (InputManager.Instance.canInput())
             {
                 //UIFeedback.Instance.PlayButtonPressEffect();
-                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+                GamePlayUI.Instance.LeftEvent();
             }
         }
 

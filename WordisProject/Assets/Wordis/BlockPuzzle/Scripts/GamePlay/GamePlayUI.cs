@@ -37,17 +37,40 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class GamePlayUI : Singleton<GamePlayUI>
     {
         #region Wordis
+
         private readonly object _gameLock = new object();
         public WordisSettings wordisSettings = new WordisSettings(9, 9, 3);
         public WordisGame wordisGame;
-
-        // public SwipeManager swipeControls;
 
         private void GameStep()
         {
             lock (_gameLock)
             {
                 wordisGame = wordisGame.Handle(GameEvent.Step);
+            }
+        }
+
+        public void LeftEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Left);
+            }
+        }
+
+        public void DownEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Down);
+            }
+        }
+
+        public void RightEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Right);
             }
         }
 
@@ -415,6 +438,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         void Update()
         {
+            // todo: ToDictionary has temporal bug on Down event (An item with the same key has already been added)
             var wordisObjects = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
 
             foreach (var row in gamePlay.allRows)

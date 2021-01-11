@@ -13,19 +13,23 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.Utils;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
+    /// <summary>
+    /// TODO: remove(?) since game logic belongs to <see cref="WordisGame"/>
+    /// </summary>
     public class GamePlay : Singleton<GamePlay>
     {
         [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
         [Tooltip("GamingButtonsController Script Reference")]
-        public GamingButtonsController blockShapeController;
+        public GamingButtonsController gamingButtonsController;
 
         [Header("Other Public Members")]
 
