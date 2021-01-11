@@ -18,7 +18,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// <summary>
     /// This script component is attached to all block shape containers.
     /// </summary>
-    public class ShapeContainer : MonoBehaviour
+    public class GamingButtonContainer : MonoBehaviour
     {
         // Rect transform of the container inside which block shape spawns.
         [System.NonSerialized] public RectTransform blockParent;

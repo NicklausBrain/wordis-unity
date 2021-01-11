@@ -24,10 +24,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
 #pragma warning disable 0649
         // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
-        [SerializeField] public List<ShapeContainer> allShapeContainers;
+        [SerializeField] public List<GamingButtonContainer> allShapeContainers;
 #pragma warning restore 0649
-
-        private bool _hasInitialized = false;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
