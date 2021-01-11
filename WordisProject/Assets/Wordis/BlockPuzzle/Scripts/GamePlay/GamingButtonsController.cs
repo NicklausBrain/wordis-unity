@@ -12,7 +12,10 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.Scripts.Controller;
+using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
@@ -23,9 +26,43 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class GamingButtonsController : MonoBehaviour
     {
 #pragma warning disable 0649
-        // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
-        [SerializeField] public List<GamingButtonContainer> allShapeContainers;
-#pragma warning restore 0649
+        [SerializeField] Button btnArrowLeft;
+        [SerializeField] Button btnArrowDown;
+        [SerializeField] Button btnArrowRight;
+#pragma warning disable 0649
+
+        /// <summary>
+        /// listener
+        /// </summary>
+        public void OnRightButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                //UIFeedback.Instance.PlayButtonPressEffect();
+                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+            }
+        }
+
+        public void OnDownButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                //UIFeedback.Instance.PlayButtonPressEffect();
+                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+            }
+        }
+
+        /// <summary>
+        /// listener
+        /// </summary>
+        public void OnLeftButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                //UIFeedback.Instance.PlayButtonPressEffect();
+                //UIController.Instance.LoadGamePlay(GameMode.Classic);
+            }
+        }
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
