@@ -116,6 +116,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         private ActiveChar GenerateActiveChar()
         {
+            // todo: extract to separate component
             var rn = new Random();
 
             var randomChar = rn.Next('A', 'Z');

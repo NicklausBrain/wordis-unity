@@ -28,9 +28,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
                 case GameEvent.Down:
                     return HandleDown(game);
                 case GameEvent.Left:
-                    return HandleLeft();
+                    return HandleLeft(game);
                 case GameEvent.Right:
-                    return HandleRight(game.Settings.Width);
+                    return HandleRight(game);
                 default:
                     return this;
             }
@@ -42,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         private WordisObj HandleStep(WordisGame game)
         {
             // on reaching the bottom:
-            if (Y == game.Settings.Height - 1)
+            if (Y == game.Settings.MaxY)
             {
                 return new StaticChar(X, Y, Value);
             }
@@ -75,29 +75,50 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
 
             if (firstObjBelow == null)
             {
-                return With(y: game.Settings.Height - 1);
+                return With(y: game.Settings.MaxY);
             }
 
+            // stop before obstacle
             return With(y: firstObjBelow.Y - 1);
         }
 
         /// <summary>
         /// Moves this char left.
         /// </summary>
-        private WordisObj HandleLeft() => With(
-            // todo: has a bug, does not count an obstacle
-            x: X == 0
-                ? 0
-                : X - 1);
+        private WordisObj HandleLeft(WordisGame game)
+        {
+            var firstObjLeft = game.GameObjects
+                .Where(o => o.Y == Y && o.X < X)
+                .OrderByDescending(o => o.X)
+                .FirstOrDefault();
+
+            if (firstObjLeft != null || X == 0)
+            {
+                // stay in current place
+                return this;
+            }
+
+            return With(x: X - 1);
+        }
 
         /// <summary>
         /// Moves this char right.
         /// </summary>
-        private WordisObj HandleRight(int width) => With(
-            // todo: has a bug, does not count an obstacle
-            x: X == width - 1
-                ? X
-                : X + 1);
+        private WordisObj HandleRight(WordisGame game)
+        {
+            var firstObjRight = game.GameObjects
+                .Where(o => o.Y == Y && o.X > X)
+                .OrderBy(o => o.X)
+                .FirstOrDefault();
+
+            if (firstObjRight != null || X == game.Settings.MaxX)
+            {
+                // stay in current place
+                return this;
+            }
+
+            return With(x: X + 1);
+        }
 
         private ActiveChar With(
             int? x = null,

@@ -18,9 +18,19 @@
         public int Width { get; }
 
         /// <summary>
+        /// Max possible X-axis index;
+        /// </summary>
+        public int MaxX => Width - 1;
+
+        /// <summary>
         /// Game board rows count.
         /// </summary>
         public int Height { get; }
+
+        /// <summary>
+        /// Max possible Y-axis index;
+        /// </summary>
+        public int MaxY => Height - 1;
 
         /// <summary>
         /// Minimum word to be counted as match.

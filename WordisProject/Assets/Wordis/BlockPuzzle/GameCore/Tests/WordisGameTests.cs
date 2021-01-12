@@ -15,19 +15,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleStep_ForActiveChar_MovesItDown()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-]
              * [-] [-] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 3))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Step);
 
             /* Expected state:
              * [-] [-] [-]
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-] */
             Assert.AreEqual(
-                new ActiveChar(1, 1, 'W'),
+                new ActiveChar(1, 1, 'A'),
                 game.GameObjects.Single());
         }
 
@@ -35,18 +35,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleStep_ForActiveCharOnBottom_MakesItStatic()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step);
 
             /* Expected state:
              * [-] [-] [-]
-             * [-] [W] [-] */
+             * [-] [A] [-] */
             Assert.Contains(
-                new StaticChar(1, 1, 'W'),
+                new StaticChar(1, 1, 'A'),
                 game.GameObjects.ToArray());
         }
 
@@ -54,20 +54,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleStep_ForActiveCharOnObstacle_MakesItStatic()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-]
              * [-] [X] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step);
 
             /* Expected state:
              * [-] [-] [-]
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [X] [-] */
             Assert.Contains(
-                new StaticChar(1, 1, 'W'),
+                new StaticChar(1, 1, 'A'),
                 game.GameObjects.ToArray());
         }
 
@@ -75,15 +75,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleLeft_ForActiveChar_MovesItLeft()
         {
             /* Initial state:
-             * [-] [W] [-] */
+             * [-] [A] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Left);
 
             /* Expected state:
-             * [W] [-] [-] */
+             * [A] [-] [-] */
             Assert.AreEqual(
-                new ActiveChar(0, 0, 'W'),
+                new ActiveChar(0, 0, 'A'),
                 game.GameObjects.Single());
         }
 
@@ -91,31 +91,55 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleLeft_WhenActiveCharReachedTheEdge_DoesNotMoveIt()
         {
             /* Initial state:
-             * [W] [-] [-] */
+             * [A] [-] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(0, 0, 'W'))
+                .With(new ActiveChar(0, 0, 'A'))
                 .Handle(GameEvent.Left);
 
             /* Expected state:
-             * [W] [-] [-] */
+             * [A] [-] [-] */
             Assert.AreEqual(
-                new ActiveChar(0, 0, 'W'),
+                new ActiveChar(0, 0, 'A'),
                 game.GameObjects.Single());
+        }
+
+        [Test]
+        public void HandleLeft_WhenActiveCharHasMultipleObstacles_ItStopsBeforeTheFirst()
+        {
+            /* Initial state:
+             * [Y] [X] [A] [-] [-] */
+            var game = new WordisGame(_settings.With(width: 5, height: 1))
+                .With(new ActiveChar(2, 0, 'A'))
+                .With(new ActiveChar(1, 0, 'X'))
+                .With(new ActiveChar(0, 0, 'Y')) // order can be random (here Y is comes last, but actually it is first)
+                .Handle(GameEvent.Left);
+
+            /* Expected state:
+             * [Y] [X] [A] [-] [-] */
+            Assert.Contains(
+                new ActiveChar(2, 0, 'A'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(1, 0, 'X'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(0, 0, 'Y'),
+                game.GameObjects.ToArray());
         }
 
         [Test]
         public void HandleRight_ForActiveChar_MovesItRight()
         {
             /* Initial state:
-             * [-] [W] [-] */
+             * [-] [A] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Right);
 
             /* Expected state:
-             * [-] [-] [W] */
+             * [-] [-] [A] */
             Assert.AreEqual(
-                new ActiveChar(2, 0, 'W'),
+                new ActiveChar(2, 0, 'A'),
                 game.GameObjects.Single());
         }
 
@@ -123,35 +147,59 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleRight_WhenActiveCharReachedTheEdge_DoesNotMoveIt()
         {
             /* Initial state:
-             * [-] [-] [W] */
+             * [-] [-] [A] */
             var game = new WordisGame(_settings.With(width: 3, height: 2))
-                .With(new ActiveChar(2, 0, 'W'))
+                .With(new ActiveChar(2, 0, 'A'))
                 .Handle(GameEvent.Right);
 
             /* Expected state:
-             * [-] [-] [W] */
+             * [-] [-] [A] */
             Assert.AreEqual(
-                new ActiveChar(2, 0, 'W'),
+                new ActiveChar(2, 0, 'A'),
                 game.GameObjects.Single());
+        }
+
+        [Test]
+        public void HandleRight_WhenActiveCharHasMultipleObstacles_ItStopsBeforeTheFirst()
+        {
+            /* Initial state:
+             * [-] [-] [A] [X] [Y] */
+            var game = new WordisGame(_settings.With(width: 5, height: 1))
+                .With(new ActiveChar(2, 0, 'A'))
+                .With(new ActiveChar(4, 0, 'Y')) // order can be random (here Y is comes first, but actually it is last)
+                .With(new ActiveChar(3, 0, 'X'))
+                .Handle(GameEvent.Right);
+
+            /* Expected state:
+             * [-] [-] [A] [X] [Y] */
+            Assert.Contains(
+                new ActiveChar(2, 0, 'A'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(3, 0, 'X'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(4, 0, 'Y'),
+                game.GameObjects.ToArray());
         }
 
         [Test]
         public void HandleDown_WhenActiveCharHasNoObstacles_ItDropsToTheBottom()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-]
              * [-] [-] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 3))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .Handle(GameEvent.Down);
 
             /* Expected state:
              * [-] [-] [-]
              * [-] [-] [-]
-             * [-] [W] [-] */
+             * [-] [A] [-] */
             Assert.AreEqual(
-                new ActiveChar(1, 2, 'W'),
+                new ActiveChar(1, 2, 'A'),
                 game.GameObjects.Single());
         }
 
@@ -159,20 +207,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleDown_WhenActiveCharHasObstacle_ItStopsBeforeIt()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-]
              * [-] [X] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 3))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .With(new ActiveChar(1, 2, 'X'))
                 .Handle(GameEvent.Down);
 
             /* Expected state:
              * [-] [-] [-]
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [X] [-] */
             Assert.Contains(
-                new ActiveChar(1, 1, 'W'),
+                new ActiveChar(1, 1, 'A'),
                 game.GameObjects.ToArray());
             Assert.Contains(
                 new ActiveChar(1, 2, 'X'),
@@ -183,23 +231,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void HandleDown_WhenActiveCharHasMultipleObstacles_ItStopsBeforeTheFirst()
         {
             /* Initial state:
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [-] [-]
              * [-] [X] [-]
              * [-] [Y] [-] */
             var game = new WordisGame(_settings.With(width: 3, height: 4))
-                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 0, 'A'))
                 .With(new ActiveChar(1, 3, 'Y')) // order can be random (here Y is comes first, but actually it is last)
                 .With(new ActiveChar(1, 2, 'X'))
                 .Handle(GameEvent.Down);
 
             /* Expected state:
              * [-] [-] [-]
-             * [-] [W] [-]
+             * [-] [A] [-]
              * [-] [X] [-]
              * [-] [Y] [-]*/
             Assert.Contains(
-                new ActiveChar(1, 1, 'W'),
+                new ActiveChar(1, 1, 'A'),
                 game.GameObjects.ToArray());
             Assert.Contains(
                 new ActiveChar(1, 2, 'X'),
