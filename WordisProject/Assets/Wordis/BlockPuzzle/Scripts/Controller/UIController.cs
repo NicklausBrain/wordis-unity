@@ -435,12 +435,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             }
 
             homeScreen.gameObject.Deactivate();
-            if (showTutorial)
-            {
-                gameScreenTutorial.gameObject.Activate();
-                cachedSelectedMode = gameMode;
-            }
-            else
+
+            // TODO: consider adding tutorial
+            //if (showTutorial)
+            //{
+            //    gameScreenTutorial.gameObject.Activate();
+            //    cachedSelectedMode = gameMode;
+            //}
+            //else
             {
                 gameScreen.gameObject.Activate();
                 gameScreen.GetComponent<GamePlayUI>().StartGamePlay(gameMode);
