@@ -14,6 +14,7 @@
 
 #if UNITY_IOS
 using UnityEngine.iOS;
+using System.Runtime.InteropServices;
 #endif
 
 namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
@@ -451,7 +452,9 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
 			}
 			else if (defaultToRegularVibrate)
 			{
-				Handheld.Vibrate();
+				// Not sure where Handheld should be initialized, do it if you know.
+				// For now, just commented to get build xcode project.
+				// Handheld.Vibrate();
 			}
 #endif
         }
