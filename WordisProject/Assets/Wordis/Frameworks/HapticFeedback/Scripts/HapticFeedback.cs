@@ -14,6 +14,7 @@
 
 #if UNITY_IOS
 using UnityEngine.iOS;
+using System.Runtime.InteropServices;
 #endif
 
 namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
