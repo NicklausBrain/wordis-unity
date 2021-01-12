@@ -13,19 +13,23 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.Utils;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
+    /// <summary>
+    /// TODO: remove(?) since game logic belongs to <see cref="WordisGame"/>
+    /// </summary>
     public class GamePlay : Singleton<GamePlay>
     {
         [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
-        [Tooltip("BlockShapesController Script Reference")]
-        public BlockShapesController blockShapeController;
+        [Tooltip("GamingButtonsController Script Reference")]
+        public GamingButtonsController gamingButtonsController;
 
         [Header("Other Public Members")]
 
@@ -307,7 +311,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResetGame()
         {
             boardGenerator.ResetGame();
-            blockShapeController.ResetGame();
         }
 
         #region Rescue Specific Code
@@ -329,13 +332,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         // Will add 15 seconds to timer and will rescue game.
                         GamePlayUI.Instance.timeModeProgresssBar.AddTime(15);
-
-                        // If none of block shape can be placed then will clear lines for rescue.
-                        bool canAnyShapePlacedTimeRescue = blockShapeController.CheckBlockShapeCanPlaced();
-                        if (!canAnyShapePlacedTimeRescue)
-                        {
-                            ClearBoardLinesForRescue();
-                        }
+                        ClearBoardLinesForRescue();
                     }
 
                     #endregion

@@ -67,9 +67,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         private WordisObj HandleDown(WordisGame game)
         {
             var firstObjBelow = game.GameObjects
-                .FirstOrDefault(o =>
+                .Where(o =>
                     o.X == X &&
-                    o.Y > Y);
+                    o.Y > Y)
+                .OrderBy(o => o.Y)
+                .FirstOrDefault();
 
             if (firstObjBelow == null)
             {
@@ -83,6 +85,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         /// Moves this char left.
         /// </summary>
         private WordisObj HandleLeft() => With(
+            // todo: has a bug, does not count an obstacle
             x: X == 0
                 ? 0
                 : X - 1);
@@ -91,6 +94,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         /// Moves this char right.
         /// </summary>
         private WordisObj HandleRight(int width) => With(
+            // todo: has a bug, does not count an obstacle
             x: X == width - 1
                 ? X
                 : X + 1);

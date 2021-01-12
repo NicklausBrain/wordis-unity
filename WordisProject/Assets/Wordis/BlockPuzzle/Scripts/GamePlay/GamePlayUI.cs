@@ -15,6 +15,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial;
 using Assets.Wordis.BlockPuzzle.Scripts.UI;
@@ -34,6 +36,46 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
     public class GamePlayUI : Singleton<GamePlayUI>
     {
+        #region Wordis
+
+        private readonly object _gameLock = new object();
+        public WordisSettings wordisSettings = new WordisSettings(9, 9, 3);
+        public WordisGame wordisGame;
+
+        private void GameStep()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Step);
+            }
+        }
+
+        public void LeftEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Left);
+            }
+        }
+
+        public void DownEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Down);
+            }
+        }
+
+        public void RightEvent()
+        {
+            lock (_gameLock)
+            {
+                wordisGame = wordisGame.Handle(GameEvent.Right);
+            }
+        }
+
+        #endregion Wordis
+
         [Header("Public Class Members")]
         [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
@@ -100,6 +142,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void StartGamePlay(GameMode gameMode)
         {
+            #region
+            wordisGame = new WordisGame(wordisSettings);
+            InvokeRepeating(nameof(GameStep), 1, 1);
+            #endregion
+
             currentGameMode = gameMode;
             currentModeSettings = GetCurrentModeSettings();
 
@@ -120,8 +167,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.boardGenerator.GenerateBoard(progressData);
 
             // Board Generator will create and initialize board with progress data if available.
-            gamePlay.blockShapeController.PrepareShapeContainer(progressData);
-
             #region Time Mode Specific
 
             // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
@@ -286,7 +331,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             rescueDone = true;
 
             GameProgressTracker.Instance.SaveProgressExplicitly();
-            gamePlay.blockShapeController.UpdateShapeContainers();
         }
 
         /// <summary>
@@ -326,6 +370,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     currentGameMode);
 
             UIController.Instance.gameOverScreen.Activate();
+            CancelInvoke(nameof(GameStep));
         }
 
         /// <summary>
@@ -333,6 +378,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ResetGame()
         {
+            wordisGame = new WordisGame(wordisSettings);
+
             progressData = null;
             totalLinesCompleted = 0;
             rescueDone = false;
@@ -357,6 +404,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PauseGame()
         {
+            CancelInvoke(nameof(GameStep));
             OnGamePausedEvent?.Invoke(currentGameMode, true);
         }
 
@@ -378,38 +426,39 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             StartGamePlay(currentGameMode);
         }
 
-        // TODO: REMOVE IT SOON, JUST TEST:
-        #region My Custom UI Interaction
+        #region Wordis
 
-        private Block _currentTestBlock;
+        private BlockShape GetBasicBlockShape()
+        {
+            var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
+            var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
+            basicBlockShape.SetSpriteTag(basicBlockInfo.blockSpriteTag);
+            return basicBlockShape;
+        }
 
         void Update()
         {
-            BlockShape GetBasicBlockShape()
-            {
-                var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
-                var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
-                basicBlockShape.SetSpriteTag(basicBlockInfo.blockSpriteTag);
-                return basicBlockShape;
-            }
+            // todo: ToDictionary has temporal bug on Down event (An item with the same key has already been added)
+            var wordisObjects = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
 
-            var shape = GetBasicBlockShape();
-
-            // Press Q to close the Listener
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            foreach (var row in gamePlay.allRows)
             {
-                _currentTestBlock = gamePlay.allRows[0][3];
-                _currentTestBlock.PlaceBlock(shape.spriteTag);
-                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
-            }
-
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                _currentTestBlock.PlaceBlock(_currentTestBlock.defaultSpriteTag); // reset
-                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty; // reset
-                _currentTestBlock = gamePlay.allRows[_currentTestBlock.RowId + 1][3];
-                _currentTestBlock.PlaceBlock(shape.spriteTag);
-                _currentTestBlock.GetComponentInChildren<TextMeshProUGUI>().text = "A";
+                foreach (var block in row)
+                {
+                    var blockKey = (block.ColumnId, block.RowId);
+                    if (wordisObjects.ContainsKey(blockKey))
+                    {
+                        var basicShape = GetBasicBlockShape();
+                        block.PlaceBlock(basicShape.spriteTag);
+                        block.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{(wordisObjects[blockKey] as WordisChar)?.Value}";
+                    }
+                    else // reset
+                    {
+                        block.PlaceBlock(block.defaultSpriteTag);
+                        block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                    }
+                }
             }
         }
 

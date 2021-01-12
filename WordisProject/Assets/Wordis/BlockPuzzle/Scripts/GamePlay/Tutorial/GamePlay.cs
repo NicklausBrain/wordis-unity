@@ -23,8 +23,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
         [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
-        [Tooltip("BlockShapesController Script Reference")]
-        public BlockShapesController blockShapeController;
+        [Tooltip("GamingButtonsController Script Reference")]
+        public GamingButtonsController blockShapeController;
 
         //List of all Blocks in Row X Column format.
         [System.NonSerialized] public List<List<Block>> allRows = new List<List<Block>>();

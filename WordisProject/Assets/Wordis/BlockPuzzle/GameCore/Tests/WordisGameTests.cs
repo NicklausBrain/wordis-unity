@@ -180,6 +180,36 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void HandleDown_WhenActiveCharHasMultipleObstacles_ItStopsBeforeTheFirst()
+        {
+            /* Initial state:
+             * [-] [W] [-]
+             * [-] [-] [-]
+             * [-] [X] [-]
+             * [-] [Y] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 4))
+                .With(new ActiveChar(1, 0, 'W'))
+                .With(new ActiveChar(1, 3, 'Y')) // order can be random (here Y is comes first, but actually it is last)
+                .With(new ActiveChar(1, 2, 'X'))
+                .Handle(GameEvent.Down);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [W] [-]
+             * [-] [X] [-]
+             * [-] [Y] [-]*/
+            Assert.Contains(
+                new ActiveChar(1, 1, 'W'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(1, 2, 'X'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new ActiveChar(1, 3, 'Y'),
+                game.GameObjects.ToArray());
+        }
+
+        [Test]
         public void Settings_ReturnsPassedObject()
         {
             var settings = new WordisSettings(

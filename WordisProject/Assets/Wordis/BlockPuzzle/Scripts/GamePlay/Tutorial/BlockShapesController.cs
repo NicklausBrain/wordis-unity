@@ -21,7 +21,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
     /// <summary>
     /// This script controls the block shapes that being place/played on board grid. It controlls spawning of block shapes and organizing it.
     /// </summary>
-    public class BlockShapesController : MonoBehaviour
+    public class GamingButtonsController : MonoBehaviour
     {
 #pragma warning disable 0649
         // All The Block shape containers are added via inspector. Typically used 3 in block puzzle games.
