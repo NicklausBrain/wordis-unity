@@ -32,7 +32,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void OnRightButtonPressed()
         {
             UIFeedback.Instance.PlayButtonPressEffect();
-
             GamePlayUI.Instance.RightEvent();
         }
 
