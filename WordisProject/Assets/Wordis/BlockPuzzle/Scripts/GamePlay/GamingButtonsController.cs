@@ -11,7 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Assets.Wordis.Frameworks.InputManager.Scripts;
+using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,21 +31,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         public void OnRightButtonPressed()
         {
-            if (InputManager.Instance.canInput())
-            {
-                //UIFeedback.Instance.PlayButtonPressEffect();
-
-                GamePlayUI.Instance.RightEvent();
-            }
+            UIFeedback.Instance.PlayButtonPressEffect();
+            GamePlayUI.Instance.RightEvent();
         }
 
         public void OnDownButtonPressed()
         {
-            if (InputManager.Instance.canInput())
-            {
-                //UIFeedback.Instance.PlayButtonPressEffect();
-                GamePlayUI.Instance.DownEvent();
-            }
+            UIFeedback.Instance.PlayButtonPressEffect();
+            GamePlayUI.Instance.DownEvent();
         }
 
         /// <summary>
@@ -53,11 +46,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void OnLeftButtonPressed()
         {
-            if (InputManager.Instance.canInput())
-            {
-                //UIFeedback.Instance.PlayButtonPressEffect();
-                GamePlayUI.Instance.LeftEvent();
-            }
+            UIFeedback.Instance.PlayButtonPressEffect();
+            GamePlayUI.Instance.LeftEvent();
         }
 
         /// <summary>
@@ -72,7 +62,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnEnable()
         {
-            // Registers game status callbacks.
         }
 
         /// <summary>
@@ -80,7 +69,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            // Unregisters game status callbacks.
         }
     }
 }
