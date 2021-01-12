@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
     public class WordisGame
     {
+        private readonly GetLetterFunc _getLetterFunc;
         private readonly Lazy<WordMatch[]> _matches;
         private readonly Lazy<GameEvent[]> _events;
 
@@ -20,11 +22,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         public WordisGame(
             WordisSettings settings,
+            GetLetterFunc getLetterFunc = null,
             IEnumerable<WordisObj> gameObjects = null,
             IEnumerable<GameEvent> events = null,
             IEnumerable<WordMatch> matches = null)
         {
             Settings = settings;
+            _getLetterFunc = getLetterFunc ?? new GetEngLetterFunc();
             _matches = new Lazy<WordMatch[]>(
                 () => matches?.ToArray() ?? Array.Empty<WordMatch>());
             _gameObjects = new Lazy<WordisObj[]>(
@@ -102,6 +106,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             IEnumerable<WordMatch> matches = null) =>
             new WordisGame(
                 Settings,
+                _getLetterFunc,
                 gameObjects,
                 gameEvents ?? GameEvents,
                 matches ?? Matches);
@@ -116,12 +121,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         private ActiveChar GenerateActiveChar()
         {
-            // todo: extract to separate component
-            var rn = new Random();
 
-            var randomChar = rn.Next('A', 'Z');
+            var randomChar = _getLetterFunc.Invoke();
 
-            return new ActiveChar(Settings.Width / 2, 0, (char)randomChar);
+            return new ActiveChar(Settings.Width / 2, 0, randomChar);
         }
     }
 }
