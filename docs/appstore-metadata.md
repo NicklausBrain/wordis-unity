@@ -67,7 +67,7 @@ The person in your organization who should be contacted if the App Review team h
 
 ## Metadata transfer
 
-#### Media(screnshots)
+#### Media(screenshots)
 .zip archive
 
 #### Text information(texts, app review)
