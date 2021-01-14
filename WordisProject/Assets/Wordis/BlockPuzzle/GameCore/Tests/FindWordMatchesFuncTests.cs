@@ -196,6 +196,24 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
         // row - column intersection
 
-        // no match
+        [Test]
+        public void Invoke_WhenWordIsTooSmall_IgnoresIt()
+        {
+            var y = 1;
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 4);
+
+            // [-][C][-][-][-]
+            // [X][-][A][T][-]
+            // ---------------------
+            // [X][C][A][T][-][-][-] - here we have a CAT
+            var chars = new[] { 'X', 'C', 'A', 'T' };
+
+            var matches = findWordMatchesFunc.Invoke(
+                chars.Select((@char, x) => new StaticChar(x, y, @char)));
+
+            Assert.IsEmpty(matches);
+        }
     }
 }
