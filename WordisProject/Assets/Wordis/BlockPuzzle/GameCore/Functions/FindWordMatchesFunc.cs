@@ -30,14 +30,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 
             foreach (var row in rows)
             {
-                wordMatches.AddRange(FindInVector(row.ToArray(), c => c.X));
+                wordMatches.AddRange(FindInVector(row.OrderBy(c => c.X).ToArray(), c => c.X));
             }
 
             var columns = staticCharsArr.GroupBy(c => c.X);
 
             foreach (var column in columns)
             {
-                wordMatches.AddRange(FindInVector(column.ToArray(), c => c.Y));
+                wordMatches.AddRange(FindInVector(column.OrderBy(c => c.Y).ToArray(), c => c.Y));
             }
 
             return wordMatches.ToArray();
