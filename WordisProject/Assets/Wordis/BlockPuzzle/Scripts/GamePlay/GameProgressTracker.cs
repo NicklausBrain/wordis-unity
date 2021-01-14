@@ -141,7 +141,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
                 _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
                 _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
-                _currentProgressData.remainingTimer = GamePlayUI.Instance.GetRemainingTimer();
+                _currentProgressData.remainingTimer = 0;
                 PlayerPrefs.SetString($"gameProgress_{GamePlayUI.Instance.currentGameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }

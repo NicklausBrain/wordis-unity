@@ -133,7 +133,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             #endregion
 
             currentGameMode = gameMode;
-            currentModeSettings = GetCurrentModeSettings();
+            currentModeSettings = gamePlaySettings.classicModeSettings;
 
             // Checks if the there is user progress from previous session.
             bool hasPreviousSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
@@ -152,46 +152,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.boardGenerator.GenerateBoard(progressData);
 
             // Board Generator will create and initialize board with progress data if available.
-            #region Time Mode Specific
 
-            // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
-            if (gameMode == GameMode.Timed)
-            {
-                timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer(
-                    progressData?.remainingTimer ?? timeModeInitialTimer);
-                timeModeProgresssBar.StartTimer();
-            }
-            else
-            {
-                if (timeModeProgresssBar.gameObject.activeSelf)
-                {
-                    timeModeProgresssBar.gameObject.SetActive(false);
-                }
-            }
-
-            if (progressData != null)
-            {
-                totalLinesCompleted = progressData.totalLinesCompleted;
-                rescueDone = progressData.rescueDone;
-            }
-
-            #endregion
-
-            // Invokes Game Start Event Callback.
             OnGameStartedEvent?.Invoke(currentGameMode);
-
-            ShowInitialTip();
-        }
-
-        void ShowInitialTip()
-        {
-            switch (currentGameMode)
-            {
-                case GameMode.Timed:
-                    UIController.Instance.ShowTimeModeTip();
-                    break;
-            }
         }
 
         /// <summary>
@@ -201,24 +163,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public BoardSize GetBoardSize()
         {
             return currentModeSettings.boardSize;
-        }
-
-        /// <summary>
-        /// Returns game settings for the current game mode.
-        /// </summary>
-        GameModeSettings GetCurrentModeSettings()
-        {
-            switch (currentGameMode)
-            {
-                case GameMode.Classic:
-                    return gamePlaySettings.classicModeSettings;
-                case GameMode.Timed:
-                    return gamePlaySettings.timeModeSettings;
-                case GameMode.Advance:
-                    return gamePlaySettings.advancedModeSettings;
-            }
-
-            return gamePlaySettings.classicModeSettings;
         }
 
         // Returns of list of all standard block shapes.
@@ -241,16 +185,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         // Returns score multiplier to be added on for each line cleared when more than 1 lines cleared together.
         public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
-
-        #region Time Mode Specific
-
-        // Returns Initial timer for time mode.
-        public float timeModeInitialTimer => gamePlaySettings.initialTime;
-
-        // Returns seconds to be added 
-        public float timeModeAddSecondsOnLineBreak => gamePlaySettings.addSecondsOnLineBreak;
-
-        #endregion
 
         public bool rewardOnGameOver => gamePlaySettings.rewardOnGameOver;
 
@@ -327,15 +261,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                #region Time Mode Specific
-
-                if (currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F)
-                {
-                    return;
-                }
-
-                #endregion
-
                 UIController.Instance.pauseGameScreen.Activate();
             }
         }
@@ -371,18 +296,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.ResetGame();
             scoreManager.ResetGame();
         }
-
-        #region Time Mode Specific
-
-        /// <summary>
-        /// Returns Remaining Timer.
-        /// </summary>
-        public int GetRemainingTimer()
-        {
-            return currentGameMode == GameMode.Timed ? timeModeProgresssBar.GetRemainingTimer() : 0;
-        }
-
-        #endregion
 
         /// <summary>
         /// Pauses game.
