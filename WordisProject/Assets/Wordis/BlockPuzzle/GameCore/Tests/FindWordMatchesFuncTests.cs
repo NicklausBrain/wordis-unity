@@ -194,7 +194,46 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             }), matches);
         }
 
-        // row - column intersection
+        [Test]
+        public void Invoke_WhenColumnAndRowHaveIntersectedMatch_TakesBothWords()
+        {
+            var y = 2;
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 3);
+
+            // [F]
+            // [-][I][R][E]
+            // [L]
+            // [Y]
+
+            var chars = new[]
+            {
+                new StaticChar(1, 1, 'F'),
+                new StaticChar(2, 1, 'I'),
+                new StaticChar(3, 1, 'R'),
+                new StaticChar(4, 1, 'E'),
+                new StaticChar(1, 2, 'L'),
+                new StaticChar(1, 3, 'Y'),
+            };
+
+            var matches = findWordMatchesFunc.Invoke(chars);
+
+            Assert.Contains(new WordMatch(new[]
+            {
+                new StaticChar(1, 1, 'F'),
+                new StaticChar(2, 1, 'I'),
+                new StaticChar(3, 1, 'R'),
+                new StaticChar(4, 1, 'E'),
+            }), matches);
+
+            Assert.Contains(new WordMatch(new[]
+            {
+                new StaticChar(1, 1, 'F'),
+                new StaticChar(1, 2, 'L'),
+                new StaticChar(1, 3, 'Y'),
+            }), matches);
+        }
 
         [Test]
         public void Invoke_WhenWordIsTooSmall_IgnoresIt()
