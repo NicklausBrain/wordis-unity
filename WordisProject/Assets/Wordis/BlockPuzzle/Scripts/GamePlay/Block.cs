@@ -15,13 +15,15 @@ using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
 using Assets.Wordis.Frameworks.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This class component is attached to all blocks in the grid 
+    /// This class component is attached to all blocks in the grid.
+    /// This is presentation level component.
     /// </summary>
     public class Block : MonoBehaviour
     {
@@ -161,6 +163,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             isAvailable = true;
             thisCollider.enabled = true;
             assignedSpriteTag = defaultSpriteTag;
+            GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+        }
+
+        public void Fade()
+        {
+            // todo: to be done
         }
     }
 }

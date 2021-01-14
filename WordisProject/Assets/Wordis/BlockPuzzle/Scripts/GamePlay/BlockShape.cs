@@ -442,18 +442,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         AudioController.Instance.PlayLineBreakSound(completedRows.Count + completedColumns.Count);
                     }
 
-                    #region TimeMode Specific
-
-                    if (GamePlayUI.Instance.currentGameMode == GameMode.Timed)
-                    {
-                        // Will add line completion bonus time to timer.
-                        GamePlayUI.Instance.timeModeProgresssBar.AddTime(
-                            GamePlayUI.Instance.timeModeAddSecondsOnLineBreak *
-                            (completedRows.Count + completedColumns.Count));
-                    }
-
-                    #endregion
-
                     return true;
                 }
             }

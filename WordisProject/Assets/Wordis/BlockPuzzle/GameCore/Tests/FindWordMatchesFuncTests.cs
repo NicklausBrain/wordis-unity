@@ -197,7 +197,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void Invoke_WhenColumnAndRowHaveIntersectedMatch_TakesBothWords()
         {
-            var y = 2;
             var findWordMatchesFunc = new FindWordMatchesFunc(
                 isLegitWordFunc: new IsLegitEngWordFunc(),
                 minWordLength: 3);
@@ -253,6 +252,24 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 chars.Select((@char, x) => new StaticChar(x, y, @char)));
 
             Assert.IsEmpty(matches);
+        }
+
+        [Test]
+        public void Invoke_WhenInputIsInWrongOrder_FindsTheMatchAnyway()
+        {
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 3);
+
+            var matches = findWordMatchesFunc.Invoke(
+                new[]
+                {
+                    new StaticChar(3, 1, 'T'), // input order is wrong,
+                    new StaticChar(1, 1, 'C'), // but coordinates are correct
+                    new StaticChar(2, 1, 'A'),
+                });
+
+            Assert.AreEqual("CAT", matches.First().Word);
         }
     }
 }

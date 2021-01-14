@@ -17,7 +17,7 @@ using UnityEngine.UI;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This script component will animate the new added score and will deappear after 1 second.
+    /// This script component will animate the new added score and will disappear after 1 second.
     /// </summary>
     public class ScoreAnimator : MonoBehaviour
     {

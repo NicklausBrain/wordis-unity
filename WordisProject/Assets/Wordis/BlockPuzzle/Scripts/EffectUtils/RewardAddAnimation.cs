@@ -39,7 +39,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.EffectUtils
         }
 
         /// Plays animations and iterated all gems images.
-        IEnumerator PlayAddRewardAnimationCoroutine(float delay)
+        private IEnumerator PlayAddRewardAnimationCoroutine(float delay)
         {
             yield return new WaitForSeconds(delay);
             int iterations = 10;
@@ -59,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.EffectUtils
                 }
             }
 
-            Invoke("DestroyAnim", 0.5F);
+            Invoke(nameof(DestroyAnim), 0.5F);
         }
 
         void DestroyAnim()

@@ -18,7 +18,6 @@ using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
-using Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial;
 using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
@@ -44,34 +43,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void GameStep()
         {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Step);
-            }
+            HandleGameEvent(GameEvent.Step);
         }
 
-        public void LeftEvent()
+        public void HandleGameEvent(GameEvent gameEvent)
         {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Left);
-            }
-        }
+            var lastGame = wordisGame;
+            var newGame = wordisGame.Handle(gameEvent);
 
-        public void DownEvent()
-        {
             lock (_gameLock)
             {
-                wordisGame = wordisGame.Handle(GameEvent.Down);
+                wordisGame = newGame;
             }
-        }
 
-        public void RightEvent()
-        {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Right);
-            }
+            RefreshPresentation(lastGame, newGame);
         }
 
         #endregion Wordis
@@ -148,7 +133,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             #endregion
 
             currentGameMode = gameMode;
-            currentModeSettings = GetCurrentModeSettings();
+            currentModeSettings = gamePlaySettings.classicModeSettings;
 
             // Checks if the there is user progress from previous session.
             bool hasPreviousSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
@@ -167,46 +152,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.boardGenerator.GenerateBoard(progressData);
 
             // Board Generator will create and initialize board with progress data if available.
-            #region Time Mode Specific
 
-            // Will enable timer start seeking it. If there is previous session data then timer will start from remaining duration.
-            if (gameMode == GameMode.Timed)
-            {
-                timeModeProgresssBar.gameObject.SetActive(true);
-                timeModeProgresssBar.SetTimer(
-                    progressData?.remainingTimer ?? timeModeInitialTimer);
-                timeModeProgresssBar.StartTimer();
-            }
-            else
-            {
-                if (timeModeProgresssBar.gameObject.activeSelf)
-                {
-                    timeModeProgresssBar.gameObject.SetActive(false);
-                }
-            }
-
-            if (progressData != null)
-            {
-                totalLinesCompleted = progressData.totalLinesCompleted;
-                rescueDone = progressData.rescueDone;
-            }
-
-            #endregion
-
-            // Invokes Game Start Event Callback.
             OnGameStartedEvent?.Invoke(currentGameMode);
-
-            ShowInitialTip();
-        }
-
-        void ShowInitialTip()
-        {
-            switch (currentGameMode)
-            {
-                case GameMode.Timed:
-                    UIController.Instance.ShowTimeModeTip();
-                    break;
-            }
         }
 
         /// <summary>
@@ -216,24 +163,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public BoardSize GetBoardSize()
         {
             return currentModeSettings.boardSize;
-        }
-
-        /// <summary>
-        /// Returns game settings for the current game mode.
-        /// </summary>
-        GameModeSettings GetCurrentModeSettings()
-        {
-            switch (currentGameMode)
-            {
-                case GameMode.Classic:
-                    return gamePlaySettings.classicModeSettings;
-                case GameMode.Timed:
-                    return gamePlaySettings.timeModeSettings;
-                case GameMode.Advance:
-                    return gamePlaySettings.advancedModeSettings;
-            }
-
-            return gamePlaySettings.classicModeSettings;
         }
 
         // Returns of list of all standard block shapes.
@@ -256,16 +185,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         // Returns score multiplier to be added on for each line cleared when more than 1 lines cleared together.
         public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
-
-        #region Time Mode Specific
-
-        // Returns Initial timer for time mode.
-        public float timeModeInitialTimer => gamePlaySettings.initialTime;
-
-        // Returns seconds to be added 
-        public float timeModeAddSecondsOnLineBreak => gamePlaySettings.addSecondsOnLineBreak;
-
-        #endregion
 
         public bool rewardOnGameOver => gamePlaySettings.rewardOnGameOver;
 
@@ -342,15 +261,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                #region Time Mode Specific
-
-                if (currentGameMode == GameMode.Timed && timeModeProgresssBar.GetRemainingTimer() < 5F)
-                {
-                    return;
-                }
-
-                #endregion
-
                 UIController.Instance.pauseGameScreen.Activate();
             }
         }
@@ -386,18 +296,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gamePlay.ResetGame();
             scoreManager.ResetGame();
         }
-
-        #region Time Mode Specific
-
-        /// <summary>
-        /// Returns Remaining Timer.
-        /// </summary>
-        public int GetRemainingTimer()
-        {
-            return currentGameMode == GameMode.Timed ? timeModeProgresssBar.GetRemainingTimer() : 0;
-        }
-
-        #endregion
 
         /// <summary>
         /// Pauses game.
@@ -436,27 +334,67 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             return basicBlockShape;
         }
 
-        void Update()
+        private void RefreshPresentation(
+            WordisGame lastGameState, WordisGame newGameState)
         {
-            // todo: ToDictionary has temporal bug on Down event (An item with the same key has already been added)
-            var wordisObjects = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
+            var newObjects =
+                newGameState.GameObjects
+                    .Except(lastGameState.GameObjects)
+                    .ToArray();
+            var removedObjects =
+                lastGameState.GameObjects
+                    .Except(newGameState.GameObjects)
+                    .ToArray();
+            var newMatches =
+                newGameState.Matches
+                    .Except(lastGameState.Matches)
+                    .ToArray();
 
-            foreach (var row in gamePlay.allRows)
+            if (newMatches.Any())
             {
-                foreach (var block in row)
+                var blocksToClear =
+                    newMatches
+                        .SelectMany(match => match.MatchedChars)
+                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .ToArray();
+                // todo: check score logic
+                scoreManager.AddScore(newMatches.Length, blocksToClear.Length);
+                StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+                AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
+            }
+
+            if (removedObjects.Any())
+            {
+                var blocksToClear =
+                    removedObjects
+                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .ToArray();
+
+                foreach (Block block in blocksToClear)
                 {
-                    var blockKey = (block.ColumnId, block.RowId);
-                    if (wordisObjects.ContainsKey(blockKey))
+                    block.PlaceBlock(block.defaultSpriteTag);
+                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                }
+                // todo: add animation instead like: block.Fade()
+                //StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+            }
+
+            if (newObjects.Any())
+            {
+                var blocksToCreate =
+                    newObjects
+                        .Select(o => (wordisObj: o, block: gamePlay.allColumns[o.X][o.Y]))
+                        .ToArray();
+
+                foreach (var pair in blocksToCreate)
+                {
+                    var basicShape = GetBasicBlockShape();
+                    pair.block.PlaceBlock(basicShape.spriteTag);
+
+                    if (pair.wordisObj is WordisChar)
                     {
-                        var basicShape = GetBasicBlockShape();
-                        block.PlaceBlock(basicShape.spriteTag);
-                        block.GetComponentInChildren<TextMeshProUGUI>().text =
-                            $"{(wordisObjects[blockKey] as WordisChar)?.Value}";
-                    }
-                    else // reset
-                    {
-                        block.PlaceBlock(block.defaultSpriteTag);
-                        block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                        pair.block.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{((WordisChar)pair.wordisObj).Value}";
                     }
                 }
             }

@@ -122,7 +122,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void SetTimer(float seconds)
         {
-            _maxTimer = GamePlayUI.Instance.timeModeInitialTimer;
+            // _maxTimer = GamePlayUI.Instance.timeModeInitialTimer;
 
             _remainingTime = seconds;
             _remainingTime = Mathf.Clamp(_remainingTime, 0, _maxTimer);

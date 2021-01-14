@@ -3448,7 +3448,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &238239803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4423,7 +4423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ADVANCE MODE
+  m_Text: SETTINGS
 --- !u!222 &341232377
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6048,7 +6048,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TIME MODE
+  m_Text: LEVEL
 --- !u!222 &469540846
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10899,7 +10899,6 @@ MonoBehaviour:
   UICanvas: {fileID: 1840772184}
   homeScreen: {fileID: 644614682}
   gameScreen: {fileID: 1501201907}
-  gameScreenTutorial: {fileID: 0}
   shopScreen: {fileID: 778718246504830255}
   settingScreen: {fileID: 1069858229}
   consentScreen: {fileID: 927073206}
@@ -26697,7 +26696,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &1449438605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28580,7 +28579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67354df83d20345d8a3637e1946305e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtTag: txtClassicMode
+  txtTag: txtPlay
 --- !u!114 &1585603388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28613,7 +28612,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CLASSIC MODE
+  m_Text: PLAY
 --- !u!222 &1585603389
 CanvasRenderer:
   m_ObjectHideFlags: 0

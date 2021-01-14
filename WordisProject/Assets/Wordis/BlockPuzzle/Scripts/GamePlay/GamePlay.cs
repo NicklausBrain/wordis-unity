@@ -25,7 +25,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GamePlay : Singleton<GamePlay>
     {
-        [Header("Public Class Members")] [Tooltip("BoardGenerator Script Reference")]
+        [Header("Public Class Members")]
+        [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
         [Tooltip("GamingButtonsController Script Reference")]
@@ -79,7 +80,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             foreach (int rowId in rowIds)
             {
-                StartCoroutine(ClearAllBlocks(GetEntireRow(rowId)));
+                var entireRow = GetEntireRow(rowId).ToArray();
+                StartCoroutine(ClearAllBlocks(entireRow));
             }
 
             GamePlayUI.Instance.totalLinesCompleted += rowIds.Count;
@@ -92,7 +94,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             foreach (int columnId in columnIds)
             {
-                StartCoroutine(ClearAllBlocks(GetEntireColumn(columnId)));
+                var entireColumn = GetEntireColumn(columnId).ToArray();
+                StartCoroutine(ClearAllBlocks(entireColumn));
             }
 
             GamePlayUI.Instance.totalLinesCompleted += columnIds.Count;
@@ -101,13 +104,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears all given blocks from the board. On Completion state of block will be empty.
         /// </summary>
-        IEnumerator ClearAllBlocks(List<Block> allBlocks)
+        public static IEnumerator ClearAllBlocks(params Block[] allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = allBlocks.Count % 2 == 0 ? allBlocks.Count / 2 : allBlocks.Count / 2 + 1;
+            int middleIndex = allBlocks.Length % 2 == 0 ? allBlocks.Length / 2 : allBlocks.Length / 2 + 1;
             int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
-            int totalBlocks = allBlocks.Count;
+            int totalBlocks = allBlocks.Length;
 
             for (int i = 0; i < middleIndex; i++, leftIndex--, rightIndex++)
             {
@@ -367,7 +370,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         List<int> GetMiddleLinesFromGrid(int noOfLines)
         {
             List<int> lines = new List<int>();
-            int totalLines = (int) GamePlayUI.Instance.GetBoardSize();
+            int totalLines = (int)GamePlayUI.Instance.GetBoardSize();
             int middleIndex = 0;
 
             if (totalLines % 2 == 0)

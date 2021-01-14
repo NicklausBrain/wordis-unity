@@ -10,7 +10,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     {
         private readonly GetLetterFunc _getLetterFunc;
         private readonly FindWordMatchesFunc _findWordMatchesFunc;
-        private readonly Lazy<WordMatch[]> _matches;
+        private readonly Lazy<WordMatchEx[]> _matches;
         private readonly Lazy<GameEvent[]> _events;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             FindWordMatchesFunc findWordMatchesFunc = null,
             IEnumerable<WordisObj> gameObjects = null,
             IEnumerable<GameEvent> events = null,
-            IEnumerable<WordMatch> matches = null)
+            IEnumerable<WordMatchEx> matches = null)
         {
             Settings = settings;
             _getLetterFunc =
@@ -38,8 +38,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 new FindWordMatchesFunc(
                     new IsLegitEngWordFunc(),
                     settings.MinWordLength);
-            _matches = new Lazy<WordMatch[]>(
-                () => matches?.ToArray() ?? Array.Empty<WordMatch>());
+            _matches = new Lazy<WordMatchEx[]>(
+                () => matches?.ToArray() ?? Array.Empty<WordMatchEx>());
             _gameObjects = new Lazy<WordisObj[]>(
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
             _events = new Lazy<GameEvent[]>(
@@ -66,7 +66,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <summary>
         /// Words matched.
         /// </summary>
-        public IReadOnlyList<WordMatch> Matches => _matches.Value;
+        public IReadOnlyList<WordMatchEx> Matches => _matches.Value;
 
         /// <summary>
         /// Transforms the game into the next state.
@@ -86,7 +86,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 case GameEvent.Step:
                     {
                         var matches = _findWordMatchesFunc.Invoke(
-                            updatedGameObjects.Where(o => o is StaticChar).Cast<StaticChar>());
+                            updatedGameObjects.Where(o => o is StaticChar).Cast<StaticChar>())
+                            .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
+                            .ToArray();
 
                         var updatedGame = With(
                             gameObjects: matches.Any()
@@ -115,7 +117,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordisGame With(
             IEnumerable<WordisObj> gameObjects,
             IEnumerable<GameEvent> gameEvents = null,
-            IEnumerable<WordMatch> matches = null) =>
+            IEnumerable<WordMatchEx> matches = null) =>
             new WordisGame(
                 Settings,
                 _getLetterFunc,
