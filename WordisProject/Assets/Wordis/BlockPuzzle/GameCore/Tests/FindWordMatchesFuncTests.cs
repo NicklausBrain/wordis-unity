@@ -41,7 +41,29 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             }), matches.Single());
         }
 
-        // simple column match
+        [Test]
+        public void Invoke_WhenColumnContainsWord_TakesIt()
+        {
+            var x = 1;
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 3);
+
+            // [-][R][-][-][-]
+            // [-][A][-][-][-]
+            // [-][T][-][-][-]
+            var chars = new[] { 'X', 'R', 'A', 'T', 'Y' };
+
+            var matches = findWordMatchesFunc.Invoke(
+                chars.Select((@char, y) => new StaticChar(x, y, @char)));
+
+            Assert.AreEqual(new WordMatch(new[]
+            {
+                new StaticChar(x, 1, 'R'),
+                new StaticChar(x, 2, 'A'),
+                new StaticChar(x, 3, 'T'),
+            }), matches.Single());
+        }
 
         [Test]
         public void Invoke_WhenLongerWordCanBeMatched_TakesIt()

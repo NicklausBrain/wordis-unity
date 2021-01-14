@@ -26,21 +26,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
             var wordMatches = new List<WordMatch>();
             var staticCharsArr = staticChars.ToArray();
 
-            // [F][R][E][E][D][O][M]
-            // [K][I][S][S][I][L][L][Y]
             var rows = staticCharsArr.GroupBy(c => c.Y);
 
             foreach (var row in rows)
             {
-                wordMatches.AddRange(FindInRow(row.ToArray()));
+                wordMatches.AddRange(FindInVector(row.ToArray(), c => c.X));
             }
 
             var columns = staticCharsArr.GroupBy(c => c.X);
 
+            foreach (var column in columns)
+            {
+                wordMatches.AddRange(FindInVector(column.ToArray(), c => c.Y));
+            }
+
             return wordMatches.ToArray();
         }
 
-        private WordMatch[] FindInRow(StaticChar[] staticChars)
+        private WordMatch[] FindInVector(
+            StaticChar[] staticChars,
+            Func<StaticChar, int> getAxisIndex)
         {
             if (staticChars.Length == 0 ||
                 staticChars.Length < _minWordLength)
@@ -54,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
             foreach (StaticChar staticChar in staticChars)
             {
                 if (potentialWord.Count == 0 ||
-                    potentialWord[potentialWord.Count - 1].X == staticChar.X - 1)
+                    getAxisIndex(potentialWord[potentialWord.Count - 1]) == getAxisIndex(staticChar) - 1)
                 {
                     potentialWord.Add(staticChar);
 
@@ -73,28 +78,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                         else if (wordMatches.Any())
                         {
                             wordMatches.AddRange(
-                                FindInRow(staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray()));
+                                FindInVector(staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray(), getAxisIndex));
                         }
                         else
                         {
                             wordMatches.AddRange(
-                                FindInRow(staticChars.Skip(1).ToArray()));
+                                FindInVector(staticChars.Skip(1).ToArray(), getAxisIndex));
                         }
                     }
                 }
                 else
                 {
                     wordMatches.AddRange(
-                        FindInRow(staticChars.Skip(potentialWord.Count).ToArray()));
+                        FindInVector(staticChars.Skip(potentialWord.Count).ToArray(), getAxisIndex));
                 }
             }
 
             return wordMatches.ToArray();
-        }
-
-        private static string ToString(IEnumerable<StaticChar> potentialWord)
-        {
-            return new string(potentialWord.Select(c => c.Value).ToArray());
         }
     }
 }
