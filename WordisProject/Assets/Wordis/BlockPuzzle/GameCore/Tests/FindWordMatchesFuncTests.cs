@@ -16,13 +16,37 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         // [K][I][S][-][I][L][L][Y]
         // 4 min word len
 
-        // simple row match
+        [Test]
+        public void Invoke_WhenRowContainsWord_TakesIt()
+        {
+            var y = 1;
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 3);
+
+            // [-][C][-][-][-]
+            // [X][-][A][T][-]
+            // ---------------------
+            // [X][C][A][T][-][-][-] - here we have a CAT
+            var chars = new[] { 'X', 'C', 'A', 'T' };
+
+            var matches = findWordMatchesFunc.Invoke(
+                chars.Select((@char, x) => new StaticChar(x, y, @char)));
+
+            Assert.AreEqual(new WordMatch(new[]
+            {
+                new StaticChar(1, y, 'C'),
+                new StaticChar(2, y, 'A'),
+                new StaticChar(3, y, 'T'),
+            }), matches.Single());
+        }
 
         // simple column match
 
         [Test]
         public void Invoke_WhenLongerWordCanBeMatched_TakesIt()
         {
+            var y = 2;
             var findWordMatchesFunc = new FindWordMatchesFunc(
                 isLegitWordFunc: new IsLegitEngWordFunc(),
                 minWordLength: 4);
@@ -34,23 +58,24 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var chars = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' };
 
             var matches = findWordMatchesFunc.Invoke(
-                chars.Select((@char, x) => new StaticChar(x, 0, @char)));
+                chars.Select((@char, x) => new StaticChar(x, y, @char)));
 
             Assert.AreEqual(new WordMatch(new[]
             {
-                new StaticChar(0, 0, 'F'),
-                new StaticChar(1, 0, 'I'),
-                new StaticChar(2, 0, 'R'),
-                new StaticChar(3, 0, 'E'),
-                new StaticChar(4, 0, 'F'),
-                new StaticChar(5, 0, 'L'),
-                new StaticChar(6, 0, 'Y'),
+                new StaticChar(0, y, 'F'),
+                new StaticChar(1, y, 'I'),
+                new StaticChar(2, y, 'R'),
+                new StaticChar(3, y, 'E'),
+                new StaticChar(4, y, 'F'),
+                new StaticChar(5, y, 'L'),
+                new StaticChar(6, y, 'Y'),
             }), matches.Single());
         }
 
         [Test]
         public void Invoke_WhenTwoWordMatchInARow_AcceptsBoth()
         {
+            var y = 0;
             var findWordMatchesFunc = new FindWordMatchesFunc(
                 isLegitWordFunc: new IsLegitEngWordFunc(),
                 minWordLength: 4);
@@ -61,22 +86,22 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var chars = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' };
 
             var matches = findWordMatchesFunc.Invoke(
-                chars.Select((@char, x) => new StaticChar(x, 0, @char)));
+                chars.Select((@char, x) => new StaticChar(x, y, @char)));
 
             Assert.Contains(new WordMatch(new[]
             {
-                new StaticChar(0, 0, 'S'),
-                new StaticChar(1, 0, 'I'),
-                new StaticChar(2, 0, 'C'),
-                new StaticChar(3, 0, 'K'),
+                new StaticChar(0, y, 'S'),
+                new StaticChar(1, y, 'I'),
+                new StaticChar(2, y, 'C'),
+                new StaticChar(3, y, 'K'),
             }), matches);
 
             Assert.Contains(new WordMatch(new[]
             {
-                new StaticChar(3, 0, 'K'),
-                new StaticChar(4, 0, 'I'),
-                new StaticChar(5, 0, 'L'),
-                new StaticChar(6, 0, 'L'),
+                new StaticChar(3, y, 'K'),
+                new StaticChar(4, y, 'I'),
+                new StaticChar(5, y, 'L'),
+                new StaticChar(6, y, 'L'),
             }), matches);
         }
 

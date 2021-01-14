@@ -26,7 +26,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
             var wordMatches = new List<WordMatch>();
             var staticCharsArr = staticChars.ToArray();
 
-            // 
             // [F][R][E][E][D][O][M]
             // [K][I][S][S][I][L][L][Y]
             var rows = staticCharsArr.GroupBy(c => c.Y);
@@ -75,6 +74,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                         {
                             wordMatches.AddRange(
                                 FindInRow(staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray()));
+                        }
+                        else
+                        {
+                            wordMatches.AddRange(
+                                FindInRow(staticChars.Skip(1).ToArray()));
                         }
                     }
                 }
