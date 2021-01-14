@@ -367,8 +367,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     removedObjects
                         .Select(c => gamePlay.allColumns[c.X][c.Y])
                         .ToArray();
-                StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
-                AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
+
+                foreach (Block block in blocksToClear)
+                {
+                    block.PlaceBlock(block.defaultSpriteTag);
+                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                }
+                // todo: add animation instead like: block.Fade()
+                //StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
             }
 
             if (newObjects.Any())

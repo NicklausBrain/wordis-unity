@@ -22,7 +22,8 @@ using UnityEngine.UI;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// This class component is attached to all blocks in the grid 
+    /// This class component is attached to all blocks in the grid.
+    /// This is presentation level component.
     /// </summary>
     public class Block : MonoBehaviour
     {
@@ -163,6 +164,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             thisCollider.enabled = true;
             assignedSpriteTag = defaultSpriteTag;
             GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+        }
+
+        public void Fade()
+        {
+            // todo: to be done
         }
     }
 }
