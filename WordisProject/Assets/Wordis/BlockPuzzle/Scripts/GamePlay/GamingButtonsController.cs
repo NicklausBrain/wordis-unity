@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,13 +33,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void OnRightButtonPressed()
         {
             UIFeedback.Instance.PlayButtonPressEffect();
-            GamePlayUI.Instance.RightEvent();
+            GamePlayUI.Instance.HandleGameEvent(GameEvent.Right);
         }
 
         public void OnDownButtonPressed()
         {
             UIFeedback.Instance.PlayButtonPressEffect();
-            GamePlayUI.Instance.DownEvent();
+            GamePlayUI.Instance.HandleGameEvent(GameEvent.Down);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void OnLeftButtonPressed()
         {
             UIFeedback.Instance.PlayButtonPressEffect();
-            GamePlayUI.Instance.LeftEvent();
+            GamePlayUI.Instance.HandleGameEvent(GameEvent.Left);
         }
 
         /// <summary>

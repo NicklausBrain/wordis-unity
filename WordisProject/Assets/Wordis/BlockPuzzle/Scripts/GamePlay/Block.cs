@@ -15,6 +15,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
 using Assets.Wordis.Frameworks.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -161,6 +162,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             isAvailable = true;
             thisCollider.enabled = true;
             assignedSpriteTag = defaultSpriteTag;
+            GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
         }
     }
 }

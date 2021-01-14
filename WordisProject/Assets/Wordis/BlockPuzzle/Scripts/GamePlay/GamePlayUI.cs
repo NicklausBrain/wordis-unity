@@ -43,34 +43,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void GameStep()
         {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Step);
-            }
+            HandleGameEvent(GameEvent.Step);
         }
 
-        public void LeftEvent()
+        public void HandleGameEvent(GameEvent gameEvent)
         {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Left);
-            }
-        }
+            var lastGame = wordisGame;
+            var newGame = wordisGame.Handle(gameEvent);
 
-        public void DownEvent()
-        {
             lock (_gameLock)
             {
-                wordisGame = wordisGame.Handle(GameEvent.Down);
+                wordisGame = newGame;
             }
-        }
 
-        public void RightEvent()
-        {
-            lock (_gameLock)
-            {
-                wordisGame = wordisGame.Handle(GameEvent.Right);
-            }
+            RefreshPresentation(lastGame, newGame);
         }
 
         #endregion Wordis
@@ -435,27 +421,59 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             return basicBlockShape;
         }
 
-        void Update()
+        private void RefreshPresentation(
+            WordisGame lastGameState, WordisGame newGameState)
         {
-            // todo: ToDictionary has temporal bug on Down event (An item with the same key has already been added)
-            var wordisObjects = wordisGame.GameObjects.ToDictionary(o => (o.X, o.Y));
+            var newObjects =
+                newGameState.GameObjects
+                    .Except(lastGameState.GameObjects)
+                    .ToArray();
+            var removedObjects =
+                lastGameState.GameObjects
+                    .Except(newGameState.GameObjects)
+                    .ToArray();
+            var newMatches =
+                newGameState.Matches
+                    .Except(lastGameState.Matches)
+                    .ToArray();
 
-            foreach (var row in gamePlay.allRows)
+            if (newMatches.Any())
             {
-                foreach (var block in row)
+                var blocksToClear =
+                    newMatches
+                        .SelectMany(match => match.MatchedChars)
+                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .ToArray();
+                StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+                AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
+            }
+
+            if (removedObjects.Any())
+            {
+                var blocksToClear =
+                    removedObjects
+                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .ToArray();
+                StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+                AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
+            }
+
+            if (newObjects.Any())
+            {
+                var blocksToCreate =
+                    newObjects
+                        .Select(o => (wordisObj: o, block: gamePlay.allColumns[o.X][o.Y]))
+                        .ToArray();
+
+                foreach (var pair in blocksToCreate)
                 {
-                    var blockKey = (block.ColumnId, block.RowId);
-                    if (wordisObjects.ContainsKey(blockKey))
+                    var basicShape = GetBasicBlockShape();
+                    pair.block.PlaceBlock(basicShape.spriteTag);
+
+                    if (pair.wordisObj is WordisChar)
                     {
-                        var basicShape = GetBasicBlockShape();
-                        block.PlaceBlock(basicShape.spriteTag);
-                        block.GetComponentInChildren<TextMeshProUGUI>().text =
-                            $"{(wordisObjects[blockKey] as WordisChar)?.Value}";
-                    }
-                    else // reset
-                    {
-                        block.PlaceBlock(block.defaultSpriteTag);
-                        block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                        pair.block.GetComponentInChildren<TextMeshProUGUI>().text =
+                            $"{((WordisChar)pair.wordisObj).Value}";
                     }
                 }
             }
