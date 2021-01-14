@@ -9,6 +9,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     public class WordisGame
     {
         private readonly GetLetterFunc _getLetterFunc;
+        private readonly FindWordMatchesFunc _findWordMatchesFunc;
         private readonly Lazy<WordMatch[]> _matches;
         private readonly Lazy<GameEvent[]> _events;
 
@@ -23,12 +24,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordisGame(
             WordisSettings settings,
             GetLetterFunc getLetterFunc = null,
+            FindWordMatchesFunc findWordMatchesFunc = null,
             IEnumerable<WordisObj> gameObjects = null,
             IEnumerable<GameEvent> events = null,
             IEnumerable<WordMatch> matches = null)
         {
             Settings = settings;
-            _getLetterFunc = getLetterFunc ?? new GetEngLetterFunc();
+            _getLetterFunc =
+                getLetterFunc ??
+                new GetEngLetterFunc();
+            _findWordMatchesFunc =
+                findWordMatchesFunc ??
+                new FindWordMatchesFunc(
+                    new IsLegitEngWordFunc(),
+                    settings.MinWordLength);
             _matches = new Lazy<WordMatch[]>(
                 () => matches?.ToArray() ?? Array.Empty<WordMatch>());
             _gameObjects = new Lazy<WordisObj[]>(
@@ -76,15 +85,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        // todo: determine matches
+                        var matches = _findWordMatchesFunc.Invoke(
+                            updatedGameObjects.Where(o => o is StaticChar).Cast<StaticChar>());
 
-                        var hasActiveObjects = updatedGameObjects.Any(o => o is ActiveChar);
                         var updatedGame = With(
-                            gameObjects: updatedGameObjects,
+                            gameObjects: matches.Any()
+                                ? updatedGameObjects.Except(matches.SelectMany(m => m.MatchedChars))
+                                : updatedGameObjects,
                             gameEvents: updatedEvents,
-                            matches: Matches);
+                            matches: Matches.Concat(matches));
 
-                        // todo: make testable and test
+                        var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
+
                         return hasActiveObjects
                             ? updatedGame
                             : updatedGame.With(GenerateActiveChar());
@@ -107,6 +119,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             new WordisGame(
                 Settings,
                 _getLetterFunc,
+                _findWordMatchesFunc,
                 gameObjects,
                 gameEvents ?? GameEvents,
                 matches ?? Matches);

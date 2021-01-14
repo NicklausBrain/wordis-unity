@@ -9,7 +9,7 @@
         {
             Width = width;
             Height = height;
-            MinWordMatch = minWordMatch;
+            MinWordLength = minWordMatch;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@
         public int MaxY => Height - 1;
 
         /// <summary>
-        /// Minimum word to be counted as match.
+        /// Minimum word length to be counted as match.
         /// </summary>
-        public int MinWordMatch { get; }
+        public int MinWordLength { get; }
 
         /// <summary>
         /// Creates a new instance with the given properties.
