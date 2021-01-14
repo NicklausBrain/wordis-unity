@@ -258,6 +258,53 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void GameStep_OnWordMatch_EliminatesMatchedChars()
+        {
+            /* Initial state:
+             * [-] [R] [-]
+             * [-] [-] [-]
+             * [-] [A] [-]
+             * [-] [T] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 4))
+                .With(new ActiveChar(1, 0, 'R'))
+                .With(new StaticChar(1, 2, 'A'))
+                .With(new StaticChar(1, 3, 'T'))
+                .Handle(GameEvent.Step)  // move char down
+                .Handle(GameEvent.Step); // count RAT as match
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [-] [-]
+             * [-] [-] [-]
+             * [-] [-] [-] */
+
+            Assert.IsNull(game.GameObjects
+                .FirstOrDefault(o => o.X == 1 && o.Y == 1)); // R
+            Assert.IsNull(game.GameObjects
+                .FirstOrDefault(o => o.X == 1 && o.Y == 2)); // A
+            Assert.IsNull(game.GameObjects
+                .FirstOrDefault(o => o.X == 1 && o.Y == 3)); // T
+        }
+
+        [Test]
+        public void GameStep_OnWordMatch_RecordsMatch()
+        {
+            /* Initial state:
+             * [-] [R] [-]
+             * [-] [-] [-]
+             * [-] [A] [-]
+             * [-] [T] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 4))
+                .With(new ActiveChar(1, 0, 'R'))
+                .With(new StaticChar(1, 2, 'A'))
+                .With(new StaticChar(1, 3, 'T'))
+                .Handle(GameEvent.Step)  // move char down
+                .Handle(GameEvent.Step); // count RAT as match
+
+            Assert.AreEqual("RAT", game.Matches.First().Word);
+        }
+
+        [Test]
         public void Settings_ReturnsPassedObject()
         {
             var settings = new WordisSettings(
