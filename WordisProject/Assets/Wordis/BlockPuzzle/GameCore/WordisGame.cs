@@ -78,13 +78,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                     {
                         // todo: determine matches
 
-                        var hasActiveObjects = updatedGameObjects.Any(o => o is ActiveChar);
                         var updatedGame = With(
                             gameObjects: updatedGameObjects,
                             gameEvents: updatedEvents,
                             matches: Matches);
 
-                        // todo: make testable and test
+                        var hasActiveObjects = updatedGameObjects.Any(o => o is ActiveChar);
+
                         return hasActiveObjects
                             ? updatedGame
                             : updatedGame.With(GenerateActiveChar());
