@@ -357,6 +357,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         .SelectMany(match => match.MatchedChars)
                         .Select(c => gamePlay.allColumns[c.X][c.Y])
                         .ToArray();
+                // todo: check score logic
+                scoreManager.AddScore(newMatches.Length, blocksToClear.Length);
                 StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
             }
