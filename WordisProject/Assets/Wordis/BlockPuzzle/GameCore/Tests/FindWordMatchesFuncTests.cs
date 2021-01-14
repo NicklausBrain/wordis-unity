@@ -55,10 +55,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 isLegitWordFunc: new IsLegitEngWordFunc(),
                 minWordLength: 4);
             // [-][-][-][K][-][-][-]
-            // [S][I][C][-][I][L][L]
+            // [S][I][C][-][I][L][L] - one end - another start
             // ---------------------
             // [S][I][C][K][I][L][L] - both should match
-            var chars = new[] { 'S', 'I', 'C', 'K', 'K', 'I', 'L', 'L' };
+            var chars = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' };
 
             var matches = findWordMatchesFunc.Invoke(
                 chars.Select((@char, x) => new StaticChar(x, 0, @char)));
@@ -66,17 +66,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.Contains(new WordMatch(new[]
             {
                 new StaticChar(0, 0, 'S'),
-                new StaticChar(0, 1, 'I'),
-                new StaticChar(0, 2, 'C'),
-                new StaticChar(0, 3, 'K'),
+                new StaticChar(1, 0, 'I'),
+                new StaticChar(2, 0, 'C'),
+                new StaticChar(3, 0, 'K'),
             }), matches);
 
             Assert.Contains(new WordMatch(new[]
             {
-                new StaticChar(0, 3, 'K'),
-                new StaticChar(0, 4, 'I'),
-                new StaticChar(0, 5, 'L'),
-                new StaticChar(0, 6, 'L'),
+                new StaticChar(3, 0, 'K'),
+                new StaticChar(4, 0, 'I'),
+                new StaticChar(5, 0, 'L'),
+                new StaticChar(6, 0, 'L'),
             }), matches);
         }
 

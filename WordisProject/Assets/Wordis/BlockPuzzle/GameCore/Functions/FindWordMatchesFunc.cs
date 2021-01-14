@@ -62,13 +62,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                     if (potentialWord.Count >= _minWordLength)
                     {
                         var potentialMatch = new WordMatch(potentialWord);
-                        if (_isLegitWordFunc.Invoke(potentialMatch.Word))
+                        var isLegitWord = _isLegitWordFunc.Invoke(potentialMatch.Word);
+                        if (isLegitWord)
                         {
                             wordMatches.Add(potentialMatch);
                             if (wordMatches.Count > 1)
                             {
                                 wordMatches.RemoveAt(0);
                             }
+                        }
+                        else if (wordMatches.Any())
+                        {
+                            wordMatches.AddRange(
+                                FindInRow(staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray()));
                         }
                     }
                 }
