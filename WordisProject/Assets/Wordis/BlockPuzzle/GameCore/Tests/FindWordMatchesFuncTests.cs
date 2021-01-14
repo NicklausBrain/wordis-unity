@@ -34,17 +34,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var chars = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' };
 
             var matches = findWordMatchesFunc.Invoke(
-                chars.Select((@char, y) => new StaticChar(0, y, @char)));
+                chars.Select((@char, x) => new StaticChar(x, 0, @char)));
 
             Assert.AreEqual(new WordMatch(new[]
             {
                 new StaticChar(0, 0, 'F'),
-                new StaticChar(0, 1, 'I'),
-                new StaticChar(0, 2, 'R'),
-                new StaticChar(0, 3, 'E'),
-                new StaticChar(0, 3, 'F'),
-                new StaticChar(0, 3, 'L'),
-                new StaticChar(0, 3, 'Y'),
+                new StaticChar(1, 0, 'I'),
+                new StaticChar(2, 0, 'R'),
+                new StaticChar(3, 0, 'E'),
+                new StaticChar(4, 0, 'F'),
+                new StaticChar(5, 0, 'L'),
+                new StaticChar(6, 0, 'Y'),
             }), matches.Single());
         }
 
@@ -61,7 +61,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var chars = new[] { 'S', 'I', 'C', 'K', 'K', 'I', 'L', 'L' };
 
             var matches = findWordMatchesFunc.Invoke(
-                chars.Select((@char, y) => new StaticChar(0, y, @char)));
+                chars.Select((@char, x) => new StaticChar(x, 0, @char)));
 
             Assert.Contains(new WordMatch(new[]
             {
