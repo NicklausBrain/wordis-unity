@@ -38,7 +38,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         [Header("UI Screens")]
         public HomeScreen homeScreen;
         public GamePlayUI gameScreen;
-        public GamePlay.Tutorial.GamePlayUI gameScreenTutorial;
 
         [Header("Public Members.")]
         public GameObject shopScreen;

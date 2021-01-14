@@ -16,7 +16,7 @@ using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial
+namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     public class InGameMessage : MonoBehaviour
     {

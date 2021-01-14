@@ -18,7 +18,6 @@ using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
-using Assets.Wordis.BlockPuzzle.Scripts.GamePlay.Tutorial;
 using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
