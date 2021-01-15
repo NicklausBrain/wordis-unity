@@ -51,6 +51,27 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             GamePlayUI.Instance.HandleGameEvent(GameEvent.Left);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.LeftArrow) ||
+                Input.GetKeyUp(KeyCode.A))
+            {
+                OnLeftButtonPressed();
+            }
+
+            if (Input.GetKeyUp(KeyCode.RightArrow) ||
+                Input.GetKeyUp(KeyCode.D))
+            {
+                OnRightButtonPressed();
+            }
+
+            if (Input.GetKeyUp(KeyCode.DownArrow) ||
+                Input.GetKeyUp(KeyCode.S))
+            {
+                OnDownButtonPressed();
+            }
+        }
+
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
