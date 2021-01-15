@@ -56,9 +56,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                              .Where(k => k < p.Key)
                              .Sum(k => RelativeEngFrequency[k])));
 
+        private int i = 0;
+
+        private char[] arr = new[] { 'C', 'A', 'R', 'T' };
+
         /// <inheritdoc />
         public override char Invoke()
         {
+            if (i == arr.Length)
+            {
+               i = 0;
+            }
+            return arr[i++];
+
             var rn = new Random(Environment.TickCount);
 
             var randomPick = rn.NextDouble();
