@@ -66,7 +66,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             if (Input.GetKeyUp(KeyCode.DownArrow) ||
-                Input.GetKeyUp(KeyCode.S))
+                Input.GetKeyUp(KeyCode.S) ||
+                Input.GetKeyUp(KeyCode.Space))
             {
                 OnDownButtonPressed();
             }
