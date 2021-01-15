@@ -48,15 +48,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         public void HandleGameEvent(GameEvent gameEvent)
         {
-            var lastGame = wordisGame;
-            var newGame = wordisGame.Handle(gameEvent);
-
             lock (_gameLock)
             {
+                var lastGame = wordisGame;
+                var newGame = wordisGame.Handle(gameEvent);
                 wordisGame = newGame;
+                RefreshPresentation(lastGame, newGame);
             }
-
-            RefreshPresentation(lastGame, newGame);
         }
 
         #endregion Wordis
