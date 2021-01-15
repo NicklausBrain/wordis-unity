@@ -13,24 +13,24 @@
 
             switch (firstChar)
             {
-                case 'A': return EngLookupA.ALookUp.Check(word);
-                case 'B': return EngLookupB.BLookUp.Check(word);
-                case 'C': return EngLookupC.CLookUp.Check(word);
-                case 'D': return EngLookupD.DLookUp.Check(word);
-                case 'E': return EngLookupE.ELookUp.Check(word);
-                case 'F': return EngLookupF.FLookUp.Check(word);
-                case 'G': return EngLookupG.GLookUp.Check(word);
-                case 'H': return EngLookupH.HLookUp.Check(word);
-                case 'I': return EngLookupI.ILookUp.Check(word);
-                case 'J': return EngLookupJ.JLookUp.Check(word);
-                case 'K': return EngLookupK.KLookUp.Check(word);
-                case 'L': return EngLookupL.LLookUp.Check(word);
-                case 'M': return EngLookupM.MLookUp.Check(word);
-                case 'N': return EngLookupN.NLookUp.Check(word);
-                case 'O': return EngLookupO.OLookUp.Check(word);
-                case 'P': return EngLookupP.PLookUp.Check(word);
-                case 'Q': return EngLookupQ.QLookUp.Check(word);
-                case 'R': return EngLookupR.RLookUp.Check(word);
+                case 'A': return EngLookupA.LookUp.Check(word);
+                case 'B': return EngLookupB.LookUp.Check(word);
+                case 'C': return EngLookupC.LookUp.Check(word);
+                case 'D': return EngLookupD.LookUp.Check(word);
+                case 'E': return EngLookupE.LookUp.Check(word);
+                case 'F': return EngLookupF.LookUp.Check(word);
+                case 'G': return EngLookupG.LookUp.Check(word);
+                case 'H': return EngLookupH.LookUp.Check(word);
+                case 'I': return EngLookupI.LookUp.Check(word);
+                case 'J': return EngLookupJ.LookUp.Check(word);
+                case 'K': return EngLookupK.LookUp.Check(word);
+                case 'L': return EngLookupL.LookUp.Check(word);
+                case 'M': return EngLookupM.LookUp.Check(word);
+                case 'N': return EngLookupN.LookUp.Check(word);
+                case 'O': return EngLookupO.LookUp.Check(word);
+                case 'P': return EngLookupP.LookUp.Check(word);
+                case 'Q': return EngLookupQ.LookUp.Check(word);
+                case 'R': return EngLookupR.LookUp.Check(word);
                 case 'S': return EngLookupS.SLookUp.Check(word);
                 case 'T': return EngLookupT.TLookUp.Check(word);
                 case 'U': return EngLookupU.ULookUp.Check(word);
