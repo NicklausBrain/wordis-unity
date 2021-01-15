@@ -2,9 +2,9 @@
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static partial class EngLookup
+    static class EngLookupS
     {
-        private static WordList SLookUp => WordList.CreateFromWords(new []
+        public static WordList SLookUp { get; } = WordList.CreateFromWords(new []
         {
             "parterie",
 "s",

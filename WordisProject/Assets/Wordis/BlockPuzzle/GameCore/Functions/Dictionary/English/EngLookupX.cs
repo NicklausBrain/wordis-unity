@@ -2,9 +2,9 @@
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static partial class EngLookup
+    static class EngLookupX
     {
-        private static WordList XLookUp => WordList.CreateFromWords(new []
+        public static WordList XLookUp { get; } = WordList.CreateFromWords(new[]
         {
             "x",
             "xanthamide",
@@ -131,7 +131,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
             "xystarch",
             "xyster",
             "xystus",
-
         });
     }
 }

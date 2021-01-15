@@ -1,6 +1,6 @@
 ﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    public static partial class EngLookup
+    public static class EngLookup
     {
         public static bool Contains(string word)
         {
@@ -13,32 +13,32 @@
 
             switch (firstChar)
             {
-                case 'A': return ALookUp.Check(word);
-                case 'B': return BLookUp.Check(word);
-                case 'C': return CLookUp.Check(word);
-                case 'D': return DLookUp.Check(word);
-                case 'E': return ELookUp.Check(word);
-                case 'F': return FLookUp.Check(word);
-                case 'G': return GLookUp.Check(word);
-                case 'H': return HLookUp.Check(word);
-                case 'I': return ILookUp.Check(word);
-                case 'J': return JLookUp.Check(word);
-                case 'K': return KLookUp.Check(word);
-                case 'L': return LLookUp.Check(word);
-                case 'M': return MLookUp.Check(word);
-                case 'N': return NLookUp.Check(word);
-                case 'O': return OLookUp.Check(word);
-                case 'P': return PLookUp.Check(word);
-                case 'Q': return QLookUp.Check(word);
-                case 'R': return RLookUp.Check(word);
-                case 'S': return SLookUp.Check(word);
-                case 'T': return TLookUp.Check(word);
-                case 'U': return ULookUp.Check(word);
-                case 'V': return VLookUp.Check(word);
-                case 'W': return WLookUp.Check(word);
-                case 'X': return XLookUp.Check(word);
-                case 'Y': return YLookUp.Check(word);
-                case 'Z': return ZLookUp.Check(word);
+                case 'A': return EngLookupA.ALookUp.Check(word);
+                case 'B': return EngLookupB.BLookUp.Check(word);
+                case 'C': return EngLookupC.CLookUp.Check(word);
+                case 'D': return EngLookupD.DLookUp.Check(word);
+                case 'E': return EngLookupE.ELookUp.Check(word);
+                case 'F': return EngLookupF.FLookUp.Check(word);
+                case 'G': return EngLookupG.GLookUp.Check(word);
+                case 'H': return EngLookupH.HLookUp.Check(word);
+                case 'I': return EngLookupI.ILookUp.Check(word);
+                case 'J': return EngLookupJ.JLookUp.Check(word);
+                case 'K': return EngLookupK.KLookUp.Check(word);
+                case 'L': return EngLookupL.LLookUp.Check(word);
+                case 'M': return EngLookupM.MLookUp.Check(word);
+                case 'N': return EngLookupN.NLookUp.Check(word);
+                case 'O': return EngLookupO.OLookUp.Check(word);
+                case 'P': return EngLookupP.PLookUp.Check(word);
+                case 'Q': return EngLookupQ.QLookUp.Check(word);
+                case 'R': return EngLookupR.RLookUp.Check(word);
+                case 'S': return EngLookupS.SLookUp.Check(word);
+                case 'T': return EngLookupT.TLookUp.Check(word);
+                case 'U': return EngLookupU.ULookUp.Check(word);
+                case 'V': return EngLookupV.VLookUp.Check(word);
+                case 'W': return EngLookupW.WLookUp.Check(word);
+                case 'X': return EngLookupX.XLookUp.Check(word);
+                case 'Y': return EngLookupY.YLookUp.Check(word);
+                case 'Z': return EngLookupZ.ZLookUp.Check(word);
                 default: return false;
             }
         }

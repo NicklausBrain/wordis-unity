@@ -2,9 +2,9 @@
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static partial class EngLookup
+    static class EngLookupQ
     {
-        private static WordList QLookUp => WordList.CreateFromWords(new []
+        public static WordList QLookUp { get; } = WordList.CreateFromWords(new []
         {
             "q",
 "qua",
