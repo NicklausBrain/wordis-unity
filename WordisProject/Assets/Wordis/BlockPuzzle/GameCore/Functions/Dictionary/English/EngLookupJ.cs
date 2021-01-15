@@ -4,7 +4,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
     static partial class EngLookup
     {
-        private static readonly WordList JLookUp = WordList.CreateFromWords(new []
+        private static WordList JLookUp => WordList.CreateFromWords(new []
         {
             "j",
 "jaal goat",

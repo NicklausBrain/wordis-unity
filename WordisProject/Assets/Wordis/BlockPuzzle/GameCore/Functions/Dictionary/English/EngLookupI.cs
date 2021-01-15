@@ -4,7 +4,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
     static partial class EngLookup
     {
-        private static readonly WordList ILookUp = WordList.CreateFromWords(new []
+        private static WordList ILookUp => WordList.CreateFromWords(new []
         {
 "i",
 "i o u",

@@ -4,7 +4,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
     static partial class EngLookup
     {
-        private static readonly WordList PLookUp = WordList.CreateFromWords(new []
+        private static WordList PLookUp => WordList.CreateFromWords(new []
         {
             "ies",
 "p",
