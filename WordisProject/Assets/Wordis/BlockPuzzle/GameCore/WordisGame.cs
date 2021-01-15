@@ -85,10 +85,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        var matches = _findWordMatchesFunc.Invoke(
-                            updatedGameObjects.Where(o => o is StaticChar).Cast<StaticChar>())
-                            .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
-                            .ToArray();
+                        var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar);
+
+                        var matches = activeObj == null
+                            ? Array.Empty<WordMatchEx>()
+                            : _findWordMatchesFunc.Invoke(
+                                    updatedGameObjects
+                                        .Where(o => o is StaticChar && (o.X == activeObj.X || o.Y == activeObj.Y))
+                                        .Cast<StaticChar>())
+                                .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
+                                .ToArray();
 
                         var updatedGame = With(
                             gameObjects: matches.Any()

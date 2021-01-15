@@ -42,8 +42,8 @@ PlayerSettings:
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
-  defaultScreenWidth: 1024
-  defaultScreenHeight: 768
+  defaultScreenWidth: 400
+  defaultScreenHeight: 640
   defaultScreenWidthWeb: 400
   defaultScreenHeightWeb: 640
   m_StereoRenderingPath: 0
@@ -172,7 +172,7 @@ PlayerSettings:
     Standalone: com.wordis.blockpuzzle
     iPhone: com.wordis.blockpuzzle
   buildNumber:
-    iPhone: 2
+    iPhone: 7
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0

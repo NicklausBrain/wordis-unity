@@ -1,4 +1,4 @@
-﻿using gnuciDictionary;
+﻿using Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 {
@@ -10,9 +10,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
         /// <inheritdoc />
         public override bool Invoke(string word)
         {
-            var definition = EnglishDictionary.Define(word);
-
-            return definition != null;
+            var isLegitWord = EngLookup.Contains(word);
+            return isLegitWord;
         }
     }
 }

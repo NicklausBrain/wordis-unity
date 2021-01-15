@@ -1,0 +1,1994 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WeCantSpell.Hunspell</name>
+    </assembly>
+    <members>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Options">
+            <summary>
+            Various affix options.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Options"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.FlagMode">
+            <summary>
+            The flag type.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.FlagMode"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.KeyString">
+            <summary>
+            A string of text representing a keyboard layout.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.KeyString"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.TryString">
+            <summary>
+            Characters used to permit some suggestions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.TryString"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Language">
+            <summary>
+            The language code used for language specific functions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Language"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Culture">
+            <summary>
+            The culture associated with the language.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Culture"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundFlag">
+            <summary>
+            Flag indicating that a word may be in compound words.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundFlag"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundBegin">
+            <summary>
+            A flag indicating that a word may be the first element in a compound word.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundBegin"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundEnd">
+            <summary>
+            A flag indicating that a word may be the last element in a compound word.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundEnd"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundMiddle">
+            <summary>
+            A flag indicating that a word may be a middle element in a compound word.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMiddle"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundWordMax">
+            <summary>
+            Maximum word count in a compound word.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundWordMax"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundMin">
+            <summary>
+            Minimum length of words used for compounding.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMin"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundRoot">
+            <summary>
+            A flag marking compounds as a compound root.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundRoot"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundPermitFlag">
+            <summary>
+            A flag indicating that an affix may be inside of compounds.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundPermitFlag"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundForbidFlag">
+            <summary>
+            A flag forbidding a suffix from compounding.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundForbidFlag"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.NoSuggest">
+            <summary>
+            Flag indicating that a word should not be used as a suggestion.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.NoSuggest"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.NoNgramSuggest">
+            <summary>
+            Flag indicating that a word should not be used in ngram based suggestions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.NoNgramSuggest"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.ForbiddenWord">
+            <summary>
+            A flag indicating a forbidden word form.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.ForbiddenWord"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.LemmaPresent">
+            <summary>
+            A flag used by forbidden words.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.LemmaPresent"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Circumfix">
+            <summary>
+            A flag indicating that affixes may be on a word when this word also has prefix with <see cref="F:WeCantSpell.Hunspell.AffixConfig.Builder.Circumfix"/> flag and vice versa.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Circumfix"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.OnlyInCompound">
+            <summary>
+            A flag indicating that a suffix may be only inside of compounds.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.OnlyInCompound"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.NeedAffix">
+            <summary>
+            A flag signing virtual stems in the dictionary.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.NeedAffix"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.MaxNgramSuggestions">
+            <summary>
+            Maximum number of n-gram suggestions. A value of 0 switches off the n-gram suggestions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxNgramSuggestions"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.MaxDifferency">
+            <summary>
+            Similarity factor for the n-gram based suggestions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxDifferency"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.MaxCompoundSuggestions">
+            <summary>
+            Maximum number of suggested compound words generated by compound rule.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxCompoundSuggestions"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.KeepCase">
+            <summary>
+            A flag indicating that uppercased and capitalized forms of words are forbidden.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.ForceUpperCase">
+            <summary>
+            A flag forcing capitalization of the whole compound word.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.ForceUpperCase"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Warn">
+            <summary>
+            Flag indicating a rare word that is also often a spelling mistake.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Warn"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.SubStandard">
+            <summary>
+            Flag signing affix rules and dictionary words not used in morphological generation.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.SubStandard"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundSyllableNum">
+            <summary>
+            A flag used by compound check.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundSyllableNum"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Encoding">
+            <summary>
+            The encoding to be used in morpheme, affix, and dictionary files.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Encoding"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Replacements">
+            <summary>
+            Specifies modifications to try first.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Replacements"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Suffixes">
+            <summary>
+            Suffixes attached to root words to make other words.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Suffixes"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Prefixes">
+            <summary>
+            Preffixes attached to root words to make other words.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Prefixes"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.AliasF">
+            <summary>
+            Ordinal numbers for affix flag compression.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.AliasF"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.IsAliasF">
+            <summary>
+            Inidicates if any <see cref="F:WeCantSpell.Hunspell.AffixConfig.Builder.AliasF"/> entries have been defined.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.AliasM">
+            <summary>
+            Values used for morphological alias compression.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.AliasM"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.IsAliasM">
+            <summary>
+            Indicates if any <see cref="F:WeCantSpell.Hunspell.AffixConfig.Builder.AliasM"/> entries have been defined.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundRules">
+            <summary>
+            Defines custom compound patterns with a regex-like syntax.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundRules"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundPatterns">
+            <summary>
+            Forbid compounding, if the first word in the compound ends with endchars, and
+            next word begins with beginchars and(optionally) they have the requested flags.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundPatterns"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.BreakPoints">
+            <summary>
+            Defines new break points for breaking words and checking word parts separately.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.BreakPoints"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.InputConversions">
+            <summary>
+            Input conversion entries.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.InputConversions"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.OutputConversions">
+            <summary>
+            Output conversion entries.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.OutputConversions"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.RelatedCharacterMap">
+            <summary>
+            Mappings between related characters.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.RelatedCharacterMap"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Phone">
+            <summary>
+            Phonetic transcription entries.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Phone"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundMaxSyllable">
+            <summary>
+            Maximum syllable number, that may be in a
+            compound, if words in compounds are more than <see cref="F:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundWordMax"/>.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMaxSyllable"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.CompoundVowels">
+            <summary>
+            Voewls for calculating syllables.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundVowels"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.WordChars">
+            <summary>
+            Extra word characters.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.WordChars"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.IgnoredChars">
+            <summary>
+            Ignored characters (for example, Arabic optional diacretics characters)
+            for dictionary words, affixes and input words.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.IgnoredChars"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.Version">
+            <summary>
+            Affix and dictionary file version string.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Version"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Builder.HasContClass">
+            <summary>
+            Indicates that some of the affix entries have "cont class".
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfig.Builder.Warnings">
+            <summary>
+            A list of the warnings that were produced while reading or building an <see cref="T:WeCantSpell.Hunspell.AffixConfig"/>.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.AffixConfig.Builder.ToImmutable">
+            <summary>
+            Constructs a <see cref="T:WeCantSpell.Hunspell.AffixConfig"/> based on the values set in the builder.
+            </summary>
+            <returns>A constructed affix config.</returns>
+            <seealso cref="T:WeCantSpell.Hunspell.AffixConfig"/>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.AffixConfig.Builder.MoveToImmutable">
+            <summary>
+            Constructs a <see cref="T:WeCantSpell.Hunspell.AffixConfig"/> based on the values set in the builder
+            destroying the builder in the process.
+            </summary>
+            <returns>A constructed affix config.</returns>
+            <seealso cref="T:WeCantSpell.Hunspell.AffixConfig"/>
+            <remarks>
+            This method can leave the builder in an invalid state
+            but provides better performance for file reads.
+            </remarks>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.AffixConfig.Builder.EnableOptions(WeCantSpell.Hunspell.AffixConfigOptions)">
+            <summary>
+            Enables the given <paramref name="options"/> bits.
+            </summary>
+            <param name="options">Various bit options to enable.</param>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.FlagMode">
+            <summary>
+            The flag type.
+            </summary>
+            <remarks>
+            Default type is the extended ASCII (8-bit) character. 
+            `UTF-8' parameter sets UTF-8 encoded Unicode character flags.
+            The `long' value sets the double extended ASCII character flag type,
+            the `num' sets the decimal number flag type. Decimal flags numbered from 1 to
+            65000, and in flag fields are separated by comma.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Options">
+            <summary>
+            Various affix options.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.ComplexPrefixes">
+            <summary>
+            Indicates agglutinative languages with right-to-left writing system.
+            </summary>
+            <remarks>
+            Set twofold prefix stripping (but single suffix stripping) eg. for morphologically complex
+            languages with right-to-left writing system.
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.ComplexPrefixes"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundMoreSuffixes">
+            <summary>
+            Allow twofold suffixes within compounds.
+            </summary>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CompoundMoreSuffixes"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundDup">
+            <summary>
+            Forbid word duplication in compounds (e.g. foofoo).
+            </summary>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundDup"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundRep">
+            <summary>
+            Forbid compounding if the compound word may be a non compound word with a REP fault.
+            </summary>
+            <remarks>
+            Forbid compounding, if the (usually bad) compound word may be
+            a non compound word with a REP fault. Useful for languages with
+            'compound friendly' orthography.
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Replacements"/>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundRep"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundTriple">
+            <summary>
+            Forbid compounding if the compound word contains triple repeating letters.
+            </summary>
+            <remarks>
+            Forbid compounding, if compound word contains triple repeating letters
+            (e.g.foo|ox or xo|oof). Bug: missing multi-byte character support
+            in UTF-8 encoding(works only for 7-bit ASCII characters).
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundTriple"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.SimplifiedTriple">
+            <summary>
+            Allow simplified 2-letter forms of the compounds forbidden by <see cref="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundTriple"/>.
+            </summary>
+            <remarks>
+            It's useful for Swedish and Norwegian (and for
+            the old German orthography: Schiff|fahrt -> Schiffahrt).
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.SimplifiedTriple"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundCase">
+            <summary>
+            Forbid upper case characters at word boundaries in compounds.
+            </summary>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundCase"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckNum">
+            <summary>
+            A flag used by the controlled compound words.
+            </summary>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckNum"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.OnlyMaxDiff">
+            <summary>
+            Remove all bad n-gram suggestions (default mode keeps one).
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxDifferency"/>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.OnlyMaxDiff"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.NoSplitSuggestions">
+            <summary>
+            Disable word suggestions with spaces.
+            </summary>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.NoSplitSuggestions"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.FullStrip">
+            <summary>
+            Indicates that affix rules can strip full words.
+            </summary>
+            <remarks>
+            When active, affix rules can strip full words, not only one less characters, before
+            adding the affixes, see fullstrip.* test files in the source distribution).
+            Note: conditions may be word length without <see cref="P:WeCantSpell.Hunspell.AffixConfig.FullStrip"/>, too.
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.FullStrip"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.SuggestWithDots">
+            <summary>
+            Add dot(s) to suggestions, if input word terminates in dot(s).
+            </summary>
+            <remarks>
+            Not for LibreOffice dictionaries, because LibreOffice
+            has an automatic dot expansion mechanism.
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.SuggestWithDots"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.ForbidWarn">
+            <summary>
+            When active, words marked with the <see cref="P:WeCantSpell.Hunspell.AffixConfig.Warn"/> flag aren't accepted by the spell checker.
+            </summary>
+            <remarks>
+            Words with flag <see cref="P:WeCantSpell.Hunspell.AffixConfig.Warn"/> aren't accepted by the spell checker using this parameter.
+            </remarks>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.ForbidWarn"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CheckSharps">
+            <summary>
+            Indicates SS letter pair in uppercased (German) words may be upper case sharp s (ß).
+            </summary>
+            <remarks>
+            SS letter pair in uppercased (German) words may be upper case sharp s (ß).
+            Hunspell can handle this special casing with the CHECKSHARPS
+            declaration (see also KEEPCASE (<see cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/>) flag and tests/germancompounding example)
+            in both spelling and suggestion.
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/>
+            <seealso cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckSharps"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.SimplifiedCompound">
+            <summary>
+            Indicates that simplified coumpounds are enabled.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.KeyString">
+            <summary>
+            A string of text representing a keyboard layout.
+            </summary>
+            <remarks>
+            Hunspell searches and suggests words with one different
+            character replaced by a neighbor KEY character. Not neighbor
+            characters in KEY string separated by vertical line characters.
+            </remarks>
+            <example>
+            Suggested KEY parameters for QWERTY and Dvorak keyboard layouts:
+            <code>
+            KEY qwertyuiop|asdfghjkl|zxcvbnm
+            KEY pyfgcrl|aeouidhtns|qjkxbmwvz
+            </code>
+            </example>
+            <example>
+            Using the first QWERTY layout, Hunspell suggests "nude" and
+            "node" for "*nide". A character may have more neighbors, too:
+            <code>
+            KEY qwertzuop|yxcvbnm|qaw|say|wse|dsx|sy|edr|fdc|dx|rft|gfv|fc|tgz|hgb|gv|zhu|jhn|hb|uji|kjm|jn|iko|lkm
+            </code>
+            </example>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.TryString">
+            <summary>
+            Characters used to permit some suggestions.
+            </summary>
+            <remarks>
+            Hunspell can suggest right word forms, when they differ from the
+            bad input word by one TRY character.The parameter of TRY is case sensitive.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Language">
+            <summary>
+            The language code used for language specific functions.
+            </summary>
+            <remarks>
+            Use this to activate special casing of Azeri(LANG az) and Turkish(LANG tr).
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Culture">
+            <summary>
+            The culture associated with the language.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.StringComparer">
+            <summary>
+            The string comparer associated with the culture.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundFlag">
+            <summary>
+            Flag indicating that a word may be in compound words.
+            </summary>
+            <remarks>
+            Words signed with this flag may be in compound words (except when
+            word shorter than <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMin"/>). Affixes with <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundFlag"/> also permits
+            compounding of affixed words.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundBegin">
+            <summary>
+            A flag indicating that a word may be the first element in a compound word.
+            </summary>
+            <remarks>
+            Words signed with this flag (or with a signed affix) may
+            be first elements in compound words.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundEnd">
+            <summary>
+            A flag indicating that a word may be the last element in a compound word.
+            </summary>
+            <remarks>
+            Words signed with this flag (or with a signed affix) may
+            be last elements in compound words.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundMiddle">
+            <summary>
+            A flag indicating that a word may be a middle element in a compound word.
+            </summary>
+            <remarks>
+            Words signed with this flag (or with a signed affix) may be middle elements in compound words.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundWordMax">
+            <summary>
+            Maximum word count in a compound word.
+            </summary>
+            <remarks>
+            Set maximum word count in a compound word. (Default is unlimited.)
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundMin">
+            <summary>
+            Minimum length of words used for compounding.
+            </summary>
+            <remarks>
+            Default value is documented as 3 but may be 1.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundRoot">
+            <summary>
+            A flag marking compounds as a compound root.
+            </summary>
+            <remarks>
+            This flag signs the compounds in the dictionary
+            (Now it is used only in the Hungarian language specific code).
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundPermitFlag">
+            <summary>
+            A flag indicating that an affix may be inside of compounds.
+            </summary>
+            <remarks>
+            Prefixes are allowed at the beginning of compounds,
+            suffixes are allowed at the end of compounds by default.
+            Affixes with this flag may be inside of compounds.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundForbidFlag">
+            <summary>
+            A flag forbidding a suffix from compounding.
+            </summary>
+            <remarks>
+            Suffixes with this flag forbid compounding of the affixed word.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.NoSuggest">
+            <summary>
+            Flag indicating that a word should not be used as a suggestion.
+            </summary>
+            <remarks>
+            Words signed with this flag flag are not suggested (but still accepted when
+            typed correctly). Proposed flag
+            for vulgar and obscene words(see also <see cref="P:WeCantSpell.Hunspell.AffixConfig.SubStandard"/> ).
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.SubStandard"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.NoNgramSuggest">
+            <summary>
+            Flag indicating that a word should not be used in ngram based suggestions.
+            </summary>
+            <remarks>
+            Similar to <see cref="P:WeCantSpell.Hunspell.AffixConfig.NoSuggest"/>, but it forbids to use the word
+            in ngram based(more, than 1-character distance) suggestions.
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.NoSuggest"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.ForbiddenWord">
+            <summary>
+            A flag indicating a forbidden word form.
+            </summary>
+            <remarks>
+            This flag signs forbidden word form. Because affixed forms
+            are also forbidden, we can subtract a subset from set of
+            the accepted affixed and compound words.
+            Note: usefull to forbid erroneous words, generated by the compounding mechanism.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.LemmaPresent">
+            <summary>
+            A flag used by forbidden words.
+            </summary>
+            <remarks>
+            Deprecated. Use "st:" field instead.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Circumfix">
+            <summary>
+            A flag indicating that affixes may be on a word when this word also has prefix with <see cref="P:WeCantSpell.Hunspell.AffixConfig.Circumfix"/> flag and vice versa.
+            </summary>
+            <remarks>
+            Affixes signed with this flag may be on a word when this word also has a
+            prefix with this flag and vice versa(see circumfix.* test files in the source distribution).
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.OnlyInCompound">
+            <summary>
+            A flag indicating that a suffix may be only inside of compounds.
+            </summary>
+            <remarks>
+            Suffixes signed with this flag may be only inside of compounds
+            (Fuge-elements in German, fogemorphemes in Swedish).
+            This flag works also with words(see tests/onlyincompound.*).
+            Note: also valuable to flag compounding parts which are not correct as a word
+            by itself.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.NeedAffix">
+            <summary>
+            A flag signing virtual stems in the dictionary.
+            </summary>
+            <remarks>
+            This flag signs virtual stems in the dictionary, words only valid when affixed.
+            Except, if the dictionary word has a homonym or a zero affix.
+            NEEDAFFIX works also with prefixes and prefix + suffix combinations
+            (see tests/pseudoroot5.*). This should be used instead of the deprecated PSEUDOROOT flag.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.MaxNgramSuggestions">
+            <summary>
+            Maximum number of n-gram suggestions. A value of 0 switches off the n-gram suggestions.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxDifferency"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.MaxDifferency">
+            <summary>
+            Similarity factor for the n-gram based suggestions.
+            </summary>
+            <remarks>
+            Set the similarity factor for the n-gram based suggestions (5 = default value; 0 = fewer n-gram suggestions, but min. 1;
+            10 = <see cref="P:WeCantSpell.Hunspell.AffixConfig.MaxNgramSuggestions"/> n-gram suggestions).
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxNgramSuggestions"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.MaxCompoundSuggestions">
+            <summary>
+            Maximum number of suggested compound words generated by compound rule.
+            </summary>
+            <remarks>
+            Set max. number of suggested compound words generated by compound rules. The
+            number of the suggested compound words may be greater from the same 1-character
+            distance type.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.KeepCase">
+            <summary>
+            A flag indicating that uppercased and capitalized forms of words are forbidden.
+            </summary>
+            <remarks>
+            <para>
+            Forbid uppercased and capitalized forms of words 
+            signed with this flag. Useful for special orthographies 
+            (measurements and currency often keep their case in uppercased
+            texts) and writing systems(e.g.keeping lower case of IPA characters).
+            Also valuable for words erroneously written in the wrong case.
+            </para>
+            <para>
+            Note: With <see cref="P:WeCantSpell.Hunspell.AffixConfig.CheckSharps"/> declaration, words with sharp s and <see cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/> 
+            flag may be capitalized and uppercased, but uppercased forms of these
+            words may not contain sharp s, only SS.See germancompounding
+            example in the tests directory of the Hunspell distribution.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.ForceUpperCase">
+            <summary>
+            A flag forcing capitalization of the whole compound word.
+            </summary>
+            <remarks>
+            Last word part of a compound with this flag forces capitalization of the whole
+            compound word.Eg.Dutch word "straat" (street) with <see cref="P:WeCantSpell.Hunspell.AffixConfig.ForceUpperCase"/> will allowed only
+            in capitalized compound forms, according to the Dutch spelling rules for proper
+            names.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Warn">
+            <summary>
+            Flag indicating a rare word that is also often a spelling mistake.
+            </summary>
+            <remarks>
+            This flag is for rare words, wich are also often spelling mistakes,
+            see option -r of command line Hunspell and <see cref="P:WeCantSpell.Hunspell.AffixConfig.ForbidWarn"/> .
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.ForbidWarn"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.SubStandard">
+            <summary>
+            Flag signing affix rules and dictionary words not used in morphological generation.
+            </summary>
+            <remarks>
+            This flag signs affix rules and dictionary words (allomorphs)
+            not used in morphological generation(and in suggestion in the
+            future versions).
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.NoSuggest"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundSyllableNum">
+            <summary>
+            A flag used by compound check.
+            </summary>
+            <remarks>
+            Need for special compounding rules in Hungarian.
+            It appears that this string is used as a boolean where <c>null</c> or <see cref="F:System.String.Empty"/> indicates <c>false</c>.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Encoding">
+            <summary>
+            The encoding name to be used in morpheme, affix, and dictionary files.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Replacements">
+            <summary>
+            Specifies modifications to try first
+            </summary>
+            <remarks>
+            <para>
+            This table specifies modifications to try first.
+            First REP is the header of this table and one or more REP data
+            line are following it.
+            With this table, Hunspell can suggest the right forms for the typical
+            spelling mistakes when the incorrect form differs by more
+            than 1 letter from the right form.
+            The search string supports the regex boundary signs (^ and $).
+            </para>
+            <para>
+            It's very useful to define replacements for the most typical one-character mistakes, too:
+            with REP you can add higher priority to a subset of the TRY suggestions(suggestion list
+            begins with the REP suggestions).
+            </para>
+            <para>
+            Replacement table can be used for a stricter compound word checking with the option CHECKCOMPOUNDREP (<see cref="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundRep"/>).
+            </para>
+            </remarks>
+            <examples>
+            For example a possible English replacement table definition
+            to handle misspelled consonants:
+            <code>
+            REP 5
+            REP f ph
+            REP ph f
+            REP tion$ shun
+            REP ^cooccurr co-occurr
+            REP ^alot$ a_lot
+            </code>
+            </examples>
+            <example>
+            Suggesting separated words, specify spaces with underlines.
+            <code>
+            REP 1
+            REP onetwothree one_two_three
+            </code>
+            </example>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundRep"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Prefixes">
+            <summary>
+            Preffixes attached to root words to make other words.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Suffixes">
+            <summary>
+            Suffixes attached to root words to make other words.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.AliasF">
+            <summary>
+            Ordinal numbers for affix flag compression.
+            </summary>
+            <remarks>
+            <para>
+            Hunspell can substitute affix flag sets with ordinal numbers in affix rules(alias compression, see makealias tool).
+            </para>
+            <para>
+            If affix file contains the FLAG parameter, define it before the AF definitions.
+            </para>
+            <para>
+            Use makealias utility in Hunspell distribution to compress aff and dic files.
+            </para>
+            </remarks>
+            <example>
+            First example with alias compression:
+            <code>
+            3
+            hello
+            try/1
+            work/2
+            </code>
+            AF definitions in the affix file:
+            <code>
+            AF 2
+            AF A
+            AF AB
+            ...
+            </code>
+            </example>
+            <example>
+            It is equivalent of the following dic file:
+            <code>
+            3
+            hello
+            try/A
+            work/AB
+            </code>
+            </example>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.IsAliasF">
+            <summary>
+            Inidicates if any <see cref="P:WeCantSpell.Hunspell.AffixConfig.AliasF"/> entries have been defined.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.AliasM">
+            <summary>
+            Values used for morphological alias compression.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.IsAliasM">
+            <summary>
+            Indicates if any <see cref="P:WeCantSpell.Hunspell.AffixConfig.AliasM"/> entries have been defined.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundRules">
+            <summary>
+            Defines custom compound patterns with a regex-like syntax.
+            </summary>
+            <remarks>
+            <para>
+            Compound patterns consist compound flags,
+            parentheses, star and question mark meta characters.A flag followed by a `*' matches
+            a word sequence of 0 or more matches of words signed with this compound flag.
+            A flag followed by a `?' matches a word sequence of
+            0 or 1 matches of a word signed with this compound flag.
+            See tests/compound*.* examples.
+            </para>
+            <para>
+            en_US dictionary of OpenOffice.org uses COMPOUNDRULE for ordinal number recognitio
+            (1st, 2nd, 11th, 12th, 22nd, 112th, 1000122nd etc.).
+            </para>
+            <para>
+            In the case of long and numerical flag types use only parenthesized 
+            flags: (1500)*(2000)?
+            </para>
+            <para>
+            CompoundRule flags work completely separately from the
+            compounding mechanisme using <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundFlag"/>, <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundBegin"/> , etc.compound
+            flags. (Use these flags on different enhtries for words).
+            </para>
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundPatterns">
+            <summary>
+            Forbid compounding, if the first word in the compound ends with endchars, and
+            next word begins with beginchars and(optionally) they have the requested flags.
+            </summary>
+            <remarks>
+            <para>
+            The optional replacement parameter allows simplified compound form.
+            </para>
+            <para>
+            <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMin"/> doesn't work correctly with the compound word alternation,
+            so it may need to set <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMin"/> to lower value.
+            </para>
+            </remarks>
+            <example>
+            The special "endchars" pattern 0 (zero) limits the rule to the unmodified stems (stems
+            and stems with zero affixes):
+            <code>
+            CHECKCOMPOUNDPATTERN 0/x /y
+            </code>
+            </example>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.BreakPoints">
+            <summary>
+            Defines new break points for breaking words and checking word parts separately.
+            </summary>
+            <remarks>
+            <para>
+            Use <value>^</value> and <value>$</value> to delete characters at end and
+            start of the word.Rationale: useful for compounding with joining character or strings (for example, hyphen in English and German or hyphen and n-dash in Hungarian). Dashes are often bad break points for tokenization, because compounds with
+            dashes may contain not valid parts, too.) 
+            </para>
+            <para>
+            COMPOUNDRULE (<see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundRules"/>) is better for handling dashes and
+            other compound joining characters or character strings.Use BREAK, if you
+            want to check words with dashes or other joining characters and there is no time
+            or possibility to describe precise compound rules with COMPOUNDRULE
+            (COMPOUNDRULE handles only the suffixation of the last word part of a
+            compound word).
+            </para>
+            <para>
+            For command line spell checking of words with extra characters,
+            set WORDCHARS parameters: WORDCHARS -\fB--\fR(see tests/break.*) example
+            </para>
+            </remarks>
+            <example>
+            With BREAK, Hunspell can check both side of these compounds, breaking the words at dashes and n-dashes
+            <code>
+            BREAK 2
+            BREAK -
+            BREAK \fB--\fR    # n-dash
+            </code>
+            </example>
+            <example>
+            Breaking are recursive, so foo-bar, bar-foo and foo-foo\fB--\fRbar-bar 
+            would be valid compounds.
+            Note: The default word break of Hunspell is equivalent of the following BREAK
+            definition.
+            <code>
+            BREAK 3
+            BREAK -
+            BREAK ^-
+            BREAK -$
+            </code>
+            </example>
+            <example>
+            Hunspell doesn't accept the "-word" and "word-" forms by this BREAK definition:
+            <code>
+            BREAK 1
+            BREAK -
+            </code>
+            </example>
+            <example>
+            Switching off the default values:
+            <code>
+            BREAK 0
+            </code>
+            </example>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundRules"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.InputConversions">
+            <summary>
+            Input conversion entries.
+            </summary>
+            <remarks>
+            Useful to convert one type of quote to another one, or change ligature.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.OutputConversions">
+            <summary>
+            Output conversion entries.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.RelatedCharacterMap">
+            <summary>
+            Mappings between related characters.
+            </summary>
+            <remarks>
+            We can define language-dependent information on characters and
+            character sequences that should be considered related(i.e.nearer than
+            other chars not in the set) in the affix file(.aff)  by a map table.
+            With this table, Hunspell can suggest the right forms for words, which
+            incorrectly choose the wrong letter or letter groups from a related
+            set more than once in a word (see <see cref="P:WeCantSpell.Hunspell.AffixConfig.Replacements"/>).
+            </remarks>
+            <example>
+            For example a possible mapping could be for the German
+            umlauted ü versus the regular u; the word
+            Frühstück really should be written with umlauted u's and not regular ones
+            <code>
+            MAP 1
+            MAP uü
+            </code>
+            </example>
+            <example>
+            Use parenthesized groups for character sequences (eg. for
+            composed Unicode characters):
+            <code>
+            MAP 3
+            MAP ß(ss)  (character sequence)
+            MAP ﬁ(fi)  ("fi" compatibility characters for Unicode fi ligature)
+            MAP(ọ́)o(composed Unicode character: ó with bottom dot)
+            </code>
+            </example>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Replacements"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Phone">
+            <summary>
+            Phonetic transcription entries.
+            </summary>
+            <remarks>
+            <para>
+            Uses a table-driven phonetic transcription
+            algorithm borrowed from Aspell.It is useful for languages with not
+            pronunciation based orthography. You can add a full
+            alphabet conversion and other rules for conversion of
+            special letter sequences.For detailed documentation see
+            http://aspell.net/man-html/Phonetic-Code.html.
+            </para>
+            <para>
+            Note: Multibyte UTF-8 characters have not worked with
+            bracket expression yet. Dash expression has signed bytes and not
+            UTF-8 characters yet.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundMaxSyllable">
+            <summary>
+            Maximum syllable number, that may be in a
+            compound, if words in compounds are more than <see cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundWordMax"/>.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundVowels"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.CompoundVowels">
+            <summary>
+            Voewls for calculating syllables.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CompoundMaxSyllable"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.WordChars">
+            <summary>
+            Extra word characters.
+            </summary>
+            <remarks>
+            Extends tokenizer of Hunspell command line interface with
+            additional word character.
+            For example, dot, dash, n-dash, numbers, percent sign
+            are word character in Hungarian.
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.IgnoredChars">
+            <summary>
+            Ignored characters (for example, Arabic optional diacretics characters)
+            for dictionary words, affixes and input words.
+            </summary>
+            <remarks>
+            Useful for optional characters, as Arabic (harakat) or Hebrew (niqqud) diacritical marks (see
+            tests/ignore.* test dictionary in Hunspell distribution).
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.Version">
+            <summary>
+            Affix and dictionary file version string.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.ContClasses">
+            <summary>
+            The set of cont classes used across all affixes.
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixEntry.ContClass"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixConfig.IsLanguageWithDashUsage">
+            <summary>
+            Language with possible dash usage.
+            </summary>
+            <remarks>
+            Latin letters or dash in TRY characters can trigger this condition.
+            </remarks>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.AffixConfigOptions">
+            <summary>
+            Various options that can be enabled as part of an <seealso cref="T:WeCantSpell.Hunspell.AffixConfig"/>.
+            </summary>
+            <seealso cref="T:WeCantSpell.Hunspell.AffixConfig"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.None">
+            <summary>
+            Indicates that no options are set.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.ComplexPrefixes">
+            <summary>
+            Indicates agglutinative languages with right-to-left writing system.
+            </summary>
+            <remarks>
+            Set twofold prefix stripping (but single suffix stripping) eg. for morphologically complex
+            languages with right-to-left writing system.
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CompoundMoreSuffixes">
+            <summary>
+            Allow twofold suffixes within compounds.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundDup">
+            <summary>
+            Forbid word duplication in compounds (e.g. foofoo).
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundRep">
+            <summary>
+            Forbid compounding if the compound word may be a non compound word with a REP fault.
+            </summary>
+            <remarks>
+            Forbid compounding, if the (usually bad) compound word may be
+            a non compound word with a REP fault. Useful for languages with
+            'compound friendly' orthography.
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundTriple">
+            <summary>
+            Forbid compounding if the compound word contains triple repeating letters.
+            </summary>
+            <remarks>
+            Forbid compounding, if compound word contains triple repeating letters
+            (e.g.foo|ox or xo|oof). Bug: missing multi-byte character support
+            in UTF-8 encoding(works only for 7-bit ASCII characters).
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.SimplifiedTriple">
+            <summary>
+            Allow simplified 2-letter forms of the compounds forbidden by <see cref="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundTriple"/>.
+            </summary>
+            <remarks>
+            It's useful for Swedish and Norwegian (and for
+            the old German orthography: Schiff|fahrt -> Schiffahrt).
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckCompoundCase">
+            <summary>
+            Forbid upper case characters at word boundaries in compounds.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckNum">
+            <summary>
+            A flag used by the controlled compound words.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.OnlyMaxDiff">
+            <summary>
+            Remove all bad n-gram suggestions (default mode keeps one).
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.MaxDifferency"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.NoSplitSuggestions">
+            <summary>
+            Disable word suggestions with spaces.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.FullStrip">
+            <summary>
+            Indicates that affix rules can strip full words.
+            </summary>
+            <remarks>
+            <para>
+            When active, affix rules can strip full words, not only one less characters, before
+            adding the affixes, see fullstrip.* test files in the source distribution).
+            </para>
+            <para>
+            Note: conditions may be word length without <see cref="F:WeCantSpell.Hunspell.AffixConfigOptions.FullStrip"/>, too.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.SuggestWithDots">
+            <summary>
+            Add dot(s) to suggestions, if input word terminates in dot(s).
+            </summary>
+            <remarks>
+            Not for LibreOffice dictionaries, because LibreOffice
+            has an automatic dot expansion mechanism.
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.ForbidWarn">
+            <summary>
+            When active, words marked with the <see cref="P:WeCantSpell.Hunspell.AffixConfig.Warn"/> flag aren't accepted by the spell checker.
+            </summary>
+            <remarks>
+            Words with flag <see cref="P:WeCantSpell.Hunspell.AffixConfig.Warn"/> aren't accepted by the spell checker using this parameter.
+            </remarks>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixConfigOptions.CheckSharps">
+            <summary>
+            Indicates SS letter pair in uppercased (German) words may be upper case sharp s (ß).
+            </summary>
+            <remarks>
+            SS letter pair in uppercased (German) words may be upper case sharp s (ß).
+            Hunspell can handle this special casing with the CHECKSHARPS
+            declaration (see also <see cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/> flag and tests/germancompounding example)
+            in both spelling and suggestion.
+            </remarks>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.KeepCase"/>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.AffixEntry">
+            <summary>
+            An affix is either a prefix or a suffix attached to root words to make other words.
+            </summary>
+            <remarks>
+            <para>
+            Basically a Prefix or a Suffix is set of <see cref="T:WeCantSpell.Hunspell.AffixEntry"/> objects
+            which store information about the prefix or suffix along
+            with supporting routines to check if a word has a particular
+            prefix or suffix or a combination.
+            </para>
+            
+            Appendix:  Understanding Affix Code
+            
+            <para>
+            An affix is either a  prefix or a suffix attached to root words to make 
+            other words.
+            </para>
+            
+            <para>
+            Basically a prefix or a suffix is set of <see cref="T:WeCantSpell.Hunspell.AffixEntry"/> objects
+            which store information about the prefix or suffix along
+            with supporting routines to check if a word has a particular
+            prefix or suffix or a combination.
+            </para>
+            
+            <para>
+            Zero stripping or affix are indicated by zero. Zero condition is indicated by dot.
+            Condition is a simplified, regular expression-like pattern, which must be met
+            before the affix can be applied. (Dot signs an arbitrary character.Characters in braces
+            sign an arbitrary character from the character subset.Dash hasn't got special
+            meaning, but circumflex(^) next the first brace sets the complementer character set.)
+            </para>
+            
+            </remarks>
+            
+            <example>
+            
+            <para>
+            Here is a suffix borrowed from the en_US.aff file.  This file 
+            is whitespace delimited.
+            </para>
+            
+            <code>
+            SFX D Y 4 
+            SFX D   0     e          d
+            SFX D   y     ied        [^aeiou]y
+            SFX D   0     ed         [^ey]
+            SFX D   0     ed         [aeiou]y
+            </code>
+            
+            This information can be interpreted as follows
+            
+            <para>
+            In the first line has 4 fields which define the <see cref="T:WeCantSpell.Hunspell.AffixEntryGroup`1"/> for this affix that will contain four <see cref="T:WeCantSpell.Hunspell.SuffixEntry"/> objects.
+            </para>
+            
+            <code>
+            Field
+            -----
+            1     SFX - indicates this is a suffix
+            2     D   - is the name of the character flag which represents this suffix
+            3     Y   - indicates it can be combined with prefixes (cross product)
+            4     4   - indicates that sequence of 4 affentry structures are needed to
+                           properly store the affix information
+            </code>
+            
+            <para>
+            The remaining lines describe the unique information for the 4 <see cref="T:WeCantSpell.Hunspell.SuffixEntry"/> 
+            objects that make up this affix.  Each line can be interpreted
+            as follows: (note fields 1 and 2 are as a check against line 1 info)
+            </para>
+            
+            <code>
+            Field
+            -----
+            1     SFX         - indicates this is a suffix
+            2     D           - is the name of the character flag for this affix
+            3     y           - the string of chars to strip off before adding affix
+                                     (a 0 here indicates the NULL string)
+            4     ied         - the string of affix characters to add
+            5     [^aeiou]y   - the conditions which must be met before the affix
+                                can be applied
+            </code>
+            
+            <para>
+            Field 5 is interesting.  Since this is a suffix, field 5 tells us that
+            there are 2 conditions that must be met.  The first condition is that 
+            the next to the last character in the word must *NOT* be any of the 
+            following "a", "e", "i", "o" or "u".  The second condition is that
+            the last character of the word must end in "y".
+            </para>
+            
+            </example>
+            
+            <seealso cref="T:WeCantSpell.Hunspell.PrefixEntry"/>
+            <seealso cref="T:WeCantSpell.Hunspell.SuffixEntry"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntry.MorphCode">
+            <summary>
+            Optional morphological fields separated by spaces or tabulators.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntry.Conditions">
+            <summary>
+            Text matching conditions that are to be met.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntry.Append">
+            <summary>
+            The affix string to add.
+            </summary>
+            <remarks>
+            Affix (optionally with flags of continuation classes, separated by a slash).
+            </remarks>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntry.Strip">
+            <summary>
+            String to strip before adding affix.
+            </summary>
+            <remarks>
+            Stripping characters from beginning (at prefix rules) or
+            end(at suffix rules) of the word.
+            </remarks>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.AffixEntryGroup`1">
+            <summary>
+            Contains a set of <see cref="T:WeCantSpell.Hunspell.AffixEntry"/> instances based on the same <see cref="P:WeCantSpell.Hunspell.AffixEntryGroup`1.AFlag"/>.
+            </summary>
+            <typeparam name="TEntry">The specific entry type.</typeparam>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.Builder.Entries">
+            <summary>
+            All of the entries that make up this group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.Builder.AFlag">
+            <summary>
+            ID used to represent the affix group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.Builder.Options">
+            <summary>
+            Options for this affix group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.Entries">
+            <summary>
+            All of the entries that make up this group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.AFlag">
+            <summary>
+            ID used to represent the affix group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.Options">
+            <summary>
+            Options for this affix group.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.AffixEntryGroup`1.AllowCross">
+            <summary>
+            Indicates if a group has the <see cref="F:WeCantSpell.Hunspell.AffixEntryOptions.CrossProduct"/> option enabled.
+            </summary>
+            <seealso cref="T:WeCantSpell.Hunspell.AffixEntryOptions"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixEntryOptions.CrossProduct">
+            <summary>
+            Indicates that both prefixes and suffixes can apply to the same subject.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Flag">
+            <summary>
+            parse in the try string
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.KeyString">
+            <summary>
+            parse in the keyboard string
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.TryString">
+            <summary>
+            parse in the try string
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.SetEncoding">
+            <summary>
+            parse in the name of the character set used by the .dict and .aff
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Language">
+            <summary>
+            parse in the language for language specific codes
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundSyllableNum">
+            <summary>
+            parse in the flag used by compound_check() method
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.WordChars">
+            <summary>
+            parse in the extra word characters
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Ignore">
+            <summary>
+            parse in the ignored characters (for example, Arabic optional diacretics characters)
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundFlag">
+            <summary>
+            parse in the flag used by the controlled compound words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundMiddle">
+            <summary>
+            parse in the flag used by compound words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundBegin">
+            <summary>
+            parse in the flag used by compound words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundEnd">
+            <summary>
+            parse in the flag used by compound words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundWordMax">
+            <summary>
+            parse in the data used by compound_check() method
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundMin">
+            <summary>
+            parse in the minimal length for words in compounds
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundRoot">
+            <summary>
+            parse in the flag sign compounds in dictionary
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundPermitFlag">
+            <summary>
+            parse in the flag used by compound_check() method
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundForbidFlag">
+            <summary>
+            parse in the flag used by compound_check() method
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundSyllable">
+            <summary>
+            parse in the max. words and syllables in compounds
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.ForbiddenWord">
+            <summary>
+            parse in the flag used by forbidden words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.LemmaPresent">
+            <summary>
+            parse in the flag used by forbidden words
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Circumfix">
+            <summary>
+            parse in the flag used by circumfixes
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.OnlyInCompound">
+            <summary>
+            parse in the flag used by fogemorphemes
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.NeedAffix">
+            <summary>
+            parse in the flag used by `needaffixs'
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Replacement">
+            <summary>
+            parse in the typical fault correcting table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.InputConversions">
+            <summary>
+            parse in the input conversion table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.OutputConversions">
+            <summary>
+            parse in the output conversion table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Phone">
+            <summary>
+            parse in the phonetic conversion table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CheckCompoundPattern">
+            <summary>
+            parse in the checkcompoundpattern table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.CompoundRule">
+            <summary>
+            parse in the defcompound table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Map">
+            <summary>
+            parse in the related character map table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.Break">
+            <summary>
+            parse in the word breakpoints table
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.AffixReader.AffixReaderCommandKind.KeepCase">
+            <summary>
+            parse in the flag used by forbidden words
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.BreakSet.FindRecursionLimit(System.String)">
+            <summary>
+            Calculate break points for recursion limit.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CapitalizationType.None">
+            <summary>
+            No letters capitalized.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CapitalizationType.Init">
+            <summary>
+            Initial letter capitalized.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CapitalizationType.All">
+            <summary>
+            All letters capitalized.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CapitalizationType.Huh">
+            <summary>
+            Mixed case.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CapitalizationType.HuhInit">
+            <summary>
+            Initial letter capitalized with mixed case.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.CharacterCondition.Restricted">
+            <summary>
+            Indicates that the <see cref="P:WeCantSpell.Hunspell.CharacterCondition.Characters"/> are restricted when <c>true</c>.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.CharacterConditionGroup.IsStartingMatch(System.String)">
+            <summary>
+            Determines if the start of the given <paramref name="text"/> matches the conditions.
+            </summary>
+            <param name="text">The text to check.</param>
+            <returns>True when the start of the <paramref name="text"/> is matched by the conditions.</returns>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.CharacterConditionGroup.IsEndingMatch(System.String)">
+            <summary>
+            Determines if the end of the given <paramref name="text"/> matches the conditions.
+            </summary>
+            <param name="text">The text to check.</param>
+            <returns>True when the end of the <paramref name="text"/> is matched by the conditions.</returns>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CompoundRuleSet.MetacharData.btpp">
+            <summary>
+            Metacharacter (*, ?) position for backtracking.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CompoundRuleSet.MetacharData.btwp">
+            <summary>
+            Word position for metacharacters.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.CompoundRuleSet.MetacharData.btnum">
+            <summary>
+            Number of matched characters in metacharacter.
+            </summary>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.FlagMode">
+            <summary>
+            Indicates the method of encoding used for flag values.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.FlagMode.Char">
+            <summary>
+            Ispell's one-character flags (erfg -> e r f g).
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.FlagMode.Long">
+            <summary>
+            Two-character flags (1x2yZz -> 1x 2y Zz).
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.FlagMode.Num">
+            <summary>
+            Decimal numbers separated by comma (4521,23,233 -> 452123 233).
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.FlagMode.Uni">
+            <summary>
+            UTF-8 characters.
+            </summary>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.IHunspellLineReader">
+            <summary>
+            Defines operations to read affix or dictionary lines from a stream sequentially.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.IHunspellLineReader.ReadLineAsync">
+            <summary>
+            Reads the next line from a stream.
+            </summary>
+            <returns>A task that represents the asynchronous read operation. The reult value will contain the contents of the next line as a string or the value <c>null</c> indicating there are no more lines to be read.</returns>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.IHunspellLineReader.ReadLine">
+            <summary>
+            Reads the next line from a stream.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.IHunspellLineReader.CurrentEncoding">
+            <summary>
+            Gets the current encoding that the reader is using to decode text.
+            </summary>
+        </member>
+        <member name="T:WeCantSpell.Hunspell.Infrastructure.CulturedStringComparer">
+            <summary>
+            Provides the ability to compare text using a configured culture.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.Infrastructure.HunspellTextFunctions.MakeAllSmall(System.String,System.Globalization.TextInfo)">
+            <summary>
+            Convert to all little.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.MultiReplacementTable.FindLargestMatchingConversion(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Finds a conversion matching the longest version of the given <paramref name="text"/> from the left.
+            </summary>
+            <param name="text">The text to find a matching input conversion for.</param>
+            <returns>The best matching input conversion.</returns>
+            <seealso cref="T:WeCantSpell.Hunspell.MultiReplacementEntry"/>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.PatternSet.Check(System.String,System.Int32,WeCantSpell.Hunspell.WordEntry,WeCantSpell.Hunspell.WordEntry,System.Boolean)">
+            <summary>
+            Forbid compoundings when there are special patterns at word bound.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.ReplacementEntry.Med">
+            <seealso cref="F:WeCantSpell.Hunspell.ReplacementValueType.Med"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.ReplacementEntry.Ini">
+            <seealso cref="F:WeCantSpell.Hunspell.ReplacementValueType.Ini"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.ReplacementEntry.Fin">
+            <seealso cref="F:WeCantSpell.Hunspell.ReplacementValueType.Fin"/>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.ReplacementEntry.Isol">
+            <seealso cref="F:WeCantSpell.Hunspell.ReplacementValueType.Isol"/>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.ReplacementValueType.Med">
+            <summary>
+            Indicates that text can contain the pattern.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.ReplacementValueType.Ini">
+            <summary>
+            Indicates that text can start with the pattern.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.ReplacementValueType.Fin">
+            <summary>
+            Indicates that text can end with the pattern.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.ReplacementValueType.Isol">
+            <summary>
+            Indicates that text must match the pattern exactly.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordEntryOptions.None">
+            <summary>
+            Indicates there is optional morphological data.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordEntryOptions.AliasM">
+            <summary>
+            Using alias compression.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordEntryOptions.Phon">
+            <summary>
+            Indicates there is a "ph:" field in the morphological data.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordEntryOptions.InitCap">
+            <summary>
+            Indicates the dictionary word is capitalized.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordList.Builder.PhoneticReplacements">
+            <summary>
+            Spelling replacement suggestions based on phonetics.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.WordList.Query.PrefixAppend">
+            <summary>
+            Previous prefix for counting syllables of the prefix.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.WordList.Query.SuffixExtra">
+            <summary>
+            Modifier for syllable count of <see cref="P:WeCantSpell.Hunspell.WordList.Query.SuffixAppend"/>.
+            </summary>
+        </member>
+        <member name="P:WeCantSpell.Hunspell.WordList.Query.SuffixAppend">
+            <summary>
+            Previous suffix for counting syllables of the suffix.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordList.Query.CompoundCheckTimeLimiter">
+            <summary>
+            Used to abort long running compound check calls.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.AffixCheck(System.ReadOnlySpan{System.Char},WeCantSpell.Hunspell.FlagValue,WeCantSpell.Hunspell.WordList.Query.CompoundOptions)">
+            <summary>
+            Check if word with affixes is correctly spelled.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.AffixCheck(System.String,WeCantSpell.Hunspell.FlagValue,WeCantSpell.Hunspell.WordList.Query.CompoundOptions)">
+            <summary>
+            Check if word with affixes is correctly spelled.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.PrefixCheck(System.String,WeCantSpell.Hunspell.WordList.Query.CompoundOptions,WeCantSpell.Hunspell.FlagValue)">
+            <summary>
+            Check word for prefixes
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.CheckTwoSfx(WeCantSpell.Hunspell.Affix{WeCantSpell.Hunspell.PrefixEntry},System.String,WeCantSpell.Hunspell.WordList.Query.CompoundOptions,WeCantSpell.Hunspell.FlagValue)">
+            <summary>
+            Check if this prefix entry matches.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.SuffixCheckTwoSfx(System.String,WeCantSpell.Hunspell.AffixEntryOptions,WeCantSpell.Hunspell.Affix{WeCantSpell.Hunspell.PrefixEntry},WeCantSpell.Hunspell.FlagValue)">
+            <summary>
+            Check word for two-level suffixes.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.DefCompoundCheck(WeCantSpell.Hunspell.Infrastructure.IncrementalWordList,WeCantSpell.Hunspell.WordEntryDetail,System.Boolean)">
+            <summary>
+            Compound check patterns.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.CompoundCaseCheck(System.String,System.Int32)">
+            <summary>
+            Forbid compounding with neighbouring upper and lower case characters at word bounds.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.GetSyllable(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Calculate number of syllable for compound-checking.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.CompoundReplacementCheck(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Is word a non compound with a REP substitution?
+            </summary>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.CheckCompoundRep"/>
+            <seealso cref="P:WeCantSpell.Hunspell.AffixConfig.Replacements"/>
+            <seealso cref="P:WeCantSpell.Hunspell.WordList.AllReplacements"/>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.CheckTwoSfx(WeCantSpell.Hunspell.Affix{WeCantSpell.Hunspell.SuffixEntry},System.String,WeCantSpell.Hunspell.AffixEntryOptions,WeCantSpell.Hunspell.Affix{WeCantSpell.Hunspell.PrefixEntry},WeCantSpell.Hunspell.FlagValue)">
+            <summary>
+            See if two-level suffix is present in the word.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.Query.CleanWord2(System.String,WeCantSpell.Hunspell.CapitalizationType@,System.Int32@)">
+            <summary>
+            Make a copy of <paramref name="src"/> and returns it
+            while removing all leading blanks and removing any trailing periods.
+            </summary>
+            <param name="src">The source text to clean and classify.</param>
+            <param name="capType">The capitalization type the <paramref name="src"/> is classified as.</param>
+            <param name="abbv">Abbreviation flag indicating the presence of trailing periods.</param>
+            <returns>The cleaned source text.</returns>
+            <remarks>
+            Removes all leading blanks and removes any trailing periods after recording
+            their presence with the abbreviation flag (<paramref name="abbv"/>)
+            also since already going through character by character,
+            set the capitalization type (<paramref name="capType"/>) and
+            return the length of the "cleaned" (and UTF-8 encoded) word
+            </remarks>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QueryCheck.SpellSharps(System.String@,WeCantSpell.Hunspell.SpellCheckResultType@,System.String@)">
+            <summary>
+            Recursive search for right ss - sharp s permutations
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QueryCheck.SpellSharps(System.String@,System.Int32,System.Int32,System.Int32,WeCantSpell.Hunspell.SpellCheckResultType@,System.String@)">
+            <summary>
+            Recursive search for right ss - sharp s permutations
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordList.QuerySuggest.TimeLimitMs">
+            <summary>
+            Timelimit: max ~1/4 sec (process time on Linux) for a time consuming function.
+            </summary>
+        </member>
+        <member name="F:WeCantSpell.Hunspell.WordList.QuerySuggest.CompoundSuggestTimeLimiter">
+            <summary>
+            Used to abort long running compound check calls.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.Suggest(System.Collections.Generic.List{System.String},System.String,System.Boolean@)">
+            <summary>
+            Generate suggestions for a misspelled word
+            </summary>
+            <param name="slst">Resulting suggestion list.</param>
+            <param name="word">The word to base suggestions on.</param>
+            <param name="onlyCompoundSug">Indicates there may be bad suggestions.</param>
+            <returns>True when there may be a good suggestion.</returns>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.DoubleTwoChars(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            perhaps we doubled two characters (pattern aba -> ababa, for example vacation -> vacacation)
+            </summary>
+            <remarks>
+            (for example vacation -> vacacation)
+            The recognized pattern with regex back-references:
+            "(.)(.)\1\2\1" or "..(.)(.)\1\2"
+            </remarks>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.BadChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is wrong char in place of correct one.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.MoveChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is a letter was moved.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.ForgotChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is missing a letter it needs.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.ExtraChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is word has an extra letter it does not need.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.BadCharKey(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            error is wrong char in place of correct one (case and keyboard related version)
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.LongSwapChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is not adjacent letter were swapped.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.SwapChar(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Error is adjacent letter were swapped.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.CheckWord(System.String,System.Boolean,WeCantSpell.Hunspell.Infrastructure.OperationTimeLimiter)">
+            <summary>
+            See if a candidate suggestion is spelled correctly
+            needs to check both root words and words with affixes.
+            </summary>
+            <remarks>
+            Obsolote MySpell-HU modifications:
+            return value 2 and 3 marks compounding with hyphen (-)
+            `3' marks roots without suffix
+            </remarks>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.ReplChars(System.Collections.Generic.List{System.String},System.String,System.Boolean)">
+            <summary>
+            Suggestions for a typical fault of spelling, that
+            differs with more, than 1 letter from the right form.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.NGramSuggest(System.Collections.Generic.List{System.String},System.String,WeCantSpell.Hunspell.CapitalizationType)">
+            <summary>
+            Generate a set of suggestions for very poorly spelled words.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.Lcs(System.String,System.String,System.Int32@,System.Int32@,WeCantSpell.Hunspell.WordList.QuerySuggest.LongestCommonSubsequenceType[]@)">
+            <summary>
+            Longest common subsequence.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.TwoWords(System.Collections.Generic.List{System.String},System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Error if should have been two words.
+            </summary>
+            <returns>Trye if there is a dictionary word pair or there was already a good suggestion before calling.</returns>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.Add(WeCantSpell.Hunspell.PrefixEntry,System.String)">
+            <summary>
+            Add prefix to this word assuming conditions hold.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.Add(WeCantSpell.Hunspell.SuffixEntry,System.String)">
+            <summary>
+            Add suffix to this word assuming conditions hold.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.LeftCommonSubstring(System.String,System.String)">
+            <summary>
+            Length of the left common substring of s1 and (decapitalised) s2.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.NGram(System.Int32,System.String,System.String,WeCantSpell.Hunspell.WordList.QuerySuggest.NGramOptions)">
+            <summary>
+            Generate an n-gram score comparing s1 and s2.
+            </summary>
+        </member>
+        <member name="M:WeCantSpell.Hunspell.WordList.QuerySuggest.Phonet(System.String)">
+            <summary>
+            Do phonetic transformation.
+            </summary>
+            <param name="inword">An uppercase string.</param>
+            <remarks>
+            Phonetic transcription algorithm
+            see: http://aspell.net/man-html/Phonetic-Code.html
+            convert string to uppercase before this call
+            </remarks>
+        </member>
+    </members>
+</doc>

@@ -271,5 +271,21 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
             Assert.AreEqual("CAT", matches.First().Word);
         }
+
+        [Test]
+        // pseudo-performance test
+        public void Invoke_ForLongWrongVector_ZZZ()
+        {
+            var findWordMatchesFunc = new FindWordMatchesFunc(
+                isLegitWordFunc: new IsLegitEngWordFunc(),
+                minWordLength: 4);
+
+            var chars = new[] { 'C', 'T', 'C', 'T', 'C', 'T', 'C', 'T', 'C' };
+
+            var matches = findWordMatchesFunc.Invoke(
+                chars.SelectMany((_, y) => chars.Select((@char, x) => new StaticChar(x, y, @char))));
+
+            Assert.IsEmpty(matches);
+        }
     }
 }
