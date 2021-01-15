@@ -31,14 +31,14 @@
                 case 'P': return EngLookupP.LookUp.Check(word);
                 case 'Q': return EngLookupQ.LookUp.Check(word);
                 case 'R': return EngLookupR.LookUp.Check(word);
-                case 'S': return EngLookupS.SLookUp.Check(word);
-                case 'T': return EngLookupT.TLookUp.Check(word);
-                case 'U': return EngLookupU.ULookUp.Check(word);
-                case 'V': return EngLookupV.VLookUp.Check(word);
-                case 'W': return EngLookupW.WLookUp.Check(word);
-                case 'X': return EngLookupX.XLookUp.Check(word);
-                case 'Y': return EngLookupY.YLookUp.Check(word);
-                case 'Z': return EngLookupZ.ZLookUp.Check(word);
+                case 'S': return EngLookupS.LookUp.Check(word);
+                case 'T': return EngLookupT.LookUp.Check(word);
+                case 'U': return EngLookupU.LookUp.Check(word);
+                case 'V': return EngLookupV.LookUp.Check(word);
+                case 'W': return EngLookupW.LookUp.Check(word);
+                case 'X': return EngLookupX.LookUp.Check(word);
+                case 'Y': return EngLookupY.LookUp.Check(word);
+                case 'Z': return EngLookupZ.LookUp.Check(word);
                 default: return false;
             }
         }
