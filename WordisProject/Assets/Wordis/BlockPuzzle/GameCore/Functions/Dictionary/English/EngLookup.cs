@@ -13,14 +13,14 @@
 
             switch (firstChar)
             {
-                case 'A': return EngLookupA.ALookUp.Check(word);
-                case 'B': return EngLookupB.BLookUp.Check(word);
-                case 'C': return EngLookupC.CLookUp.Check(word);
-                case 'D': return EngLookupD.DLookUp.Check(word);
-                case 'E': return EngLookupE.ELookUp.Check(word);
-                case 'F': return EngLookupF.FLookUp.Check(word);
-                case 'G': return EngLookupG.GLookUp.Check(word);
-                case 'H': return EngLookupH.HLookUp.Check(word);
+                case 'A': return EngLookupA.LookUp.Check(word);
+                case 'B': return EngLookupB.LookUp.Check(word);
+                case 'C': return EngLookupC.LookUp.Check(word);
+                case 'D': return EngLookupD.LookUp.Check(word);
+                case 'E': return EngLookupE.LookUp.Check(word);
+                case 'F': return EngLookupF.LookUp.Check(word);
+                case 'G': return EngLookupG.LookUp.Check(word);
+                case 'H': return EngLookupH.LookUp.Check(word);
                 case 'I': return EngLookupI.ILookUp.Check(word);
                 case 'J': return EngLookupJ.JLookUp.Check(word);
                 case 'K': return EngLookupK.KLookUp.Check(word);
