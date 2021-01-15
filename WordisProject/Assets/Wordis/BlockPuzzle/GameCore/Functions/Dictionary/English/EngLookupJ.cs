@@ -6,7 +6,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     static class EngLookupJ
     {
         private const string Csv =
-            @"            j,
+            @"j,
 jaal goat,
 jab,
 jabber,
@@ -801,6 +801,6 @@ juxtaposition";
 
         public static WordList LookUp { get; } =
             WordList.CreateFromWords(
-                Csv.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

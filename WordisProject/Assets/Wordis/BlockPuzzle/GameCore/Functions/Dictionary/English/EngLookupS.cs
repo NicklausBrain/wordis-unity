@@ -7,8 +7,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     {
         public static WordList LookUp { get; } =
             WordList.CreateFromWords(
-                Csv.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries));
-        
+                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+
         private const string Csv = @"s,
 saadh,
 saan,

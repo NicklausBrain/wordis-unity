@@ -849,6 +849,6 @@ kytoplasma";
 
         public static WordList LookUp { get; } =
             WordList.CreateFromWords(
-                Csv.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }
