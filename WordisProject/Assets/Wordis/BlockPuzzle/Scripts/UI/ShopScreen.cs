@@ -103,7 +103,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// <param name="productInfo"></param>
         void OnPurchaseSuccessful(ProductInfo productInfo)
         {
-            Invoke("UpdateShopScreen", 0.2F);
+            Invoke(nameof(UpdateShopScreen), 0.2F);
         }
 
         void UpdateShopScreen()

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf0a325abbbb4c93be731056f0e93f3, type: 3}
   m_Name: AdSettings
   m_EditorClassIdentifier: 
-  enableConsent: 1
+  enableConsent: 0
   consentSelection: 1
-  adsEnabled: 1
+  adsEnabled: 0
   selectedAdNetwork: 1
   bannerAdsEnabled: 1
   showBannerOnLoad: 1
