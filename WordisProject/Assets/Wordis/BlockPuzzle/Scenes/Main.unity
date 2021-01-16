@@ -26073,6 +26073,7 @@ GameObject:
   - component: {fileID: 1424944132}
   - component: {fileID: 1424944133}
   - component: {fileID: 1424944134}
+  - component: {fileID: 1424944135}
   m_Layer: 5
   m_Name: GamingButtonsPanel
   m_TagString: Untagged
@@ -26129,6 +26130,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98093f8f578318245a7f7997fe37cbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1424944135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424944131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3679893077c3574faed34891256d7bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSwipeLength: 0.5
+  triggerSwipeAtMinLength: 0
+  useEightDirections: 0
 --- !u!1 &1424972107
 GameObject:
   m_ObjectHideFlags: 0
