@@ -95,6 +95,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         // Additional score multiplier on breaking more than 1 line.
         public int multiLineScoreMultiplier = 50;
+
+        /// <summary>
+        /// Game step duration in seconds.
+        /// Lover -> faster game.
+        /// </summary>
+        public float gameSpeed = 1.0f;
     }
 
     /// <summary>

@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -45,7 +46,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             vibrationToggleButton.SetActive(ProfileManager.Instance.GetAppSettings().enableVibrations ? true : false);
 
             int activeLanguages = 0;
-            foreach (LocalizedLanguage lang in LocalizationManager.Instance.allLocalizedLanaguages)
+            var allLocalizedLanguages =
+                LocalizationManager.Instance?.allLocalizedLanaguages?.ToArray() ??
+                Array.Empty<LocalizedLanguage>();
+
+            foreach (LocalizedLanguage lang in allLocalizedLanguages)
             {
                 if (lang.isLanguageEnabled)
                 {
@@ -53,8 +58,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                 }
             }
 
-            selectLanguageButton.SetActive(LocalizationManager.Instance.isLocalizationSupported &&
-                                           activeLanguages > 1);
+            selectLanguageButton.SetActive(
+                LocalizationManager.Instance.isLocalizationSupported &&
+                activeLanguages > 1);
+
             txtVersion.text = "Version : " + Application.version;
         }
 

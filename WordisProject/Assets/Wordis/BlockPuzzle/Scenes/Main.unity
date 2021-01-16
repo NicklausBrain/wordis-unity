@@ -15450,7 +15450,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 225, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093981465
 MonoBehaviour:
@@ -15522,14 +15522,14 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093981463}
-  m_Text: <<
+  m_Text: "\u25C0"
   m_OffsetZ: -1
-  m_CharacterSize: 40
+  m_CharacterSize: 36
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 36
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}
@@ -26136,6 +26136,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1424944132}
   - component: {fileID: 1424944133}
+  - component: {fileID: 1424944134}
+  - component: {fileID: 1424944135}
   m_Layer: 5
   m_Name: GamingButtonsPanel
   m_TagString: Untagged
@@ -26180,6 +26182,33 @@ MonoBehaviour:
   btnArrowLeft: {fileID: 1093981471}
   btnArrowDown: {fileID: 1667601869}
   btnArrowRight: {fileID: 1785016448}
+--- !u!114 &1424944134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424944131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98093f8f578318245a7f7997fe37cbe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1424944135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424944131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3679893077c3574faed34891256d7bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSwipeLength: 0.5
+  triggerSwipeAtMinLength: 0
+  useEightDirections: 0
 --- !u!1 &1424972107
 GameObject:
   m_ObjectHideFlags: 0
@@ -27258,6 +27287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardGenerator: {fileID: 1169354917}
   gamingButtonsController: {fileID: 0}
+  gamingSwipesController: {fileID: 0}
 --- !u!114 &1501201906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30529,7 +30559,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 225, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1667601863
 MonoBehaviour:
@@ -30603,12 +30633,12 @@ TextMesh:
   m_GameObject: {fileID: 1667601861}
   m_Text: "\u25BC"
   m_OffsetZ: -1
-  m_CharacterSize: 40
+  m_CharacterSize: 36
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 36
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}
@@ -32081,7 +32111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 225, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1785016442
 MonoBehaviour:
@@ -32153,14 +32183,14 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785016440}
-  m_Text: '>>'
+  m_Text: "\u25B6"
   m_OffsetZ: -1
-  m_CharacterSize: 40
+  m_CharacterSize: 36
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
-  m_TabSize: 4
-  m_FontSize: 40
+  m_TabSize: 0
+  m_FontSize: 36
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}

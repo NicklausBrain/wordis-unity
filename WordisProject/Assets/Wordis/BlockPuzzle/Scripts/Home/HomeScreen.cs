@@ -24,7 +24,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
     public class HomeScreen : MonoBehaviour
     {
 #pragma warning disable 0649
-        [SerializeField] Button btnClassicMode;
+        [SerializeField] Button btnClassicMode; // todo: rename to play button
         [SerializeField] Button btnTimeMode;
         [SerializeField] Button btnAdvanceMode;
 #pragma warning restore 0649
