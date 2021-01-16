@@ -30,6 +30,6 @@ MonoBehaviour:
   defaultGemsAmount: 100
   watchVideoRewardAmount: 50
   rescueGameGemsAmount: 100
-  useDailyRewards: 1
+  useDailyRewards: 0
   dailyRewardsSettings:
     allDayRewards: 1900000023000000320000004b00000055000000640000007d0000008700000096000000af000000

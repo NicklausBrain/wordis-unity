@@ -137,19 +137,6 @@ MonoBehaviour:
     shapeDragPositionOffset: 1
     allowRescueGame: 1
     saveProgress: 1
-  blastModeSettings:
-    modeEnabled: 1
-    boardSize: 9
-    blockSize: 90
-    blockSpace: 3
-    standardShapeAllowed: 1
-    advancedShapeAllowed: 0
-    allowRotation: 0
-    alwaysKeepFilled: 0
-    shapeInactiveSize: 0.5
-    shapeDragPositionOffset: 1
-    allowRescueGame: 0
-    saveProgress: 0
   advancedModeSettings:
     modeEnabled: 1
     boardSize: 9
@@ -165,8 +152,6 @@ MonoBehaviour:
     saveProgress: 1
   initialTime: 60
   addSecondsOnLineBreak: 5
-  blastModeCounter: 9
-  addBombAfterMoves: 4
   rewardOnGameOver: 1
   giveFixedReward: 0
   fixedRewardAmount: 25
@@ -174,3 +159,4 @@ MonoBehaviour:
   blockScore: 20
   singleLineBreakScore: 100
   multiLineScoreMultiplier: 25
+  gameSpeed: 1
