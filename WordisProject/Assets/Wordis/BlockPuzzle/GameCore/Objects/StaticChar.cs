@@ -19,9 +19,31 @@
         {
             switch (gameEvent)
             {
+                case GameEvent.Step:
+                    {
+                        // fall down if any spare space
+                        for (int y = Y + 1; y < game.Settings.Height; y++)
+                        {
+                            var matrix = game.GameObjectsMatrix;
+                            if (matrix[y, X] == null)
+                            {
+                                return With(y: Y + 1);
+                            }
+                        }
+
+                        return this;
+                    }
                 default:
                     return this;
             }
         }
+
+        private StaticChar With(
+            int? x = null,
+            int? y = null) =>
+            new StaticChar(
+                x ?? X,
+                y ?? Y,
+                Value);
     }
 }

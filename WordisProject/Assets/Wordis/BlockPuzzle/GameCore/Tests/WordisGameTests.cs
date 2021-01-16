@@ -315,5 +315,33 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
             Assert.AreSame(settings, game.Settings);
         }
+
+        [Test]
+        public void StaticBlocks_WhenHaveEmptySpaceBelow_FallDown()
+        {
+            /* Initial state:
+             * [-] [-] [X]
+             * [-] [Z] [Y]
+             * [-] [-] [-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .With(new StaticChar(2, 0, 'X'))
+                .With(new StaticChar(2, 1, 'Y'))
+                .With(new StaticChar(1, 1, 'Z'))
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [-]
+             * [-] [-] [X]
+             * [-] [Z] [Y] */
+            Assert.Contains(
+                new StaticChar(2, 1, 'X'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new StaticChar(2, 2, 'Y'),
+                game.GameObjects.ToArray());
+            Assert.Contains(
+                new StaticChar(1, 2, 'Z'),
+                game.GameObjects.ToArray());
+        }
     }
 }

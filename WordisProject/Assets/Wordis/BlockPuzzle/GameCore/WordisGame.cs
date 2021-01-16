@@ -20,6 +20,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// [0:2][1:2][2:2]
         /// </summary>
         private readonly Lazy<WordisObj[]> _gameObjects;
+        private readonly Lazy<WordisObj[,]> _gameObjectsMatrix;
 
         public WordisGame(
             WordisSettings settings,
@@ -44,6 +45,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
             _events = new Lazy<GameEvent[]>(
                 () => events?.ToArray() ?? Array.Empty<GameEvent>());
+            _gameObjectsMatrix = new Lazy<WordisObj[,]>(InitMatrix);
         }
 
         public WordisSettings Settings { get; }
@@ -57,6 +59,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// State of the game.
         /// </summary>
         public IReadOnlyList<WordisObj> GameObjects => _gameObjects.Value;
+
+        public WordisObj[,] GameObjectsMatrix => _gameObjectsMatrix.Value;
 
         /// <summary>
         /// Log of the game events.
@@ -146,6 +150,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             var randomChar = _getLetterFunc.Invoke();
 
             return new ActiveChar(Settings.Width / 2, 0, randomChar);
+        }
+
+        private WordisObj[,] InitMatrix()
+        {
+            var matrix = new WordisObj[Settings.Height, Settings.Width]; // that's right
+
+            foreach (WordisObj gameObject in GameObjects)
+            {
+                matrix[gameObject.Y, gameObject.X] = gameObject;
+            }
+
+            return matrix;
         }
     }
 }
