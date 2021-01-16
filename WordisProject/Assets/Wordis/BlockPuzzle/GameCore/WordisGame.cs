@@ -91,6 +91,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns></returns>
         public WordisGame Handle(GameEvent gameEvent)
         {
+            if (IsGameOver) // do nothing
+            {
+                return this;
+            }
+
             var updatedGameObjects = GameObjects
                 .Select(gameObject => gameObject.Handle(this, gameEvent))
                 .ToArray();
@@ -112,7 +117,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 
-                        return hasActiveObjects // || Game Over how to cover?
+                        return hasActiveObjects || updatedGame.IsGameOver
                             ? updatedGame
                             : updatedGame.With(GenerateActiveChar());
                     }
