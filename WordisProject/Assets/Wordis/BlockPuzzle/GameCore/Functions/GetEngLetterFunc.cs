@@ -63,11 +63,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
         /// <inheritdoc />
         public override char Invoke()
         {
+#if !UNITY_IOS
             if (i == arr.Length)
             {
-               i = 0;
+                i = 0;
             }
             return arr[i++];
+#endif
 
             var rn = new Random(Environment.TickCount);
 
