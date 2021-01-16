@@ -50,6 +50,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             lock (_gameLock)
             {
+                if (wordisGame.IsGameOver)
+                {
+                    // stop the game cycle
+                    CancelInvoke(nameof(GameStep));
+                    OnGameOver();
+                }
+
                 var lastGame = wordisGame;
                 var newGame = wordisGame.Handle(gameEvent);
                 wordisGame = newGame;
@@ -217,7 +224,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             StartCoroutine(TryRescueGameEnumerator(reason));
         }
 
-        IEnumerator TryRescueGameEnumerator(GameOverReason reason)
+        // todo: remove or adapt
+        private IEnumerator TryRescueGameEnumerator(GameOverReason reason)
         {
             inGameMessage.ShowMessage(reason);
             yield return new WaitForSeconds(1.5F);
@@ -230,13 +238,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
             else
             {
-                OnGameOver();
+                // OnGameOver();
             }
         }
 
         public void OnRescueCancelled()
         {
-            OnGameOver();
+            // OnGameOver();
         }
 
         /// <summary>
@@ -278,7 +286,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     currentGameMode);
 
             UIController.Instance.gameOverScreen.Activate();
-            CancelInvoke(nameof(GameStep));
         }
 
         /// <summary>
