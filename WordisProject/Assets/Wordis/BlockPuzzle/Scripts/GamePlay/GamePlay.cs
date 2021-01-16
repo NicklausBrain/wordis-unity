@@ -14,7 +14,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.GameCore;
-using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.Utils;
 using UnityEngine;
 
@@ -31,6 +30,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         [Tooltip("GamingButtonsController Script Reference")]
         public GamingButtonsController gamingButtonsController;
+
+        [Tooltip("GamingSwipesController Script Reference")]
+        public GamingSwipesController gamingSwipesController;
 
         [Header("Other Public Members")]
 
