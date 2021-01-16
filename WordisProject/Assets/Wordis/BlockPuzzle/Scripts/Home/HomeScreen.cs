@@ -17,6 +17,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using GameAnalyticsSDK;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.Home
 {
@@ -51,6 +52,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             }
 
             gamePlaySettings = null;
+            GameAnalytics.Initialize();
         }
 
         /// <summary>
