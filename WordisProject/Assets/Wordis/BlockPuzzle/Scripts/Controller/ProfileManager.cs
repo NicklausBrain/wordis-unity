@@ -224,7 +224,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
         public bool IsAppAdFree()
         {
-            return isUserAdFree;
+            return true;
         }
 
         /// <summary>

@@ -53,9 +53,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 #pragma warning restore 0649
 
 
-        int rewardAmount = 0;
-        int totalLinesCompleted = 0;
-        int gameOverId = 0;
+        int _rewardAmount = 0;
+        int _totalLinesCompleted = 0;
+        int _gameOverId = 0;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -96,7 +96,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         public void SetGameData(
             GameOverReason reason,
             int score,
-            int _totalLinesCompleted,
+            int totalLinesCompleted,
             GameMode gameMode)
         {
             switch (reason)
@@ -110,7 +110,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                     break;
             }
 
-            totalLinesCompleted = _totalLinesCompleted;
+            _totalLinesCompleted = totalLinesCompleted;
             txtScore.text = score.ToString("N0");
 
             int bestScore = ProfileManager.Instance.GetBestScore(gameMode);
@@ -125,11 +125,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
 
             // Number of time game over shown. Also total game play counts.
-            gameOverId = PlayerPrefs.GetInt("gameOverId", 0);
-            gameOverId += 1;
-            PlayerPrefs.SetInt("gameOverId", gameOverId);
+            _gameOverId = PlayerPrefs.GetInt("gameOverId", 0);
+            _gameOverId += 1;
+            PlayerPrefs.SetInt("gameOverId", _gameOverId);
 
-            if (ProfileManager.Instance.gameOverReviewSessions.Contains(gameOverId))
+            if (ProfileManager.Instance.gameOverReviewSessions.Contains(_gameOverId))
             {
                 InputManager.Instance.DisableTouchForDelay(2F);
                 Invoke("CheckForReview", 2F);
@@ -148,18 +148,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
                 if (GamePlayUI.Instance.giveFixedReward)
                 {
-                    rewardAmount = GamePlayUI.Instance.fixedRewardAmount;
+                    _rewardAmount = GamePlayUI.Instance.fixedRewardAmount;
                 }
                 else
                 {
-                    rewardAmount = (int)(GamePlayUI.Instance.rewardPerLine * totalLinesCompleted);
+                    _rewardAmount = (int)(GamePlayUI.Instance.rewardPerLine * _totalLinesCompleted);
                 }
 
-                txtReward.text = rewardAmount.ToString();
+                txtReward.text = _rewardAmount.ToString();
 
-                if (rewardAmount > 0)
+                if (_rewardAmount > 0)
                 {
-                    Invoke("ShowRewardAnimation", 1F);
+                    Invoke(nameof(ShowRewardAnimation), 1F);
                 }
             }
             else
@@ -170,12 +170,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
         private void CheckForReview()
         {
-            UIController.Instance.CheckForReviewAppPopupOnGameOver(gameOverId);
+            UIController.Instance.CheckForReviewAppPopupOnGameOver(_gameOverId);
         }
 
         private void ShowRewardAnimation()
         {
-            CurrencyManager.Instance.AddGems(rewardAmount);
+            CurrencyManager.Instance.AddGems(_rewardAmount);
             rewardAnimation.SetActive(true);
         }
 
@@ -204,7 +204,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         }
 
         /// <summary>
-        /// Replay button click listner.
+        /// Replay button click listener.
         /// </summary>
         public void OnReplayButtonPressed()
         {
