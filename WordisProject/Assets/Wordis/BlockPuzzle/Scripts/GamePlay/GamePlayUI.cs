@@ -12,7 +12,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
@@ -38,8 +37,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         #region Wordis
 
         private readonly object _gameLock = new object();
-        public WordisSettings wordisSettings = new WordisSettings(9, 9, 3);
-        public WordisGame wordisGame;
+
+        private readonly WordisSettings _wordisSettings = new WordisSettings(
+            width: 9,
+            height: 9,
+            minWordMatch: 3);
+
+        private WordisGame _wordisGame;
 
         private void GameStep()
         {
@@ -50,16 +54,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             lock (_gameLock)
             {
-                if (wordisGame.IsGameOver)
+                if (_wordisGame.IsGameOver)
                 {
                     // stop the game cycle
                     CancelInvoke(nameof(GameStep));
                     OnGameOver();
                 }
 
-                var lastGame = wordisGame;
-                var newGame = wordisGame.Handle(gameEvent);
-                wordisGame = newGame;
+                var lastGame = _wordisGame;
+                var newGame = _wordisGame.Handle(gameEvent);
+                _wordisGame = newGame;
                 RefreshPresentation(lastGame, newGame);
             }
         }
@@ -133,7 +137,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void StartGamePlay(GameMode gameMode)
         {
             #region
-            wordisGame = new WordisGame(wordisSettings);
+            _wordisGame = new WordisGame(_wordisSettings);
             InvokeRepeating(nameof(GameStep), 1, 1);
             #endregion
 
@@ -206,6 +210,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
+        /// Pauses the game on pressing pause button.
+        /// </summary>
+        public void OnPauseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+
+                UIController.Instance.pauseGameScreen.Activate();
+            }
+        }
+
+        /// <summary>
         /// Will be called on game over. 
         /// </summary>
         public void OnGameOver()
@@ -227,7 +244,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ResetGame()
         {
-            wordisGame = new WordisGame(wordisSettings);
+            _wordisGame = new WordisGame(_wordisSettings);
 
             progressData = null;
             totalLinesCompleted = 0;
