@@ -80,13 +80,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void TryShowingInterstitial()
         {
-            if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
-            {
-                if (AdManager.Instance.IsInterstitialAvailable())
-                {
-                    AdManager.Instance.ShowInterstitial();
-                }
-            }
+            // Bug: NullReferenceException is here
+            //if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
+            //{
+            //    if (AdManager.Instance.IsInterstitialAvailable())
+            //    {
+            //        AdManager.Instance.ShowInterstitial();
+            //    }
+            //}
         }
 
         /// <summary>
