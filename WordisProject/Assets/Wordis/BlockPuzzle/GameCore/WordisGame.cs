@@ -73,6 +73,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public IReadOnlyList<WordMatchEx> Matches => _matches.Value;
 
         /// <summary>
+        /// Determines if game is over.
+        /// </summary>
+        public bool IsGameOver
+        {
+            get
+            {
+                var startPointObj = Matrix[StartPoint.x, StartPoint.y];
+                return startPointObj != null && !(startPointObj is ActiveChar);
+            }
+        }
+
+        /// <summary>
         /// Transforms the game into the next state.
         /// </summary>
         /// <param name="gameEvent"></param>
@@ -89,16 +101,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar);
-
-                        var matches = activeObj == null
-                            ? Array.Empty<WordMatchEx>()
-                            : _findWordMatchesFunc.Invoke(
-                                    updatedGameObjects
-                                        .Where(o => o is StaticChar && (o.X == activeObj.X || o.Y == activeObj.Y))
-                                        .Cast<StaticChar>())
-                                .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
-                                .ToArray();
+                        var matches = FindWordMatches(updatedState: updatedGameObjects);
 
                         var updatedGame = With(
                             gameObjects: matches.Any()
@@ -109,7 +112,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 
-                        return hasActiveObjects
+                        return hasActiveObjects // || Game Over how to cover?
                             ? updatedGame
                             : updatedGame.With(GenerateActiveChar());
                     }
@@ -144,12 +147,35 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordisGame With(WordisObj gameObj) =>
             With(GameObjects.Append(gameObj));
 
+        /// <summary>
+        /// The point where a new active object is generated.
+        /// </summary>
+        public (int x, int y) StartPoint => (x: Settings.Width / 2, y: 0);
+
         private ActiveChar GenerateActiveChar()
         {
-
             var randomChar = _getLetterFunc.Invoke();
 
-            return new ActiveChar(Settings.Width / 2, 0, randomChar);
+            return new ActiveChar(
+                x: StartPoint.x,
+                y: StartPoint.y,
+                randomChar);
+        }
+
+        private WordMatchEx[] FindWordMatches(WordisObj[] updatedState)
+        {
+            var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar);
+
+            var foundMatches = activeObj == null
+                ? Array.Empty<WordMatchEx>()
+                : _findWordMatchesFunc.Invoke(
+                    updatedState // this is optimization to calculate the match only for the active axes
+                        .Where(o => o is StaticChar && (o.X == activeObj.X || o.Y == activeObj.Y))
+                        .Cast<StaticChar>())
+                .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
+                .ToArray();
+
+            return foundMatches;
         }
     }
 }

@@ -343,5 +343,43 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(1, 2, 'Z'),
                 game.GameObjects.ToArray());
         }
+
+        [Test]
+        public void IsGameOver_WhenStartPointIsOccupied_ReturnsTrue()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 3));
+
+            var finishedGame = game.With(
+                new StaticChar(game.StartPoint.x, game.StartPoint.y, 'A'));
+
+            Assert.IsTrue(finishedGame.IsGameOver);
+        }
+
+        [Test]
+        public void IsGameOver_WhenStartPointIsSpare_ReturnsFalse()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .Handle(GameEvent.Step);
+
+            Assert.IsFalse(game.IsGameOver);
+        }
+
+        [Test]
+        public void Handle_WhenGameIsOver_ReturnsTheSameGameInstance()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 3));
+
+            var finishedGame = game.With(
+                new StaticChar(game.StartPoint.x, game.StartPoint.y, 'A'));
+
+            var updatedGame = finishedGame
+                .Handle(GameEvent.Left)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Down)
+                .Handle(GameEvent.Right)
+                .Handle(GameEvent.None);
+
+            Assert.AreSame(finishedGame, updatedGame);
+        }
     }
 }
