@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using NUnit.Framework;
-using UnityEditor.Purchasing;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 {

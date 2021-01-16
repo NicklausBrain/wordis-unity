@@ -12,7 +12,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
@@ -38,8 +37,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         #region Wordis
 
         private readonly object _gameLock = new object();
-        public WordisSettings wordisSettings = new WordisSettings(9, 9, 3);
-        public WordisGame wordisGame;
+
+        private readonly WordisSettings _wordisSettings = new WordisSettings(
+            width: 9,
+            height: 9,
+            minWordMatch: 3);
+
+        private WordisGame _wordisGame;
 
         private void GameStep()
         {
@@ -50,16 +54,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             lock (_gameLock)
             {
-                if (wordisGame.IsGameOver)
+                if (_wordisGame.IsGameOver)
                 {
                     // stop the game cycle
                     CancelInvoke(nameof(GameStep));
                     OnGameOver();
                 }
 
-                var lastGame = wordisGame;
-                var newGame = wordisGame.Handle(gameEvent);
-                wordisGame = newGame;
+                var lastGame = _wordisGame;
+                var newGame = _wordisGame.Handle(gameEvent);
+                _wordisGame = newGame;
                 RefreshPresentation(lastGame, newGame);
             }
         }
@@ -133,7 +137,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void StartGamePlay(GameMode gameMode)
         {
             #region
-            wordisGame = new WordisGame(wordisSettings);
+            _wordisGame = new WordisGame(_wordisSettings);
             InvokeRepeating(nameof(GameStep), 1, 1);
             #endregion
 
@@ -205,59 +209,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             OnShapePlacedEvent?.Invoke();
         }
 
-        public bool CanRescueGame()
-        {
-            if (!rescueDone && currentModeSettings.allowRescueGame)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Checks if game can be rescued.
-        /// </summary>
-        public void TryRescueGame(GameOverReason reason)
-        {
-            currentGameOverReason = reason;
-            StartCoroutine(TryRescueGameEnumerator(reason));
-        }
-
-        // todo: remove or adapt
-        private IEnumerator TryRescueGameEnumerator(GameOverReason reason)
-        {
-            inGameMessage.ShowMessage(reason);
-            yield return new WaitForSeconds(1.5F);
-            GameProgressTracker.Instance.ClearProgressData();
-
-            if (CanRescueGame())
-            {
-                UIController.Instance.rescueGameScreen.Activate();
-                UIController.Instance.rescueGameScreen.GetComponent<RescueGame>().SetRescueReason(reason);
-            }
-            else
-            {
-                // OnGameOver();
-            }
-        }
-
-        public void OnRescueCancelled()
-        {
-            // OnGameOver();
-        }
-
-        /// <summary>
-        /// Resume Game With Rescue Done
-        /// </summary>
-        public void OnRescueSuccessful()
-        {
-            gamePlay.PerfromRescueAction(currentGameOverReason);
-            rescueDone = true;
-
-            GameProgressTracker.Instance.SaveProgressExplicitly();
-        }
-
         /// <summary>
         /// Pauses the game on pressing pause button.
         /// </summary>
@@ -293,7 +244,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ResetGame()
         {
-            wordisGame = new WordisGame(wordisSettings);
+            _wordisGame = new WordisGame(_wordisSettings);
 
             progressData = null;
             totalLinesCompleted = 0;
@@ -355,16 +306,27 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .Except(lastGameState.Matches)
                     .ToArray();
 
-            if (newMatches.Any())
+            if (newMatches.Any()) // on word matches
             {
+                // 1. display matched words
+                foreach (var match in newMatches)
+                {
+                    inGameMessage.ShowMessage(match.Word);
+                }
+
                 var blocksToClear =
                     newMatches
                         .SelectMany(match => match.MatchedChars)
                         .Select(c => gamePlay.allColumns[c.X][c.Y])
                         .ToArray();
-                // todo: check score logic
+
+                // 2. display score (todo: check calculation logic)
                 scoreManager.AddScore(newMatches.Length, blocksToClear.Length);
+
+                // 3. animate blocks destruction
                 StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+
+                // 4. play break sound
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
             }
 

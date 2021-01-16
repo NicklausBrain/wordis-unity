@@ -165,7 +165,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (!(UIController.Instance.rescueGameScreen.activeSelf ||
                       UIController.Instance.gameOverScreen.activeSelf))
                 {
-                    GamePlayUI.Instance.TryRescueGame(GameOverReason.TimeOver);
+                    // GamePlayUI.Instance.TryRescueGame(GameOverReason.TimeOver);
                 }
             }
         }

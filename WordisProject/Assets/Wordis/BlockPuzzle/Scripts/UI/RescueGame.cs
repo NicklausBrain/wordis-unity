@@ -143,7 +143,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             isRescueDone = true;
             InputManager.Instance.DisableTouchForDelay(1F);
-            GamePlayUI.Instance.OnRescueSuccessful();
+            // GamePlayUI.Instance.OnRescueSuccessful();
             gameObject.Deactivate();
         }
 
@@ -156,7 +156,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 isRescueDone = false;
                 UIFeedback.Instance.PlayButtonPressEffect();
-                GamePlayUI.Instance.OnRescueCancelled();
+                // GamePlayUI.Instance.OnRescueCancelled();
                 gameObject.Deactivate();
             }
         }
@@ -177,7 +177,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (watchVidoTag == RescueVideoTag)
             {
                 isRescueDone = true;
-                GamePlayUI.Instance.OnRescueSuccessful();
+                // GamePlayUI.Instance.OnRescueSuccessful();
                 gameObject.Deactivate();
             }
         }
