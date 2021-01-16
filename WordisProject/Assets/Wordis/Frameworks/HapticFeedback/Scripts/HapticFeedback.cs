@@ -11,6 +11,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#if UNITY_ANDROID
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Runtime.InteropServices;
+using System;
+#endif
 
 #if UNITY_IOS
 using UnityEngine.iOS;
