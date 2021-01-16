@@ -21,11 +21,10 @@
             {
                 case GameEvent.Step:
                     {
-                        // fall down if any spare space
+                        // fall down if any spare space below
                         for (int y = Y + 1; y < game.Settings.Height; y++)
                         {
-                            var matrix = game.GameObjectsMatrix;
-                            if (matrix[y, X] == null)
+                            if (game.Matrix[X, y] == null)
                             {
                                 return With(y: Y + 1);
                             }
