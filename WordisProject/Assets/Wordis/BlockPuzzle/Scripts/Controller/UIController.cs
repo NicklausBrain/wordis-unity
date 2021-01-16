@@ -269,10 +269,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                     pauseGameScreen.Deactivate();
                     break;
 
-                case "RescueGame":
-                    GamePlayUI.Instance.OnRescueCancelled();
-                    rescueGameScreen.Deactivate();
-                    break;
+                //case "RescueGame":
+                //    GamePlayUI.Instance.OnRescueCancelled();
+                //    rescueGameScreen.Deactivate();
+                //    break;
             }
         }
 

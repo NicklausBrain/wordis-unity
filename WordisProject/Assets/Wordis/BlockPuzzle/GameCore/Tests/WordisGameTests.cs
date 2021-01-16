@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using NUnit.Framework;
+using UnityEditor.Purchasing;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 {
@@ -342,6 +343,61 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.Contains(
                 new StaticChar(1, 2, 'Z'),
                 game.GameObjects.ToArray());
+        }
+
+        [Test]
+        public void IsGameOver_WhenStartPointIsOccupied_ReturnsTrue()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 3));
+
+            var finishedGame = game.With(
+                new StaticChar(game.StartPoint.x, game.StartPoint.y, 'A'));
+
+            Assert.IsTrue(finishedGame.IsGameOver);
+        }
+
+        [Test]
+        public void IsGameOver_WhenStartPointIsSpare_ReturnsFalse()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 3))
+                .Handle(GameEvent.Step);
+
+            Assert.IsFalse(game.IsGameOver);
+        }
+
+        [Test]
+        public void Handle_WhenGameIsOver_ReturnsTheSameGameInstance()
+        {
+            /* [-][A][-] game is over
+             * [-][B][-] */
+            var game = new WordisGame(_settings.With(width: 3, height: 2))
+                .With(new StaticChar(1, 0, 'A'))
+                .With(new StaticChar(1, 1, 'B'));
+
+            var finishedGame = game
+                .Handle(GameEvent.Left)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Down)
+                .Handle(GameEvent.Right)
+                .Handle(GameEvent.None);
+
+            Assert.AreSame(game, finishedGame);
+        }
+
+        [Test]
+        public void Step_WhenLeadsToGameOver_DoesNotProduceNewActiveObject()
+        {
+            var game = new WordisGame(_settings.With(width: 3, height: 2));
+
+            /* [-][A][-] A is active and next step should finish the game
+             * [-][B][-] */
+            var finishedGame = game
+                .With(new ActiveChar(game.StartPoint.x, game.StartPoint.y, 'A'))
+                .With(new StaticChar(game.StartPoint.x, game.StartPoint.y + 1, 'B'))
+                .Handle(GameEvent.Step);
+
+            Assert.IsTrue(finishedGame.IsGameOver);
+            Assert.IsFalse(finishedGame.GameObjects.Any(o => o is ActiveChar));
         }
     }
 }

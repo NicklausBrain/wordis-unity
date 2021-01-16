@@ -27,19 +27,24 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
     {
 #pragma warning disable 0649
 
-        [Tooltip("Game Over reason text")] [SerializeField]
+        [Tooltip("Game Over reason text")]
+        [SerializeField]
         Text txtGameOveTitle;
 
-        [Tooltip("Score text from game over screen")] [SerializeField]
+        [Tooltip("Score text from game over screen")]
+        [SerializeField]
         Text txtScore;
 
-        [Tooltip("BestScore text from game over screen")] [SerializeField]
+        [Tooltip("BestScore text from game over screen")]
+        [SerializeField]
         Text txtBestScore;
 
-        [Tooltip("Reward Penel")] [SerializeField]
+        [Tooltip("Reward Penel")]
+        [SerializeField]
         GameObject rewardPanel;
 
-        [Tooltip("Reward text from game over screen")] [SerializeField]
+        [Tooltip("Reward text from game over screen")]
+        [SerializeField]
         Text txtReward;
 
         [SerializeField] GameObject gemImage;
@@ -73,15 +78,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// <summary>
         /// Try to show Interstitial ad on game over if ad is available.
         /// </summary>
-        void TryShowingInterstitial()
+        private void TryShowingInterstitial()
         {
-            if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
-            {
-                if (AdManager.Instance.IsInterstitialAvailable())
-                {
-                    AdManager.Instance.ShowInterstitial();
-                }
-            }
+            // Bug: NullReferenceException is here
+            //if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
+            //{
+            //    if (AdManager.Instance.IsInterstitialAvailable())
+            //    {
+            //        AdManager.Instance.ShowInterstitial();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -146,7 +152,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                 }
                 else
                 {
-                    rewardAmount = (int) (GamePlayUI.Instance.rewardPerLine * totalLinesCompleted);
+                    rewardAmount = (int)(GamePlayUI.Instance.rewardPerLine * totalLinesCompleted);
                 }
 
                 txtReward.text = rewardAmount.ToString();
@@ -162,12 +168,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             }
         }
 
-        void CheckForReview()
+        private void CheckForReview()
         {
             UIController.Instance.CheckForReviewAppPopupOnGameOver(gameOverId);
         }
 
-        void ShowRewardAnimation()
+        private void ShowRewardAnimation()
         {
             CurrencyManager.Instance.AddGems(rewardAmount);
             rewardAnimation.SetActive(true);
