@@ -50,6 +50,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             HandleGameEvent(GameEvent.Step);
         }
 
+        private void StartGame()
+        {
+            InvokeRepeating(nameof(GameStep), 1, gamePlaySettings.gameSpeed);
+        }
+
+        private void StopGame()
+        {
+            CancelInvoke(nameof(GameStep));
+        }
+
         public void HandleGameEvent(GameEvent gameEvent)
         {
             lock (_gameLock)
@@ -57,7 +67,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (_wordisGame.IsGameOver)
                 {
                     // stop the game cycle
-                    CancelInvoke(nameof(GameStep));
+                    StopGame();
                     OnGameOver();
                 }
 
@@ -136,9 +146,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void StartGamePlay(GameMode gameMode)
         {
-            #region
+            #region Wordis
             _wordisGame = new WordisGame(_wordisSettings);
-            InvokeRepeating(nameof(GameStep), 1, 1);
+            StartGame();
             #endregion
 
             currentGameMode = gameMode;
@@ -217,7 +227,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-
                 UIController.Instance.pauseGameScreen.Activate();
             }
         }
@@ -258,7 +267,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PauseGame()
         {
-            CancelInvoke(nameof(GameStep));
+            StopGame();
             OnGamePausedEvent?.Invoke(currentGameMode, true);
         }
 
@@ -267,6 +276,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ResumeGame()
         {
+            StartGame();
             OnGamePausedEvent?.Invoke(currentGameMode, false);
         }
 
