@@ -44,6 +44,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
             _events = new Lazy<GameEvent[]>(
                 () => events?.ToArray() ?? Array.Empty<GameEvent>());
+            Matrix = new WordisMatrix(this);
         }
 
         public WordisSettings Settings { get; }
@@ -57,6 +58,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// State of the game.
         /// </summary>
         public IReadOnlyList<WordisObj> GameObjects => _gameObjects.Value;
+
+        /// <inheritdoc cref="WordisMatrix"/>
+        public WordisMatrix Matrix { get; }
 
         /// <summary>
         /// Log of the game events.
