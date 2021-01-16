@@ -11,7 +11,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Assets.Wordis.Frameworks.Localization.Scripts;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,31 +23,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public GameObject messageView;
         public Text txtMessageText;
 
-        public void ShowMessage(GameOverReason reason)
+        public void ShowMessage(string message)
         {
             messageView.transform.localScale = Vector3.zero;
-            txtMessageText.text = GetRescueReason(reason);
+            txtMessageText.text = message;
 
             messageView.gameObject.SetActive(true);
             messageView.transform.LocalScale(Vector3.one, 0.2F).SetAnimation(animationCurve).OnComplete(() =>
             {
                 messageView.transform.LocalScale(Vector3.zero, 0.2F).SetAnimation(animationCurve).SetDelay(1F);
             });
-        }
-
-        public string GetRescueReason(GameOverReason reason)
-        {
-            switch (reason)
-            {
-                case GameOverReason.GridFilled:
-                    return LocalizationManager.Instance.GetTextWithTag("txtGameOver_gridfull");
-
-                case GameOverReason.TimeOver:
-                    return LocalizationManager.Instance.GetTextWithTag("txtGameOver_timeover");
-
-                default:
-                    return LocalizationManager.Instance.GetTextWithTag("txtGameOver_gridfull");
-            }
         }
     }
 }

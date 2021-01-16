@@ -435,7 +435,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                     int linesCleared = completedRows.Count + completedColumns.Count;
                     // Adds score based on the number of rows, columns and blocks cleares. final calculation will be done in score manager.
-                    GamePlayUI.Instance.scoreManager.AddScore(linesCleared, _activeBlocks.Count);
+                    // GamePlayUI.Instance.scoreManager.AddScore(linesCleared, _activeBlocks.Count);
 
                     if (linesCleared > 0)
                     {

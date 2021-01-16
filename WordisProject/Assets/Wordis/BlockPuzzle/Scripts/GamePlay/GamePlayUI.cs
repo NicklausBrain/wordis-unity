@@ -205,72 +205,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             OnShapePlacedEvent?.Invoke();
         }
 
-        public bool CanRescueGame()
-        {
-            if (!rescueDone && currentModeSettings.allowRescueGame)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Checks if game can be rescued.
-        /// </summary>
-        public void TryRescueGame(GameOverReason reason)
-        {
-            currentGameOverReason = reason;
-            StartCoroutine(TryRescueGameEnumerator(reason));
-        }
-
-        // todo: remove or adapt
-        private IEnumerator TryRescueGameEnumerator(GameOverReason reason)
-        {
-            inGameMessage.ShowMessage(reason);
-            yield return new WaitForSeconds(1.5F);
-            GameProgressTracker.Instance.ClearProgressData();
-
-            if (CanRescueGame())
-            {
-                UIController.Instance.rescueGameScreen.Activate();
-                UIController.Instance.rescueGameScreen.GetComponent<RescueGame>().SetRescueReason(reason);
-            }
-            else
-            {
-                // OnGameOver();
-            }
-        }
-
-        public void OnRescueCancelled()
-        {
-            // OnGameOver();
-        }
-
-        /// <summary>
-        /// Resume Game With Rescue Done
-        /// </summary>
-        public void OnRescueSuccessful()
-        {
-            gamePlay.PerfromRescueAction(currentGameOverReason);
-            rescueDone = true;
-
-            GameProgressTracker.Instance.SaveProgressExplicitly();
-        }
-
-        /// <summary>
-        /// Pauses the game on pressing pause button.
-        /// </summary>
-        public void OnPauseButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-
-                UIController.Instance.pauseGameScreen.Activate();
-            }
-        }
-
         /// <summary>
         /// Will be called on game over. 
         /// </summary>
@@ -355,16 +289,27 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .Except(lastGameState.Matches)
                     .ToArray();
 
-            if (newMatches.Any())
+            if (newMatches.Any()) // on word matches
             {
+                // 1. display matched words
+                foreach (var match in newMatches)
+                {
+                    inGameMessage.ShowMessage(match.Word);
+                }
+
                 var blocksToClear =
                     newMatches
                         .SelectMany(match => match.MatchedChars)
                         .Select(c => gamePlay.allColumns[c.X][c.Y])
                         .ToArray();
-                // todo: check score logic
+
+                // 2. display score (todo: check calculation logic)
                 scoreManager.AddScore(newMatches.Length, blocksToClear.Length);
+
+                // 3. animate blocks destruction
                 StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+
+                // 4. play break sound
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
             }
 
