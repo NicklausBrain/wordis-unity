@@ -53,6 +53,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void StartGame()
         {
+            CancelInvoke(nameof(GameStep));
             InvokeRepeating(nameof(GameStep), 1, gamePlaySettings.gameSpeed);
         }
 
@@ -257,7 +258,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResetGame()
         {
             _wordisGame = new WordisGame(_wordisSettings);
-
             progressData = null;
             totalLinesCompleted = 0;
             rescueDone = false;
@@ -288,6 +288,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void RestartGame()
         {
+            StopGame();
             GameProgressTracker.Instance.ClearProgressData();
             ResetGame();
             StartGamePlay(currentGameMode);
