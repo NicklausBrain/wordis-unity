@@ -42,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             width: 9,
             height: 9,
             minWordMatch: 3,
-            waterLevel: 4);
+            waterLevel: 0);
 
         private WordisGame _wordisGame;
 
@@ -66,6 +66,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             lock (_gameLock)
             {
+                StopGame(); // prevent premature UI refresh
+
                 if (_wordisGame.IsGameOver)
                 {
                     // stop the game cycle
@@ -77,6 +79,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var newGame = _wordisGame.Handle(gameEvent);
                 _wordisGame = newGame;
                 RefreshPresentation(lastGame, newGame);
+                StartGame();//resume refresh immediately
             }
         }
 
@@ -330,7 +333,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
 
                 // 3. animate blocks destruction
-                StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
+                StartCoroutine(GamePlay.ClearAllBlocks(_wordisSettings, blocksToClear));
 
                 // 4. play break sound
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);

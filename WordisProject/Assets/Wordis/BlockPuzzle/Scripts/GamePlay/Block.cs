@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
@@ -146,7 +147,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears block. Will be called when line containing this block will get completed. This is typical animation effect of how completed block shoudl disappear.
         /// </summary>
-        public void Clear()
+        public void Clear(WordisSettings settings = null)
         {
             transform.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
@@ -159,8 +160,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             });
 
             blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(() =>
-            {
-                blockImage.transform.localEulerAngles = Vector3.zero;
+            {blockImage.transform.localEulerAngles = Vector3.zero;
             });
 
             transform.GetComponent<Image>().SetAlpha(1, 0.35F).SetDelay(0.3F);
@@ -173,6 +173,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             thisCollider.enabled = true;
             assignedSpriteTag = defaultSpriteTag;
             GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+
+            if (settings != null && settings.IsWaterZone(RowId))
+            {
+                PlaceBlock(Block.WaterTag);
+            }
         }
 
         public void Fade()
