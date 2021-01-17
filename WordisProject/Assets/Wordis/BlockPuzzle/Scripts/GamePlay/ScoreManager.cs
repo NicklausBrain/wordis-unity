@@ -50,7 +50,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void OnEnable()
         {
-            /// Registers game status callbacks.
+            // Registers game status callbacks.
             GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
         }
 
@@ -59,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            /// Unregisters game status callbacks.
+            // Unregisters game status callbacks.
             GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
         }
 
@@ -101,14 +101,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             scoreAnimator.Animate(scoreToAdd);
         }
 
-        void ShowScoreAnimation()
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
-            scoreAnimator.transform.position = mousePos;
-            // txtAnimatedText.text = "+" + 100.ToString ();
-        }
-
         /// <summary>
         /// Returns score for the current game mode.
         /// </summary>
@@ -120,7 +112,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Set score with counter animation effect.
         /// </summary>
-        IEnumerator SetScore(int lastScore, int currentScore)
+        private IEnumerator SetScore(int lastScore, int currentScore)
         {
             int iterationSize = (currentScore - lastScore) / 10;
             txtScore.transform.LocalScale(Vector3.one * 1.2F, 0.2F).OnComplete(() =>
@@ -132,7 +124,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 lastScore += iterationSize;
                 txtScore.text = lastScore.ToString("N0");
-                AudioController.Instance.PlayClipLow(AudioController.Instance.addScoreSoundChord, 0.15F);
+                AudioController.Instance.PlayClipLow(
+                    AudioController.Instance.addScoreSoundChord, 0.15F);
                 yield return scoreIterationWait;
             }
 

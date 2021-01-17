@@ -301,7 +301,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Handle(GameEvent.Step)  // move char down
                 .Handle(GameEvent.Step); // count RAT as match
 
-            Assert.AreEqual("RAT", game.Matches.First().Word);
+            Assert.AreEqual("RAT", game.AllMatches.First().Word);
+            Assert.AreEqual("RAT", game.LastStepMatches.First().Word);
         }
 
         [Test]
