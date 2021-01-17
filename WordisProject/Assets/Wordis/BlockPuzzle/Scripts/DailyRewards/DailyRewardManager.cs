@@ -63,19 +63,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.DailyRewards
 
         private void OnSessionUpdated(SessionInfo info)
         {
-            if (ProfileManager.Instance.GetAppSettings().useDailyRewards)
-            {
-                if (info.currentSessionCount == 1)
-                {
-                    currentRewardDay = 1;
-                    isDailyRewardAvailable = true;
-                    UIController.Instance.ShowDailyRewardsPopup();
-                }
-                else
-                {
-                    CheckForDailyReward();
-                }
-            }
+            //if (ProfileManager.Instance.GetAppSettings().useDailyRewards)
+            //{
+            //    if (info.currentSessionCount == 1)
+            //    {
+            //        currentRewardDay = 1;
+            //        isDailyRewardAvailable = true;
+            //        UIController.Instance.ShowDailyRewardsPopup();
+            //    }
+            //    else
+            //    {
+            //        CheckForDailyReward();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.DailyRewards
             {
                 if (hasInitialised)
                 {
-                    /// Checks if daily reward is available on app resume.
-                    CheckForDailyReward();
+                    // Checks if daily reward is available on app resume.
+                    //CheckForDailyReward();
                 }
             }
         }
