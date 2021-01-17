@@ -41,7 +41,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private readonly WordisSettings _wordisSettings = new WordisSettings(
             width: 9,
             height: 9,
-            minWordMatch: 3);
+            minWordMatch: 3,
+            waterLevel: 4);
 
         private WordisGame _wordisGame;
 
@@ -168,7 +169,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Generated gameplay grid.
-            gamePlay.boardGenerator.GenerateBoard(progressData);
+            gamePlay.boardGenerator.GenerateBoard(
+                progressData,
+                _wordisSettings);
 
             // Board Generator will create and initialize board with progress data if available.
 
@@ -292,16 +295,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Wordis
 
-        private Lazy<string> _basicSpriteTag = new Lazy<string>(
-            () => GetBasicBlockShape().spriteTag);
 
-        private static BlockShape GetBasicBlockShape()
-        {
-            var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
-            var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
-            basicBlockShape.SetSpriteTag(basicBlockInfo.blockSpriteTag);
-            return basicBlockShape;
-        }
 
         private void RefreshPresentation(
             WordisGame lastGameState, WordisGame newGameState)
@@ -316,7 +310,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .ToArray();
             var newMatches = newGameState.LastStepMatches;
 
-            if (newGameState.GameEvents.Last() == GameEvent.Step && newMatches.Any()) // on word matches
+            if (newGameState.GameEvents.Last() == GameEvent.Step &&
+                newMatches.Any()) // on word matches
             {
                 // 1. display matched words
                 foreach (var match in newMatches)
@@ -349,7 +344,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 foreach (Block block in blocksToClear)
                 {
-                    block.PlaceBlock(block.defaultSpriteTag);
+                    block.PlaceBlock(_wordisSettings.IsWaterZone(block.RowId)
+                        ? Block.WaterTag
+                        : block.defaultSpriteTag);
                     block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
                 }
                 // todo: add animation instead like: block.Fade()
@@ -365,7 +362,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 foreach (var pair in blocksToCreate)
                 {
-                    pair.block.PlaceBlock(_basicSpriteTag.Value);
+                    pair.block.PlaceBlock(Block.DefaultCharTag);
 
                     if (pair.wordisObj is WordisChar)
                     {

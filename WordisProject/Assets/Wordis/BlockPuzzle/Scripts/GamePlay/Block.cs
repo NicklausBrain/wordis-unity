@@ -27,6 +27,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class Block : MonoBehaviour
     {
+        #region Wordis
+
+        public static string DefaultCharTag => "b1"; // nice blue;
+
+        public static string WaterTag => "b4"; // azure (?);
+
+        #endregion
+
+
         // Returns rowId 
         public int RowId { get; private set; }
 

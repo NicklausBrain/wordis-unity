@@ -36,7 +36,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
-        public void GenerateBoard(ProgressData progressData)
+        public void GenerateBoard(
+            ProgressData progressData,
+            GameCore.WordisSettings wordisSettings)
         {
             progressData = null; // TODO: tmp
 
@@ -71,6 +73,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 {
                     // Spawn a block instance and prepares it.
                     Block block = SpawnBlock(currentPositionX, currentPositionY, blockSize, row, column);
+
+                    if (wordisSettings.IsWaterZone(row))
+                    {
+                        block.PlaceBlock(Block.WaterTag);
+                    }
 
                     blockRow.Add(block);
 
