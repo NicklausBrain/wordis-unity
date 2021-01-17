@@ -51,9 +51,14 @@
         public bool HasWater => WaterLevel > 0;
 
         /// <summary>
-        /// The line before water.
+        /// The line before water (Y coordinate).
         /// </summary>
         public int AboveWaterY => MaxY - WaterLevel;
+
+        /// <summary>
+        /// The water like Y coordinate.
+        /// </summary>
+        public int WaterY => Height - WaterLevel;
 
         /// <summary>
         /// Determines if zer-based Y coordinate belong to the water field/zone.
