@@ -292,7 +292,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Wordis
 
-        private BlockShape GetBasicBlockShape()
+        private Lazy<string> _basicSpriteTag = new Lazy<string>(
+            () => GetBasicBlockShape().spriteTag);
+
+        private static BlockShape GetBasicBlockShape()
         {
             var basicBlockInfo = GamePlayUI.Instance.GetStandardBlockShapesInfo().First();
             var basicBlockShape = basicBlockInfo.blockShape.GetComponent<BlockShape>();
@@ -311,12 +314,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 lastGameState.GameObjects
                     .Except(newGameState.GameObjects)
                     .ToArray();
-            var newMatches =
-                newGameState.Matches
-                    .Except(lastGameState.Matches)
-                    .ToArray();
+            var newMatches = newGameState.LastStepMatches;
 
-            if (newMatches.Any()) // on word matches
+            if (newGameState.GameEvents.Last() == GameEvent.Step && newMatches.Any()) // on word matches
             {
                 // 1. display matched words
                 foreach (var match in newMatches)
@@ -331,7 +331,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         .ToArray();
 
                 // 2. display score (todo: check calculation logic)
-                scoreManager.AddScore(newMatches.Length, blocksToClear.Length);
+                scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
 
                 // 3. animate blocks destruction
                 StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
@@ -365,8 +365,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 foreach (var pair in blocksToCreate)
                 {
-                    var basicShape = GetBasicBlockShape();
-                    pair.block.PlaceBlock(basicShape.spriteTag);
+                    pair.block.PlaceBlock(_basicSpriteTag.Value);
 
                     if (pair.wordisObj is WordisChar)
                     {

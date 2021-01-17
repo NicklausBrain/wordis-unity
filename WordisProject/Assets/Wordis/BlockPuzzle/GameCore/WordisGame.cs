@@ -10,7 +10,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     {
         private readonly GetLetterFunc _getLetterFunc;
         private readonly FindWordMatchesFunc _findWordMatchesFunc;
-        private readonly Lazy<WordMatchEx[]> _matches;
+        private readonly Lazy<WordMatchEx[]> _allMatches;
+        private readonly Lazy<WordMatchEx[]> _lastStepMatches;
         private readonly Lazy<GameEvent[]> _events;
 
         /// <summary>
@@ -27,7 +28,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             FindWordMatchesFunc findWordMatchesFunc = null,
             IEnumerable<WordisObj> gameObjects = null,
             IEnumerable<GameEvent> events = null,
-            IEnumerable<WordMatchEx> matches = null)
+            IEnumerable<WordMatchEx> allMatches = null,
+            IEnumerable<WordMatchEx> lastStepMatches = null)
         {
             Settings = settings;
             _getLetterFunc =
@@ -38,8 +40,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 new FindWordMatchesFunc(
                     new IsLegitEngWordFunc(),
                     settings.MinWordLength);
-            _matches = new Lazy<WordMatchEx[]>(
-                () => matches?.ToArray() ?? Array.Empty<WordMatchEx>());
+            _allMatches = new Lazy<WordMatchEx[]>(
+                () => allMatches?.ToArray() ?? Array.Empty<WordMatchEx>());
+            _lastStepMatches = new Lazy<WordMatchEx[]>(
+                () => lastStepMatches?.ToArray() ?? Array.Empty<WordMatchEx>());
             _gameObjects = new Lazy<WordisObj[]>(
                 () => gameObjects?.ToArray() ?? Array.Empty<WordisObj>());
             _events = new Lazy<GameEvent[]>(
@@ -68,9 +72,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public IReadOnlyList<GameEvent> GameEvents => _events.Value;
 
         /// <summary>
-        /// Words matched.
+        /// All the words matched during the game.
         /// </summary>
-        public IReadOnlyList<WordMatchEx> Matches => _matches.Value;
+        public IReadOnlyList<WordMatchEx> AllMatches => _allMatches.Value;
+
+        /// <summary>
+        /// Matches made on last step.
+        /// </summary>
+        public IReadOnlyList<WordMatchEx> LastStepMatches => _lastStepMatches.Value;
 
         /// <summary>
         /// Determines if game is over.
@@ -113,7 +122,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                                 ? updatedGameObjects.Except(matches.SelectMany(m => m.MatchedChars))
                                 : updatedGameObjects,
                             gameEvents: updatedEvents,
-                            matches: Matches.Concat(matches));
+                            allMatches: AllMatches.Concat(matches),
+                            lastStepMatches: matches);
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 
@@ -135,14 +145,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordisGame With(
             IEnumerable<WordisObj> gameObjects,
             IEnumerable<GameEvent> gameEvents = null,
-            IEnumerable<WordMatchEx> matches = null) =>
+            IEnumerable<WordMatchEx> allMatches = null,
+            IEnumerable<WordMatchEx> lastStepMatches = null) =>
             new WordisGame(
-                Settings,
-                _getLetterFunc,
-                _findWordMatchesFunc,
-                gameObjects,
-                gameEvents ?? GameEvents,
-                matches ?? Matches);
+                settings: Settings,
+                getLetterFunc: _getLetterFunc,
+                findWordMatchesFunc: _findWordMatchesFunc,
+                gameObjects: gameObjects,
+                events: gameEvents ?? GameEvents,
+                allMatches: allMatches ?? AllMatches,
+                lastStepMatches: lastStepMatches ?? LastStepMatches);
 
         /// <summary>
         /// Spawns a new game object inside a game.
