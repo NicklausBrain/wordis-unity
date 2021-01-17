@@ -88,8 +88,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         {
             get
             {
-                var startPointObj = Matrix[StartPoint.x, StartPoint.y];
-                return startPointObj != null && !(startPointObj is ActiveChar);
+                for (int y = 0; y < Settings.Height; y++)
+                {
+                    if (Matrix[StartPoint.x, y] == null || Matrix[StartPoint.x, y] is ActiveChar)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 
@@ -186,8 +193,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             var foundMatches = activeObj == null
                 ? Array.Empty<WordMatchEx>()
                 : _findWordMatchesFunc.Invoke(
-                    updatedState // this is optimization to calculate the match only for the active axes
-                        .Where(o => o is StaticChar && (o.X == activeObj.X || o.Y == activeObj.Y))
+                    updatedState
+                        .Where(o => o is StaticChar)
                         .Cast<StaticChar>())
                 .Select(m => new WordMatchEx(m, Step, DateTimeOffset.UtcNow))
                 .ToArray();

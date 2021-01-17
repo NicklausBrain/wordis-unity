@@ -346,12 +346,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
-        public void IsGameOver_WhenStartPointIsOccupied_ReturnsTrue()
+        public void IsGameOver_WhenCentralColumnIsOccupied_ReturnsTrue()
         {
-            var game = new WordisGame(_settings.With(width: 3, height: 3));
+            var game = new WordisGame(_settings.With(width: 3, height: 2));
 
-            var finishedGame = game.With(
-                new StaticChar(game.StartPoint.x, game.StartPoint.y, 'A'));
+            var finishedGame = game
+                .With(new StaticChar(game.StartPoint.x, 0, 'A'))
+                .With(new StaticChar(game.StartPoint.x, 1, 'B'));
 
             Assert.IsTrue(finishedGame.IsGameOver);
         }

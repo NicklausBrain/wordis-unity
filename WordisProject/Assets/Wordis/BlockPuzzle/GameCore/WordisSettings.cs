@@ -3,10 +3,12 @@
     public class WordisSettings
     {
         public WordisSettings(
-            int width,
-            int height,
-            int minWordMatch = 3)
+            int width = 9,
+            int height = 9,
+            int minWordMatch = 3,
+            int waterLevel = 0)
         {
+            WaterLevel = waterLevel;
             Width = width;
             Height = height;
             MinWordLength = minWordMatch;
@@ -38,13 +40,51 @@
         public int MinWordLength { get; }
 
         /// <summary>
+        /// "Water" is an opposite force to the down direction of blocks.
+        /// Block stops on water, and drowns if another block pushes it down.
+        /// Water serves as a game-play enhancement.
+        /// Water level counts from the bottom of the game board.
+        /// </summary>
+        public int WaterLevel { get; }
+
+        /// <inheritdoc cref="WaterLevel"/>
+        public bool HasWater => WaterLevel > 0;
+
+        /// <summary>
+        /// The line before water (Y coordinate).
+        /// </summary>
+        public int AboveWaterY => MaxY - WaterLevel;
+
+        /// <summary>
+        /// The water like Y coordinate.
+        /// </summary>
+        public int WaterY => Height - WaterLevel;
+
+        /// <summary>
+        /// Determines if zer-based Y coordinate belong to the water field/zone.
+        /// </summary>
+        public bool IsWaterZone(int y)
+        {
+            if (HasWater)
+            {
+                return y >= Height - WaterLevel;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Creates a new instance with the given properties.
         /// </summary>
         public WordisSettings With(
-            int? width,
-            int? height) =>
+            int? width = null,
+            int? height = null,
+            int? minWordLength = null,
+            int? waterLevel = null) =>
             new WordisSettings(
-                width ?? Width,
-                height ?? Height);
+                width: width ?? Width,
+                height: height ?? Height,
+                minWordMatch: minWordLength ?? MinWordLength,
+                waterLevel: waterLevel ?? WaterLevel);
     }
 }

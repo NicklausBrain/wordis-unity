@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AppSettings
   m_EditorClassIdentifier: 
   currentAndroidStore: 0
-  privacyPolicyURL: https://www.hyperbytestudios.com/
+  privacyPolicyURL: https://wordis-puzzle.flycricket.io/privacy.html
   enableSupportURL: 1
-  supportURL: https://www.hyperbytestudios.com/
+  supportURL: https://wordis-puzzle.flycricket.io/terms.html
   appleID: 
   showReviewPopupOnLaunch: 1
   reviewPopupAppLaunchCount: 10,20,30

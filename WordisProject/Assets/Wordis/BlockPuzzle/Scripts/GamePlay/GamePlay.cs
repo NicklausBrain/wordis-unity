@@ -82,7 +82,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             foreach (int rowId in rowIds)
             {
                 var entireRow = GetEntireRow(rowId).ToArray();
-                StartCoroutine(ClearAllBlocks(entireRow));
+                StartCoroutine(ClearAllBlocks(null, entireRow));
             }
 
             GamePlayUI.Instance.totalLinesCompleted += rowIds.Count;
@@ -96,7 +96,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             foreach (int columnId in columnIds)
             {
                 var entireColumn = GetEntireColumn(columnId).ToArray();
-                StartCoroutine(ClearAllBlocks(entireColumn));
+                StartCoroutine(ClearAllBlocks(null, entireColumn));
             }
 
             GamePlayUI.Instance.totalLinesCompleted += columnIds.Count;
@@ -105,7 +105,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears all given blocks from the board. On Completion state of block will be empty.
         /// </summary>
-        public static IEnumerator ClearAllBlocks(params Block[] allBlocks)
+        public static IEnumerator ClearAllBlocks(WordisSettings settings = null, params Block[] allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
             int middleIndex = allBlocks.Length % 2 == 0 ? allBlocks.Length / 2 : allBlocks.Length / 2 + 1;
@@ -117,12 +117,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 if (leftIndex >= 0)
                 {
-                    allBlocks[leftIndex].Clear();
+                    allBlocks[leftIndex].Clear(settings);
                 }
 
                 if (rightIndex < totalBlocks)
                 {
-                    allBlocks[rightIndex].Clear();
+                    allBlocks[rightIndex].Clear(settings);
                 }
 
                 yield return new WaitForSeconds(0.03F);

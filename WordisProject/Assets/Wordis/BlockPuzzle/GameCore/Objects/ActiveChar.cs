@@ -41,6 +41,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         /// </summary>
         private WordisObj HandleStep(WordisGame game)
         {
+            // on reaching water
+            if (game.Settings.HasWater && Y == game.Settings.AboveWaterY)
+            {
+                return new StaticChar(X, Y, Value);
+            }
+
             // on reaching the bottom:
             if (Y == game.Settings.MaxY)
             {
@@ -75,6 +81,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
 
             if (firstObjBelow == null)
             {
+                if (game.Settings.HasWater)
+                {
+                    return With(y: game.Settings.AboveWaterY);
+                }
+
                 return With(y: game.Settings.MaxY);
             }
 
