@@ -51,6 +51,11 @@
         public bool HasWater => WaterLevel > 0;
 
         /// <summary>
+        /// The line before water.
+        /// </summary>
+        public int AboveWaterY => MaxY - WaterLevel;
+
+        /// <summary>
         /// Determines if zer-based Y coordinate belong to the water field/zone.
         /// </summary>
         public bool IsWaterZone(int y)
@@ -67,10 +72,14 @@
         /// Creates a new instance with the given properties.
         /// </summary>
         public WordisSettings With(
-            int? width,
-            int? height) =>
+            int? width = null,
+            int? height = null,
+            int? minWordLength = null,
+            int? waterLevel = null) =>
             new WordisSettings(
-                width ?? Width,
-                height ?? Height);
+                width: width ?? Width,
+                height: height ?? Height,
+                minWordMatch: minWordLength ?? MinWordLength,
+                waterLevel: waterLevel ?? WaterLevel);
     }
 }
