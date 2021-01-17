@@ -82,5 +82,29 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(1, 1, 'Z'),
                 game.GameObjects.ToArray());
         }
+
+        [Test]
+        public void HandleStep_WhenColumnWithWaterIsNotFull_TheGameIsntOver()
+        {
+            /* Initial state:
+             * [-] [-] [-]
+             * [-] [-] [-]
+             * [-]-[-]-[-] -- water --
+             * [-]-[-]-[-] -- water -- */
+            var game = new WordisGame(_settings.With(width: 3, height: 4, waterLevel: 2, minWordLength: int.MaxValue));
+            game = game.Handle(GameEvent.Step);
+            game = game.Handle(GameEvent.Step);
+            game = game.Handle(GameEvent.Step);
+            game = game.Handle(GameEvent.Step);
+
+            /* Initial state:
+             * [-] [-] [-]
+             * [-] [*] [-]
+             * [-]-[*]-[-] -- water --
+             * [-]-[-]-[-] -- water -- */
+
+            Assert.IsFalse(game.IsGameOver);
+            // todo add coordinates assertion
+        }
     }
 }

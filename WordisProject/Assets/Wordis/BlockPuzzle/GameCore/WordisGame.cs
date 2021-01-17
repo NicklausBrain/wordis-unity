@@ -88,8 +88,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         {
             get
             {
-                var startPointObj = Matrix[StartPoint.x, StartPoint.y];
-                return startPointObj != null && !(startPointObj is ActiveChar);
+                for (int y = 0; y < Settings.Height; y++)
+                {
+                    if (Matrix[StartPoint.x, y] == null || Matrix[StartPoint.x, y] is ActiveChar)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 

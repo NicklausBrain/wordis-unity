@@ -25,22 +25,27 @@
                         {
                             var staticCharsAbove = 0;
                             var sparePlaceAbove = 0;
+                            var sparePlaceBelow = 0;
 
-                            for (int y = Y - 1; y >= 0; y--)
+                            for (int y = 0; y < game.Settings.Height; y++)
                             {
-                                if (game.Matrix[X, y] is StaticChar)
+                                if (game.Matrix[X, y] is StaticChar && y < Y)
                                 {
                                     staticCharsAbove++;
                                 }
-                                else if (game.Matrix[X, y] == null)
+                                if (game.Matrix[X, y] == null && y < Y)
                                 {
                                     sparePlaceAbove++;
+                                }
+                                if (game.Matrix[X, y] == null && y > Y)
+                                {
+                                    sparePlaceBelow++;
                                 }
                             }
 
                             var destination = (x: X, y: game.Settings.AboveWaterY + staticCharsAbove);
 
-                            if (destination.y > Y && destination.y < game.Settings.Height)
+                            if (destination.y > Y && sparePlaceBelow > 0)// destination.y < game.Settings.Height
                             {
                                 // go down by pressure
                                 return With(y: Y + 1);
