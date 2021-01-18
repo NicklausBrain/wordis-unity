@@ -1,0 +1,17 @@
+Hello, I am Nick, from the Sigma team.
+And let me introduce our work which is the Wordis puzzle.
+Wordis is essentially a Tetris spin-off, where the goal is to match the words by the letters falling down the playing area.
+Up to this moment we've managed to implement a minimum valuable functionality to start the publishing procedure.
+If it passes it would be our very first game released.
+
+I believe this concept itself is very scalable and can be really successful if done right:
+For instance it can be extended with
+	- the different shapes falling down
+	- additional game objects: erasing or mixing the existing letters
+	- word learning capabilities
+	- support of the different languages
+	- etc
+	
+So our plan for now is to manage extending it with a level-based gameplay, to make a user feel the advancement.
+I hope we'll get it in time.
+
