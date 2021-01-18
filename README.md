@@ -9,6 +9,7 @@
 - [Prerequisites](docs/prerequisites.md)
 - [SDK Integration](docs/SDK_Integration.pdf)
 - [App Store Metadata](docs/appstore-metadata.md)
+- [Next Steps](docs/next-steps.md)
 
 ## Startup
 
