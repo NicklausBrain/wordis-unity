@@ -54,8 +54,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             float currentPositionX = startPointX;
             float currentPositionY = startPointY;
 
-            GamePlayUI.Instance.gamePlay.allRows = new List<List<Block>>();
-            GamePlayUI.Instance.gamePlay.allColumns = new List<List<Block>>();
+            GamePlayUI.Instance.gameBoard.allRows = new List<List<Block>>();
+            GamePlayUI.Instance.gameBoard.allColumns = new List<List<Block>>();
 
             // Iterates through all rows and columns to generate grid.
             for (int row = 0; row < rowSize; row++)
@@ -80,10 +80,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 currentPositionX = startPointX;
                 currentPositionY -= blockSize + blockSpace;
 
-                GamePlayUI.Instance.gamePlay.allRows.Add(blockRow);
+                GamePlayUI.Instance.gameBoard.allRows.Add(blockRow);
             }
 
-            GamePlay.Instance.OnBoardGridReady();
+            GameBoard.Instance.OnBoardGridReady();
         }
 
         /// <summary>

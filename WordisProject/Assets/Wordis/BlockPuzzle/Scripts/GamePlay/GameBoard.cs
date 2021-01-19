@@ -20,9 +20,9 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     /// <summary>
-    /// TODO: remove(?) since game logic belongs to <see cref="WordisGame"/>
+    /// Represents game board UI
     /// </summary>
-    public class GamePlay : Singleton<GamePlay>
+    public class GameBoard : Singleton<GameBoard>
     {
         [Header("Public Class Members")]
         [Tooltip("BoardGenerator Script Reference")]
@@ -104,7 +104,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             //Below calculation is done so blocks starts clearing from center to end on both sides.
             int middleIndex = allBlocks.Length % 2 == 0
                 ? allBlocks.Length / 2
-                : allBlocks.Length / 2 + 1; // 3 -> 2 dich?
+                : allBlocks.Length / 2 + 1; // todo: 3 -> 2 suspicious logic?
 
             int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;

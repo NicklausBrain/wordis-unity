@@ -117,11 +117,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (_currentProgressData != null)
             {
-                string[] gridData = new string[GamePlay.Instance.allRows.Count];
+                string[] gridData = new string[GameBoard.Instance.allRows.Count];
                 int rowIndex = 0;
 
                 // Reads the status of all elements from the board grid.
-                foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                foreach (List<Block> blockRow in GameBoard.Instance.allRows)
                 {
                     string row = "";
                     foreach (Block b in blockRow)

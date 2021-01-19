@@ -53,7 +53,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 for (int i = 0; i < 4; i++)
                 {
                     _shapeClone.transform.localEulerAngles = new Vector3(0, 0, 90 * i);
-                    foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                    foreach (List<Block> blockRow in GameBoard.Instance.allRows)
                     {
                         foreach (Block b in blockRow)
                         {
@@ -72,7 +72,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
             else
             {
-                foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                foreach (List<Block> blockRow in GameBoard.Instance.allRows)
                 {
                     foreach (Block b in blockRow)
                     {

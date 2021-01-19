@@ -316,7 +316,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (hittingBlock == null || hittingBlocks.Contains(hittingBlock))
                 {
                     StopHighlight();
-                    GamePlay.Instance.StopHighlight();
+                    GameBoard.Instance.StopHighlight();
                     return false;
                 }
 
@@ -326,7 +326,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // Used to highlight lines that can be completed by placing block shape at current position.
                 if (!hittingRows.Contains(hittingBlock.RowId))
                 {
-                    if (GamePlay.Instance.CanHighlightRow(hittingBlock.RowId))
+                    if (GameBoard.Instance.CanHighlightRow(hittingBlock.RowId))
                     {
                         hittingRows.Add(hittingBlock.RowId);
                     }
@@ -336,7 +336,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // Used to highlight lines that can be completed by placing block shape at current position.
                 if (!hittingColumns.Contains(hittingBlock.ColumnId))
                 {
-                    if (GamePlay.Instance.CanHighlightColumn(hittingBlock.ColumnId))
+                    if (GameBoard.Instance.CanHighlightColumn(hittingBlock.ColumnId))
                     {
                         hittingColumns.Add(hittingBlock.ColumnId);
                     }
@@ -352,17 +352,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         block.Highlight(thisBlockSprite);
                     }
 
-                    GamePlay.Instance.HighlightAllRows(hittingRows, thisBlockSprite);
-                    GamePlay.Instance.HighlightAllColumns(hittingColumns, thisBlockSprite);
+                    GameBoard.Instance.HighlightAllRows(hittingRows, thisBlockSprite);
+                    GameBoard.Instance.HighlightAllColumns(hittingColumns, thisBlockSprite);
 
                     StopHighlight(hittingBlocks);
 
                     // Will stop highlight all rows and columns except for given. 
-                    GamePlay.Instance.StopHighlight(hittingRows, hittingColumns);
+                    GameBoard.Instance.StopHighlight(hittingRows, hittingColumns);
 
                     highlightingBlocks.AddRange(hittingBlocks);
-                    GamePlay.Instance.highlightingRows.AddRange(hittingRows);
-                    GamePlay.Instance.highlightingColumns.AddRange(hittingColumns);
+                    GameBoard.Instance.highlightingRows.AddRange(hittingRows);
+                    GameBoard.Instance.highlightingColumns.AddRange(hittingColumns);
                     return true;
                 }
             }
@@ -387,7 +387,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (hittingBlock == null || hittingBlocks.Contains(hittingBlock))
                 {
                     StopHighlight();
-                    GamePlay.Instance.StopHighlight();
+                    GameBoard.Instance.StopHighlight();
                     return false;
                 }
 
@@ -396,7 +396,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // Row id of block will be added to list if entire row is going to finish on placing current shape.
                 if (!completedRows.Contains(hittingBlock.RowId))
                 {
-                    if (GamePlay.Instance.IsRowCompleted(hittingBlock.RowId))
+                    if (GameBoard.Instance.IsRowCompleted(hittingBlock.RowId))
                     {
                         completedRows.Add(hittingBlock.RowId);
                     }
@@ -405,7 +405,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // Column id of block will be added to list if entire column is going to finish on placing current shape.
                 if (!completedColumns.Contains(hittingBlock.ColumnId))
                 {
-                    if (GamePlay.Instance.IsColumnCompleted(hittingBlock.ColumnId))
+                    if (GameBoard.Instance.IsColumnCompleted(hittingBlock.ColumnId))
                     {
                         completedColumns.Add(hittingBlock.ColumnId);
                     }
@@ -424,13 +424,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     // Will clear all rows that completed by placing current shape.
                     if (completedRows.Count > 0)
                     {
-                        GamePlay.Instance.ClearRows(completedRows);
+                        GameBoard.Instance.ClearRows(completedRows);
                     }
 
                     // Will clear all columns that completed by placing current shape.
                     if (completedColumns.Count > 0)
                     {
-                        GamePlay.Instance.ClearColumns(completedColumns);
+                        GameBoard.Instance.ClearColumns(completedColumns);
                     }
 
                     int linesCleared = completedRows.Count + completedColumns.Count;

@@ -93,7 +93,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         [Header("Public Class Members")]
         [Tooltip("GamePlay Script Reference")]
-        public GamePlay gamePlay;
+        public GameBoard gameBoard;
 
         [Tooltip("ScoreManager Script Reference")]
         public ScoreManager scoreManager;
@@ -170,13 +170,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Enables gameplay screen if not active.
-            if (!gamePlay.gameObject.activeSelf)
+            if (!gameBoard.gameObject.activeSelf)
             {
-                gamePlay.gameObject.SetActive(true);
+                gameBoard.gameObject.SetActive(true);
             }
 
             // Generated gameplay grid.
-            gamePlay.boardGenerator.GenerateBoard(_wordisSettings);
+            gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
 
             // Board Generator will create and initialize board with progress data if available.
 
@@ -256,7 +256,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             progressData = null;
             totalLinesCompleted = 0;
             rescueDone = false;
-            gamePlay.ResetGame();
+            gameBoard.ResetGame();
             scoreManager.ResetGame();
         }
 
@@ -328,14 +328,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var blocksToClear =
                     newMatches
                         .SelectMany(match => match.MatchedChars)
-                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .Select(c => gameBoard.allColumns[c.X][c.Y])
                         .ToArray();
 
                 // 2. display score (todo: check calculation logic)
                 scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
 
                 // 3. animate blocks destruction
-                StartCoroutine(GamePlay.ClearAllBlocks(_wordisSettings, blocksToClear));
+                StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));
 
                 // 4. play break sound
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
@@ -345,7 +345,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 var blocksToClear =
                     removedObjects
-                        .Select(c => gamePlay.allColumns[c.X][c.Y])
+                        .Select(c => gameBoard.allColumns[c.X][c.Y])
                         .ToArray();
 
                 foreach (Block block in blocksToClear)
@@ -363,7 +363,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 var blocksToCreate =
                     newObjects
-                        .Select(o => (wordisObj: o, block: gamePlay.allColumns[o.X][o.Y]))
+                        .Select(o => (wordisObj: o, block: gameBoard.allColumns[o.X][o.Y]))
                         .ToArray();
 
                 foreach (var pair in blocksToCreate)
