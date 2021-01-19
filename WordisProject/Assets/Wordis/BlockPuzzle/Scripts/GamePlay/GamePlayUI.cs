@@ -47,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void StartGame()
         {
             CancelInvoke(nameof(GameStep));
-            InvokeRepeating(nameof(GameStep), 1f, gamePlaySettings.gameSpeed);
+            InvokeRepeating(nameof(GameStep), 1f, _gamePlaySettings.gameSpeed);
         }
 
         private void StopGame()
@@ -94,10 +94,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
-        [NonSerialized] public GameModeSettings currentModeSettings;
-
         // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [NonSerialized] GamePlaySettings gamePlaySettings;
+        [NonSerialized] private GamePlaySettings _gamePlaySettings;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -105,10 +103,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void Awake()
         {
             // Initializes the GamePlay Settings Scriptable.
-            if (gamePlaySettings == null)
+            if (_gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
-                currentModeSettings = gamePlaySettings.classicModeSettings;
+                _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
             }
         }
 

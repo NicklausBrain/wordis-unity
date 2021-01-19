@@ -53,10 +53,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void SaveProgressExplicitly()
         {
-            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            {
-                Invoke(nameof(SaveProgress), 2F);
-            }
+            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            //{
+            //    Invoke(nameof(SaveProgress), 2F);
+            //}
         }
 
         /// <summary>
@@ -64,10 +64,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void GamePlayUI_OnShapePlacedEvent()
         {
-            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            {
-                Invoke(nameof(SaveProgress), 1F);
-            }
+            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            //{
+            //    Invoke(nameof(SaveProgress), 1F);
+            //}
         }
 
         /// <summary>

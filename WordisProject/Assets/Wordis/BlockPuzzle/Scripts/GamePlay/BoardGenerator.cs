@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
@@ -32,6 +33,24 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [SerializeField] public GameObject blockRoot;
 #pragma warning restore 0649
 
+        // GamePlay Setting Scriptable Instance. Initializes on awake.
+        [NonSerialized] private GamePlaySettings _gamePlaySettings;
+
+        [NonSerialized] private GameModeSettings _currentModeSettings;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            // Initializes the GamePlay Settings Scriptable.
+            if (_gamePlaySettings == null)
+            {
+                _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
+                _currentModeSettings = _gamePlaySettings.classicModeSettings;
+            }
+        }
+
         /// <summary>
         /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
@@ -41,10 +60,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             int columnSize = wordisSettings.Height;
 
             // Fetched the size of block that should be used.
-            float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
+            float blockSize = _currentModeSettings.blockSize;
 
             // Fetched the space between blocks that should be used.
-            float blockSpace = GamePlayUI.Instance.currentModeSettings.blockSpace;
+            float blockSpace = _currentModeSettings.blockSpace;
 
             // Starting points represents point from where block shape grid should start inside block shape.
             float startPointX = GetStartPointX(blockSize, columnSize);
@@ -54,6 +73,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             float currentPositionX = startPointX;
             float currentPositionY = startPointY;
 
+            // todo: nasty programming approach
             GamePlayUI.Instance.gameBoard.allRows = new List<List<Block>>();
             GamePlayUI.Instance.gameBoard.allColumns = new List<List<Block>>();
 
@@ -101,7 +121,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             float totalWidth =
                 blockSize * rowSize +
-                (rowSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+                (rowSize - 1) * _currentModeSettings.blockSpace;
             return -(totalWidth / 2 - blockSize / 2);
         }
 
@@ -112,7 +132,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             float totalHeight =
                 blockSize * columnSize +
-                (columnSize - 1) * GamePlayUI.Instance.currentModeSettings.blockSpace;
+                (columnSize - 1) * _currentModeSettings.blockSpace;
             return totalHeight / 2 - blockSize / 2;
         }
 
