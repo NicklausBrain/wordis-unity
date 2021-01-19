@@ -32,13 +32,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [SerializeField] private Text txtBestScore;
 #pragma warning restore 0649
 
-        int Score = 0;
-        int blockScore = 0;
-        int singleLineBreakScore = 0;
-        int multiLineScoreMultiplier = 0;
+        private int _score = 0;
+        private int _blockScore = 0;
+        private int _singleLineBreakScore = 0;
+        private int _multiLineScoreMultiplier = 0;
 
-        // Yield instruction for the score countet iterations.
-        WaitForSeconds scoreIterationWait = new WaitForSeconds(0.02F);
+        // Yield instruction for the score counter iterations.
+        readonly WaitForSeconds _scoreIterationWait = new WaitForSeconds(0.02F);
 
 #pragma warning disable 0649
         [SerializeField] private ScoreAnimator scoreAnimator;
@@ -70,18 +70,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             #region score data to local members
 
-            blockScore = GamePlayUI.Instance.blockScore;
-            singleLineBreakScore = GamePlayUI.Instance.singleLineBreakScore;
-            multiLineScoreMultiplier = GamePlayUI.Instance.multiLineScoreMultiplier;
+            _blockScore = GamePlayUI.Instance.blockScore;
+            _singleLineBreakScore = GamePlayUI.Instance.singleLineBreakScore;
+            _multiLineScoreMultiplier = GamePlayUI.Instance.multiLineScoreMultiplier;
 
             #endregion
 
             if (GamePlayUI.Instance.progressData != null)
             {
-                Score += GamePlayUI.Instance.progressData.score;
+                _score += GamePlayUI.Instance.progressData.score;
             }
 
-            txtScore.text = Score.ToString("N0");
+            txtScore.text = _score.ToString("N0");
             txtBestScore.text = ProfileManager.Instance.GetBestScore(GamePlayUI.Instance.currentGameMode)
                 .ToString("N0");
         }
@@ -91,13 +91,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void AddScore(int linesCleared, int clearedBlocks)
         {
-            int scorePerLine = singleLineBreakScore + (linesCleared - 1) * multiLineScoreMultiplier;
-            int scoreToAdd = linesCleared * scorePerLine + clearedBlocks * blockScore;
+            int scorePerLine = _singleLineBreakScore + (linesCleared - 1) * _multiLineScoreMultiplier;
+            int scoreToAdd = linesCleared * scorePerLine + clearedBlocks * _blockScore;
 
-            int oldScore = Score;
-            Score += scoreToAdd;
+            int oldScore = _score;
+            _score += scoreToAdd;
 
-            StartCoroutine(SetScore(oldScore, Score));
+            StartCoroutine(SetScore(oldScore, _score));
             scoreAnimator.Animate(scoreToAdd);
         }
 
@@ -106,7 +106,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public int GetScore()
         {
-            return Score;
+            return _score;
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 txtScore.text = lastScore.ToString("N0");
                 AudioController.Instance.PlayClipLow(
                     AudioController.Instance.addScoreSoundChord, 0.15F);
-                yield return scoreIterationWait;
+                yield return _scoreIterationWait;
             }
 
             txtScore.text = currentScore.ToString("N0");
@@ -139,7 +139,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             txtScore.text = "0";
             txtBestScore.text = "0";
-            Score = 0;
+            _score = 0;
         }
     }
 }
