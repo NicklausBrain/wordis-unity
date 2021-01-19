@@ -34,7 +34,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             //  Registers game status callbacks.
             GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
             GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
-            GamePlayUI.OnShapePlacedEvent += GamePlayUI_OnShapePlacedEvent;
         }
 
         /// <summary>
@@ -44,7 +43,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             //  Registers game status callbacks.
             GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
-            GamePlayUI.OnShapePlacedEvent -= GamePlayUI_OnShapePlacedEvent;
             GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
         }
 
@@ -63,7 +61,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (GamePlayUI.Instance.currentModeSettings.saveProgress)
             {
-                Invoke("SaveProgress", 2F);
+                Invoke(nameof(SaveProgress), 2F);
             }
         }
 
@@ -74,7 +72,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (GamePlayUI.Instance.currentModeSettings.saveProgress)
             {
-                Invoke("SaveProgress", 1F);
+                Invoke(nameof(SaveProgress), 1F);
             }
         }
 
@@ -123,7 +121,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // Reads the status of all elements from the board grid.
                 foreach (List<Block> blockRow in GameBoard.Instance.allRows)
                 {
-                    string row = "";
+                    string row = string.Empty;
                     foreach (Block b in blockRow)
                     {
                         row = row == string.Empty
@@ -141,7 +139,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
                 _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
                 _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
-                _currentProgressData.remainingTimer = 0;
                 PlayerPrefs.SetString($"gameProgress_{GamePlayUI.Instance.currentGameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }
@@ -185,19 +182,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class ProgressData
     {
         public string[] gridData;
-        public ShapeInfo[] currentShapesInfo;
 
         public int score;
         public int totalLinesCompleted;
         public bool rescueDone;
-
-        #region Time Mode Specific
-
-        public int remainingTimer = 0;
-
-        #endregion
-
-        public int totalShapesPlaced = 0;
 
         public ProgressData()
         {

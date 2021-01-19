@@ -117,9 +117,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         //Event action for game start callback.
         public static event Action<GameMode> OnGameStartedEvent;
 
-        //Event action for shape place callback.
-        public static event Action OnShapePlacedEvent;
-
         //Event action for game finish callback.
         public static event Action<GameMode> OnGameOverEvent;
 
@@ -183,18 +180,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             OnGameStartedEvent?.Invoke(currentGameMode);
         }
 
-        // Returns of list of all standard block shapes.
-        public List<BlockShapeInfo> GetStandardBlockShapesInfo()
-        {
-            return gamePlaySettings.standardBlockShapesInfo.ToList();
-        }
-
-        // Returns of list of all advanced block shapes.
-        public List<BlockShapeInfo> GetAdvancedBlockShapesInfo()
-        {
-            return gamePlaySettings.advancedBlockShapesInfo.ToList();
-        }
-
         // Returns score to be added on for each block cleared.
         public int blockScore => gamePlaySettings.blockScore;
 
@@ -211,12 +196,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public int fixedRewardAmount => gamePlaySettings.fixedRewardAmount;
 
         public float rewardPerLine => gamePlaySettings.rewardPerLineCompleted;
-
-        // Invokes callback for OnShapePlaced Event.
-        public void OnShapePlaced()
-        {
-            OnShapePlacedEvent?.Invoke();
-        }
 
         /// <summary>
         /// Pauses the game on pressing pause button.
