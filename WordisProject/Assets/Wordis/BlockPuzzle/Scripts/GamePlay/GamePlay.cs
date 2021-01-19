@@ -28,12 +28,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Tooltip("BoardGenerator Script Reference")]
         public BoardGenerator boardGenerator;
 
-        [Tooltip("GamingButtonsController Script Reference")]
-        public GamingButtonsController gamingButtonsController;
-
-        [Tooltip("GamingSwipesController Script Reference")]
-        public GamingSwipesController gamingSwipesController;
-
         [Header("Other Public Members")]
 
         //List of all Blocks in Row X Column format.
@@ -50,10 +44,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [System.NonSerialized] public List<int> highlightingColumns = new List<int>();
 
         // Saves highlighting rows as cached to reduce iterations . Will keep updating runtime. 
-        readonly List<int> _cachedHighlightingRows = new List<int>();
+        private readonly List<int> _cachedHighlightingRows = new List<int>();
 
         // Saves highlighting columns as cached to reduce iterations . Will keep updating runtime. 
-        readonly List<int> _cachedHighlightingColumns = new List<int>();
+        private readonly List<int> _cachedHighlightingColumns = new List<int>();
 
         /// <summary>
         /// Will get called when board grid gets initialized.
@@ -108,7 +102,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public static IEnumerator ClearAllBlocks(WordisSettings settings = null, params Block[] allBlocks)
         {
             //Below calculation is done so blocks starts clearing from center to end on both sides.
-            int middleIndex = allBlocks.Length % 2 == 0 ? allBlocks.Length / 2 : allBlocks.Length / 2 + 1;
+            int middleIndex = allBlocks.Length % 2 == 0
+                ? allBlocks.Length / 2
+                : allBlocks.Length / 2 + 1; // 3 -> 2 dich?
+
             int leftIndex = middleIndex - 1;
             int rightIndex = middleIndex;
             int totalBlocks = allBlocks.Length;

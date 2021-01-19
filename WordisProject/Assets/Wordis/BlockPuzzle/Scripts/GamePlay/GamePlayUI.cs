@@ -42,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             width: 9,
             height: 9,
             minWordMatch: 3,
-            waterLevel: 0);
+            waterLevel: 4);
 
         private WordisGame _wordisGame;
 
@@ -54,7 +54,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void StartGame()
         {
             CancelInvoke(nameof(GameStep));
-            InvokeRepeating(nameof(GameStep), 1, gamePlaySettings.gameSpeed);
+            InvokeRepeating(nameof(GameStep), 0.5f, gamePlaySettings.gameSpeed);
         }
 
         private void StopGame()
@@ -85,6 +85,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #endregion Wordis
 
+        [Tooltip("GamingButtonsController Script Reference")]
+        public GamingButtonsController gamingButtonsController;
+
+        [Tooltip("GamingSwipesController Script Reference")]
+        public GamingSwipesController gamingSwipesController;
+
         [Header("Public Class Members")]
         [Tooltip("GamePlay Script Reference")]
         public GamePlay gamePlay;
@@ -94,9 +100,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         [Tooltip("ProgressData Script Reference")]
         public ProgressData progressData;
-
-        [Tooltip("TimeModeProgresssBar Script Reference")]
-        public TimeModeProgresssBar timeModeProgresssBar;
 
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
@@ -173,22 +176,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Generated gameplay grid.
-            gamePlay.boardGenerator.GenerateBoard(
-                progressData,
-                _wordisSettings);
+            gamePlay.boardGenerator.GenerateBoard(_wordisSettings);
 
             // Board Generator will create and initialize board with progress data if available.
 
             OnGameStartedEvent?.Invoke(currentGameMode);
-        }
-
-        /// <summary>
-        /// Returns size of the current grid.
-        /// </summary>
-        /// <returns></returns>
-        public BoardSize GetBoardSize()
-        {
-            return currentModeSettings.boardSize;
         }
 
         // Returns of list of all standard block shapes.
@@ -299,7 +291,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         #region Wordis
 
-
+        private static string lastLog;
 
         private void RefreshPresentation(
             WordisGame lastGameState, WordisGame newGameState)
@@ -315,11 +307,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             var newMatches = newGameState.LastStepMatches;
 
             if (newGameState.GameEvents.Last() == GameEvent.Step &&
-                newMatches.Any()) // on word matches
+                newMatches.Any() && newMatches.First().GameStep == lastGameState.Step) // on word matches
             {
                 // 1. display matched words
                 foreach (var match in newMatches)
                 {
+                    var log = "MATCH! '" + match.Word + "' Step: " + newGameState.Step;
+                    Debug.LogWarning(log);
+
+                    if (log == lastLog)
+                    {
+                        Debug.LogError("LOL it is here");
+                    }
+
+                    lastLog = log;
+
                     inGameMessage.ShowMessage(match.Word);
                 }
 

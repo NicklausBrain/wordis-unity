@@ -14,7 +14,6 @@
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,16 +35,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Generates the block grid based on game settings and will also set progress from previous session if any.
         /// </summary>
-        public void GenerateBoard(
-            ProgressData progressData,
-            GameCore.WordisSettings wordisSettings)
+        public void GenerateBoard(GameCore.WordisSettings wordisSettings)
         {
-            progressData = null; // TODO: tmp
-
-            BoardSize boardSize = GamePlayUI.Instance.GetBoardSize();
-
-            int rowSize = (int)boardSize;
-            int columnSize = (int)boardSize;
+            int rowSize = wordisSettings.Width;
+            int columnSize = wordisSettings.Height;
 
             // Fetched the size of block that should be used.
             float blockSize = GamePlayUI.Instance.currentModeSettings.blockSize;
@@ -90,12 +83,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 GamePlayUI.Instance.gamePlay.allRows.Add(blockRow);
             }
 
-            // Sets progress and status to each blocks if there is any from previous session.
-            if (progressData != null)
-            {
-                RestoreBoard(progressData, rowSize, columnSize);
-            }
-
             GamePlay.Instance.OnBoardGridReady();
         }
 
@@ -130,38 +117,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Restores the saved board state.
-        /// </summary>
-        private void RestoreBoard(
-            ProgressData progressData,
-            int rowSize,
-            int columnSize)
-        {
-            if (progressData != null)
-            {
-                int rowIndex = 0;
-                foreach (string blockRow in progressData.gridData)
-                {
-                    int columnIndex = 0;
-                    string[] rowData = blockRow.Split(',');
-                    foreach (string blockData in rowData)
-                    {
-                        if (rowIndex < rowSize && columnIndex < columnSize)
-                        {
-                            SetBlockStatus(
-                                block: GamePlay.Instance.allRows[rowIndex][columnIndex],
-                                statusData: blockData);
-                        }
-
-                        columnIndex++;
-                    }
-
-                    rowIndex++;
-                }
-            }
-        }
-
-        /// <summary>
         /// Spawns a new block.
         /// </summary>
         private Block SpawnBlock(
@@ -192,19 +147,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             block.SetBlockLocation(row, column);
             block.assignedSpriteTag = block.defaultSpriteTag;
             return block;
-        }
-
-        /// <summary>
-        /// Will set block status if there is any from previous session progress.
-        /// </summary>
-        private void SetBlockStatus(Block block, string statusData)
-        {
-            bool.TryParse(statusData.Split('-')[0], out var isAvailable);
-
-            if (!isAvailable)
-            {
-                block.PlaceBlock(statusData.Split('-')[1]);
-            }
         }
 
         /// <summary>
