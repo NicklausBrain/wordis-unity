@@ -444,7 +444,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             //else
             {
                 gameScreen.gameObject.Activate();
-                gameScreen.GetComponent<GamePlayUI>().StartGamePlay(gameMode);
+                gameScreen.GetComponent<GamePlayUI>().StartGamePlay();
             }
         }
 

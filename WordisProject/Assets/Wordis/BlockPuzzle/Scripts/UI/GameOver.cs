@@ -17,7 +17,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Localization.Scripts;
-using Assets.Wordis.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,7 +96,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             GameOverReason reason,
             int score,
             int totalLinesCompleted,
-            GameMode gameMode)
+            GameMode gameMode = GameMode.Classic)
         {
             switch (reason)
             {
@@ -222,7 +221,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
-            GamePlayUI.Instance.StartGamePlay(GamePlayUI.Instance.currentGameMode);
+            GamePlayUI.Instance.StartGamePlay();
             gameObject.Deactivate();
         }
     }

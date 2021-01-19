@@ -12,7 +12,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -106,24 +105,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         [NonSerialized] public GameModeSettings currentModeSettings;
 
-        // Stores current playing mode.
-        [NonSerialized] public GameMode currentGameMode;
-
         // GamePlay Setting Scriptable Instance. Initializes on awake.
         [NonSerialized] GamePlaySettings gamePlaySettings;
-
-        #region  Game Status event callbacks.
-
-        //Event action for game start callback.
-        public static event Action<GameMode> OnGameStartedEvent;
-
-        //Event action for game finish callback.
-        public static event Action<GameMode> OnGameOverEvent;
-
-        //Event action for game pause callback.
-        public static event Action<GameMode, bool> OnGamePausedEvent;
-
-        #endregion
 
         // Total lines clear during gameplay.
         [HideInInspector] public int totalLinesCompleted = 0;
@@ -149,21 +132,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
-        public void StartGamePlay(GameMode gameMode)
+        public void StartGamePlay()
         {
             #region Wordis
             _wordisGame = new WordisGame(_wordisSettings);
             StartGame();
             #endregion
 
-            currentGameMode = gameMode;
             currentModeSettings = gamePlaySettings.classicModeSettings;
 
             // Checks if the there is user progress from previous session.
-            bool hasPreviousSessionProgress = GameProgressTracker.Instance.HasGameProgress(currentGameMode);
+            bool hasPreviousSessionProgress =
+                GameProgressTracker.Instance.HasGameProgress();
+
             if (hasPreviousSessionProgress)
             {
-                progressData = GameProgressTracker.Instance.GetGameProgress(Instance.currentGameMode);
+                progressData = GameProgressTracker.Instance.GetGameProgress();
             }
 
             // Enables gameplay screen if not active.
@@ -174,10 +158,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // Generated gameplay grid.
             gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
-
-            // Board Generator will create and initialize board with progress data if available.
-
-            OnGameStartedEvent?.Invoke(currentGameMode);
+            scoreManager.Init();
         }
 
         // Returns score to be added on for each block cleared.
@@ -214,14 +195,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void OnGameOver()
         {
-            OnGameOverEvent?.Invoke(currentGameMode);
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
                 .SetGameData(
                     currentGameOverReason,
                     scoreManager.GetScore(),
-                    totalLinesCompleted,
-                    currentGameMode);
+                    totalLinesCompleted);
 
             UIController.Instance.gameOverScreen.Activate();
         }
@@ -245,7 +224,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void PauseGame()
         {
             StopGame();
-            OnGamePausedEvent?.Invoke(currentGameMode, true);
         }
 
         /// <summary>
@@ -254,7 +232,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResumeGame()
         {
             StartGame();
-            OnGamePausedEvent?.Invoke(currentGameMode, false);
         }
 
         /// <summary>
@@ -265,7 +242,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             StopGame();
             GameProgressTracker.Instance.ClearProgressData();
             ResetGame();
-            StartGamePlay(currentGameMode);
+            StartGamePlay();
         }
 
         #region Wordis

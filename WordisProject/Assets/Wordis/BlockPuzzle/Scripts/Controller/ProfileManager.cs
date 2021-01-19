@@ -24,7 +24,8 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 {
     /// <summary>
-    /// This script compont manages and saves the basic status if user control including sound, music, haptic feedback, notification, ad status etc.
+    /// This script component manages and saves the basic status
+    /// if user control including sound, music, haptic feedback, notification, ad status etc.
     /// </summary>
     public class ProfileManager : Singleton<ProfileManager>
     {
@@ -55,7 +56,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public bool IsNotificationEnabled { get; private set; } = true;
 
         // Whether user will be served ads or not.
-        [NonSerialized] bool isUserAdFree = false;
+        [NonSerialized] bool _isUserAdFree = false;
 
         // List of all sessions when review nad should be shown to user.
         [HideInInspector] public List<int> appLaunchReviewSessions = new List<int>();
@@ -63,7 +64,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         [HideInInspector] public List<int> gameOverReviewSessions = new List<int>();
 
         // Profile manager has initialized or not.
-        bool hasInitialised = false;
+        bool _isInitialized = false;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -95,7 +96,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 }
             }
 
-            hasInitialised = true;
+            _isInitialized = true;
             InitProfileStatus();
         }
 
@@ -154,7 +155,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 OnNotificationStatusChangedEvent?.Invoke(IsNotificationEnabled);
             }
 
-            isUserAdFree = PlayerPrefs.GetInt("isUserAdFree", 0) == 1 ? true : false;
+            _isUserAdFree = PlayerPrefs.GetInt("isUserAdFree", 0) == 1 ? true : false;
         }
 
         /// <summary>
@@ -204,7 +205,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // Returns the app setting scriptable instance.
         public AppSettings GetAppSettings()
         {
-            if (!hasInitialised)
+            if (!_isInitialized)
             {
                 Initialise();
             }
@@ -218,7 +219,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public void SetAppAsAdFree()
         {
             PlayerPrefs.SetInt("isUserAdFree", 1);
-            isUserAdFree = true;
+            _isUserAdFree = true;
             AdManager.Instance.HideBanner();
         }
 
@@ -230,7 +231,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Returns best score for the given mode.
         /// </summary>
-        public int GetBestScore(GameMode gameMode)
+        public int GetBestScore(GameMode gameMode = GameMode.Classic)
         {
             return PlayerPrefs.GetInt($"bestScore_{gameMode}", 0);
         }
@@ -238,7 +239,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Saves best for the give mode.
         /// </summary>
-        public void SetBestScore(int score, GameMode gameMode)
+        public void SetBestScore(int score, GameMode gameMode = GameMode.Classic)
         {
             PlayerPrefs.SetInt($"bestScore_{gameMode}", score);
         }

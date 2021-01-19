@@ -50,8 +50,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         void OnEnable()
         {
-            // Registers game status callbacks.
-            GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
         }
 
         /// <summary>
@@ -59,14 +57,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            // Unregisters game status callbacks.
-            GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
         }
 
         /// <summary>
         /// Set best score onn game start. 
         /// </summary>
-        private void GamePlayUI_OnGameStartedEvent(GameMode currentGameMode)
+        public void Init()
         {
             #region score data to local members
 
@@ -82,7 +78,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             txtScore.text = _score.ToString("N0");
-            txtBestScore.text = ProfileManager.Instance.GetBestScore(GamePlayUI.Instance.currentGameMode)
+            txtBestScore.text = ProfileManager.Instance.GetBestScore()
                 .ToString("N0");
         }
 

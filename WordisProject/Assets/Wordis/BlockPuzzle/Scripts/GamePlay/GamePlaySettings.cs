@@ -24,35 +24,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         Advance
     }
 
-    // Grid size of playing board.
-    public enum BoardSize
-    {
-        BoardSize_5X5 = 5,
-        BoardSize_6X6 = 6,
-        BoardSize_7X7 = 7,
-        BoardSize_8X8 = 8,
-        BoardSize_9X9 = 9,
-        BoardSize_10X10 = 10,
-        BoardSize_11X11 = 11,
-        BoardSize_12X12 = 12
-    }
-
     /// <summary>
     /// This scriptable object instance contains all the info regarding the game setting for each game mode.static
     /// This settings can be updated from Hyperbyte -> Gameplay Setting menu item.
     /// </summary>
     public class GamePlaySettings : ScriptableObject
     {
-        #region BlockShape Settings
-
-        // List of standard block shapes.
-        public BlockShapeInfo[] standardBlockShapesInfo;
-
-        // List of advanced block shapes.
-        public BlockShapeInfo[] advancedBlockShapesInfo;
-
-        #endregion
-
         // Classic mode settings.
         public GameModeSettings tutorialModeSettings;
 
