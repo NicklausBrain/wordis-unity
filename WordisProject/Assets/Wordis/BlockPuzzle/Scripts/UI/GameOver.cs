@@ -79,14 +79,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void TryShowingInterstitial()
         {
-            // Bug: NullReferenceException is here
-            //if (AdManager.Instance.adSettings.showInterstitialOnGameOver)
-            //{
-            //    if (AdManager.Instance.IsInterstitialAvailable())
-            //    {
-            //        AdManager.Instance.ShowInterstitial();
-            //    }
-            //}
         }
 
         /// <summary>
@@ -120,8 +112,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             }
 
             txtBestScore.text = bestScore.ToString("N0");
-            ProgressGameReward();
-
 
             // Number of time game over shown. Also total game play counts.
             _gameOverId = PlayerPrefs.GetInt("gameOverId", 0);
@@ -132,38 +122,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 InputManager.Instance.DisableTouchForDelay(2F);
                 Invoke("CheckForReview", 2F);
-            }
-        }
-
-        public void ProgressGameReward()
-        {
-            if (GamePlayUI.Instance.rewardOnGameOver)
-            {
-                if (!rewardPanel.activeSelf)
-                {
-                    rewardPanel.SetActive(true);
-                    gemImage.SetActive(true);
-                }
-
-                if (GamePlayUI.Instance.giveFixedReward)
-                {
-                    _rewardAmount = GamePlayUI.Instance.fixedRewardAmount;
-                }
-                else
-                {
-                    _rewardAmount = (int)(GamePlayUI.Instance.rewardPerLine * _totalLinesCompleted);
-                }
-
-                txtReward.text = _rewardAmount.ToString();
-
-                if (_rewardAmount > 0)
-                {
-                    Invoke(nameof(ShowRewardAnimation), 1F);
-                }
-            }
-            else
-            {
-                rewardPanel.SetActive(false);
             }
         }
 

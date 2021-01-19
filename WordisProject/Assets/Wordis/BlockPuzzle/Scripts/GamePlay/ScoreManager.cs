@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
@@ -44,6 +45,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [SerializeField] private ScoreAnimator scoreAnimator;
 #pragma warning restore 0649
 
+        // GamePlay Setting Scriptable Instance. Initializes on awake.
+        [NonSerialized] GamePlaySettings gamePlaySettings;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            // Initializes the GamePlay Settings Scriptable.
+            if (gamePlaySettings == null)
+            {
+                gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
+            }
+        }
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -66,16 +81,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             #region score data to local members
 
-            _blockScore = GamePlayUI.Instance.blockScore;
-            _singleLineBreakScore = GamePlayUI.Instance.singleLineBreakScore;
-            _multiLineScoreMultiplier = GamePlayUI.Instance.multiLineScoreMultiplier;
+            _blockScore = gamePlaySettings.blockScore;
+            _singleLineBreakScore = gamePlaySettings.singleLineBreakScore;
+            _multiLineScoreMultiplier = gamePlaySettings.multiLineScoreMultiplier;
 
             #endregion
-
-            if (GamePlayUI.Instance.progressData != null)
-            {
-                _score += GamePlayUI.Instance.progressData.score;
-            }
 
             txtScore.text = _score.ToString("N0");
             txtBestScore.text = ProfileManager.Instance.GetBestScore()

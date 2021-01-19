@@ -47,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void StartGame()
         {
             CancelInvoke(nameof(GameStep));
-            InvokeRepeating(nameof(GameStep), 0.5f, gamePlaySettings.gameSpeed);
+            InvokeRepeating(nameof(GameStep), 1f, gamePlaySettings.gameSpeed);
         }
 
         private void StopGame()
@@ -91,9 +91,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Tooltip("ScoreManager Script Reference")]
         public ScoreManager scoreManager;
 
-        [Tooltip("ProgressData Script Reference")]
-        public ProgressData progressData;
-
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
@@ -110,7 +107,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // Initializes the GamePlay Settings Scriptable.
             if (gamePlaySettings == null)
             {
-                gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+                gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
+                currentModeSettings = gamePlaySettings.classicModeSettings;
             }
         }
 
@@ -119,21 +117,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void StartGamePlay()
         {
-            #region Wordis
             _wordisGame = new WordisGame(_wordisSettings);
-            StartGame();
-            #endregion
-
-            currentModeSettings = gamePlaySettings.classicModeSettings;
-
-            // Checks if the there is user progress from previous session.
-            bool hasPreviousSessionProgress =
-                GameProgressTracker.Instance.HasGameProgress();
-
-            if (hasPreviousSessionProgress)
-            {
-                progressData = GameProgressTracker.Instance.GetGameProgress();
-            }
 
             // Enables gameplay screen if not active.
             if (!gameBoard.gameObject.activeSelf)
@@ -144,24 +128,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // Generated gameplay grid.
             gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
             scoreManager.Init();
+
+            StartGame();
         }
-
-        // Returns score to be added on for each block cleared.
-        public int blockScore => gamePlaySettings.blockScore;
-
-        // Returns score to be added on for each line cleared.
-        public int singleLineBreakScore => gamePlaySettings.singleLineBreakScore;
-
-        // Returns score multiplier to be added on for each line cleared when more than 1 lines cleared together.
-        public int multiLineScoreMultiplier => gamePlaySettings.multiLineScoreMultiplier;
-
-        public bool rewardOnGameOver => gamePlaySettings.rewardOnGameOver;
-
-        public bool giveFixedReward => gamePlaySettings.giveFixedReward;
-
-        public int fixedRewardAmount => gamePlaySettings.fixedRewardAmount;
-
-        public float rewardPerLine => gamePlaySettings.rewardPerLineCompleted;
 
         /// <summary>
         /// Pauses the game on pressing pause button.
@@ -195,7 +164,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResetGame()
         {
             _wordisGame = new WordisGame(_wordisSettings);
-            progressData = null;
             gameBoard.ResetGame();
             scoreManager.ResetGame();
         }
