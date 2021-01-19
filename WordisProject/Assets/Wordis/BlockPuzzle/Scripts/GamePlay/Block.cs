@@ -134,10 +134,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void PlaceBlock(string spriteTag)
         {
             Sprite sprite = ThemeManager.Instance.GetBlockSpriteWithTag(spriteTag);
-            thisCollider.enabled = false;
-            blockImage.enabled = true;
-            blockImage.sprite = sprite;
-            blockImage.color = blockImage.color.WithNewA(1);
+
+            if (thisCollider != null)
+            {
+                thisCollider.enabled = false;
+            }
+
+            if (blockImage != null)
+            {
+                blockImage.enabled = true;
+                blockImage.sprite = sprite;
+                blockImage.color = blockImage.color.WithNewA(1);
+            }
+
             defaultSprite = sprite;
             isFilled = true;
             isAvailable = false;
@@ -160,7 +169,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             });
 
             blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(() =>
-            {blockImage.transform.localEulerAngles = Vector3.zero;
+            {
+                blockImage.transform.localEulerAngles = Vector3.zero;
             });
 
             transform.GetComponent<Image>().SetAlpha(1, 0.35F).SetDelay(0.3F);

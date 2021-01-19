@@ -131,8 +131,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 // Attached all the fetched data to progress data class instance.
                 _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
-                _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
-                _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
                 PlayerPrefs.SetString($"gameProgress_{gameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }

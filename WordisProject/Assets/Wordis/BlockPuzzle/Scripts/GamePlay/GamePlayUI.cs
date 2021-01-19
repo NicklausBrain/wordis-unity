@@ -25,12 +25,6 @@ using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
-    public enum GameOverReason
-    {
-        GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
-        TimeOver, // If timer finishing. Applied only to time mode.
-    }
-
     public class GamePlayUI : Singleton<GamePlayUI>
     {
         #region Wordis
@@ -107,15 +101,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         // GamePlay Setting Scriptable Instance. Initializes on awake.
         [NonSerialized] GamePlaySettings gamePlaySettings;
-
-        // Total lines clear during gameplay.
-        [HideInInspector] public int totalLinesCompleted = 0;
-
-        // Rescue used for the game or not.
-        [HideInInspector] public bool rescueDone = false;
-
-        // Reason for game over. Will Initialize at game over or rescue.
-        [HideInInspector] public GameOverReason currentGameOverReason;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -198,9 +183,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
                 .SetGameData(
-                    currentGameOverReason,
                     scoreManager.GetScore(),
-                    totalLinesCompleted);
+                    _wordisGame.AllMatches.Count);
 
             UIController.Instance.gameOverScreen.Activate();
         }
@@ -212,8 +196,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             _wordisGame = new WordisGame(_wordisSettings);
             progressData = null;
-            totalLinesCompleted = 0;
-            rescueDone = false;
             gameBoard.ResetGame();
             scoreManager.ResetGame();
         }

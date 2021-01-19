@@ -93,9 +93,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// Sets game data and score on game over.
         /// </summary>
         public void SetGameData(
-            GameOverReason reason,
             int score,
             int totalLinesCompleted,
+            GameOverReason reason = GameOverReason.GridFilled,
             GameMode gameMode = GameMode.Classic)
         {
             switch (reason)
@@ -223,6 +223,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             yield return new WaitForSeconds(0.1f);
             GamePlayUI.Instance.StartGamePlay();
             gameObject.Deactivate();
+        }
+
+        public enum GameOverReason
+        {
+            GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
+            TimeOver, // If timer finishing. Applied only to time mode.
         }
     }
 }

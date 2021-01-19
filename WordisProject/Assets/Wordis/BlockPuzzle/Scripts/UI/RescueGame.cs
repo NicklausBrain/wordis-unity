@@ -15,7 +15,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
-using Assets.Wordis.Frameworks.Localization.Scripts;
 using Assets.Wordis.Frameworks.MobileAds._Common;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,26 +46,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             txtRescueGemAmount.text = ProfileManager.Instance.GetAppSettings().rescueGameGemsAmount.ToString();
         }
 
-        public void SetRescueReason(GameOverReason reason)
-        {
-            switch (reason)
-            {
-                case GameOverReason.GridFilled:
-                    txtTitle.SetTextWithTag("txtGameOver_gridfull");
-                    break;
-
-                case GameOverReason.TimeOver:
-                    txtTitle.SetTextWithTag("txtGameOver_timeover");
-                    break;
-            }
-        }
-
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         private void OnEnable()
         {
-            /// Pauses the game when it gets enabled.
+            // Pauses the game when it gets enabled.
             GamePlayUI.Instance.PauseGame();
             AdManager.OnRewardedAdRewardedEvent += OnRewardedAdRewarded;
             UIController.Instance.EnableCurrencyBalanceButton();

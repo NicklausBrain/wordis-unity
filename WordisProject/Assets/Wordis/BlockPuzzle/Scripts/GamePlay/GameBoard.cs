@@ -78,8 +78,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var entireRow = GetEntireRow(rowId).ToArray();
                 StartCoroutine(ClearAllBlocks(null, entireRow));
             }
-
-            GamePlayUI.Instance.totalLinesCompleted += rowIds.Count;
         }
 
         /// <summary>
@@ -92,8 +90,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var entireColumn = GetEntireColumn(columnId).ToArray();
                 StartCoroutine(ClearAllBlocks(null, entireColumn));
             }
-
-            GamePlayUI.Instance.totalLinesCompleted += columnIds.Count;
         }
 
         /// <summary>
