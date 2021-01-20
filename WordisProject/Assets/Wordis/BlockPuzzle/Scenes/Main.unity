@@ -27315,9 +27315,6 @@ MonoBehaviour:
   gameBoard: {fileID: 1501201905}
   scoreManager: {fileID: 1501201908}
   inGameMessage: {fileID: 1909395461}
-  totalLinesCompleted: 0
-  rescueDone: 0
-  currentGameOverReason: 0
 --- !u!114 &1501201908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36077,7 +36074,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1069858231}
-        m_MethodName: OnSupprtButtonPressed
+        m_MethodName: OnSupportButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
