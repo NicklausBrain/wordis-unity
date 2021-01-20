@@ -7,7 +7,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordMatchEx(
             WordMatch wordMatch,
             int gameStep,
-            DateTimeOffset timestamp) : base(wordMatch.MatchedChars)
+            DateTimeOffset timestamp)
+            : base(
+                wordMatch.MatchedChars)
         {
             GameStep = gameStep;
             Timestamp = timestamp;

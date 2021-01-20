@@ -44,35 +44,36 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Starts / resumes the game.
         /// </summary>
-        public void StartGame()
+        public void ResumeGame()
         {
-            StopGame();
+            PauseGame(); // to prevent double callback
             InvokeRepeating(nameof(GameStep), 1f, _gamePlaySettings.gameSpeed);
         }
 
         /// <summary>
         /// Stops / pauses the game.
         /// </summary>
-        public void StopGame() => CancelInvoke(nameof(GameStep));
+        public void PauseGame() => CancelInvoke(nameof(GameStep));
 
         public void HandleGameEvent(GameEvent gameEvent)
         {
             lock (_gameLock)
             {
-                StopGame(); // prevent premature UI refresh
+                PauseGame(); // prevent premature UI refresh
 
                 if (_wordisGame.IsGameOver)
                 {
                     // stop the game cycle
-                    StopGame();
-                    OnGameOver();
+                    PauseGame();
+                    GameOver();
+                    return;
                 }
 
                 var lastGame = _wordisGame;
                 var newGame = _wordisGame.Handle(gameEvent);
                 _wordisGame = newGame;
                 RefreshPresentation(lastGame, newGame);
-                StartGame();//resume refresh immediately
+                ResumeGame();
             }
         }
 
@@ -205,7 +206,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
-        public void StartGamePlay()
+        public void RestartGame()
         {
             ClearGame();
 
@@ -219,7 +220,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
             scoreManager.Init();
 
-            StartGame();
+            ResumeGame();
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Will be called on game over. 
         /// </summary>
-        public void OnGameOver()
+        private void GameOver()
         {
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
@@ -248,14 +249,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             UIController.Instance.gameOverScreen.Activate();
         }
 
-        /// <summary>
-        /// Will rest game to empty state and start new game with same selected mode.
-        /// </summary>
-        public void RestartGame() => StartGamePlay();
-
         private void ClearGame()
         {
-            StopGame();
+            PauseGame();
             gameBoard.Clear();
             scoreManager.Clear();
             GameProgressTracker.Instance.ClearProgressData();

@@ -30,7 +30,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         private void OnEnable()
         {
             // Pauses the game when it gets enabled.
-            GamePlayUI.Instance.StopGame();
+            GamePlayUI.Instance.PauseGame();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         private void OnDisable()
         {
             // Resumes the game when it gets enabled.
-            GamePlayUI.Instance.StartGame();
+            GamePlayUI.Instance.ResumeGame();
         }
 
         /// <summary>
