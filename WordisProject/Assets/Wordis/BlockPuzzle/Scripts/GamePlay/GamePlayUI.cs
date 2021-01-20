@@ -152,7 +152,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 .GetComponent<GameOver>()
                 .SetGameData(
                     scoreManager.GetScore(),
-                    _wordisGame.AllMatches.Count);
+                    _wordisGame.Matches.Count);
 
             UIController.Instance.gameOverScreen.Activate();
         }
@@ -171,24 +171,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void RefreshPresentation(
             WordisGame lastGameState, WordisGame newGameState)
         {
-            var newObjects =
-                newGameState.GameObjects
-                    .Except(lastGameState.GameObjects)
-                    .ToArray();
-            var removedObjects =
-                lastGameState.GameObjects
-                    .Except(newGameState.GameObjects)
-                    .ToArray();
-            var newMatches = newGameState.LastStepMatches;
+            var newMatches = newGameState.Matches.Last;
 
-            // todo: bug is here
-            if (newGameState.GameEvents.Last() == GameEvent.Step &&
-                newMatches.Any() && newMatches.First().GameStep == lastGameState.Step) // on word matches
+            if (newMatches.Any()) // on word matches
             {
                 // 1. display matched words
                 foreach (var match in newMatches)
                 {
-                    var log = "MATCH! '" + match.Word + "' Step: " + newGameState.Step;
+                    var log = "MATCH! '" + match.Word + "' Step: " + newGameState.GameEvents.Count;
                     Debug.LogWarning(log);
 
                     if (log == lastLog)
