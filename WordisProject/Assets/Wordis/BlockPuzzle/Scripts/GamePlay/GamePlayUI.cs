@@ -28,13 +28,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-        private readonly object _gameLock = new object();
+        private static readonly object GameLock = new object();
 
         private readonly WordisSettings _wordisSettings = new WordisSettings(
             width: 9,
             height: 9,
             minWordMatch: 3,
-            waterLevel: 4);
+            waterLevel: 0);
 
         private WordisGame _wordisGame;
 
@@ -56,7 +56,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         public void HandleGameEvent(GameEvent gameEvent)
         {
-            lock (_gameLock)
+            lock (GameLock)
             {
                 PauseGame(); // prevent premature UI refresh
 
@@ -68,10 +68,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     return;
                 }
 
-                var lastGame = _wordisGame;
-                var newGame = _wordisGame.Handle(gameEvent);
-                _wordisGame = newGame;
-                RefreshPresentation(lastGame, newGame);
+                var updatedGame = _wordisGame.Handle(gameEvent);
+                _wordisGame = updatedGame;
+                RefreshPresentation(_wordisGame);
                 ResumeGame();
             }
         }
@@ -167,21 +166,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             _wordisGame = new WordisGame(_wordisSettings);
         }
 
-        private void RefreshPresentation(
-            WordisGame lastGameState, WordisGame newGameState)
+        private void RefreshPresentation(WordisGame gameState)
         {
-            var newMatches = newGameState.Matches.Last;
+            var newMatches = gameState.Matches.Last;
 
             if (newMatches.Any()) // on word matches
             {
                 DisplayMatches(newMatches);
             }
 
-            for (int x = 0; x < newGameState.Matrix.Width; x++)
+            for (int x = 0; x < gameState.Matrix.Width; x++)
             {
-                for (int y = 0; y < newGameState.Matrix.Height; y++)
+                for (int y = 0; y < gameState.Matrix.Height; y++)
                 {
-                    var wordisObject = newGameState.Matrix[x, y];
+                    var wordisObject = gameState.Matrix[x, y];
 
                     RefreshVisualBlock(x, y, wordisObject);
                 }
