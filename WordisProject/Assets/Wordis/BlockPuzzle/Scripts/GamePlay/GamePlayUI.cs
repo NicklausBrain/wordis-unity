@@ -12,7 +12,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -69,8 +68,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 }
 
                 var updatedGame = _wordisGame.Handle(gameEvent);
+
+                if (updatedGame.GameEvents.Count >
+                    _wordisGame.GameEvents.Count) // avoid extra refresh on game over.
+                {
+                    RefreshPresentation(updatedGame);
+                }
+
                 _wordisGame = updatedGame;
-                RefreshPresentation(_wordisGame);
+
                 ResumeGame();
             }
         }
