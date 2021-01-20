@@ -103,7 +103,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
                 .OrderByDescending(o => o.X)
                 .FirstOrDefault();
 
-            if (firstObjLeft != null || X == 0)
+            if (firstObjLeft?.X == X - 1 || X == 0)
             {
                 // stay in current place
                 return this;
@@ -122,7 +122,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
                 .OrderBy(o => o.X)
                 .FirstOrDefault();
 
-            if (firstObjRight != null || X == game.Settings.MaxX)
+            if (firstObjRight?.X == X + 1 || X == game.Settings.MaxX)
             {
                 // stay in current place
                 return this;
