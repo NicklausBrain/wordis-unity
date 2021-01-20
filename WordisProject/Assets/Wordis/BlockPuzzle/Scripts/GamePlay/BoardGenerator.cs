@@ -109,10 +109,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Resets Grid and removes all blocks from it.
         /// </summary>
-        public void ResetGame()
-        {
-            blockRoot.ClearAllChild();
-        }
+        public void Clear() => blockRoot.ClearAllChild();
 
         /// <summary>
         /// Horizontal position from where block grid will start.

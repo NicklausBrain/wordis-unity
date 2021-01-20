@@ -141,7 +141,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Resets score on game over, game quit.
         /// </summary>
-        public void ResetGame()
+        public void Clear()
         {
             txtScore.text = "0";
             txtBestScore.text = "0";

@@ -305,9 +305,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Reset the game. All the data, grid, and all UI will reset as fresh game.
         /// </summary>
-        public void ResetGame()
-        {
-            boardGenerator.ResetGame();
-        }
+        public void Clear() => boardGenerator.Clear();
     }
 }

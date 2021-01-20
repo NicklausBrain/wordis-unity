@@ -458,7 +458,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
         private IEnumerator OpenHomeScreenFromGameOverCoroutine()
         {
-            GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
             gameScreen.gameObject.Deactivate();
             gameOverScreen.Deactivate();
@@ -475,7 +474,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
         private IEnumerator OpenHomeScreenFromPauseGameCoroutine()
         {
-            GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
             gameScreen.gameObject.Deactivate();
             pauseGameScreen.Deactivate();

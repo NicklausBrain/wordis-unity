@@ -198,11 +198,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
+        /// This function is called when the behaviour becomes disabled or inactive.
+        /// </summary>
+        private void OnDisable() => ClearGame();
+
+        /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
         public void StartGamePlay()
         {
-            ResetGame();
+            ClearGame();
 
             // Enables gameplay screen if not active.
             if (!gameBoard.gameObject.activeSelf)
@@ -244,23 +249,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Resets game.
-        /// </summary>
-        public void ResetGame()
-        {
-            _wordisGame = new WordisGame(_wordisSettings);
-            gameBoard.ResetGame();
-            scoreManager.ResetGame();
-        }
-
-        /// <summary>
         /// Will rest game to empty state and start new game with same selected mode.
         /// </summary>
-        public void RestartGame()
+        public void RestartGame() => StartGamePlay();
+
+        private void ClearGame()
         {
             StopGame();
+            gameBoard.Clear();
+            scoreManager.Clear();
             GameProgressTracker.Instance.ClearProgressData();
-            StartGamePlay();
+            _wordisGame = new WordisGame(_wordisSettings);
         }
     }
 }
