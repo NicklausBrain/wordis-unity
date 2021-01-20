@@ -27,8 +27,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
     public class GamePlayUI : Singleton<GamePlayUI>
     {
-        #region Wordis Game Integration
-
         private readonly object _gameLock = new object();
 
         private readonly WordisSettings _wordisSettings = new WordisSettings(
@@ -75,6 +73,97 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 RefreshPresentation(lastGame, newGame);
                 ResumeGame();
             }
+        }
+
+        /// <summary>
+        /// Starts game with selected game mode.
+        /// </summary>
+        public void RestartGame()
+        {
+            ClearGame();
+
+            // Enables gameplay screen if not active.
+            if (!gameBoard.gameObject.activeSelf)
+            {
+                gameBoard.gameObject.SetActive(true);
+            }
+
+            // Generated gameplay grid.
+            gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
+            scoreManager.Init();
+
+            ResumeGame();
+        }
+
+        /// <summary>
+        /// Pauses the game on pressing pause button.
+        /// </summary>
+        public void OnPauseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.pauseGameScreen.Activate();
+            }
+        }
+
+        [Tooltip("GamingButtonsController Script Reference")]
+        public GamingButtonsController gamingButtonsController;
+
+        [Tooltip("GamingSwipesController Script Reference")]
+        public GamingSwipesController gamingSwipesController;
+
+        [Header("Public Class Members")]
+        [Tooltip("GamePlay Script Reference")]
+        public GameBoard gameBoard;
+
+        [Tooltip("ScoreManager Script Reference")]
+        public ScoreManager scoreManager;
+
+        [Tooltip("InGameMessage Script Reference To Show Message")]
+        public InGameMessage inGameMessage;
+
+        // GamePlay Setting Scriptable Instance. Initializes on awake.
+        [NonSerialized] private GamePlaySettings _gamePlaySettings;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            // Initializes the GamePlay Settings Scriptable.
+            if (_gamePlaySettings == null)
+            {
+                _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
+            }
+        }
+
+        /// <summary>
+        /// This function is called when the behaviour becomes disabled or inactive.
+        /// </summary>
+        private void OnDisable() => ClearGame();
+
+        /// <summary>
+        /// Will be called on game over. 
+        /// </summary>
+        private void GameOver()
+        {
+            UIController.Instance.gameOverScreen
+                .GetComponent<GameOver>()
+                .SetGameData(
+                    scoreManager.GetScore(),
+                    _wordisGame.AllMatches.Count);
+
+            UIController.Instance.gameOverScreen.Activate();
+        }
+
+        private void ClearGame()
+        {
+            PauseGame();
+            gameBoard.Clear();
+            scoreManager.Clear();
+            GameProgressTracker.Instance.ClearProgressData();
+            _wordisGame = new WordisGame(_wordisSettings);
         }
 
         private static string lastLog;
@@ -163,99 +252,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     }
                 }
             }
-        }
-
-        #endregion
-
-        [Tooltip("GamingButtonsController Script Reference")]
-        public GamingButtonsController gamingButtonsController;
-
-        [Tooltip("GamingSwipesController Script Reference")]
-        public GamingSwipesController gamingSwipesController;
-
-        [Header("Public Class Members")]
-        [Tooltip("GamePlay Script Reference")]
-        public GameBoard gameBoard;
-
-        [Tooltip("ScoreManager Script Reference")]
-        public ScoreManager scoreManager;
-
-        [Tooltip("InGameMessage Script Reference To Show Message")]
-        public InGameMessage inGameMessage;
-
-        // GamePlay Setting Scriptable Instance. Initializes on awake.
-        [NonSerialized] private GamePlaySettings _gamePlaySettings;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            // Initializes the GamePlay Settings Scriptable.
-            if (_gamePlaySettings == null)
-            {
-                _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
-            }
-        }
-
-        /// <summary>
-        /// This function is called when the behaviour becomes disabled or inactive.
-        /// </summary>
-        private void OnDisable() => ClearGame();
-
-        /// <summary>
-        /// Starts game with selected game mode.
-        /// </summary>
-        public void RestartGame()
-        {
-            ClearGame();
-
-            // Enables gameplay screen if not active.
-            if (!gameBoard.gameObject.activeSelf)
-            {
-                gameBoard.gameObject.SetActive(true);
-            }
-
-            // Generated gameplay grid.
-            gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
-            scoreManager.Init();
-
-            ResumeGame();
-        }
-
-        /// <summary>
-        /// Pauses the game on pressing pause button.
-        /// </summary>
-        public void OnPauseButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.pauseGameScreen.Activate();
-            }
-        }
-
-        /// <summary>
-        /// Will be called on game over. 
-        /// </summary>
-        private void GameOver()
-        {
-            UIController.Instance.gameOverScreen
-                .GetComponent<GameOver>()
-                .SetGameData(
-                    scoreManager.GetScore(),
-                    _wordisGame.AllMatches.Count);
-
-            UIController.Instance.gameOverScreen.Activate();
-        }
-
-        private void ClearGame()
-        {
-            PauseGame();
-            gameBoard.Clear();
-            scoreManager.Clear();
-            GameProgressTracker.Instance.ClearProgressData();
-            _wordisGame = new WordisGame(_wordisSettings);
         }
     }
 }
