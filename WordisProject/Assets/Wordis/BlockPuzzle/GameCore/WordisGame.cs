@@ -220,8 +220,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             /// Matches on this game event.
             /// </summary>
             public IReadOnlyList<WordMatchEx> Last =>
-                _game._wordMatches.ContainsKey(_game._gameEvents.Count)
-                    ? _game._wordMatches[_game._gameEvents.Count] // bug is still with us
+                _game._wordMatches.ContainsKey(_game._gameEvents.Count - 1)
+                    ? _game._wordMatches[_game._gameEvents.Count - 1]
                     : Array.Empty<WordMatchEx>();
 
             public IEnumerator<WordMatchEx> GetEnumerator() =>

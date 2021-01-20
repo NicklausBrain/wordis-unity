@@ -12,6 +12,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -166,8 +167,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             _wordisGame = new WordisGame(_wordisSettings);
         }
 
-        private static string lastLog;
-
         private void RefreshPresentation(
             WordisGame lastGameState, WordisGame newGameState)
         {
@@ -175,36 +174,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (newMatches.Any()) // on word matches
             {
-                // 1. display matched words
-                foreach (var match in newMatches)
-                {
-                    var log = "MATCH! '" + match.Word + "' Step: " + newGameState.GameEvents.Count;
-                    Debug.LogWarning(log);
-
-                    if (log == lastLog)
-                    {
-                        Debug.LogError("LOL it is here");
-                    }
-
-                    lastLog = log;
-
-                    inGameMessage.ShowMessage(match.Word);
-                }
-
-                var blocksToClear =
-                    newMatches
-                        .SelectMany(match => match.MatchedChars)
-                        .Select(c => gameBoard.allColumns[c.X][c.Y])
-                        .ToArray();
-
-                // 2. display score (todo: check calculation logic)
-                scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
-
-                // 3. animate blocks destruction
-                StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));
-
-                // 4. play break sound
-                AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
+                DisplayMatches(newMatches);
             }
 
             for (int x = 0; x < newGameState.Matrix.Width; x++)
@@ -216,6 +186,30 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     RefreshVisualBlock(x, y, wordisObject);
                 }
             }
+        }
+
+        private void DisplayMatches(IReadOnlyList<WordMatchEx> newMatches)
+        {
+            // 1. display matched words
+            foreach (var match in newMatches)
+            {
+                inGameMessage.ShowMessage(match.Word);
+            }
+
+            var blocksToClear =
+                newMatches
+                    .SelectMany(match => match.MatchedChars)
+                    .Select(c => gameBoard.allColumns[c.X][c.Y])
+                    .ToArray();
+
+            // 2. display score (todo: check calculation logic)
+            scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
+
+            // 3. animate blocks destruction
+            StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));
+
+            // 4. play break sound
+            AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
         }
 
         private void RefreshVisualBlock(int x, int y, WordisObj wordisObj)
