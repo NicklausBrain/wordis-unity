@@ -46,7 +46,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Classic);
+                UIController.Instance.LoadGamePlay(GameMode.Default);
             }
         }
 

@@ -19,7 +19,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public enum GameMode
     {
         Tutorial,
-        Classic,
+        Default,
         Timed,
         Advance
     }

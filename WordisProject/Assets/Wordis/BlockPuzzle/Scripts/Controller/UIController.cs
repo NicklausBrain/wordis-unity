@@ -65,7 +65,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // to queue so it will load automatically when already existing popup gets closed.
         readonly List<string> _orderedPopupStack = new List<string>();
 
-        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Classic;
+        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Default;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.

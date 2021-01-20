@@ -88,7 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             int score,
             int totalLinesCompleted,
             GameOverReason reason = GameOverReason.GridFilled,
-            GameMode gameMode = GameMode.Classic)
+            GameMode gameMode = GameMode.Default)
         {
             switch (reason)
             {

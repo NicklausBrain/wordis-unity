@@ -85,6 +85,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordMatches Matches => new WordMatches(this);
 
         /// <summary>
+        /// Accumulated score.
+        /// </summary>
+        public WordisScore Score => new WordisScore(this);
+
+        /// <summary>
         /// Determines if game is over.
         /// </summary>
         public bool IsGameOver
@@ -223,6 +228,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 _game._wordMatches.ContainsKey(_game._gameEvents.Count - 1)
                     ? _game._wordMatches[_game._gameEvents.Count - 1]
                     : Array.Empty<WordMatchEx>();
+
+            /// <summary>
+            /// All matches.
+            /// </summary>
+            public IReadOnlyDictionary<int, IReadOnlyList<WordMatchEx>> All =>
+                _game._wordMatches;
 
             public IEnumerator<WordMatchEx> GetEnumerator() =>
                 _game._wordMatches.Values

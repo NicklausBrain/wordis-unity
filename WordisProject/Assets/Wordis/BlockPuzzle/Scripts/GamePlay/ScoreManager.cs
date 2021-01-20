@@ -95,16 +95,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Adds score based on calculation and bonus.
         /// </summary>
-        public void AddScore(int linesCleared, int clearedBlocks)
+        public void ShowScore(int score)
         {
-            int scorePerLine = _singleLineBreakScore + (linesCleared - 1) * _multiLineScoreMultiplier;
-            int scoreToAdd = linesCleared * scorePerLine + clearedBlocks * _blockScore;
-
             int oldScore = _score;
-            _score += scoreToAdd;
 
-            StartCoroutine(SetScore(oldScore, _score));
-            scoreAnimator.Animate(scoreToAdd);
+            StartCoroutine(SetScore(oldScore, score));
+            scoreAnimator.Animate(score - oldScore);
+
+            _score = score;
         }
 
         /// <summary>

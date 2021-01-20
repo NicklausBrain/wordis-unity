@@ -168,11 +168,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void RefreshPresentation(WordisGame gameState)
         {
-            var newMatches = gameState.Matches.Last;
-
-            if (newMatches.Any()) // on word matches
+            if (gameState.Matches.Last.Any()) // on word matches
             {
-                DisplayMatches(newMatches);
+                DisplayMatches(gameState);
             }
 
             for (int x = 0; x < gameState.Matrix.Width; x++)
@@ -186,8 +184,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        private void DisplayMatches(IReadOnlyList<WordMatchEx> newMatches)
+        private void DisplayMatches(WordisGame gameState)
         {
+            var newMatches = gameState.Matches.Last;
+
             // 1. display matched words
             foreach (var match in newMatches)
             {
@@ -200,8 +200,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .Select(c => gameBoard.allColumns[c.X][c.Y])
                     .ToArray();
 
-            // 2. display score (todo: check calculation logic)
-            scoreManager.AddScore(newMatches.Count, blocksToClear.Length);
+            // 2. display score
+            scoreManager.ShowScore(gameState.Score.Value);
 
             // 3. animate blocks destruction
             StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));

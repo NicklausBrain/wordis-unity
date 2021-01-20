@@ -105,7 +105,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
         /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
         /// </summary>
-        private void SaveProgress(GameMode gameMode = GameMode.Classic)
+        private void SaveProgress(GameMode gameMode = GameMode.Default)
         {
             if (_currentProgressData != null)
             {
@@ -136,7 +136,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        public bool HasGameProgress(GameMode gameMode = GameMode.Classic)
+        public bool HasGameProgress(GameMode gameMode = GameMode.Default)
         {
             return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
         }
@@ -144,7 +144,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns game progress for the given mode if any.
         /// </summary>
-        public ProgressData GetGameProgress(GameMode gameMode = GameMode.Classic)
+        public ProgressData GetGameProgress(GameMode gameMode = GameMode.Default)
         {
             if (HasGameProgress(gameMode))
             {
@@ -162,7 +162,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears game progress if any for the given game mode.
         /// </summary>
-        public void DeleteProgress(GameMode gameMode = GameMode.Classic)
+        public void DeleteProgress(GameMode gameMode = GameMode.Default)
         {
             PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
         }

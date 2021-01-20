@@ -231,7 +231,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Returns best score for the given mode.
         /// </summary>
-        public int GetBestScore(GameMode gameMode = GameMode.Classic)
+        public int GetBestScore(GameMode gameMode = GameMode.Default)
         {
             return PlayerPrefs.GetInt($"bestScore_{gameMode}", 0);
         }
@@ -239,7 +239,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Saves best for the give mode.
         /// </summary>
-        public void SetBestScore(int score, GameMode gameMode = GameMode.Classic)
+        public void SetBestScore(int score, GameMode gameMode = GameMode.Default)
         {
             PlayerPrefs.SetInt($"bestScore_{gameMode}", score);
         }
