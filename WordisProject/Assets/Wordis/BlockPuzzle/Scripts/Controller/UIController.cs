@@ -269,10 +269,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                     pauseGameScreen.Deactivate();
                     break;
 
-                //case "RescueGame":
-                //    GamePlayUI.Instance.OnRescueCancelled();
-                //    rescueGameScreen.Deactivate();
-                //    break;
+                    //case "RescueGame":
+                    //    GamePlayUI.Instance.OnRescueCancelled();
+                    //    rescueGameScreen.Deactivate();
+                    //    break;
             }
         }
 
@@ -473,7 +473,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             StartCoroutine(OpenHomeScreenFromPauseGameCoroutine());
         }
 
-        IEnumerator OpenHomeScreenFromPauseGameCoroutine()
+        private IEnumerator OpenHomeScreenFromPauseGameCoroutine()
         {
             GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
@@ -580,29 +580,29 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             tipView.Activate(false);
         }
 
-        public void ShowTimeModeTip()
-        {
-            if (!PlayerPrefs.HasKey("timeTip"))
-            {
-                Instance.ShowTipWithTextIdAtPosition(
-                    tipPosition: new Vector2(0, -350F),
-                    anchor: new Vector2(0.5F, 1),
-                    tipText: "txtTimeTip1",
-                    duration: 6F);
+        //public void ShowTimeModeTip()
+        //{
+        //    if (!PlayerPrefs.HasKey("timeTip"))
+        //    {
+        //        Instance.ShowTipWithTextIdAtPosition(
+        //            tipPosition: new Vector2(0, -350F),
+        //            anchor: new Vector2(0.5F, 1),
+        //            tipText: "txtTimeTip1",
+        //            duration: 6F);
 
-                Invoke(nameof(ShowTimeModeTip2), 5F);
-            }
-        }
+        //        Invoke(nameof(ShowTimeModeTip2), 5F);
+        //    }
+        //}
 
-        void ShowTimeModeTip2()
-        {
-            Instance.ShowTipWithTextIdAtPosition(
-                tipPosition: new Vector2(0, -350F),
-                anchor: new Vector2(0.5F, 1),
-                tipText: "txtTimeTip2",
-                duration: 7F);
+        //void ShowTimeModeTip2()
+        //{
+        //    Instance.ShowTipWithTextIdAtPosition(
+        //        tipPosition: new Vector2(0, -350F),
+        //        anchor: new Vector2(0.5F, 1),
+        //        tipText: "txtTimeTip2",
+        //        duration: 7F);
 
-            PlayerPrefs.SetInt("timeTip", 1);
-        }
+        //    PlayerPrefs.SetInt("timeTip", 1);
+        //}
     }
 }

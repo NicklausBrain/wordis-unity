@@ -177,9 +177,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private IEnumerator RestartGame()
         {
-            GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
-            GamePlayUI.Instance.StartGamePlay();
+            GamePlayUI.Instance.RestartGame();
             gameObject.Deactivate();
         }
 
