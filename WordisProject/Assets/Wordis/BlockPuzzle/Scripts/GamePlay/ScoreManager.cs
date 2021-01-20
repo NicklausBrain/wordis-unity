@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.UITween.Scripts.Utils;
@@ -32,26 +33,38 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [SerializeField] private Text txtBestScore;
 #pragma warning restore 0649
 
-        int Score = 0;
-        int blockScore = 0;
-        int singleLineBreakScore = 0;
-        int multiLineScoreMultiplier = 0;
+        private int _score = 0;
+        private int _blockScore = 0;
+        private int _singleLineBreakScore = 0;
+        private int _multiLineScoreMultiplier = 0;
 
-        // Yield instruction for the score countet iterations.
-        WaitForSeconds scoreIterationWait = new WaitForSeconds(0.02F);
+        // Yield instruction for the score counter iterations.
+        readonly WaitForSeconds _scoreIterationWait = new WaitForSeconds(0.02F);
 
 #pragma warning disable 0649
         [SerializeField] private ScoreAnimator scoreAnimator;
 #pragma warning restore 0649
 
+        // GamePlay Setting Scriptable Instance. Initializes on awake.
+        [NonSerialized] GamePlaySettings gamePlaySettings;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            // Initializes the GamePlay Settings Scriptable.
+            if (gamePlaySettings == null)
+            {
+                gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
+            }
+        }
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         void OnEnable()
         {
-            // Registers game status callbacks.
-            GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
         }
 
         /// <summary>
@@ -59,46 +72,37 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            // Unregisters game status callbacks.
-            GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
         }
 
         /// <summary>
         /// Set best score onn game start. 
         /// </summary>
-        private void GamePlayUI_OnGameStartedEvent(GameMode currentGameMode)
+        public void Init()
         {
             #region score data to local members
 
-            blockScore = GamePlayUI.Instance.blockScore;
-            singleLineBreakScore = GamePlayUI.Instance.singleLineBreakScore;
-            multiLineScoreMultiplier = GamePlayUI.Instance.multiLineScoreMultiplier;
+            _blockScore = gamePlaySettings.blockScore;
+            _singleLineBreakScore = gamePlaySettings.singleLineBreakScore;
+            _multiLineScoreMultiplier = gamePlaySettings.multiLineScoreMultiplier;
 
             #endregion
 
-            if (GamePlayUI.Instance.progressData != null)
-            {
-                Score += GamePlayUI.Instance.progressData.score;
-            }
-
-            txtScore.text = Score.ToString("N0");
-            txtBestScore.text = ProfileManager.Instance.GetBestScore(GamePlayUI.Instance.currentGameMode)
+            txtScore.text = _score.ToString("N0");
+            txtBestScore.text = ProfileManager.Instance.GetBestScore()
                 .ToString("N0");
         }
 
         /// <summary>
         /// Adds score based on calculation and bonus.
         /// </summary>
-        public void AddScore(int linesCleared, int clearedBlocks)
+        public void ShowScore(int score)
         {
-            int scorePerLine = singleLineBreakScore + (linesCleared - 1) * multiLineScoreMultiplier;
-            int scoreToAdd = linesCleared * scorePerLine + clearedBlocks * blockScore;
+            int oldScore = _score;
 
-            int oldScore = Score;
-            Score += scoreToAdd;
+            StartCoroutine(SetScore(oldScore, score));
+            scoreAnimator.Animate(score - oldScore);
 
-            StartCoroutine(SetScore(oldScore, Score));
-            scoreAnimator.Animate(scoreToAdd);
+            _score = score;
         }
 
         /// <summary>
@@ -106,7 +110,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public int GetScore()
         {
-            return Score;
+            return _score;
         }
 
         /// <summary>
@@ -126,7 +130,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 txtScore.text = lastScore.ToString("N0");
                 AudioController.Instance.PlayClipLow(
                     AudioController.Instance.addScoreSoundChord, 0.15F);
-                yield return scoreIterationWait;
+                yield return _scoreIterationWait;
             }
 
             txtScore.text = currentScore.ToString("N0");
@@ -135,11 +139,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Resets score on game over, game quit.
         /// </summary>
-        public void ResetGame()
+        public void Clear()
         {
             txtScore.text = "0";
             txtBestScore.text = "0";
-            Score = 0;
+            _score = 0;
         }
     }
 }

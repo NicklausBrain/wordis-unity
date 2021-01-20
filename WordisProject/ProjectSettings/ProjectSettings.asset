@@ -248,7 +248,7 @@ PlayerSettings:
   clonedFromGUID: 0b74c1259dad24d99822c07d9ff51c73
   templatePackageId: 
   templateDefaultScene: 
-  AndroidTargetArchitectures: 3
+  AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 2800000, guid: 266ac8bcdd61a46fb8e686d0adbdc9b0, type: 3}
   AndroidKeystoreName: 
@@ -805,9 +805,10 @@ PlayerSettings:
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0
-  assemblyVersionValidation: 1
+  assemblyVersionValidation: 0
   gcWBarrierValidation: 0
-  apiCompatibilityLevelPerPlatform: {}
+  apiCompatibilityLevelPerPlatform:
+    Android: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Block-Puzzle-Magic

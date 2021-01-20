@@ -38,9 +38,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnEnable()
         {
-            //  Registers game status callbacks.
-            GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
-            GamePlayUI.OnGamePausedEvent += GamePlayUI_OnGamePausedEvent;
         }
 
         /// <summary>
@@ -48,9 +45,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            //  Un-registers game status callbacks.
-            GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
-            GamePlayUI.OnGamePausedEvent -= GamePlayUI_OnGamePausedEvent;
         }
 
         /// <summary>

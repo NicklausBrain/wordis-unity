@@ -2,19 +2,30 @@
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
+    /// <summary>
+    /// Extension for essential <see cref="WordMatch"/>.
+    /// </summary>
     public class WordMatchEx : WordMatch
     {
         public WordMatchEx(
             WordMatch wordMatch,
-            int gameStep,
-            DateTimeOffset timestamp) : base(wordMatch.MatchedChars)
+            int gameEventId,
+            DateTimeOffset timestamp)
+            : base(
+                wordMatch.MatchedChars)
         {
-            GameStep = gameStep;
+            GameEventId = gameEventId;
             Timestamp = timestamp;
         }
 
-        public int GameStep { get; }
+        /// <summary>
+        /// Zero-based event id (when the match occured).
+        /// </summary>
+        public int GameEventId { get; }
 
+        /// <summary>
+        /// Match timestamp.
+        /// </summary>
         public DateTimeOffset Timestamp { get; }
 
         protected bool Equals(WordMatchEx other)

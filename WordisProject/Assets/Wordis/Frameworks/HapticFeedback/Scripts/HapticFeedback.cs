@@ -39,12 +39,13 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
     }
 
     /// <summary>
-    /// This calss acts as plugin to generate Haptic feedback on iOS device. In turn it also uses Amplitude and vibrations to generate similar like 
-    /// Effect on android. iOS device above iOS 7 have dedicated haptic motor which will be utilized to generate haptic feedback. Please follow offical
-    /// Documentation to further enhance to effect.static
+    /// This class acts as plugin to generate Haptic feedback on iOS device.
+    /// In turn it also uses Amplitude and vibrations to generate similar like Effect on android.
+    /// iOS device above iOS 7 have dedicated haptic motor which will be utilized to generate haptic feedback.
+    /// Please follow official Documentation to further enhance to effect.static
     ///
     /// iOS Official Documentation : https://developer.apple.com/documentation/uikit/uifeedbackgenerator
-    /// Anndroid Official Documentation : https://developer.android.com/reference/android/os/VibrationEffect
+    /// Android Official Documentation : https://developer.android.com/reference/android/os/VibrationEffect
     /// 
     /// iOS Unity Plugin Guide : https://docs.unity3d.com/Manual/PluginsForIOS.html
     /// Unity Android Plugin Guide :  https://docs.unity3d.com/530/Documentation/Manual/PluginsForAndroid.html
@@ -142,7 +143,7 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
         }
 
         /// <summary>
-        /// Generates the given feedack type.
+        /// Generates the given feedback type.
         /// </summary>
         public static void GenerateAndroidHapticFeedback(FeedbackType type, bool defaultToRegularVibrate = false)
         {
@@ -199,7 +200,7 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
         }
 
         /// <summary>
-        /// Android vibrate with ampitude.
+        /// Android vibrate with amplitude.
         /// </summary>
         public static void AndroidVibrate(long milliseconds, int amplitude)
         {
@@ -219,7 +220,7 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
         }
 
         /// <summary>
-        /// Android vibrate with pattern and ampitude.
+        /// Android vibrate with pattern and amplitude.
         /// </summary>
         public static void AndroidVibrate(long[] pattern, int repeat)
         {
@@ -239,7 +240,7 @@ namespace Assets.Wordis.Frameworks.HapticFeedback.Scripts
         }
 
         /// <summary>
-        /// Android vibrate with pattern and ampitude.
+        /// Android vibrate with pattern and amplitude.
         /// </summary>
         public static void AndroidVibrate(long[] pattern, int[] amplitudes, int repeat)
         {

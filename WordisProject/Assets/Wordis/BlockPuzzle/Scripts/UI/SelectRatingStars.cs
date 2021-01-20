@@ -66,7 +66,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
         }
 
-
         private void OnStarSelected(PointerEventData eventData)
         {
             List<RaycastResult> results = new List<RaycastResult>();
@@ -74,12 +73,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             if (results.Count > 0 && results[0].gameObject.name.Contains("img-star"))
             {
-                int starIndex = -1;
-                int.TryParse(results[0].gameObject.name.Replace("img-star-", ""), out starIndex);
+                int.TryParse(results[0].gameObject.name.Replace("img-star-", ""), out var starIndex);
 
                 if (starIndex >= 0)
                 {
-                    // OnClicked(starIndex);
                     ProcessStar(starIndex);
                 }
             }
@@ -104,18 +101,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             for (int i = 0; i <= starIndex; i++)
             {
                 Image starImage = allStars[i];
-                if (i % 2 == 0)
-                {
-                    starImage.sprite = filledLeftStarSprite;
-                }
-                else
-                {
-                    starImage.sprite = filledRightStarSprite;
-                }
+                starImage.sprite = i % 2 == 0
+                    ? filledLeftStarSprite
+                    : filledRightStarSprite;
             }
 
             reviewAppScreen.currentRating = (starIndex + 1) * 0.5F;
-            // btnSubmitReview.interactable = (currentRating >= minRatingToSubmitReview) ? true : false;
         }
 
         private void Empty(int starIndex)
@@ -124,18 +115,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 Image starImage = allStars[i];
 
-                if (i % 2 == 0)
-                {
-                    starImage.sprite = emptyLeftStarSprite;
-                }
-                else
-                {
-                    starImage.sprite = emptyRightStarSprite;
-                }
+                starImage.sprite = i % 2 == 0
+                    ? emptyLeftStarSprite
+                    : emptyRightStarSprite;
             }
 
             reviewAppScreen.currentRating = (starIndex + 1) * 0.5F;
-            // btnSubmitReview.interactable = (currentRating >= minRatingToSubmitReview) ? true : false;
         }
     }
 }

@@ -19,22 +19,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public enum GameMode
     {
         Tutorial,
-        Classic,
+        Default,
         Timed,
         Advance
-    }
-
-    // Grid size of playing board.
-    public enum BoardSize
-    {
-        BoardSize_5X5 = 5,
-        BoardSize_6X6 = 6,
-        BoardSize_7X7 = 7,
-        BoardSize_8X8 = 8,
-        BoardSize_9X9 = 9,
-        BoardSize_10X10 = 10,
-        BoardSize_11X11 = 11,
-        BoardSize_12X12 = 12
     }
 
     /// <summary>
@@ -43,16 +30,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GamePlaySettings : ScriptableObject
     {
-        #region BlockShape Settings
-
-        // List of standard block shapes.
-        public BlockShapeInfo[] standardBlockShapesInfo;
-
-        // List of advanced block shapes.
-        public BlockShapeInfo[] advancedBlockShapesInfo;
-
-        #endregion
-
         // Classic mode settings.
         public GameModeSettings tutorialModeSettings;
 
@@ -123,35 +100,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Game mode is should be active or likewise,
         public bool modeEnabled = true;
 
-        // Grid size.
-        public BoardSize boardSize;
-
         // Size of block on board.
         public float blockSize;
 
         // Space between blocks on board.
         public float blockSpace;
 
-        // Should spawn standard shapes during game or not.
-        public bool standardShapeAllowed = true;
-
-        // Should spawn advanced shapes during game or not.
-        public bool advancedShapeAllowed = false;
-
         // Rotation allowed for block shape or not.
         public bool allowRotation = false;
-
-        // Block shape should be always filled or should add new after placing all current visible block shapes.
-        public bool alwaysKeepFilled = false;
 
         // Shape of block shape when inactive and inside shape container.
         public float shapeInactiveSize = 0.5F;
 
         // Offset from finger while dragging block shape.
         public float shapeDragPositionOffset = 1.0F;
-
-        // AllowRescue
-        public bool allowRescueGame = true;
 
         // Save Progress
         public bool saveProgress = true;

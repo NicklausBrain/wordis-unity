@@ -31,10 +31,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnEnable()
         {
-            //  Registers game status callbacks.
-            GamePlayUI.OnGameStartedEvent += GamePlayUI_OnGameStartedEvent;
-            GamePlayUI.OnGameOverEvent += GamePlayUI_OnGameOverEvent;
-            GamePlayUI.OnShapePlacedEvent += GamePlayUI_OnShapePlacedEvent;
         }
 
         /// <summary>
@@ -42,10 +38,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnDisable()
         {
-            //  Registers game status callbacks.
-            GamePlayUI.OnGameStartedEvent -= GamePlayUI_OnGameStartedEvent;
-            GamePlayUI.OnShapePlacedEvent -= GamePlayUI_OnShapePlacedEvent;
-            GamePlayUI.OnGameOverEvent -= GamePlayUI_OnGameOverEvent;
         }
 
         /// <summary>
@@ -61,10 +53,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void SaveProgressExplicitly()
         {
-            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            {
-                Invoke("SaveProgress", 2F);
-            }
+            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            //{
+            //    Invoke(nameof(SaveProgress), 2F);
+            //}
         }
 
         /// <summary>
@@ -72,10 +64,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void GamePlayUI_OnShapePlacedEvent()
         {
-            if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            {
-                Invoke("SaveProgress", 1F);
-            }
+            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
+            //{
+            //    Invoke(nameof(SaveProgress), 1F);
+            //}
         }
 
         /// <summary>
@@ -92,7 +84,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ClearProgressData()
         {
             _currentProgressData = null;
-            DeleteProgress(GamePlayUI.Instance.currentGameMode);
+            DeleteProgress();
         }
 
         /// <summary>
@@ -113,17 +105,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
         /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
         /// </summary>
-        private void SaveProgress()
+        private void SaveProgress(GameMode gameMode = GameMode.Default)
         {
             if (_currentProgressData != null)
             {
-                string[] gridData = new string[GamePlay.Instance.allRows.Count];
+                string[] gridData = new string[GameBoard.Instance.allRows.Count];
                 int rowIndex = 0;
 
                 // Reads the status of all elements from the board grid.
-                foreach (List<Block> blockRow in GamePlay.Instance.allRows)
+                foreach (List<Block> blockRow in GameBoard.Instance.allRows)
                 {
-                    string row = "";
+                    string row = string.Empty;
                     foreach (Block b in blockRow)
                     {
                         row = row == string.Empty
@@ -139,15 +131,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 // Attached all the fetched data to progress data class instance.
                 _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
-                _currentProgressData.totalLinesCompleted = GamePlayUI.Instance.totalLinesCompleted;
-                _currentProgressData.rescueDone = GamePlayUI.Instance.rescueDone;
-                _currentProgressData.remainingTimer = 0;
-                PlayerPrefs.SetString($"gameProgress_{GamePlayUI.Instance.currentGameMode}",
+                PlayerPrefs.SetString($"gameProgress_{gameMode}",
                     JsonUtility.ToJson(_currentProgressData));
             }
         }
 
-        public bool HasGameProgress(GameMode gameMode)
+        public bool HasGameProgress(GameMode gameMode = GameMode.Default)
         {
             return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
         }
@@ -155,7 +144,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Returns game progress for the given mode if any.
         /// </summary>
-        public ProgressData GetGameProgress(GameMode gameMode)
+        public ProgressData GetGameProgress(GameMode gameMode = GameMode.Default)
         {
             if (HasGameProgress(gameMode))
             {
@@ -173,7 +162,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears game progress if any for the given game mode.
         /// </summary>
-        public void DeleteProgress(GameMode gameMode)
+        public void DeleteProgress(GameMode gameMode = GameMode.Default)
         {
             PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
         }
@@ -185,19 +174,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class ProgressData
     {
         public string[] gridData;
-        public ShapeInfo[] currentShapesInfo;
 
         public int score;
         public int totalLinesCompleted;
         public bool rescueDone;
-
-        #region Time Mode Specific
-
-        public int remainingTimer = 0;
-
-        #endregion
-
-        public int totalShapesPlaced = 0;
 
         public ProgressData()
         {

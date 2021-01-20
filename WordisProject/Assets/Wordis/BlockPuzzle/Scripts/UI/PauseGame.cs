@@ -20,7 +20,7 @@ using UnityEngine;
 namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 {
     /// <summary>
-    /// This script component is attached to game pauser screen.
+    /// This script component is attached to game pause screen.
     /// </summary>
     public class PauseGame : MonoBehaviour
     {
@@ -29,7 +29,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void OnEnable()
         {
-            /// Pauses the game when it gets enabled.
+            // Pauses the game when it gets enabled.
             GamePlayUI.Instance.PauseGame();
         }
 
@@ -38,7 +38,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void OnDisable()
         {
-            /// Resumes the game when it gets enabled.
+            // Resumes the game when it gets enabled.
             GamePlayUI.Instance.ResumeGame();
         }
 

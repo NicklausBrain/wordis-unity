@@ -65,7 +65,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // to queue so it will load automatically when already existing popup gets closed.
         readonly List<string> _orderedPopupStack = new List<string>();
 
-        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Classic;
+        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Default;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -269,10 +269,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                     pauseGameScreen.Deactivate();
                     break;
 
-                //case "RescueGame":
-                //    GamePlayUI.Instance.OnRescueCancelled();
-                //    rescueGameScreen.Deactivate();
-                //    break;
+                    //case "RescueGame":
+                    //    GamePlayUI.Instance.OnRescueCancelled();
+                    //    rescueGameScreen.Deactivate();
+                    //    break;
             }
         }
 
@@ -444,18 +444,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             //else
             {
                 gameScreen.gameObject.Activate();
-                gameScreen.GetComponent<GamePlayUI>().StartGamePlay(gameMode);
+                gameScreen.GetComponent<GamePlayUI>().RestartGame();
             }
-        }
-
-        public bool IsGamePlay()
-        {
-            if (Peek().Equals(gameScreen.name))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -466,9 +456,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             StartCoroutine(OpenHomeScreenFromGameOverCoroutine());
         }
 
-        IEnumerator OpenHomeScreenFromGameOverCoroutine()
+        private IEnumerator OpenHomeScreenFromGameOverCoroutine()
         {
-            GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
             gameScreen.gameObject.Deactivate();
             gameOverScreen.Deactivate();
@@ -483,9 +472,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             StartCoroutine(OpenHomeScreenFromPauseGameCoroutine());
         }
 
-        IEnumerator OpenHomeScreenFromPauseGameCoroutine()
+        private IEnumerator OpenHomeScreenFromPauseGameCoroutine()
         {
-            GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);
             gameScreen.gameObject.Deactivate();
             pauseGameScreen.Deactivate();
@@ -590,29 +578,29 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             tipView.Activate(false);
         }
 
-        public void ShowTimeModeTip()
-        {
-            if (!PlayerPrefs.HasKey("timeTip"))
-            {
-                Instance.ShowTipWithTextIdAtPosition(
-                    tipPosition: new Vector2(0, -350F),
-                    anchor: new Vector2(0.5F, 1),
-                    tipText: "txtTimeTip1",
-                    duration: 6F);
+        //public void ShowTimeModeTip()
+        //{
+        //    if (!PlayerPrefs.HasKey("timeTip"))
+        //    {
+        //        Instance.ShowTipWithTextIdAtPosition(
+        //            tipPosition: new Vector2(0, -350F),
+        //            anchor: new Vector2(0.5F, 1),
+        //            tipText: "txtTimeTip1",
+        //            duration: 6F);
 
-                Invoke(nameof(ShowTimeModeTip2), 5F);
-            }
-        }
+        //        Invoke(nameof(ShowTimeModeTip2), 5F);
+        //    }
+        //}
 
-        void ShowTimeModeTip2()
-        {
-            Instance.ShowTipWithTextIdAtPosition(
-                tipPosition: new Vector2(0, -350F),
-                anchor: new Vector2(0.5F, 1),
-                tipText: "txtTimeTip2",
-                duration: 7F);
+        //void ShowTimeModeTip2()
+        //{
+        //    Instance.ShowTipWithTextIdAtPosition(
+        //        tipPosition: new Vector2(0, -350F),
+        //        anchor: new Vector2(0.5F, 1),
+        //        tipText: "txtTimeTip2",
+        //        duration: 7F);
 
-            PlayerPrefs.SetInt("timeTip", 1);
-        }
+        //    PlayerPrefs.SetInt("timeTip", 1);
+        //}
     }
 }

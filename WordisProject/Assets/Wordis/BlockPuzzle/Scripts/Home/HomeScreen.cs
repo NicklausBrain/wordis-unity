@@ -78,7 +78,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Classic);
+                UIController.Instance.LoadGamePlay(GameMode.Default);
             }
         }
 
