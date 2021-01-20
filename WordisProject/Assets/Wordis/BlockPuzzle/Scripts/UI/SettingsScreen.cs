@@ -85,7 +85,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                StartCoroutine(NavigateToUrl(ProfileManager.Instance.GetAppSettings().supportURL));
+                StartCoroutine(NavigateToUrl(
+                    ProfileManager.Instance.GetAppSettings().supportURL));
             }
         }
 
@@ -97,7 +98,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                StartCoroutine(NavigateToUrl(ProfileManager.Instance.GetAppSettings().privacyPolicyURL));
+                StartCoroutine(NavigateToUrl(
+                    ProfileManager.Instance.GetAppSettings().privacyPolicyURL));
             }
         }
 
@@ -129,7 +131,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// <summary>
         /// Navigate to given URL.
         /// </summary>
-        IEnumerator NavigateToUrl(string url)
+        private IEnumerator NavigateToUrl(string url)
         {
             yield return new WaitForSeconds(0.2F);
             Application.OpenURL(url);
