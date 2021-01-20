@@ -88,6 +88,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void HandleLeft_ForActiveChar_MovesItLeft2()
+        {
+            /* Initial state:
+             * [X][-][A][-] */
+            var game = new WordisGame(_settings.With(width: 4, height: 2))
+                .With(new StaticChar(0, 0, 'X'))
+                .With(new ActiveChar(2, 0, 'A'))
+                .Handle(GameEvent.Left);
+
+            /* Expected state:
+             * [X][A][-][-] */
+            Assert.AreEqual(
+                new ActiveChar(1, 0, 'A'),
+                game.Matrix[1, 0]);
+        }
+
+        [Test]
         public void HandleLeft_WhenActiveCharReachedTheEdge_DoesNotMoveIt()
         {
             /* Initial state:
@@ -141,6 +158,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.AreEqual(
                 new ActiveChar(2, 0, 'A'),
                 game.GameObjects.Single());
+        }
+
+        [Test]
+        public void HandleRight_ForActiveChar_MovesItRight2()
+        {
+            /* Initial state:
+             * [-][A][-][X] */
+            var game = new WordisGame(_settings.With(width: 4, height: 2))
+                .With(new ActiveChar(1, 0, 'A'))
+                .With(new StaticChar(3, 0, 'X'))
+                .Handle(GameEvent.Right);
+
+            /* Expected state:
+             * [-][-][A][X] */
+            Assert.AreEqual(
+                new ActiveChar(2, 0, 'A'),
+                game.Matrix[2, 0]);
         }
 
         [Test]
