@@ -98,7 +98,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 for (int y = 0; y < Settings.Height; y++)
                 {
-                    if (Matrix[StartPoint.x, y] == null || Matrix[StartPoint.x, y] is ActiveChar)
+                    if (Matrix[StartPoint.x, y] == null ||
+                        Matrix[StartPoint.x, y] is ActiveChar)
                     {
                         return false;
                     }
@@ -243,6 +244,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             IEnumerator IEnumerable.GetEnumerator() =>
                 GetEnumerator();
 
+            /// <summary>
+            /// Total matches.
+            /// </summary>
             public int Count => _game._wordMatches.Sum(m => m.Value.Count);
         }
     }
