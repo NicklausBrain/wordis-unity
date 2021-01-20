@@ -25,6 +25,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns><see cref="WordisObj "/></returns>
         public WordisObj this[int x, int y] => _matrix.Value[y, x];
 
+        /// <inheritdoc cref="WordisSettings.Width"/>
+        public int Width => _game.Settings.Width;
+
+        /// <inheritdoc cref="WordisSettings.Height"/>
+        public int Height => _game.Settings.Height;
+
         private WordisObj[,] InitMatrix()
         {
             // that's right we have X and Y different to default in C#

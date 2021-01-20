@@ -181,6 +181,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .ToArray();
             var newMatches = newGameState.LastStepMatches;
 
+            // todo: bug is here
             if (newGameState.GameEvents.Last() == GameEvent.Step &&
                 newMatches.Any() && newMatches.First().GameStep == lastGameState.Step) // on word matches
             {
@@ -216,40 +217,36 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
             }
 
-            if (removedObjects.Any())
+            for (int x = 0; x < newGameState.Matrix.Width; x++)
             {
-                var blocksToClear =
-                    removedObjects
-                        .Select(c => gameBoard.allColumns[c.X][c.Y])
-                        .ToArray();
-
-                foreach (Block block in blocksToClear)
+                for (int y = 0; y < newGameState.Matrix.Height; y++)
                 {
-                    block.PlaceBlock(_wordisSettings.IsWaterZone(block.RowId)
-                        ? Block.WaterTag
-                        : block.defaultSpriteTag);
-                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                    var wordisObject = newGameState.Matrix[x, y];
+
+                    RefreshVisualBlock(x, y, wordisObject);
                 }
-                // todo: add animation instead like: block.Fade()
-                //StartCoroutine(GamePlay.ClearAllBlocks(blocksToClear));
             }
+        }
 
-            if (newObjects.Any())
+        private void RefreshVisualBlock(int x, int y, WordisObj wordisObj)
+        {
+            var block = gameBoard.allColumns[x][y];
+
+            if (wordisObj == null)
             {
-                var blocksToCreate =
-                    newObjects
-                        .Select(o => (wordisObj: o, block: gameBoard.allColumns[o.X][o.Y]))
-                        .ToArray();
+                block.PlaceBlock(_wordisSettings.IsWaterZone(block.RowId)
+                    ? Block.WaterTag
+                    : block.defaultSpriteTag);
+                block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            }
+            else
+            {
+                block.PlaceBlock(Block.DefaultCharTag);
 
-                foreach (var pair in blocksToCreate)
+                if (wordisObj is WordisChar wordisChar)
                 {
-                    pair.block.PlaceBlock(Block.DefaultCharTag);
-
-                    if (pair.wordisObj is WordisChar)
-                    {
-                        pair.block.GetComponentInChildren<TextMeshProUGUI>().text =
-                            $"{((WordisChar)pair.wordisObj).Value}";
-                    }
+                    block.GetComponentInChildren<TextMeshProUGUI>().text =
+                        $"{wordisChar.Value}";
                 }
             }
         }
