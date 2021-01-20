@@ -448,16 +448,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             }
         }
 
-        public bool IsGamePlay()
-        {
-            if (Peek().Equals(gameScreen.name))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         /// <summary>
         /// Open Home screen when user presses home button from gameover screen.
         /// </summary>
@@ -466,7 +456,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             StartCoroutine(OpenHomeScreenFromGameOverCoroutine());
         }
 
-        IEnumerator OpenHomeScreenFromGameOverCoroutine()
+        private IEnumerator OpenHomeScreenFromGameOverCoroutine()
         {
             GamePlayUI.Instance.ResetGame();
             yield return new WaitForSeconds(0.1f);

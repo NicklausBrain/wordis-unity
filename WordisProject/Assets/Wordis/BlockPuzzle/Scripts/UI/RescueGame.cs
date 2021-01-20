@@ -52,8 +52,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         private void OnEnable()
         {
             // Pauses the game when it gets enabled.
-            GamePlayUI.Instance.PauseGame();
-            AdManager.OnRewardedAdRewardedEvent += OnRewardedAdRewarded;
+            GamePlayUI.Instance.StopGame();
+            // AdManager.OnRewardedAdRewardedEvent += OnRewardedAdRewarded;
             UIController.Instance.EnableCurrencyBalanceButton();
 
             if (AdManager.Instance.IsRewardedAvailable())
@@ -73,14 +73,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void OnDisable()
         {
-            /// Resumes the game when it gets enabled.
+            // Resumes the game when it gets enabled.
             AdManager.OnRewardedAdRewardedEvent -= OnRewardedAdRewarded;
             attemptedRescueWithGems = false;
             UIController.Instance.DisableCurrencyBalanceButton();
 
             if (isRescueDone)
             {
-                GamePlayUI.Instance.ResumeGame();
+                GamePlayUI.Instance.StartGame();
             }
 
             isRescueDone = false;
