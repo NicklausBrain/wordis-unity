@@ -140,7 +140,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                                     .ToImmutableArray()
                                 : updatedGameObjects,
                             gameEvents: updatedEvents,
-                            matches: _wordMatches.Add(_gameEvents.Count, matches));
+                            matches: matches.Any()
+                                ? _wordMatches.Add(_gameEvents.Count, matches)
+                                : _wordMatches);
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 

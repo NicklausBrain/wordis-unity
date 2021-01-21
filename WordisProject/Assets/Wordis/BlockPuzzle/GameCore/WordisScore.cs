@@ -34,7 +34,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// Accumulated score.
         /// </summary>
         public int Value =>
-            _game.Matches.All.Values.Select(GetMatchScore).Sum();
+            _game.Matches.All.Count; //.Values.Select(GetMatchScore).Sum();
 
         private static int GetMatchScore(IReadOnlyList<WordMatch> match)
         {
