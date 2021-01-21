@@ -53,7 +53,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
 
         int _rewardAmount = 0;
-        int _totalLinesCompleted = 0;
+        int _totalWordsMatched = 0;
         int _gameOverId = 0;
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         public void SetGameData(
             int score,
-            int totalLinesCompleted,
+            int totalWordsMatched,
             GameOverReason reason = GameOverReason.GridFilled,
             GameMode gameMode = GameMode.Default)
         {
@@ -101,7 +101,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                     break;
             }
 
-            _totalLinesCompleted = totalLinesCompleted;
+            _totalWordsMatched = totalWordsMatched;
             txtScore.text = score.ToString("N0");
 
             int bestScore = ProfileManager.Instance.GetBestScore(gameMode);
