@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
@@ -34,12 +33,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// Accumulated score.
         /// </summary>
         public int Value =>
-            _game.Matches.All.Count; //.Values.Select(GetMatchScore).Sum();
+            _game.Matches.All
+                .GroupBy(m => m.GameEventId)
+                .Sum(g => GetMatchScore(g.ToArray()));
 
-        private static int GetMatchScore(IReadOnlyList<WordMatch> match)
+        private static int GetMatchScore(WordMatchEx[] match)
         {
-            int scorePerMatch = WordScore + (match.Count - 1) * MultiWordScoreMultiplier;
-            int score = match.Count * scorePerMatch + match.SelectMany(m => m.MatchedChars).Count() * CharScore;
+            int scorePerMatch = WordScore + (match.Length - 1) * MultiWordScoreMultiplier;
+            int score = match.Length * scorePerMatch + match.SelectMany(m => m.MatchedChars).Count() * CharScore;
             return score;
         }
     }
