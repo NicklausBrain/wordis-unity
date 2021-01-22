@@ -14,12 +14,12 @@ Mode that is reasonable to have: match as many words in time limit
 
 ## Suggested game menu structure
 ```mermaid
-graph TD;
+graph TD
 
-    Wordis-->Campaign;
-	Wordis-->Endless-play;
-	Wordis-->Time-attack;
-	Wordis-->Settings;
+    Wordis-->Campaign
+	Wordis-->Endless-play
+	Wordis-->Time-attack
+	Wordis-->Settings
 
 	Campaign-->Level-0
 	Campaign-->Level-1
