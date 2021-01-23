@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.EffectUtils;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.Home;
@@ -418,34 +419,27 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Disables home and select mode screen and opens gameplay.
         /// </summary>
-        public void LoadGamePlay(GameMode gameMode)
+        public void LoadGamePlay(IWordisGameLevel gameLevel = null)
         {
-            bool showTutorial = false;
+            //bool showTutorial = false;
 
-            if (!PlayerPrefs.HasKey("tutorialShown"))
-            {
-                GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
-                showTutorial = gamePlaySettings.tutorialModeSettings.modeEnabled;
+            //if (!PlayerPrefs.HasKey("tutorialShown"))
+            //{
+            //   GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+            //    showTutorial = gamePlaySettings.tutorialModeSettings.modeEnabled;
 
-                if (!showTutorial)
-                {
-                    PlayerPrefs.SetInt("tutorialShown", 1);
-                }
-            }
-
+            //    if (!showTutorial)
+            //    {
+            //        PlayerPrefs.SetInt("tutorialShown", 1);
+            //    }
+            //}
             homeScreen.gameObject.Deactivate();
 
-            // TODO: consider adding tutorial
-            //if (showTutorial)
-            //{
-            //    gameScreenTutorial.gameObject.Activate();
-            //    cachedSelectedMode = gameMode;
-            //}
-            //else
-            {
-                gameScreen.gameObject.Activate();
-                gameScreen.GetComponent<GamePlayUI>().RestartGame();
-            }
+            gameScreen.gameObject.Activate();
+            gameScreen
+                .GetComponent<GamePlayUI>()
+                .SetLevel(gameLevel)
+                .RestartGame();
         }
 
         /// <summary>

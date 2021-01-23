@@ -46,7 +46,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Default);
+                UIController.Instance.LoadGamePlay();
             }
         }
 
@@ -59,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Timed);
+                UIController.Instance.LoadGamePlay();
             }
         }
 
@@ -72,7 +72,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Advance);
+                UIController.Instance.LoadGamePlay();
             }
         }
     }

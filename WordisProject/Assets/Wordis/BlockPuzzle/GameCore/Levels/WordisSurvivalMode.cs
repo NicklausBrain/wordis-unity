@@ -1,4 +1,6 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+﻿using System;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
     /// <summary>
     /// Default game mode, aka endless mode.
@@ -45,5 +47,7 @@
         }
 
         public IWordisGameLevel Reset() => new WordisSurvivalMode();
+
+        public IWordisGameLevel WithOutput(Action<string> outFunc) => this;
     }
 }

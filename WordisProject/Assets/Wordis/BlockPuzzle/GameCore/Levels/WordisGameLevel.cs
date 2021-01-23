@@ -1,4 +1,6 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+﻿using System;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
     /// <summary>
     /// General contract of the game level.
@@ -45,5 +47,11 @@
         /// </summary>
         /// <returns><see cref="IWordisGameLevel "/>.</returns>
         IWordisGameLevel Reset();
+
+        /// <summary>
+        /// Sets the output system to be used.
+        /// </summary>
+        /// <returns><see cref="IWordisGameLevel "/>.</returns>
+        IWordisGameLevel WithOutput(Action<string> outFunc);
     }
 }

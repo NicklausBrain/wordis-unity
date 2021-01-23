@@ -12,7 +12,9 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Linq;
+using System.Threading;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -44,7 +46,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResumeGame()
         {
             PauseGame(); // to prevent double callback
-            InvokeRepeating(nameof(GameStep), 1f, _gamePlaySettings.gameSpeed);
+            InvokeRepeating(nameof(GameStep), 1f, _wordisGameLevel.Settings.Speed);
         }
 
         /// <summary>
@@ -83,9 +85,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Sets the level to be played.
         /// </summary>
-        public void SetLevel(IWordisGameLevel gameLevel)
+        public GamePlayUI SetLevel(IWordisGameLevel gameLevel = null)
         {
-            _wordisGameLevel = gameLevel;
+            _wordisGameLevel =
+                gameLevel?.WithOutput(message =>
+                {
+                    inGameMessage.ShowMessage(message);
+                    Debug.LogWarning(message);
+                }) ??
+                new WordisSurvivalMode();
+
+            return this;
         }
 
         /// <summary>
@@ -157,7 +167,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void OnDisable() => ClearGame();
 
         /// <summary>
-        /// Will be called on game over. 
+        /// Will be called on game over.
         /// </summary>
         private void GameOver()
         {
@@ -244,6 +254,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         $"{wordisChar.Value}";
                 }
             }
+        }
+
+        private IEnumerator ShowMessage(string message)
+        {
+            inGameMessage.ShowMessage(message);
+            yield return new WaitForSeconds(1.5F);
         }
     }
 }

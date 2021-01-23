@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
+using NUnit.Framework.Constraints;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
@@ -14,23 +15,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
-                width: 4,
-                height: 4,
+                speed: 1.5f,
+                width: 5,
+                height: 5,
                 minWordMatch: 4);
 
         private WordisTutorialLevel(
-            Action<string> displayMessage,
-            WordisGame gameState)
+            Action<string> displayMessage = null,
+            WordisGame gameState = null)
         {
-            _displayMessage = displayMessage;
-            Game = gameState;
+            _displayMessage =
+                displayMessage ??
+                Console.WriteLine;
+            Game =
+                gameState ??
+                new WordisGame(
+                    TutorialLevelSettings,
+                    new WordLetters(new TutorialSequence().Word));
         }
 
-        public WordisTutorialLevel(
-            Action<string> displayMessage) : this(
-            displayMessage, new WordisGame(
-                TutorialLevelSettings,
-                new WordLetters(new TutorialSequence().Word)))
+        public WordisTutorialLevel() : this(null, null)
         {
         }
 
@@ -38,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         public WordisGame Game { get; }
 
         /// <inheritdoc />
-        public WordisSettings Settings { get; }
+        public WordisSettings Settings => Game.Settings;
 
         /// <inheritdoc />
         public string Title => "Tutorial";
@@ -48,6 +52,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         /// <inheritdoc />
         public bool IsCompleted =>
+            Game.IsGameOver ||
             Game.Matches.All
                 .Select(m => m.Word)
                 .Intersect(TutorialSequence.Words)
@@ -83,7 +88,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
 
-                        if (Game.GameEvents.Count == 4)
+                        if (Game.GameEvents.Count == 4 ||
+                            Game.GameEvents.Count == 5 ||
+                            Game.GameEvents.Count == 6 ||
+                            Game.GameEvents.Count == 7)
+                        {
+                            updatedGame = Game.Handle(GameEvent.Left);
+                        }
+
+                        if (Game.GameEvents.Count == 8)
                         {
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
@@ -95,7 +108,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             }
         }
 
-        public IWordisGameLevel Reset() => new WordisTutorialLevel(_displayMessage);
+        public IWordisGameLevel Reset() =>
+            new WordisTutorialLevel(displayMessage: _displayMessage);
+
+        public IWordisGameLevel WithOutput(Action<string> outFunc) =>
+            new WordisTutorialLevel(displayMessage: outFunc);
 
         private WordisTutorialLevel With(
             WordisGame updatedGame) =>
