@@ -12,6 +12,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     {
         private readonly IsLegitWordFunc _isLegitWordFunc;
 
+
+        /// <summary>
+        /// temp
+        /// </summary>
+        /// <param name="isLegitWordFunc"></param>
         public FindWordMatchesFunc(
             IsLegitWordFunc isLegitWordFunc = null)
         {
