@@ -67,7 +67,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             //    new GetEngLetterFunc();
             _findWordMatchesFunc =
                 findWordMatchesFunc ??
-                new FindWordMatchesFunc(settings.MinWordLength);
+                new FindWordMatchesFunc();
         }
 
         public WordisSettings Settings { get; }
@@ -217,7 +217,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
             var foundMatches = activeObj == null
                 ? ImmutableList<WordMatchEx>.Empty
-                : _findWordMatchesFunc.Invoke(matrix)
+                : _findWordMatchesFunc.Invoke(matrix, Settings.MinWordLength)
                 .Select(m => new WordMatchEx(m, _gameEvents.Count, DateTimeOffset.UtcNow))
                 .ToImmutableList();
 

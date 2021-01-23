@@ -11,17 +11,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     public class FindWordMatchesFunc
     {
         private readonly IsLegitWordFunc _isLegitWordFunc;
-        private readonly int _minWordLength;
 
         public FindWordMatchesFunc(
-            int minWordLength,
             IsLegitWordFunc isLegitWordFunc = null)
         {
             _isLegitWordFunc = isLegitWordFunc ?? new IsLegitEngWordFunc();
-            _minWordLength = minWordLength;
         }
 
-        public virtual WordMatch[] Invoke(WordisMatrix matrix)
+        public virtual WordMatch[] Invoke(WordisMatrix matrix, int minWordLength)
         {
             var staticChars = new List<StaticChar>();
 
@@ -43,14 +40,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 
             foreach (var row in rows)
             {
-                wordMatches.AddRange(FindInVector(row.OrderBy(c => c.X).ToArray(), c => c.X));
+                wordMatches.AddRange(FindInVector(
+                    row.OrderBy(c => c.X).ToArray(),
+                    c => c.X,
+                    minWordLength));
             }
 
             var columns = staticCharsArr.GroupBy(c => c.X);
 
             foreach (var column in columns)
             {
-                wordMatches.AddRange(FindInVector(column.OrderBy(c => c.Y).ToArray(), c => c.Y));
+                wordMatches.AddRange(FindInVector(
+                    column.OrderBy(c => c.Y).ToArray(),
+                    c => c.Y,
+                    minWordLength));
             }
 
             return wordMatches.ToArray();
@@ -58,10 +61,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 
         private WordMatch[] FindInVector(
             StaticChar[] staticChars,
-            Func<StaticChar, int> getAxisIndex)
+            Func<StaticChar, int> getAxisIndex,
+            int minWordLength)
         {
             if (staticChars.Length == 0 ||
-                staticChars.Length < _minWordLength)
+                staticChars.Length < minWordLength)
             {
                 return Array.Empty<WordMatch>();
             }
@@ -76,7 +80,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                 {
                     potentialWord.Add(staticChar);
 
-                    if (potentialWord.Count >= _minWordLength)
+                    if (potentialWord.Count >= minWordLength)
                     {
                         var potentialMatch = new WordMatch(potentialWord);
                         var isLegitWord = _isLegitWordFunc.Invoke(potentialMatch.Word);
@@ -91,19 +95,28 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                         else if (wordMatches.Any())
                         {
                             wordMatches.AddRange(
-                                FindInVector(staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray(), getAxisIndex));
+                                FindInVector(
+                                    staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray(),
+                                    getAxisIndex,
+                                    minWordLength));
                         }
                         else
                         {
                             wordMatches.AddRange(
-                                FindInVector(staticChars.Skip(1).ToArray(), getAxisIndex));
+                                FindInVector(
+                                    staticChars.Skip(1).ToArray(),
+                                    getAxisIndex,
+                                    minWordLength));
                         }
                     }
                 }
                 else
                 {
                     wordMatches.AddRange(
-                        FindInVector(staticChars.Skip(potentialWord.Count).ToArray(), getAxisIndex));
+                        FindInVector(
+                            staticChars.Skip(potentialWord.Count).ToArray(),
+                            getAxisIndex,
+                            minWordLength));
                 }
             }
 

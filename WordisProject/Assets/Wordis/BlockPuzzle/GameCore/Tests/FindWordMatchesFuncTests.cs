@@ -10,17 +10,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
     /// </summary>
     public class FindWordMatchesFuncTests
     {
+        private readonly FindWordMatchesFunc _findWordMatchesFunc = new FindWordMatchesFunc();
+
         [Test]
         public void Invoke_WhenRowContainsWord_TakesIt()
         {
+            var y = 1;
             var settings = new WordisSettings(
                 width: 4,
                 height: 2,
                 minWordMatch: 3);
-
-            var y = 1;
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [-][C][-][-][-]
             // [X][-][A][T][-]
@@ -33,7 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.AreEqual(new WordMatch(new[]
             {
@@ -46,14 +45,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void Invoke_WhenColumnContainsWord_TakesIt()
         {
+            var x = 1;
             var settings = new WordisSettings(
                 width: 2,
                 height: 5,
                 minWordMatch: 3);
-
-            var x = 1;
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [-][R][-][-][-]
             // [-][A][-][-][-]
@@ -64,7 +60,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.AreEqual(new WordMatch(new[]
             {
@@ -77,14 +73,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void Invoke_WhenLongerWordCanBeMatchedInARow_TakesIt()
         {
+            var y = 2;
             var settings = new WordisSettings(
                 width: 8,
                 height: 3,
-                minWordMatch: 3);
-
-            var y = 2;
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: 4);
+                minWordMatch: 4);
 
             // [-][-][-][E][-][-][-]
             // [F][I][R][-][F][L][Y]
@@ -96,7 +89,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.AreEqual(new WordMatch(new[]
             {
@@ -113,14 +106,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void Invoke_WhenTwoWordMatchInARow_AcceptsBoth()
         {
+            var y = 0;
             var settings = new WordisSettings(
                 width: 8,
                 height: 2,
                 minWordMatch: 4);
 
-            var y = 0;
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: 4);
             // [-][-][-][K][-][-][-]
             // [S][I][C][-][I][L][L] - one end - another start
             // ---------------------
@@ -131,7 +122,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.Contains(new WordMatch(new[]
             {
@@ -158,8 +149,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 width: 3,
                 height: 8,
                 minWordMatch: 4);
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [F][-]
             // [I][-]
@@ -176,7 +165,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.AreEqual(new WordMatch(new[]
             {
@@ -198,8 +187,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 width: 3,
                 height: 8,
                 minWordMatch: 4);
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [S][-]
             // [I][-]
@@ -216,8 +203,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(
-                matrix);
+            var matches = _findWordMatchesFunc.Invoke(
+                matrix, settings.MinWordLength);
 
             Assert.Contains(new WordMatch(new[]
             {
@@ -243,8 +230,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 width: 5,
                 height: 4,
                 minWordMatch: 3);
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [F]
             // [-][I][R][E]
@@ -263,7 +248,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.Contains(new WordMatch(new[]
             {
@@ -289,8 +274,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 width: 4,
                 height: 2,
                 minWordMatch: 4);
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             // [-][C][-][-][-]
             // [X][-][A][T][-]
@@ -302,7 +285,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.IsEmpty(matches);
         }
@@ -314,8 +297,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 width: 4,
                 height: 2,
                 minWordMatch: 3);
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
 
             var chars = new[]
             {
@@ -327,7 +308,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.AreEqual("CAT", matches.First().Word);
         }
@@ -343,15 +324,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 height: chars.Length,
                 minWordMatch: 4);
 
-            var findWordMatchesFunc = new FindWordMatchesFunc(
-                minWordLength: settings.MinWordLength);
-
             var matrix = chars
                 .SelectMany((_, y) => chars.Select((@char, x) => new StaticChar(x, y, @char)))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
 
-            var matches = findWordMatchesFunc.Invoke(matrix);
+            var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
             Assert.IsEmpty(matches);
         }
