@@ -1,13 +1,9 @@
-﻿using Assets.Wordis.BlockPuzzle.GameCore.Functions;
-using Assets.Wordis.BlockPuzzle.GameCore.Words;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
     /// <summary>
     /// General contract of the game level.
-    /// TODO: should it be covariant interface (out)?
     /// </summary>
-    public interface IWordisGameLevel<out T> where T : IWordisGameLevel<T>
+    public interface IWordisGameLevel
     {
         //protected WordisGameLevel(
         //    WordisSettings settings,
@@ -20,14 +16,34 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         //        findWordMatchesFunc: findWordMatchesFunc);
         //}
 
+        /// <inheritdoc cref="WordisGame"/>
         WordisGame Game { get; }
 
+        /// <inheritdoc cref="WordisSettings"/>
+        WordisSettings Settings { get; }
+
+        /// <summary>
+        /// How the level is titled.
+        /// </summary>
         string Title { get; }
 
+        /// <summary>
+        /// The goal of the level.
+        /// </summary>
         string Goal { get; }
 
+        /// <summary>
+        /// Is level completed.
+        /// </summary>
         bool IsCompleted { get; }
 
-        T Handle(GameEvent gameEvent);
+        /// <inheritdoc cref="WordisGame.Handle"/>
+        IWordisGameLevel Handle(GameEvent gameEvent);
+
+        /// <summary>
+        /// Returns this level in default state.
+        /// </summary>
+        /// <returns><see cref="IWordisGameLevel "/>.</returns>
+        IWordisGameLevel Reset();
     }
 }

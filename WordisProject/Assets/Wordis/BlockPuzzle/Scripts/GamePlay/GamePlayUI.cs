@@ -14,6 +14,7 @@
 using System;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.UI;
@@ -33,13 +34,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
         private static readonly object GameLock = new object();
 
-        private readonly WordisSettings _wordisSettings = new WordisSettings(
-            width: 9,
-            height: 9,
-            minWordMatch: 3,
-            waterLevel: 0);
-
-        private WordisGame _wordisGame;
+        private IWordisGameLevel _wordisGameLevel = new WordisSurvivalMode();
 
         private void GameStep() => HandleGameEvent(GameEvent.Step);
 
@@ -63,7 +58,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PauseGame(); // prevent premature UI refresh
 
-                if (_wordisGame.IsGameOver)
+                if (_wordisGameLevel.IsCompleted)
                 {
                     // stop the game cycle
                     PauseGame();
@@ -71,18 +66,26 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     return;
                 }
 
-                var updatedGame = _wordisGame.Handle(gameEvent);
+                var updatedLevel = _wordisGameLevel.Handle(gameEvent);
 
-                if (updatedGame.GameEvents.Count >
-                    _wordisGame.GameEvents.Count) // avoid extra refresh on game over.
+                if (updatedLevel.Game.GameEvents.Count >
+                    _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.
                 {
-                    RefreshPresentation(updatedGame);
+                    RefreshPresentation(updatedLevel.Game);
                 }
 
-                _wordisGame = updatedGame;
+                _wordisGameLevel = updatedLevel;
 
                 ResumeGame();
             }
+        }
+
+        /// <summary>
+        /// Sets the level to be played.
+        /// </summary>
+        public void SetLevel(IWordisGameLevel gameLevel)
+        {
+            _wordisGameLevel = gameLevel;
         }
 
         /// <summary>
@@ -99,7 +102,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Generated gameplay grid.
-            gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
+            gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
             scoreManager.Init();
 
             ResumeGame();
@@ -161,8 +164,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
                 .SetGameData(
-                    scoreManager.GetScore(),
-                    _wordisGame.Matches.Count);
+                    _wordisGameLevel.Game.Score.Value,
+                    _wordisGameLevel.Game.Matches.Count);
 
             UIController.Instance.gameOverScreen.Activate();
         }
@@ -173,7 +176,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.Clear();
             scoreManager.Clear();
             GameProgressTracker.Instance.ClearProgressData();
-            _wordisGame = new WordisGame(_wordisSettings);
+            _wordisGameLevel = _wordisGameLevel.Reset();
         }
 
         private void RefreshPresentation(WordisGame gameState)
@@ -214,7 +217,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             scoreManager.ShowScore(gameState.Score.Value);
 
             // 3. animate blocks destruction
-            StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));
+            StartCoroutine(GameBoard.ClearAllBlocks(_wordisGameLevel.Settings, blocksToClear));
 
             // 4. play break sound
             AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
@@ -226,7 +229,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (wordisObj == null)
             {
-                block.PlaceBlock(_wordisSettings.IsWaterZone(block.RowId)
+                block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                     ? Block.WaterTag
                     : block.defaultSpriteTag);
                 block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;

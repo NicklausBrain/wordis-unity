@@ -5,10 +5,12 @@ using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
-    public class WordisTutorialLevel : IWordisGameLevel<WordisTutorialLevel>
+    /// <summary>
+    /// Game tutorial.
+    /// </summary>
+    public class WordisTutorialLevel : IWordisGameLevel
     {
         private readonly Action<string> _displayMessage;
-        private readonly WordisGame _game;
 
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
@@ -21,7 +23,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             WordisGame gameState)
         {
             _displayMessage = displayMessage;
-            _game = gameState;
+            Game = gameState;
         }
 
         public WordisTutorialLevel(
@@ -32,19 +34,27 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         {
         }
 
-        public WordisGame Game => _game;
+        /// <inheritdoc />
+        public WordisGame Game { get; }
 
+        /// <inheritdoc />
+        public WordisSettings Settings { get; }
+
+        /// <inheritdoc />
         public string Title => "Tutorial";
 
+        /// <inheritdoc />
         public string Goal => "See what's going on here";
 
+        /// <inheritdoc />
         public bool IsCompleted =>
             Game.Matches.All
                 .Select(m => m.Word)
                 .Intersect(TutorialSequence.Words)
                 .Count() == TutorialSequence.Words.Count;
 
-        public WordisTutorialLevel Handle(GameEvent gameEvent)
+        /// <inheritdoc />
+        public IWordisGameLevel Handle(GameEvent gameEvent)
         {
             switch (gameEvent)
             {
@@ -84,6 +94,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                     return this;
             }
         }
+
+        public IWordisGameLevel Reset() => new WordisTutorialLevel(_displayMessage);
 
         private WordisTutorialLevel With(
             WordisGame updatedGame) =>

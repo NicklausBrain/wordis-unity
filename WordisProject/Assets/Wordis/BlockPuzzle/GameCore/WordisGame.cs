@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -9,6 +8,9 @@ using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
+    /// <summary>
+    /// Encapsulates essential game logic.
+    /// </summary>
     public class WordisGame
     {
         //private readonly GetLetterFunc _getLetterFunc;
@@ -156,6 +158,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                         return hasActiveObjects || updatedGame.IsGameOver
                             ? updatedGame
                             : updatedGame
+                                // todo: consider generating active object 1 step later
+                                // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
                                 .With(GenerateActiveChar(_letterSource.Char))
                                 .With(letterSource: _letterSource.Next);
                     }
