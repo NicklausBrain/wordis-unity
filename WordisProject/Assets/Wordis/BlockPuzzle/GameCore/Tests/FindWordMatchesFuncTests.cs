@@ -25,9 +25,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [X][-][A][T][-]
             // ---------------------
             // [X][C][A][T][-][-][-] - here we have a CAT
-            var chars = new[] { 'X', 'C', 'A', 'T' };
 
-            var matrix = chars
+            var matrix = new[] { 'X', 'C', 'A', 'T' }
                 .Select((@char, x) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -54,8 +53,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [-][R][-][-][-]
             // [-][A][-][-][-]
             // [-][T][-][-][-]
-            var chars = new[] { 'X', 'R', 'A', 'T', 'Y' };
-            var matrix = chars
+            var matrix = new[] { 'X', 'R', 'A', 'T', 'Y' }
                 .Select((@char, y) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -83,8 +81,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [F][I][R][-][F][L][Y]
             // ---------------------
             // [F][I][R][E][F][L][Y] - longer world should count
-            var chars = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' };
-            var matrix = chars
+            var matrix = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' }
                 .Select((@char, x) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -116,8 +113,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [S][I][C][-][I][L][L] - one end - another start
             // ---------------------
             // [S][I][C][K][I][L][L] - both should match
-            var chars = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' };
-            var matrix = chars
+            var matrix = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' }
                 .Select((@char, x) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -159,8 +155,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [Y][-]
             // ---------------------
             // [F][I][R][E][F][L][Y] - longer world should count
-            var chars = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' };
-            var matrix = chars
+            var matrix = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' }
                 .Select((@char, y) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -197,8 +192,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [L][-]
             // ---------------------
             // [S][I][C][K][I][L][L] - both should match
-            var chars = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' };
-            var matrix = chars
+            var matrix = new[] { 'S', 'I', 'C', 'K', 'I', 'L', 'L' }
                 .Select((@char, y) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
@@ -279,8 +273,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [X][-][A][T][-]
             // ---------------------
             // [X][C][A][T][-][-][-] - here we have a CAT
-            var chars = new[] { 'X', 'C', 'A', 'T' };
-            var matrix = chars
+            var matrix = new[] { 'X', 'C', 'A', 'T' }
                 .Select((@char, x) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
                 .Matrix;
