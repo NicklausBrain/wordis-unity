@@ -14,15 +14,28 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
         private readonly int _minWordLength;
 
         public FindWordMatchesFunc(
-            IsLegitWordFunc isLegitWordFunc,
-            int minWordLength)
+            int minWordLength,
+            IsLegitWordFunc isLegitWordFunc = null)
         {
-            _isLegitWordFunc = isLegitWordFunc;
+            _isLegitWordFunc = isLegitWordFunc ?? new IsLegitEngWordFunc();
             _minWordLength = minWordLength;
         }
 
-        public virtual WordMatch[] Invoke(IEnumerable<StaticChar> staticChars)
+        public virtual WordMatch[] Invoke(WordisMatrix matrix)
         {
+            var staticChars = new List<StaticChar>();
+
+            for (int y = 0; y < matrix.Height; y++)
+            {
+                for (int x = 0; x < matrix.Width; x++)
+                {
+                    if (matrix[x, y] is StaticChar)
+                    {
+                        staticChars.Add((StaticChar)matrix[x, y]);
+                    }
+                }
+            }
+
             var wordMatches = new List<WordMatch>();
             var staticCharsArr = staticChars.ToArray();
 
