@@ -25,6 +25,10 @@ using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
+    /// <summary>
+    /// Encapsulates UI logic for the gameplay.
+    /// Includes game events handling and UI refresh cycle.
+    /// </summary>
     public class GamePlayUI : Singleton<GamePlayUI>
     {
         private static readonly object GameLock = new object();
