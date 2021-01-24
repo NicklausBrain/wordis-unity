@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
-using NUnit.Framework.Constraints;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
@@ -52,11 +51,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         /// <inheritdoc />
         public bool IsCompleted =>
-            Game.IsGameOver ||
             Game.Matches.All
                 .Select(m => m.Word)
                 .Intersect(TutorialSequence.Words)
                 .Count() == TutorialSequence.Words.Count;
+
+        /// <inheritdoc />
+        public bool IsFailed => Game.IsGameOver;
 
         /// <inheritdoc />
         public IWordisGameLevel Handle(GameEvent gameEvent)
@@ -69,19 +70,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
                         if (Game.GameEvents.Count == 4)
                         {
-                            _displayMessage("Swipe left");
+                            _displayMessage("Swipe left"); // todo: localize
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
 
                         if (Game.GameEvents.Count == 7)
                         {
-                            _displayMessage("Swipe down");
+                            _displayMessage("Swipe down"); // todo: localize
                             updatedGame = Game.Handle(GameEvent.Down);
                         }
 
                         if (Game.GameEvents.Count == 10)
                         {
-                            _displayMessage("Swipe right");
+                            _displayMessage("Swipe right"); // todo: localize
                             updatedGame = Game.Handle(GameEvent.Right);
                         }
 

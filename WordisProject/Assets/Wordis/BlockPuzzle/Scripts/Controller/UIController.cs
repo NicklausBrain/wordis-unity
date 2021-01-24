@@ -136,7 +136,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             }
         }
 
-
         /// <summary>
         /// Try to show review screen if app setting has review popup on current gameover id.
         /// </summary>

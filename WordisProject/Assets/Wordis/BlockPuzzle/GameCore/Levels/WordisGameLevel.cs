@@ -35,9 +35,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         string Goal { get; }
 
         /// <summary>
-        /// Is level completed.
+        /// Is level successfully completed.
         /// </summary>
         bool IsCompleted { get; }
+
+        /// <summary>
+        /// Is level failed
+        /// </summary>
+        bool IsFailed { get; }
 
         /// <inheritdoc cref="WordisGame.Handle"/>
         IWordisGameLevel Handle(GameEvent gameEvent);

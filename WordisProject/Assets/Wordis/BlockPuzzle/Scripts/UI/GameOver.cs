@@ -12,6 +12,7 @@
 // THE SOFTWARE.
 
 using System.Collections;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -31,7 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
         [Tooltip("Game Over reason text")]
         [SerializeField]
-        Text txtGameOveTitle;
+        Text _txtGameOverTitle;
 
         [Tooltip("Score text from game over screen")]
         [SerializeField]
@@ -54,9 +55,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField] GameObject highScoreParticle;
 #pragma warning restore 0649
 
-
         int _rewardAmount = 0;
-        int _totalWordsMatched = 0;
         int _gameOverId = 0;
 
         /// <summary>
@@ -90,28 +89,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         public void SetGameData(
             int score,
             int totalWordsMatched,
-            GameOverReason reason = GameOverReason.GridFilled,
-            GameMode gameMode = GameMode.Default)
+            IWordisGameLevel gameLevel)
         {
-            switch (reason)
+            if (gameLevel.IsCompleted) // level is finished successfully
             {
-                case GameOverReason.GridFilled:
-                    txtGameOveTitle.SetTextWithTag("txtGameOver_gridfull");
-                    break;
-
-                case GameOverReason.TimeOver:
-                    txtGameOveTitle.SetTextWithTag("txtGameOver_timeover");
-                    break;
+                _txtGameOverTitle.text = "LEVEL PASSED"; // todo: localize
             }
 
-            _totalWordsMatched = totalWordsMatched;
             txtScore.text = score.ToString("N0");
 
-            int bestScore = ProfileManager.Instance.GetBestScore(gameMode);
+            // TODO: check all this logic
+            int bestScore = ProfileManager.Instance.GetBestScore(gameLevel.Title);
             if (score > bestScore)
             {
                 bestScore = score;
-                ProfileManager.Instance.SetBestScore(bestScore, gameMode);
+                ProfileManager.Instance.SetBestScore(bestScore, gameLevel.Title);
             }
 
             txtBestScore.text = bestScore.ToString("N0");
@@ -124,7 +116,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (ProfileManager.Instance.gameOverReviewSessions.Contains(_gameOverId))
             {
                 InputManager.Instance.DisableTouchForDelay(2F);
-                Invoke("CheckForReview", 2F);
+                Invoke(nameof(CheckForReview), 2F);
             }
         }
 
@@ -148,6 +140,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 InputManager.Instance.DisableTouchForDelay(1F);
                 UIFeedback.Instance.PlayButtonPressEffect();
+
+                // TODO: implement step into next level
             }
         }
 

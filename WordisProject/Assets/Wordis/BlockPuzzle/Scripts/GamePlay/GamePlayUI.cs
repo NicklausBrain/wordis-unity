@@ -115,7 +115,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // Generated gameplay grid.
             gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
-            scoreManager.Init();
+            scoreManager.Init(_wordisGameLevel.Title);
 
             inGameMessage.ShowMessage(_wordisGameLevel.Title); // move to level?
 
@@ -179,9 +179,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
-                .SetGameData(
+                .SetGameData( // TODO: remove extra args
                     _wordisGameLevel.Game.Score.Value,
-                    _wordisGameLevel.Game.Matches.Count);
+                    _wordisGameLevel.Game.Matches.Count,
+                    _wordisGameLevel);
 
             UIController.Instance.gameOverScreen.Activate();
         }

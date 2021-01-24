@@ -16461,7 +16461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043676363801946c688e161b798574aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtGameOveTitle: {fileID: 307813034}
+  _txtGameOverTitle: {fileID: 39237989}
   txtScore: {fileID: 1381225949}
   txtBestScore: {fileID: 1418565891}
   rewardPanel: {fileID: 1001011598}

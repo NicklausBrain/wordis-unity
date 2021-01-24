@@ -36,7 +36,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         public string Goal => "How long could you persist?";
 
         /// <inheritdoc />
-        public bool IsCompleted => Game.IsGameOver;
+        public bool IsCompleted => false;
+
+        /// <inheritdoc />
+        public bool IsFailed => Game.IsGameOver;
 
         /// <inheritdoc />
         public IWordisGameLevel Handle(GameEvent gameEvent)

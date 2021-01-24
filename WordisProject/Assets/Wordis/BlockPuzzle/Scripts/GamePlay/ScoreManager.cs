@@ -77,7 +77,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Set best score onn game start. 
         /// </summary>
-        public void Init()
+        public void Init(string gameLevel)
         {
             #region score data to local members
 
@@ -88,7 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             #endregion
 
             txtScore.text = _score.ToString("N0");
-            txtBestScore.text = ProfileManager.Instance.GetBestScore()
+            txtBestScore.text = ProfileManager.Instance.GetBestScore(gameLevel)
                 .ToString("N0");
         }
 
