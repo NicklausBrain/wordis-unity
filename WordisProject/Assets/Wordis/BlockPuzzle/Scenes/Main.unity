@@ -2586,7 +2586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -231}
+  m_AnchoredPosition: {x: 360, y: -207}
   m_SizeDelta: {x: 600, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &162813841
@@ -15822,6 +15822,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1109020515}
+  - component: {fileID: 1109020517}
+  - component: {fileID: 1109020516}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -15849,6 +15851,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -110}
   m_SizeDelta: {x: 0, y: -220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1109020516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109020514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Content: {fileID: 0}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 0}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1109020517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109020514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &1119930432
 GameObject:
   m_ObjectHideFlags: 0
@@ -17238,6 +17284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1196879414}
   - component: {fileID: 1196879415}
+  - component: {fileID: 1196879417}
   - component: {fileID: 1196879416}
   m_Layer: 5
   m_Name: Scroll-Panel
@@ -17266,7 +17313,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 800}
+  m_SizeDelta: {x: 720, y: 414}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1196879415
 MonoBehaviour:
@@ -17286,14 +17333,22 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 35
+  m_Spacing: 15
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &1196879416
+--- !u!222 &1196879416
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196879413}
+  m_CullTransparentMesh: 0
+--- !u!114 &1196879417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17302,27 +17357,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1196879413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
-  m_Horizontal: 0
-  m_Vertical: 1
-  m_MovementType: 1
-  m_Elasticity: 0.1
-  m_Inertia: 1
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
-  m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 0}
-  m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 0
-  m_HorizontalScrollbarSpacing: 0
-  m_VerticalScrollbarSpacing: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1207381165
 GameObject:
   m_ObjectHideFlags: 0
@@ -29867,7 +29906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -398}
+  m_AnchoredPosition: {x: 360, y: -350}
   m_SizeDelta: {x: 600, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1626237890
