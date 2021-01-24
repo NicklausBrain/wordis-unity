@@ -12,120 +12,72 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     {
         private readonly IsLegitWordFunc _isLegitWordFunc;
 
-
-        /// <summary>
-        /// temp
-        /// </summary>
-        /// <param name="isLegitWordFunc"></param>
         public FindWordMatchesFunc(
             IsLegitWordFunc isLegitWordFunc = null)
         {
             _isLegitWordFunc = isLegitWordFunc ?? new IsLegitEngWordFunc();
         }
 
-        public virtual WordMatch[] Invoke(WordisMatrix matrix, int minWordLength)
+        /// <summary>
+        /// Finds English words in a matrix of Wordis objects and stores the search results in a list. 
+        /// </summary>
+        /// <param name="m">Matrix of Wordis objects</param>
+        /// <param name="l">Length of the shortest acceptable word</param>
+        /// <param name="r">Orientation of the searched words: "true" - horizontal, i.e. words are within rows.</param>
+        /// <param name="v">List used to store the words which have been found.</param>
+        private void GetWordMatch(WordisMatrix m, int l, bool r, List<WordMatch> v)
         {
-            var staticChars = new List<StaticChar>();
+            var s = new List<StaticChar>();
 
-            for (int y = 0; y < matrix.Height; y++)
+            int h = r ? m.Height : m.Width;
+            int w = r ? m.Width : m.Height;
+                       
+            int t = w - l + 1;
+
+            for (int y = 0; y < h; y++)
             {
-                for (int x = 0; x < matrix.Width; x++)
+                int x = 0;
+
+                while (x < t)
                 {
-                    if (matrix[x, y] is StaticChar)
+                    int z = x;
+
+                    do
                     {
-                        staticChars.Add((StaticChar)matrix[x, y]);
+                        WordisObj e = r ? m[z, y] : m[y, z];
+                        if (e is StaticChar c) { s.Add(c); z++; } else break;
+                        
+                        if (s.Count < l) continue;
+                        
+                        string q = new string(s.Select(i => i.Value).ToArray());
+                        if (_isLegitWordFunc.Invoke(q)) v.Add(new WordMatch(s)); 
                     }
+                    while (z < w);
+
+                    if (s.Count <= l)
+                    {
+                        for (x = z + 1; x < t; x++)
+                            if ((r ? m[x, y] : m[y, x]) is StaticChar) break;
+                    }
+                    else x++;
+
+                    s.Clear();
                 }
             }
-
-            var wordMatches = new List<WordMatch>();
-            var staticCharsArr = staticChars.ToArray();
-
-            var rows = staticCharsArr.GroupBy(c => c.Y);
-
-            foreach (var row in rows)
-            {
-                wordMatches.AddRange(FindInVector(
-                    row.OrderBy(c => c.X).ToArray(),
-                    c => c.X,
-                    minWordLength));
-            }
-
-            var columns = staticCharsArr.GroupBy(c => c.X);
-
-            foreach (var column in columns)
-            {
-                wordMatches.AddRange(FindInVector(
-                    column.OrderBy(c => c.Y).ToArray(),
-                    c => c.Y,
-                    minWordLength));
-            }
-
-            return wordMatches.ToArray();
         }
 
-        private WordMatch[] FindInVector(
-            StaticChar[] staticChars,
-            Func<StaticChar, int> getAxisIndex,
-            int minWordLength)
+        /// <summary>
+        /// Finds English words in a matrix of Wordis objects. 
+        /// </summary>
+        /// <param name="matrix">Matrix of Wordis objects</param>
+        /// <param name="minWordLength">Length of the shortest acceptable word</param>
+        /// <returns>Array of the search results</returns>
+        public virtual WordMatch[] Invoke(WordisMatrix matrix, int minWordLength)
         {
-            if (staticChars.Length == 0 ||
-                staticChars.Length < minWordLength)
-            {
-                return Array.Empty<WordMatch>();
-            }
-
-            var potentialWord = new List<StaticChar>();
-            var wordMatches = new List<WordMatch>();
-
-            foreach (StaticChar staticChar in staticChars)
-            {
-                if (potentialWord.Count == 0 ||
-                    getAxisIndex(potentialWord[potentialWord.Count - 1]) == getAxisIndex(staticChar) - 1)
-                {
-                    potentialWord.Add(staticChar);
-
-                    if (potentialWord.Count >= minWordLength)
-                    {
-                        var potentialMatch = new WordMatch(potentialWord);
-                        var isLegitWord = _isLegitWordFunc.Invoke(potentialMatch.Word);
-                        if (isLegitWord)
-                        {
-                            wordMatches.Add(potentialMatch);
-                            if (wordMatches.Count > 1)
-                            {
-                                wordMatches.RemoveAt(0);
-                            }
-                        }
-                        else if (wordMatches.Any())
-                        {
-                            wordMatches.AddRange(
-                                FindInVector(
-                                    staticChars.Skip(wordMatches[0].Word.Length - 1).ToArray(),
-                                    getAxisIndex,
-                                    minWordLength));
-                        }
-                        else
-                        {
-                            wordMatches.AddRange(
-                                FindInVector(
-                                    staticChars.Skip(1).ToArray(),
-                                    getAxisIndex,
-                                    minWordLength));
-                        }
-                    }
-                }
-                else
-                {
-                    wordMatches.AddRange(
-                        FindInVector(
-                            staticChars.Skip(potentialWord.Count).ToArray(),
-                            getAxisIndex,
-                            minWordLength));
-                }
-            }
-
-            return wordMatches.ToArray();
+            List<WordMatch> v = new List<WordMatch>();
+            GetWordMatch(matrix, minWordLength, true, v);
+            GetWordMatch(matrix, minWordLength, false, v);
+            return v.ToArray();
         }
     }
 }

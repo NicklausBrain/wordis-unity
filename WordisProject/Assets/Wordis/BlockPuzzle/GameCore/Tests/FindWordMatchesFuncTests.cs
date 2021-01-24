@@ -69,7 +69,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
-        public void Invoke_WhenLongerWordCanBeMatchedInARow_TakesIt()
+        public void Invoke_WhenLongerWordAndItsSubwordCanBeMatchedInARow_AcceptsBoth()
         {
             var y = 2;
             var settings = new WordisSettings(
@@ -80,7 +80,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [-][-][-][E][-][-][-]
             // [F][I][R][-][F][L][Y]
             // ---------------------
-            // [F][I][R][E][F][L][Y] - longer world should count
+            // "Firefly" and "fire" world should be found. "Fly" is too short
             var matrix = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' }
                 .Select((@char, x) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
@@ -88,7 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
             var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
-            Assert.AreEqual(new WordMatch(new[]
+            Assert.Contains(new WordMatch(new[]
             {
                 new StaticChar(0, y, 'F'),
                 new StaticChar(1, y, 'I'),
@@ -97,7 +97,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(4, y, 'F'),
                 new StaticChar(5, y, 'L'),
                 new StaticChar(6, y, 'Y'),
-            }), matches.Single());
+            }), matches);
+
+            Assert.Contains(new WordMatch(new[]
+            {
+                new StaticChar(0, y, 'F'),
+                new StaticChar(1, y, 'I'),
+                new StaticChar(2, y, 'R'),
+                new StaticChar(3, y, 'E'),
+            }), matches);
         }
 
         [Test]
@@ -138,7 +146,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
-        public void Invoke_WhenLongerWordCanBeMatchedInAColumn_TakesIt()
+        public void Invoke_WhenLongerWordAndItsSubwordCanBeMatchedInAColumn_AcceptsBoth()
         {
             var x = 2;
             var settings = new WordisSettings(
@@ -154,7 +162,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             // [L][-]
             // [Y][-]
             // ---------------------
-            // [F][I][R][E][F][L][Y] - longer world should count
+            // "Firefly" and "fire" world should be found. "Fly" is too short
             var matrix = new[] { 'F', 'I', 'R', 'E', 'F', 'L', 'Y' }
                 .Select((@char, y) => new StaticChar(x, y, @char))
                 .Aggregate(new WordisGame(settings), (g, c) => g.With(c))
@@ -162,7 +170,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
             var matches = _findWordMatchesFunc.Invoke(matrix, settings.MinWordLength);
 
-            Assert.AreEqual(new WordMatch(new[]
+            Assert.Contains(new WordMatch(new[]
             {
                 new StaticChar(x, 0, 'F'),
                 new StaticChar(x, 1, 'I'),
@@ -171,7 +179,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(x, 4, 'F'),
                 new StaticChar(x, 5, 'L'),
                 new StaticChar(x, 6, 'Y'),
-            }), matches.Single());
+            }), matches);
+
+            Assert.Contains(new WordMatch(new[]
+            {
+                new StaticChar(x, 0, 'F'),
+                new StaticChar(x, 1, 'I'),
+                new StaticChar(x, 2, 'R'),
+                new StaticChar(x, 3, 'E'),
+            }), matches);
         }
 
         [Test]
@@ -315,7 +331,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: chars.Length,
                 height: chars.Length,
-                minWordMatch: 4);
+                minWordMatch: 3);
 
             var matrix = chars
                 .SelectMany((_, y) => chars.Select((@char, x) => new StaticChar(x, y, @char)))
