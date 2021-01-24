@@ -16,9 +16,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
                 speed: 1f,
-                width: 5,
+                width: 3,
                 height: 5,
-                minWordMatch: 4);
+                minWordMatch: 3);
 
         private WordisTutorialLevel(
             Action<string> displayMessage = null,
@@ -52,7 +52,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         public string Title => "Tutorial";
 
         /// <inheritdoc />
-        public string Goal => "See what's going on here";
+        public string Goal => "Match the words";
 
         /// <inheritdoc />
         public bool IsCompleted =>
@@ -71,39 +71,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                     {
                         WordisGame updatedGame = null;
                         string message = null;
-                        if (Game.GameEvents.Count == 0)
+
+                        if (Game.GameEvents.Count == 4)
                         {
-                            message = Goal;
+                            message = "Swipe left";
+                            updatedGame = Game.Handle(GameEvent.Left);
                         }
 
-                        if (Game.GameEvents.Count == 1)
+                        if (Game.GameEvents.Count == 7)
                         {
-                            message = "Your goal is to match the words";
+                            message = "Swipe down";
+                            updatedGame = Game.Handle(GameEvent.Down);
                         }
 
-                        if (Game.GameEvents.Count == 2)
+                        if (Game.GameEvents.Count == 10)
                         {
-                            message = "Move the letter right";
+                            message = "Swipe right";
                             updatedGame = Game.Handle(GameEvent.Right);
-                        }
-
-                        if (Game.GameEvents.Count == 3)
-                        {
-                            message = "Move the letter left";
-                            updatedGame = Game.Handle(GameEvent.Left);
-                        }
-
-                        if (Game.GameEvents.Count == 4 ||
-                            Game.GameEvents.Count == 5 ||
-                            Game.GameEvents.Count == 6 ||
-                            Game.GameEvents.Count == 7)
-                        {
-                            updatedGame = Game.Handle(GameEvent.Left);
-                        }
-
-                        if (Game.GameEvents.Count == 8)
-                        {
-                            updatedGame = Game.Handle(GameEvent.Left);
                         }
 
                         return With(
@@ -133,8 +117,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         {
             public static readonly IReadOnlyList<string> Words = new[]
             {
-                "hello",
-                //"world"
+                "CAT",
             };
 
             public TutorialSequence() : base(Words)

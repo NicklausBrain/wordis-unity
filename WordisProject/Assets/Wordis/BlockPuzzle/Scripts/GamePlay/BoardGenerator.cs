@@ -56,8 +56,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void GenerateBoard(GameCore.WordisSettings wordisSettings)
         {
-            int rowSize = wordisSettings.Width;
-            int columnSize = wordisSettings.Height;
+            // TODO: check this buggy code
+            int rowSize = wordisSettings.Height;
+            int columnSize = wordisSettings.Width;
 
             // Fetched the size of block that should be used.
             float blockSize = _currentModeSettings.blockSize;
