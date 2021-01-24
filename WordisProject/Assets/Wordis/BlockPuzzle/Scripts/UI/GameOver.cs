@@ -42,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField]
         Text txtBestScore;
 
-        [Tooltip("Reward Penel")]
+        [Tooltip("Reward Panel")]
         [SerializeField]
         GameObject rewardPanel;
 
@@ -97,6 +97,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (gameLevel.IsCompleted) // level is finished successfully
             {
                 _txtGameOverTitle.text = "LEVEL PASSED"; // todo: localize
+                highScoreParticle.SetActive(true);
             }
 
             txtScore.text = score.ToString("N0");
