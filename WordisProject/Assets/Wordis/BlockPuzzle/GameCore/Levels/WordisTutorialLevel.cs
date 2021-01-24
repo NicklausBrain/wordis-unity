@@ -15,15 +15,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
-                speed: 1.5f,
+                speed: 1f,
                 width: 5,
                 height: 5,
                 minWordMatch: 4);
 
         private WordisTutorialLevel(
             Action<string> displayMessage = null,
-            WordisGame gameState = null)
+            WordisGame gameState = null,
+            string message = null)
         {
+            Message = message;
             _displayMessage =
                 displayMessage ??
                 Console.WriteLine;
@@ -37,6 +39,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         public WordisTutorialLevel() : this(null, null)
         {
         }
+
+        public string Message { get; }
 
         /// <inheritdoc />
         public WordisGame Game { get; }
@@ -66,25 +70,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 case GameEvent.Step:
                     {
                         WordisGame updatedGame = null;
+                        string message = null;
                         if (Game.GameEvents.Count == 0)
                         {
-                            _displayMessage(Goal);
+                            message = Goal;
                         }
 
                         if (Game.GameEvents.Count == 1)
                         {
-                            _displayMessage("Your goal is to match the words");
+                            message = "Your goal is to match the words";
                         }
 
                         if (Game.GameEvents.Count == 2)
                         {
-                            _displayMessage("Move the letter right");
+                            message = "Move the letter right";
                             updatedGame = Game.Handle(GameEvent.Right);
                         }
 
                         if (Game.GameEvents.Count == 3)
                         {
-                            _displayMessage("Move the letter left");
+                            message = "Move the letter left";
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
 
@@ -101,7 +106,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
 
-                        return With(updatedGame ?? Game.Handle(gameEvent));
+                        return With(
+                            updatedGame: updatedGame ?? Game.Handle(gameEvent),
+                            message: message);
                     }
                 default:
                     return this;
@@ -115,10 +122,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             new WordisTutorialLevel(displayMessage: outFunc);
 
         private WordisTutorialLevel With(
-            WordisGame updatedGame) =>
+            WordisGame updatedGame,
+            string message = null) =>
             new WordisTutorialLevel(
                 _displayMessage,
-                updatedGame);
+                updatedGame,
+                message);
 
         private class TutorialSequence : WordsSequence
         {

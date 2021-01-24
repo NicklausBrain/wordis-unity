@@ -18,6 +18,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         //        findWordMatchesFunc: findWordMatchesFunc);
         //}
 
+        string Message { get; }
+
         /// <inheritdoc cref="WordisGame"/>
         WordisGame Game { get; }
 

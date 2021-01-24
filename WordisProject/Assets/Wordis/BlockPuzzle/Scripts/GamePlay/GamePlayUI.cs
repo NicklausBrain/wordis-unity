@@ -46,7 +46,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResumeGame()
         {
             PauseGame(); // to prevent double callback
-            InvokeRepeating(nameof(GameStep), 1f, _wordisGameLevel.Settings.Speed);
+            InvokeRepeating(
+                nameof(GameStep),
+                _wordisGameLevel.Settings.Speed,
+                _wordisGameLevel.Settings.Speed);
         }
 
         /// <summary>
@@ -69,6 +72,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 }
 
                 var updatedLevel = _wordisGameLevel.Handle(gameEvent);
+
+                if (!string.IsNullOrWhiteSpace(updatedLevel.Message))
+                {
+                    inGameMessage.ShowMessage(updatedLevel.Message);
+                }
 
                 if (updatedLevel.Game.GameEvents.Count >
                     _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.

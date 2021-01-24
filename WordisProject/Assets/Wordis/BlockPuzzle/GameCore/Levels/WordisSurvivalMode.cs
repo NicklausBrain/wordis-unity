@@ -23,6 +23,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         {
         }
 
+        public string Message => string.Empty;
+
         /// <inheritdoc />
         public WordisGame Game { get; }
 
