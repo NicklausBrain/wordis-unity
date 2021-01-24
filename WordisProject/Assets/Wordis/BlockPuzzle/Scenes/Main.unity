@@ -2733,7 +2733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &162813840
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16860,7 +16860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1166976018
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17625,7 +17625,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 557}
+  m_SizeDelta: {x: 720, y: 414}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1196879415
 MonoBehaviour:
@@ -26081,6 +26081,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bdc25065b3634a79b6ff5b5310eac26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelButtonTemplate: {fileID: 1166976017}
+  _levelListContent: {fileID: 1196879413}
 --- !u!95 &1410487044
 Animator:
   serializedVersion: 3
@@ -26939,7 +26941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1447086758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30344,7 +30346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626237889
 RectTransform:
   m_ObjectHideFlags: 0
