@@ -66,8 +66,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // to queue so it will load automatically when already existing popup gets closed.
         readonly List<string> _orderedPopupStack = new List<string>();
 
-        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Default;
-
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
@@ -202,7 +200,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 return _screenStack[_screenStack.Count - 1];
             }
 
-            return "";
+            return string.Empty;
         }
 
         /// <summary>
@@ -233,10 +231,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         {
             switch (currentScreen)
             {
-                case "HomeScreen":
+                case nameof(HomeScreen):
                     QuitGamePopup();
                     break;
-                case "SelectMode":
+                case nameof(SelectMode):
                     selectModeScreen.Deactivate();
                     break;
 
@@ -269,11 +267,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 case "PauseGame":
                     pauseGameScreen.Deactivate();
                     break;
-
-                    //case "RescueGame":
-                    //    GamePlayUI.Instance.OnRescueCancelled();
-                    //    rescueGameScreen.Deactivate();
-                    //    break;
             }
         }
 
@@ -298,7 +291,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // Quits the game.
         public void QuitGame()
         {
-            Invoke("QuitGameAfterDelay", 0.5F);
+            Invoke(nameof(QuitGameAfterDelay), 0.5F);
         }
 
         /// <summary>

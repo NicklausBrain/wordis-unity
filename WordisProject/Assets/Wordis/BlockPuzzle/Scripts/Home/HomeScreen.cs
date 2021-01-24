@@ -121,5 +121,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
                 UIController.Instance.LoadGamePlay();
             }
         }
+
+        /// <summary>
+        /// Advance mode button listener.
+        /// </summary>
+        public void OnCampaignModeButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.selectModeScreen.Activate();
+            }
+        }
     }
 }

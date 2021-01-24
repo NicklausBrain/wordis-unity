@@ -59,7 +59,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             }
         }
 
-
         /// <summary>
         /// Instantiates a button from template.
         /// </summary>
