@@ -72,11 +72,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 var updatedLevel = _wordisGameLevel.Handle(gameEvent);
 
-                if (!string.IsNullOrWhiteSpace(updatedLevel.Message))
-                {
-                    inGameMessage.ShowMessage(updatedLevel.Message);
-                }
-
                 if (updatedLevel.Game.GameEvents.Count >
                     _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.
                 {
@@ -122,9 +117,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
             scoreManager.Init();
 
-            inGameMessage.ShowMessage(_wordisGameLevel.Title);
+            inGameMessage.ShowMessage(_wordisGameLevel.Title); // move to level?
 
-            inGameMessage.ShowMessage(_wordisGameLevel.Goal);
+            inGameMessage.ShowMessage(_wordisGameLevel.Goal); // move to level?
 
             ResumeGame();
         }

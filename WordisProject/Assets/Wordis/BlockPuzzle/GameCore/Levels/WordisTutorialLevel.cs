@@ -22,10 +22,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         private WordisTutorialLevel(
             Action<string> displayMessage = null,
-            WordisGame gameState = null,
-            string message = null)
+            WordisGame gameState = null)
         {
-            Message = message;
             _displayMessage =
                 displayMessage ??
                 Console.WriteLine;
@@ -39,8 +37,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         public WordisTutorialLevel() : this(null, null)
         {
         }
-
-        public string Message { get; }
 
         /// <inheritdoc />
         public WordisGame Game { get; }
@@ -70,29 +66,27 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 case GameEvent.Step:
                     {
                         WordisGame updatedGame = null;
-                        string message = null;
 
                         if (Game.GameEvents.Count == 4)
                         {
-                            message = "Swipe left";
+                            _displayMessage("Swipe left");
                             updatedGame = Game.Handle(GameEvent.Left);
                         }
 
                         if (Game.GameEvents.Count == 7)
                         {
-                            message = "Swipe down";
+                            _displayMessage("Swipe down");
                             updatedGame = Game.Handle(GameEvent.Down);
                         }
 
                         if (Game.GameEvents.Count == 10)
                         {
-                            message = "Swipe right";
+                            _displayMessage("Swipe right");
                             updatedGame = Game.Handle(GameEvent.Right);
                         }
 
                         return With(
-                            updatedGame: updatedGame ?? Game.Handle(gameEvent),
-                            message: message);
+                            updatedGame: updatedGame ?? Game.Handle(gameEvent));
                     }
                 default:
                     return this;
@@ -106,12 +100,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             new WordisTutorialLevel(displayMessage: outFunc);
 
         private WordisTutorialLevel With(
-            WordisGame updatedGame,
-            string message = null) =>
+            WordisGame updatedGame) =>
             new WordisTutorialLevel(
                 _displayMessage,
-                updatedGame,
-                message);
+                updatedGame);
 
         private class TutorialSequence : WordsSequence
         {
