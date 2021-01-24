@@ -12,9 +12,7 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections;
 using System.Linq;
-using System.Threading;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -92,7 +90,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             _wordisGameLevel =
                 gameLevel?.WithOutput(message =>
                 {
-                    inGameMessage.ShowMessage(message);
+                    ShowMessage(message);
                     Debug.LogWarning(message);
                 }) ??
                 DefaultLevel;
@@ -117,9 +115,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
             scoreManager.Init(_wordisGameLevel.Title);
 
-            inGameMessage.ShowMessage(_wordisGameLevel.Title); // move to level?
+            ShowMessage(_wordisGameLevel.Title); // move to TIP area? move to level?
 
-            inGameMessage.ShowMessage(_wordisGameLevel.Goal); // move to level?
+            ShowMessage(_wordisGameLevel.Goal); // move to level?
 
             ResumeGame();
         }
@@ -221,7 +219,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // 1. display matched words
             foreach (var match in newMatches)
             {
-                inGameMessage.ShowMessage(match.Word);
+                ShowMessage(match.Word);
+                ShowWordDefinition(match.Word);
             }
 
             var blocksToClear =
@@ -261,6 +260,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         $"{wordisChar.Value}";
                 }
             }
+        }
+
+        private void ShowMessage(string message)
+        {
+            inGameMessage.ShowMessage(message);
+        }
+
+        private void ShowWordDefinition(string word)
+        {
+            return;
+            UIController.Instance.ShowTipAtPosition(
+                new Vector2(0, -325F),
+                new Vector2(0.5F, 1),
+                word,
+                7F);
         }
     }
 }
