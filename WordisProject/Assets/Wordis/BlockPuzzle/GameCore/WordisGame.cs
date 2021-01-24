@@ -69,7 +69,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             //    new GetEngLetterFunc();
             _findWordMatchesFunc =
                 findWordMatchesFunc ??
-                new FindWordMatchesFunc(new IsLegitEngWordFunc(), settings.MinWordLength);
+                new FindWordMatchesFunc();
         }
 
         public WordisSettings Settings { get; }
@@ -139,19 +139,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        var matches = FindWordMatches(updatedState: updatedGameObjects);
-
                         var updatedGame = With(
-                            gameObjects: matches.Any()
-                                ? updatedGameObjects
+                            gameObjects: updatedGameObjects,
+                            gameEvents: updatedEvents);
+
+                        var matches = FindWordMatches(updatedGame.Matrix);
+
+                        updatedGame = matches.Any()
+                            ? updatedGame.With(
+                                gameObjects: updatedGameObjects
                                     .Except(matches.SelectMany(m => m.MatchedChars))
-                                    .ToImmutableList()
-                                : updatedGameObjects,
-                            gameEvents: updatedEvents,
-                            wordMatches: matches.Any()
-                                ? _wordMatches.AddRange(matches)
-                                : _wordMatches,
-                            lastMatches: matches);
+                                    .ToImmutableList(),
+                                wordMatches: updatedGame._wordMatches.AddRange(matches),
+                                lastMatches: matches)
+                            : updatedGame;
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 
@@ -214,16 +215,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         }
 
         private ImmutableList<WordMatchEx> FindWordMatches(
-            IReadOnlyList<WordisObj> updatedState)
+            WordisMatrix matrix)
         {
-            var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar);
+            var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar); // todo: what for?
 
             var foundMatches = activeObj == null
                 ? ImmutableList<WordMatchEx>.Empty
-                : _findWordMatchesFunc.Invoke(
-                    updatedState
-                        .Where(o => o is StaticChar)
-                        .Cast<StaticChar>())
+                : _findWordMatchesFunc.Invoke(matrix, Settings.MinWordLength)
                 .Select(m => new WordMatchEx(m, _gameEvents.Count, DateTimeOffset.UtcNow))
                 .ToImmutableList();
 

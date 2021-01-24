@@ -7,22 +7,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 {
     public class WordMatch
     {
-        private readonly Lazy<WordisChar[]> _chars;
+        private readonly WordisChar[] _chars;
 
-        public WordMatch(
-            IEnumerable<WordisChar> chars)
+        public WordMatch(IEnumerable<WordisChar> chars)
         {
-            _chars = new Lazy<WordisChar[]>(
-                () => chars?.ToArray() ?? Array.Empty<WordisChar>());
+            _chars = chars?.ToArray() ?? Array.Empty<WordisChar>();
         }
 
         public string Word => new string(MatchedChars.Select(c => c.Value).ToArray());
 
-        public IReadOnlyList<WordisChar> MatchedChars => _chars.Value;
+        public IReadOnlyList<WordisChar> MatchedChars => _chars;
 
         protected bool Equals(WordMatch other)
         {
-            return _chars.Value.SequenceEqual(other._chars.Value);
+            return _chars.SequenceEqual(other._chars);
         }
 
         public override bool Equals(object obj)
