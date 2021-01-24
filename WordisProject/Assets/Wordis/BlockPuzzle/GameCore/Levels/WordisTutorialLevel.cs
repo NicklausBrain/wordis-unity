@@ -70,23 +70,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                     {
                         WordisGame updatedGame = null;
 
-                        if (Game.GameEvents.Count == 4)
-                        {
+                        if (Game.GameEvents.Count == 3)
                             _displayMessage("Swipe left"); // todo: localize
+                        if (Game.GameEvents.Count == 4)
                             updatedGame = Game.Handle(GameEvent.Left);
-                        }
-
-                        if (Game.GameEvents.Count == 7)
-                        {
+                        if (Game.GameEvents.Count == 6)
                             _displayMessage("Swipe down"); // todo: localize
+                        if (Game.GameEvents.Count == 7)
                             updatedGame = Game.Handle(GameEvent.Down);
-                        }
-
-                        if (Game.GameEvents.Count == 10)
-                        {
+                        if (Game.GameEvents.Count == 9)
                             _displayMessage("Swipe right"); // todo: localize
+                        if (Game.GameEvents.Count == 10)
                             updatedGame = Game.Handle(GameEvent.Right);
-                        }
 
                         return With(
                             updatedGame: updatedGame ?? Game.Handle(gameEvent));
