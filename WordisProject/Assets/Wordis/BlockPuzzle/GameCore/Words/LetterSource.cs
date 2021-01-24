@@ -1,30 +1,28 @@
-﻿using Assets.Wordis.BlockPuzzle.GameCore.Functions;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Words
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 {
+    /// <summary>
+    /// Abstract letters source/generator.
+    /// </summary>
     public abstract class LetterSource
     {
+        /// <summary>
+        /// Gets the current character.
+        /// </summary>
+        protected abstract char GetChar();
+
+        /// <summary>
+        /// Proceeds to the next character.
+        /// </summary>
         public abstract LetterSource Next { get; }
 
-        public abstract char Char { get; }
+        /// <summary>
+        /// Current letter. Uppercase.
+        /// </summary>
+        public virtual char Char => char.ToUpperInvariant(GetChar());
 
+        /// <summary>
+        /// Is the last letter in the sequence.
+        /// </summary>
         public abstract bool IsLast { get; }
-
-        //GetLetterFunc AsFunc => new GetEngLetterFunc();
-
-        //private class LetterSourceFunc : GetLetterFunc
-        //{
-        //    private readonly LetterSource _letterSource;
-
-        //    public LetterSourceFunc(LetterSource letterSource)
-        //    {
-        //        _letterSource = letterSource;
-        //    }
-
-        //    public override char Invoke()
-        //    {
-        //        _letterSource.
-        //    }
-        //}
     }
 }

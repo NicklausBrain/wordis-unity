@@ -18,6 +18,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
             _index = index;
         }
 
+        protected override char GetChar() => _word[_index];
+
         public WordLetters(string word) : this(word, 0)
         {
         }
@@ -26,8 +28,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
             IsLast
                 ? this
                 : new WordLetters(_word, _index + 1);
-
-        public override char Char => _word[_index];
 
         public override bool IsLast => _index == _word.Length - 1;
     }

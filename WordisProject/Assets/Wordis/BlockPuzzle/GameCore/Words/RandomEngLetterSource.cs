@@ -9,9 +9,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 
         private readonly Lazy<char> _char = new Lazy<char>(() => GetEngLetterFunc.Invoke());
 
-        public override LetterSource Next => new RandomEngLetterSource();
+        protected override char GetChar() => _char.Value;
 
-        public override char Char => _char.Value;
+        public override LetterSource Next => new RandomEngLetterSource();
 
         public override bool IsLast => false;
     }

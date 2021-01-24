@@ -16939,7 +16939,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1410487043}
-        m_MethodName: OnClassicModeButtonPressed
+        m_MethodName: OnAdvanceModeButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

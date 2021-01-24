@@ -7,17 +7,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
     /// </summary>
     public interface IWordisGameLevel
     {
-        //protected WordisGameLevel(
-        //    WordisSettings settings,
-        //    LetterSource letterSource = null,
-        //    FindWordMatchesFunc findWordMatchesFunc = null)
-        //{
-        //    Game = new WordisGame(
-        //        settings: settings,
-        //        letterSource: letterSource,
-        //        findWordMatchesFunc: findWordMatchesFunc);
-        //}
-
         /// <inheritdoc cref="WordisGame"/>
         WordisGame Game { get; }
 

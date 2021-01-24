@@ -5,8 +5,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 {
     public class WordsSequence : WordSource
     {
-        private readonly IReadOnlyList<string> _words;
         private readonly int _index;
+
+        public IReadOnlyList<string> Words { get; }
 
         private WordsSequence(
             IReadOnlyList<string> words,
@@ -14,7 +15,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
         {
             if (words == null || words.Count == 0)
                 throw new ArgumentNullException(nameof(words));
-            _words = words;
+            Words = words;
 
             if (index >= words.Count || index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -25,33 +26,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
         {
         }
 
-        public override WordSource Next => new WordsSequence(_words, _index + 1);
+        public override WordSource Next => IsLast
+            ? this
+            : new WordsSequence(Words, _index + 1);
 
-        public override string Word => _words[_index];
+        public override string Word => Words[_index];
 
-        public override bool IsLast => _index == _words.Count - 1;
+        public override bool IsLast => _index == Words.Count - 1;
 
-        public LetterSource AsLetterSource() => new WordLetters(this.Word);
-
-        //private class MultiWordsLetters : WordLetters
-        //{
-        //    private readonly string[] _words;
-
-        //    public MultiWordsLetters(string[] words) : base(words.First())
-        //    {
-        //        _words = words;
-        //    }
-
-        //    public override LetterSource Next
-        //    {
-        //        get
-        //        {
-        //            if (base.IsLast)
-        //            {
-        //                return new WordLetters(_words);
-        //            }
-        //        }
-        //    }
-        //}
+        public static WordsSequence FromCsv(string csv)
+        {
+            var words = csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            return new WordsSequence(words);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
     /// </summary>
     public class WordisTutorialLevel : IWordisGameLevel
     {
-        private readonly Action<string> _displayMessage;
+        private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
 
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
@@ -18,6 +18,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 width: 3,
                 height: 5,
                 minWordMatch: 3);
+
+        private readonly Action<string> _displayMessage;
 
         private WordisTutorialLevel(
             Action<string> displayMessage = null,
@@ -30,7 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 gameState ??
                 new WordisGame(
                     TutorialLevelSettings,
-                    new WordLetters(new TutorialSequence().Word));
+                    new WordLetters(TutorialSequence.Word));
         }
 
         public WordisTutorialLevel() : this(null, null)
@@ -105,17 +107,5 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             new WordisTutorialLevel(
                 _displayMessage,
                 updatedGame);
-
-        private class TutorialSequence : WordsSequence
-        {
-            public static readonly IReadOnlyList<string> Words = new[]
-            {
-                "CAT",
-            };
-
-            public TutorialSequence() : base(Words)
-            {
-            }
-        }
     }
 }

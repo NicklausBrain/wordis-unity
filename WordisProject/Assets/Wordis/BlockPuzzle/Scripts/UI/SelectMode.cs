@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -44,7 +45,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             if (InputManager.Instance.canInput())
             {
-                UIFeedback.Instance.PlayButtonPressEffect();
+                InputManager.Instance.DisableTouchForDelay();
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.LoadGamePlay();
                 gameObject.Deactivate();
@@ -58,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             if (InputManager.Instance.canInput())
             {
-                UIFeedback.Instance.PlayButtonPressEffect();
+                InputManager.Instance.DisableTouchForDelay();
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.LoadGamePlay();
             }
@@ -71,9 +72,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             if (InputManager.Instance.canInput())
             {
+                InputManager.Instance.DisableTouchForDelay();
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay();
+                UIController.Instance.LoadGamePlay(new Level1BasicPalindromes());
+                gameObject.Deactivate();
             }
         }
     }
