@@ -34,9 +34,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GamePlayUI : Singleton<GamePlayUI>
     {
+        private static IWordisGameLevel DefaultLevel => new WordisSurvivalMode();
+
         private static readonly object GameLock = new object();
 
-        private IWordisGameLevel _wordisGameLevel = new WordisSurvivalMode();
+        private IWordisGameLevel _wordisGameLevel = DefaultLevel;
 
         private void GameStep() => HandleGameEvent(GameEvent.Step);
 
@@ -46,10 +48,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResumeGame()
         {
             PauseGame(); // to prevent double callback
-            InvokeRepeating(
-                nameof(GameStep),
-                _wordisGameLevel.Settings.Speed,
-                _wordisGameLevel.Settings.Speed);
+            Invoke(nameof(GameStep), _wordisGameLevel.Settings.Speed);
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     inGameMessage.ShowMessage(message);
                     Debug.LogWarning(message);
                 }) ??
-                new WordisSurvivalMode();
+                DefaultLevel;
 
             return this;
         }
@@ -122,6 +121,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // Generated gameplay grid.
             gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
             scoreManager.Init();
+
+            inGameMessage.ShowMessage(_wordisGameLevel.Title);
+
+            inGameMessage.ShowMessage(_wordisGameLevel.Goal);
 
             ResumeGame();
         }
@@ -262,12 +265,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         $"{wordisChar.Value}";
                 }
             }
-        }
-
-        private IEnumerator ShowMessage(string message)
-        {
-            inGameMessage.ShowMessage(message);
-            yield return new WaitForSeconds(1.5F);
         }
     }
 }
