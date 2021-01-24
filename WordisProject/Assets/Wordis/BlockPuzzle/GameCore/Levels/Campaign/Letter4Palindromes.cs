@@ -2,7 +2,7 @@
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
-namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
 {
     /// <summary>
     /// 3 letters match. Basic palindromes.
