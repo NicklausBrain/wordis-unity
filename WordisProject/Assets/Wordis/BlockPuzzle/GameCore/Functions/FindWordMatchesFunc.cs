@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 
@@ -31,7 +30,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 
             int h = r ? m.Height : m.Width; // Height
             int w = r ? m.Width : m.Height; // Width
-                       
+
             int t = w - l + 1; // Threshold
 
             for (int y = 0; y < h; y++) // Y-coordinate
@@ -46,9 +45,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                     {
                         WordisObj e = r ? m[z, y] : m[y, z]; // Element of the matrix
                         if (e is StaticChar c) { s.Add(c); z++; } else break; // Char
-                        
+
                         if (s.Count < l) continue;
-                        
+
                         string q = new string(s.Select(i => i.Value).ToArray()); //Query string for the dictionary
                         if (_isLegitWordFunc.Invoke(q)) v.Add(new WordMatch(s));
                     }
