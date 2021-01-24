@@ -11132,7 +11132,7 @@ MonoBehaviour:
   settingScreen: {fileID: 1069858229}
   consentScreen: {fileID: 927073206}
   reviewScreen: {fileID: 642887849}
-  selectModeScreen: {fileID: 1410487041}
+  selectLevelScreen: {fileID: 1410487041}
   pauseGameScreen: {fileID: 233541509}
   rescueGameScreen: {fileID: 1076920245}
   selectThemeScreen: {fileID: 8317820521437507427}
@@ -26042,7 +26042,7 @@ GameObject:
   - component: {fileID: 1410487043}
   - component: {fileID: 1410487044}
   m_Layer: 5
-  m_Name: SelectMode
+  m_Name: SelectLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

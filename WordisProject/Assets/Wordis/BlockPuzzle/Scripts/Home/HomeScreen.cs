@@ -67,7 +67,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
                 UIFeedback.Instance.PlayButtonPressEffect();
 
                 //Opens mode selection screen.
-                UIController.Instance.selectModeScreen.Activate();
+                UIController.Instance.selectLevelScreen.Activate();
             }
         }
 
@@ -130,7 +130,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.selectModeScreen.Activate();
+                UIController.Instance.selectLevelScreen.Activate();
             }
         }
     }

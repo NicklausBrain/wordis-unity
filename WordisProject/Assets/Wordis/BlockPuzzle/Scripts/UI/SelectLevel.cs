@@ -25,7 +25,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
     /// <summary>
     /// Selection on mode to be played.
     /// </summary>
-    public class SelectMode : MonoBehaviour
+    public class SelectLevel : MonoBehaviour
     {
         private const string LevelBtnTemplate = "btn-level-template";
 

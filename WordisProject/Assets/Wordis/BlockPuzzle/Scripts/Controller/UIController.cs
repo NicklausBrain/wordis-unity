@@ -45,7 +45,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public GameObject settingScreen;
         public GameObject consentScreen;
         public GameObject reviewScreen;
-        public GameObject selectModeScreen;
+        public GameObject selectLevelScreen;
         public GameObject pauseGameScreen;
         public GameObject rescueGameScreen;
         public GameObject selectThemeScreen;
@@ -233,8 +233,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 case nameof(HomeScreen):
                     QuitGamePopup();
                     break;
-                case nameof(SelectMode):
-                    selectModeScreen.Deactivate();
+                case nameof(SelectLevel):
+                    selectLevelScreen.Deactivate();
                     break;
 
                 case "GamePlay":
