@@ -27,30 +27,30 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
         /// <param name="v">List used to store the words which have been found.</param>
         private void GetWordMatch(WordisMatrix m, int l, bool r, List<WordMatch> v)
         {
-            var s = new List<StaticChar>();
+            var s = new List<StaticChar>(); // String of StaticChars
 
-            int h = r ? m.Height : m.Width;
-            int w = r ? m.Width : m.Height;
+            int h = r ? m.Height : m.Width; // Height
+            int w = r ? m.Width : m.Height; // Width
                        
-            int t = w - l + 1;
+            int t = w - l + 1; // Threshold
 
-            for (int y = 0; y < h; y++)
+            for (int y = 0; y < h; y++) // Y-coordinate
             {
-                int x = 0;
+                int x = 0; // X-coordinate
 
                 while (x < t)
                 {
-                    int z = x;
+                    int z = x; // X-coordinate of the last symbol added to string of StaticChars
 
                     do
                     {
-                        WordisObj e = r ? m[z, y] : m[y, z];
-                        if (e is StaticChar c) { s.Add(c); z++; } else break;
+                        WordisObj e = r ? m[z, y] : m[y, z]; // Element of the matrix
+                        if (e is StaticChar c) { s.Add(c); z++; } else break; // Char
                         
                         if (s.Count < l) continue;
                         
-                        string q = new string(s.Select(i => i.Value).ToArray());
-                        if (_isLegitWordFunc.Invoke(q)) v.Add(new WordMatch(s)); 
+                        string q = new string(s.Select(i => i.Value).ToArray()); //Query string for the dictionary
+                        if (_isLegitWordFunc.Invoke(q)) v.Add(new WordMatch(s));
                     }
                     while (z < w);
 
