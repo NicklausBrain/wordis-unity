@@ -62,7 +62,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PauseGame(); // prevent premature UI refresh
 
-                if (_wordisGameLevel.IsCompleted)
+                if (_wordisGameLevel.IsCompleted || _wordisGameLevel.Game.IsGameOver)
                 {
                     // stop the game cycle
                     PauseGame();

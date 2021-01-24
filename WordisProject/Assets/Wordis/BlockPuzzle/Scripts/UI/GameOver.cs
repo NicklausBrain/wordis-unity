@@ -22,6 +22,9 @@ using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 {
+    /// <summary>
+    /// Code behind for Game Over and Level Completion
+    /// </summary>
     public class GameOver : MonoBehaviour
     {
 #pragma warning disable 0649
