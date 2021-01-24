@@ -141,7 +141,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                     {
                         var updatedGame = With(
                             gameObjects: updatedGameObjects,
-                            gameEvents: updatedEvents);
+                            gameEvents: updatedEvents,
+                            lastMatches: ImmutableList<WordMatchEx>.Empty);
 
                         var matches = FindWordMatches(updatedGame.Matrix);
 
