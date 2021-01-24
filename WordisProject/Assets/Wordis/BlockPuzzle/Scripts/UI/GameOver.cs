@@ -12,12 +12,12 @@
 // THE SOFTWARE.
 
 using System.Collections;
+using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
-using Assets.Wordis.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,8 +55,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField] GameObject highScoreParticle;
 #pragma warning restore 0649
 
-        int _rewardAmount = 0;
-        int _gameOverId = 0;
+        private int _rewardAmount = 0;
+        private int _gameOverId = 0;
+        private IWordisGameLevel _gameLevel;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -91,6 +92,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             int totalWordsMatched,
             IWordisGameLevel gameLevel)
         {
+            _gameLevel = gameLevel;
+
             if (gameLevel.IsCompleted) // level is finished successfully
             {
                 _txtGameOverTitle.text = "LEVEL PASSED"; // todo: localize
@@ -138,10 +141,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             if (InputManager.Instance.canInput())
             {
-                InputManager.Instance.DisableTouchForDelay(1F);
                 UIFeedback.Instance.PlayButtonPressEffect();
 
-                // TODO: implement step into next level
+                // select next level
+                var nextLevels = SelectLevel.Levels
+                    .SkipWhile(l => l.GetType() != _gameLevel.GetType())
+                    .Skip(1) // this level
+                    .ToArray();
+
+                var nextLevel = nextLevels.Any()
+                    ? nextLevels.First() // go next
+                    : SelectLevel.Levels.First(); // start all over again
+
+                // start next level
+                StartCoroutine(RestartGame(nextLevel));
             }
         }
 
@@ -165,24 +178,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                StartCoroutine(RestartGame());
+                StartCoroutine(RestartGame(_gameLevel));
             }
         }
 
         /// <summary>
         /// Restarts game.
         /// </summary>
-        private IEnumerator RestartGame()
+        private IEnumerator RestartGame(IWordisGameLevel level)
         {
             yield return new WaitForSeconds(0.1f);
-            GamePlayUI.Instance.RestartGame();
+            GamePlayUI.Instance
+                .SetLevel(level)
+                .RestartGame();
             gameObject.Deactivate();
-        }
-
-        public enum GameOverReason
-        {
-            GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
-            TimeOver, // If timer finishing. Applied only to time mode.
         }
     }
 }

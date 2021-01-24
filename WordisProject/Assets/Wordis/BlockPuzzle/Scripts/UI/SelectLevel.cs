@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -25,6 +26,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
     /// </summary>
     public class SelectLevel : MonoBehaviour
     {
+        public static readonly IReadOnlyList<IWordisGameLevel> Levels = new IWordisGameLevel[]
+        {
+            new Level1BasicPalindromes(),
+            new Letter4Palindromes(),
+        };
+
 #pragma warning disable 0649
         [SerializeField] GameObject _levelButtonTemplate;
         [SerializeField] GameObject _levelListContent;
@@ -53,9 +60,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
         private void PrepareLevelsScreen()
         {
-            var levels = new[] { new Level1BasicPalindromes(), };
-
-            foreach (var level in levels)
+            foreach (var level in Levels)
             {
                 CreateLevelButton(level);
             }
