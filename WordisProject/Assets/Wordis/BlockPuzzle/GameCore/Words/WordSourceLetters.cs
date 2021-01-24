@@ -4,6 +4,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 {
     /// <summary>
     /// Represents words sequence as a letters sequence.
+    /// TODO: add cycle
     /// </summary>
     public class WordSourceLetters : LetterSource
     {

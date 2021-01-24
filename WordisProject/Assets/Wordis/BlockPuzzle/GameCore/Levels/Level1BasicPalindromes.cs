@@ -17,7 +17,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             "lol,wow,eve,mom,dad,gig,pop,pup,ewe,did,gig,bob");
 
         private static readonly WordisSettings LevelSettings = new WordisSettings(
-            width: 4,
+            width: 5,
             height: 6,
             minWordMatch: 3,
             waterLevel: 0);

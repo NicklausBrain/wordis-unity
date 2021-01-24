@@ -14,9 +14,7 @@
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
-using Assets.Wordis.BlockPuzzle.Scripts.UI.Utils;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
-using Assets.Wordis.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,8 +25,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
     /// </summary>
     public class SelectLevel : MonoBehaviour
     {
-        private const string LevelBtnTemplate = "btn-level-template";
-
 #pragma warning disable 0649
         [SerializeField] GameObject _levelButtonTemplate;
         [SerializeField] GameObject _levelListContent;
@@ -80,68 +76,24 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             levelButton.GetComponentInChildren<Text>().text = level.Title;
             levelButton.SetActive(true);
 
-            //levelButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+            // set level startup callback
+            levelButton.GetComponent<Button>().onClick.AddListener(() => StartLevel(level));
 
             return levelButton;
         }
 
-        /*
-         /// <summary>
-        /// This function is called when the behaviour becomes enabled or active.
-        /// </summary>
-        private void OnEnable()
-        {
-            btnSetting.onClick.AddListener(OnSettingsButtonClicked);
-        }
-
         /// <summary>
-        /// This function is called when the behaviour becomes disabled or inactive.
+        /// Level button listener
         /// </summary>
-        private void OnDisable()
+        private void StartLevel(IWordisGameLevel level)
         {
-            btnSetting.onClick.RemoveListener(OnSettingsButtonClicked);
+            if (InputManager.Instance.canInput())
+            {
+                InputManager.Instance.DisableTouchForDelay();
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.LoadGamePlay(level);
+                gameObject.Deactivate();
+            }
         }
-         */
-
-        ///// <summary>
-        ///// Classic mode button listener.
-        ///// </summary>
-        //public void OnClassicModeButtonPressed()
-        //{
-        //    if (InputManager.Instance.canInput())
-        //    {
-        //        InputManager.Instance.DisableTouchForDelay();
-        //        UIFeedback.Instance.PlayButtonPressEffect();
-        //        UIController.Instance.LoadGamePlay();
-        //        gameObject.Deactivate();
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Time mode button listener.
-        ///// </summary>
-        //public void OnTimeModeButtonPressed()
-        //{
-        //    if (InputManager.Instance.canInput())
-        //    {
-        //        InputManager.Instance.DisableTouchForDelay();
-        //        UIFeedback.Instance.PlayButtonPressEffect();
-        //        UIController.Instance.LoadGamePlay();
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Advance mode button listener.
-        ///// </summary>
-        //public void OnAdvanceModeButtonPressed()
-        //{
-        //    if (InputManager.Instance.canInput())
-        //    {
-        //        InputManager.Instance.DisableTouchForDelay();
-        //        UIFeedback.Instance.PlayButtonPressEffect();
-        //        UIController.Instance.LoadGamePlay(new Level1BasicPalindromes());
-        //        gameObject.Deactivate();
-        //    }
-        //}
     }
 }

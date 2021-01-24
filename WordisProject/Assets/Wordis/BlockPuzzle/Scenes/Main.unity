@@ -1791,7 +1791,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: e503d8b7594417347bb6b5830c79725f, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
     m_MaxSize: 60
     m_Alignment: 4
@@ -16225,7 +16225,7 @@ RectTransform:
   - {fileID: 1207381166}
   - {fileID: 1585603386}
   m_Father: {fileID: 1624376439}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -27101,7 +27101,7 @@ RectTransform:
   - {fileID: 112934503}
   - {fileID: 341232374}
   m_Father: {fileID: 1624376439}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -29231,7 +29231,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PLAY
+  m_Text: SURVIVAL
 --- !u!222 &1585603389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30122,8 +30122,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1121146023}
   - {fileID: 1449438602}
+  - {fileID: 1121146023}
   - {fileID: 238239800}
   m_Father: {fileID: 644614680}
   m_RootOrder: 5
