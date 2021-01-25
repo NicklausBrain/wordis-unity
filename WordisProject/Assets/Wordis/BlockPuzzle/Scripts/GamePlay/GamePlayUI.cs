@@ -197,7 +197,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void RefreshPresentation(WordisGame gameState)
         {
-            if (gameState.Matches.Last.Any()) // on word matches
+            // check last game event to avoid extra animations on user input
+            if (gameState.LastEvent == GameEvent.Step &&
+                gameState.Matches.Last.Any()) // on word match
             {
                 DisplayMatches(gameState);
             }

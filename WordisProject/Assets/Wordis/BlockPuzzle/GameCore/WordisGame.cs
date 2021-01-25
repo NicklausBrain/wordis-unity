@@ -13,7 +13,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     /// </summary>
     public class WordisGame
     {
-        //private readonly GetLetterFunc _getLetterFunc;
         private readonly LetterSource _letterSource;
         private readonly FindWordMatchesFunc _findWordMatchesFunc;
         private readonly ImmutableList<WordMatchEx> _wordMatches;
@@ -31,7 +30,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         private WordisGame(
             WordisSettings settings,
             LetterSource letterSource,
-            //GetLetterFunc getLetterFunc,
             FindWordMatchesFunc findWordMatchesFunc,
             ImmutableList<WordisObj> gameObjects,
             ImmutableList<WordMatchEx> wordMatches,
@@ -41,7 +39,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             Settings = settings;
             Matrix = new WordisMatrix(this);
             _letterSource = letterSource;
-            //_getLetterFunc = getLetterFunc;
             _findWordMatchesFunc = findWordMatchesFunc;
             _gameObjects = gameObjects;
             _wordMatches = wordMatches;
@@ -52,7 +49,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         public WordisGame(
             WordisSettings settings,
             LetterSource letterSource = null,
-            //GetLetterFunc getLetterFunc = null,
             FindWordMatchesFunc findWordMatchesFunc = null)
         {
             Settings = settings;
@@ -60,13 +56,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             _gameObjects = ImmutableList<WordisObj>.Empty;
             _wordMatches = ImmutableList<WordMatchEx>.Empty;
             _gameEvents = ImmutableList<GameEvent>.Empty;
-
             _letterSource =
                 letterSource ??
                 new RandomEngLetterSource();
-            //_getLetterFunc =
-            //    getLetterFunc ??
-            //    new GetEngLetterFunc();
             _findWordMatchesFunc =
                 findWordMatchesFunc ??
                 new FindWordMatchesFunc();
@@ -86,6 +78,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// Log of the game events.
         /// </summary>
         public IReadOnlyList<GameEvent> GameEvents => _gameEvents;
+
+        /// <summary>
+        /// Returns the last event occured.
+        /// </summary>
+        public GameEvent LastEvent =>
+            GameEvents.Any()
+                ? GameEvents[GameEvents.Count - 1]
+                : GameEvent.None;
 
         /// <summary>
         /// All the words matched during the game.
@@ -184,7 +184,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             ImmutableList<GameEvent> gameEvents = null) =>
             new WordisGame(
                 settings: Settings,
-                //getLetterFunc: _getLetterFunc,
                 letterSource: letterSource ?? _letterSource,
                 findWordMatchesFunc: _findWordMatchesFunc,
                 gameObjects: gameObjects ?? _gameObjects,
@@ -207,8 +206,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         private ActiveChar GenerateActiveChar(char newChar)
         {
-            //var randomChar = _letterSource.Char;
-
             return new ActiveChar(
                 x: StartPoint.x,
                 y: StartPoint.y,
@@ -218,11 +215,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         private ImmutableList<WordMatchEx> FindWordMatches(
             WordisMatrix matrix)
         {
-            var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar); // todo: what for?
-
-            var foundMatches = activeObj == null
-                ? ImmutableList<WordMatchEx>.Empty
-                : _findWordMatchesFunc.Invoke(matrix, Settings.MinWordLength)
+            var foundMatches = _findWordMatchesFunc.Invoke(
+                    matrix,
+                    Settings.MinWordLength)
                 .Select(m => new WordMatchEx(m, _gameEvents.Count, DateTimeOffset.UtcNow))
                 .ToImmutableList();
 
