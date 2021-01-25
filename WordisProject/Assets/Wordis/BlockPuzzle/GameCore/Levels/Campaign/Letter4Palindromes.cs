@@ -34,7 +34,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public Letter4Palindromes() : this(
             new WordisGame(
                 LevelSettings,
-                FourLetterPalindromes.AsLetterSource()))
+                FourLetterPalindromes
+                    .Shuffle()
+                    .AsLetterSource()))
         {
         }
 
@@ -42,7 +44,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public override string Title => "4-letter palindromes";
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public override string Goal => $"Match {NeededMatches} palindromes";
+        public override string Goal => $"Match {NeededMatches} palindromes!";
 
         /// <inheritdoc cref="IWordisGameLevel" />
         public override bool IsCompleted =>

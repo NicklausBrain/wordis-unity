@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore.Extensions;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 {
@@ -26,17 +27,28 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
         {
         }
 
+        /// <inheritdoc />
         public override WordSource Next => IsLast
-            ? this
+            ? new WordsSequence(Words, 0)
             : new WordsSequence(Words, _index + 1);
 
+        /// <inheritdoc />
         public override string Word => Words[_index];
 
+        /// <inheritdoc />
         public override bool IsLast => _index == Words.Count - 1;
+
+        /// <summary>
+        /// Makes the words order random.
+        /// </summary>
+        public WordsSequence Shuffle() => new WordsSequence(Words.Shuffle());
 
         public static WordsSequence FromCsv(string csv)
         {
-            var words = csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = csv.Split(
+                new[] { ',', '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries);
+
             return new WordsSequence(words);
         }
     }

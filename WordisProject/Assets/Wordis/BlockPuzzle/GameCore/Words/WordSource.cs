@@ -2,7 +2,6 @@
 {
     /// <summary>
     /// Abstract words source/generator.
-    /// TODO: add cycle!
     /// </summary>
     public abstract class WordSource
     {

@@ -30,7 +30,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
 
         public Letter3Animals() : this(new WordisGame(
             LevelSettings,
-            Animals.AsLetterSource()))
+            Animals
+                .Shuffle()
+                .AsLetterSource()))
         {
         }
 

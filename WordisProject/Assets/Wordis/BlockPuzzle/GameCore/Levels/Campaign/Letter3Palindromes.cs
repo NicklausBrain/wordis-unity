@@ -8,7 +8,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter3Palindromes : WordisGameLevelBase<Letter3Palindromes>, IWordisGameLevel
     {
-        public const int NeededMatches = 5;
+        public const int NeededMatches = 10;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
@@ -32,7 +32,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public Letter3Palindromes() : this(
             new WordisGame(
                 LevelSettings,
-                ThreeLetterPalindromes.AsLetterSource()))
+                ThreeLetterPalindromes
+                    .Shuffle()
+                    .AsLetterSource()))
         {
         }
 
