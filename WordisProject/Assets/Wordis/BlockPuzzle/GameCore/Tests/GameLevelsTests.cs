@@ -14,6 +14,21 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
     public class GameLevelsTests
     {
         [Test]
+        public void WordisGameLevelBase_WhenGameIsOver_IsCompletedReturnsFalse()
+        {
+            var initialLevel = new TestLevel();
+            var failedLevel = initialLevel.WithUpdatedGame(
+                initialLevel.Game
+                    .With(new StaticChar(1, 0, 'X'))
+                    .With(new StaticChar(1, 1, 'Y'))
+                    .With(new StaticChar(1, 2, 'Z')));
+
+            Assert.IsTrue(failedLevel.Game.IsGameOver);
+            Assert.IsTrue(failedLevel.IsFailed);
+            Assert.IsFalse(failedLevel.IsCompleted);
+        }
+
+        [Test]
         public void WordisTutorial_AfterXSteps_IsCompleted()
         {
             var tutorial = Enumerable
@@ -96,5 +111,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         private static WordMatchEx StrToWordMatch(string word) =>
             new WordMatchEx(new WordMatch(
                 word.Select(c => new StaticChar(1, 3, c))), 3, DateTimeOffset.Now);
+
+        private class TestLevel : WordisGameLevelBase<TestLevel>, IWordisGameLevel
+        {
+            private static readonly WordisSettings DefaultSettings =
+                new WordisSettings(width: 3, height: 3, minWordMatch: 3);
+
+            private TestLevel(WordisGame game) : base(game)
+            {
+            }
+
+            public TestLevel() : base(new WordisGame(DefaultSettings))
+            {
+            }
+
+            public override string Title => "Test level";
+
+            public override string Goal => "Do testing";
+
+            public override TestLevel WithUpdatedGame(WordisGame updatedGame) =>
+                new TestLevel(updatedGame);
+        }
     }
 }
