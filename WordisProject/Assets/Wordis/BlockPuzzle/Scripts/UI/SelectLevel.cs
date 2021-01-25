@@ -99,8 +99,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             levelButton.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
             levelButton.transform.SetAsLastSibling();
             levelButton.GetComponentInChildren<Text>().text = "More to come...";
-            levelButton.SetActive(true);
             levelButton.GetComponent<Button>().interactable = false;
+            levelButton.SetActive(true);
         }
 
         /// <summary>
