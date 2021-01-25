@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
+using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
+    /// <summary>
+    /// Encapsulates essential game logic.
+    /// </summary>
     public class WordisGame
     {
-        private readonly GetLetterFunc _getLetterFunc;
+        private readonly LetterSource _letterSource;
         private readonly FindWordMatchesFunc _findWordMatchesFunc;
         private readonly ImmutableList<WordMatchEx> _wordMatches;
         private readonly ImmutableList<WordMatchEx> _lastMatches;
@@ -26,7 +29,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         private WordisGame(
             WordisSettings settings,
-            GetLetterFunc getLetterFunc,
+            LetterSource letterSource,
             FindWordMatchesFunc findWordMatchesFunc,
             ImmutableList<WordisObj> gameObjects,
             ImmutableList<WordMatchEx> wordMatches,
@@ -35,7 +38,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         {
             Settings = settings;
             Matrix = new WordisMatrix(this);
-            _getLetterFunc = getLetterFunc;
+            _letterSource = letterSource;
             _findWordMatchesFunc = findWordMatchesFunc;
             _gameObjects = gameObjects;
             _wordMatches = wordMatches;
@@ -45,7 +48,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
         public WordisGame(
             WordisSettings settings,
-            GetLetterFunc getLetterFunc = null,
+            LetterSource letterSource = null,
             FindWordMatchesFunc findWordMatchesFunc = null)
         {
             Settings = settings;
@@ -53,13 +56,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             _gameObjects = ImmutableList<WordisObj>.Empty;
             _wordMatches = ImmutableList<WordMatchEx>.Empty;
             _gameEvents = ImmutableList<GameEvent>.Empty;
-
-            _getLetterFunc =
-                getLetterFunc ??
-                new GetEngLetterFunc();
+            _letterSource =
+                letterSource ??
+                new RandomEngLetterSource();
             _findWordMatchesFunc =
                 findWordMatchesFunc ??
-                new FindWordMatchesFunc(new IsLegitEngWordFunc(), settings.MinWordLength);
+                new FindWordMatchesFunc();
         }
 
         public WordisSettings Settings { get; }
@@ -76,6 +78,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// Log of the game events.
         /// </summary>
         public IReadOnlyList<GameEvent> GameEvents => _gameEvents;
+
+        /// <summary>
+        /// Returns the last event occured.
+        /// </summary>
+        public GameEvent LastEvent =>
+            GameEvents.Any()
+                ? GameEvents[GameEvents.Count - 1]
+                : GameEvent.None;
 
         /// <summary>
         /// All the words matched during the game.
@@ -112,7 +122,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// </summary>
         /// <param name="gameEvent"></param>
         /// <returns></returns>
-        public WordisGame Handle(GameEvent gameEvent)
+        public virtual WordisGame Handle(GameEvent gameEvent)
         {
             if (IsGameOver) // do nothing
             {
@@ -129,25 +139,31 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        var matches = FindWordMatches(updatedState: updatedGameObjects);
-
                         var updatedGame = With(
-                            gameObjects: matches.Any()
-                                ? updatedGameObjects
-                                    .Except(matches.SelectMany(m => m.MatchedChars))
-                                    .ToImmutableList()
-                                : updatedGameObjects,
+                            gameObjects: updatedGameObjects,
                             gameEvents: updatedEvents,
-                            wordMatches: matches.Any()
-                                ? _wordMatches.AddRange(matches)
-                                : _wordMatches,
-                            lastMatches: matches);
+                            lastMatches: ImmutableList<WordMatchEx>.Empty);
+
+                        var matches = FindWordMatches(updatedGame.Matrix);
+
+                        updatedGame = matches.Any()
+                            ? updatedGame.With(
+                                gameObjects: updatedGameObjects
+                                    .Except(matches.SelectMany(m => m.MatchedChars))
+                                    .ToImmutableList(),
+                                wordMatches: updatedGame._wordMatches.AddRange(matches),
+                                lastMatches: matches)
+                            : updatedGame;
 
                         var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
 
                         return hasActiveObjects || updatedGame.IsGameOver
                             ? updatedGame
-                            : updatedGame.With(GenerateActiveChar());
+                            : updatedGame
+                                // todo: consider generating active object 1 step later
+                                // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
+                                .With(GenerateActiveChar(_letterSource.Char))
+                                .With(letterSource: _letterSource.Next);
                     }
                 default:
                     return With(
@@ -161,13 +177,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// </summary>
         /// <returns>An updated game instance.</returns>
         private WordisGame With(
+            LetterSource letterSource = null,
             ImmutableList<WordisObj> gameObjects = null,
             ImmutableList<WordMatchEx> wordMatches = null,
             ImmutableList<WordMatchEx> lastMatches = null,
             ImmutableList<GameEvent> gameEvents = null) =>
             new WordisGame(
                 settings: Settings,
-                getLetterFunc: _getLetterFunc,
+                letterSource: letterSource ?? _letterSource,
                 findWordMatchesFunc: _findWordMatchesFunc,
                 gameObjects: gameObjects ?? _gameObjects,
                 gameEvents: gameEvents ?? _gameEvents,
@@ -183,31 +200,32 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             With(gameObjects: _gameObjects.Add(gameObj));
 
         /// <summary>
+        /// For Unit Tests. Creates an instance with predefined word matches.
+        /// </summary>
+        /// <param name="wordMatches"></param>
+        /// <returns></returns>
+        public WordisGame WithWordMatches(params WordMatchEx[] wordMatches) =>
+            With(wordMatches: wordMatches.ToImmutableList());
+
+        /// <summary>
         /// The point where a new active object is generated.
         /// </summary>
         public (int x, int y) StartPoint => (x: Settings.Width / 2, y: 0);
 
-        private ActiveChar GenerateActiveChar()
+        private ActiveChar GenerateActiveChar(char newChar)
         {
-            var randomChar = _getLetterFunc.Invoke();
-
             return new ActiveChar(
                 x: StartPoint.x,
                 y: StartPoint.y,
-                randomChar);
+                newChar);
         }
 
         private ImmutableList<WordMatchEx> FindWordMatches(
-            IReadOnlyList<WordisObj> updatedState)
+            WordisMatrix matrix)
         {
-            var activeObj = GameObjects.FirstOrDefault(o => o is ActiveChar);
-
-            var foundMatches = activeObj == null
-                ? ImmutableList<WordMatchEx>.Empty
-                : _findWordMatchesFunc.Invoke(
-                    updatedState
-                        .Where(o => o is StaticChar)
-                        .Cast<StaticChar>())
+            var foundMatches = _findWordMatchesFunc.Invoke(
+                    matrix,
+                    Settings.MinWordLength)
                 .Select(m => new WordMatchEx(m, _gameEvents.Count, DateTimeOffset.UtcNow))
                 .ToImmutableList();
 

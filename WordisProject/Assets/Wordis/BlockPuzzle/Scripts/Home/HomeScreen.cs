@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -66,7 +67,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
                 UIFeedback.Instance.PlayButtonPressEffect();
 
                 //Opens mode selection screen.
-                UIController.Instance.selectModeScreen.Activate();
+                UIController.Instance.selectLevelScreen.Activate();
             }
         }
 
@@ -78,7 +79,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Default);
+                UIController.Instance.LoadGamePlay();
             }
         }
 
@@ -90,7 +91,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Timed);
+                UIController.Instance.LoadGamePlay();
+            }
+        }
+
+        /// <summary>
+        /// Campaign button listener.
+        /// </summary>
+        public void OnTutorialModePressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.LoadGamePlay(new WordisTutorialLevel());
+
+                //Opens mode selection screen.
+                //UIController.Instance.selectModeScreen.Activate();
             }
         }
 
@@ -102,7 +118,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay(GameMode.Advance);
+                UIController.Instance.LoadGamePlay();
+            }
+        }
+
+        /// <summary>
+        /// Advance mode button listener.
+        /// </summary>
+        public void OnCampaignModeButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.selectLevelScreen.Activate();
             }
         }
     }

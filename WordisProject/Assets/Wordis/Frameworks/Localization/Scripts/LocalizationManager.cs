@@ -88,8 +88,10 @@ namespace Assets.Wordis.Frameworks.Localization.Scripts
 
             if (currentLanaguage == null)
             {
-                currentLanaguage = new LocalizedLanguage();
-                currentLanaguage.languageCode = "EN";
+                currentLanaguage = new LocalizedLanguage
+                {
+                    languageCode = "EN"
+                };
             }
 
             OnLocalizationInitializedEvent?.Invoke(currentLanaguage, isLocalizationSupported);

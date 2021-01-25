@@ -17,6 +17,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Utils;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Localization.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 {
@@ -56,17 +57,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                         GetLanguageButton(lang, lang.languageCode.Equals(currentLanguage.languageCode));
                     }
                 }
+
+                GetMoreToComeButton();
             }
         }
-
 
         /// <summary>
         /// Instantiates a button from template.
         /// </summary>
         /// <returns></returns>
-        GameObject GetLanguageButton(LocalizedLanguage lang, bool isActive = false)
+        private void GetLanguageButton(LocalizedLanguage lang, bool isActive = false)
         {
-            GameObject langButton = (GameObject) Instantiate(languageButtonTemplate);
+            GameObject langButton = Instantiate(languageButtonTemplate);
             langButton.transform.SetParent(languageListContent.transform);
             langButton.name = lang.languageName;
             langButton.transform.localScale = Vector3.one;
@@ -74,7 +76,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             langButton.transform.SetAsLastSibling();
             langButton.GetComponent<LanguageButton>().SetLanaguage(lang, isActive);
             langButton.SetActive(true);
-            return langButton;
+        }
+
+        private void GetMoreToComeButton()
+        {
+            GameObject langButton = Instantiate(languageButtonTemplate);
+            langButton.transform.SetParent(languageListContent.transform);
+            langButton.name = "moreToComeBtn";
+            langButton.transform.localScale = Vector3.one;
+            langButton.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+            langButton.transform.SetAsLastSibling();
+            langButton.GetComponentInChildren<Text>().text = "More to come...";
+            langButton.GetComponent<Button>().interactable = false;
+            langButton.SetActive(true);
         }
 
         // Close button listener.

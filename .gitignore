@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WordisProject/Assets/Wordis/BlockPuzzle/GameCore/bin
+/WordisProject/Assets/Wordis/BlockPuzzle/GameCore/obj
+/WordisProject/Assets/Wordis/BlockPuzzle/GameCore/obj.meta
+/WordisProject/Assets/Wordis/BlockPuzzle/GameCore/bin.meta

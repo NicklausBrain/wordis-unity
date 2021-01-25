@@ -14,6 +14,8 @@
 using System;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.UI;
@@ -25,17 +27,17 @@ using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
+    /// <summary>
+    /// Encapsulates UI logic for the gameplay.
+    /// Includes game events handling and UI refresh cycle.
+    /// </summary>
     public class GamePlayUI : Singleton<GamePlayUI>
     {
+        private static IWordisGameLevel DefaultLevel => new WordisSurvivalMode();
+
         private static readonly object GameLock = new object();
 
-        private readonly WordisSettings _wordisSettings = new WordisSettings(
-            width: 9,
-            height: 9,
-            minWordMatch: 3,
-            waterLevel: 0);
-
-        private WordisGame _wordisGame;
+        private IWordisGameLevel _wordisGameLevel = DefaultLevel;
 
         private void GameStep() => HandleGameEvent(GameEvent.Step);
 
@@ -45,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void ResumeGame()
         {
             PauseGame(); // to prevent double callback
-            InvokeRepeating(nameof(GameStep), 1f, _gamePlaySettings.gameSpeed);
+            Invoke(nameof(GameStep), _wordisGameLevel.Settings.Speed);
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PauseGame(); // prevent premature UI refresh
 
-                if (_wordisGame.IsGameOver)
+                if (_wordisGameLevel.IsCompleted || _wordisGameLevel.Game.IsGameOver)
                 {
                     // stop the game cycle
                     PauseGame();
@@ -67,18 +69,28 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     return;
                 }
 
-                var updatedGame = _wordisGame.Handle(gameEvent);
+                var updatedLevel = _wordisGameLevel.Handle(gameEvent);
 
-                if (updatedGame.GameEvents.Count >
-                    _wordisGame.GameEvents.Count) // avoid extra refresh on game over.
+                if (updatedLevel.Game.GameEvents.Count >
+                    _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.
                 {
-                    RefreshPresentation(updatedGame);
+                    RefreshPresentation(updatedLevel.Game);
                 }
 
-                _wordisGame = updatedGame;
+                _wordisGameLevel = updatedLevel;
 
                 ResumeGame();
             }
+        }
+
+        /// <summary>
+        /// Sets the level to be played.
+        /// </summary>
+        public GamePlayUI SetLevel(IWordisGameLevel gameLevel = null)
+        {
+            _wordisGameLevel = gameLevel ?? DefaultLevel;
+
+            return this;
         }
 
         /// <summary>
@@ -95,8 +107,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // Generated gameplay grid.
-            gameBoard.boardGenerator.GenerateBoard(_wordisSettings);
-            scoreManager.Init();
+            gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
+            scoreManager.Init(_wordisGameLevel.Title);
+
+            ShowMessage(_wordisGameLevel.Title); // move to TIP area? move to level?
+
+            ShowMessage(_wordisGameLevel.Goal); // move to level?
 
             ResumeGame();
         }
@@ -150,15 +166,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void OnDisable() => ClearGame();
 
         /// <summary>
-        /// Will be called on game over. 
+        /// Will be called on game over.
         /// </summary>
         private void GameOver()
         {
             UIController.Instance.gameOverScreen
                 .GetComponent<GameOver>()
-                .SetGameData(
-                    scoreManager.GetScore(),
-                    _wordisGame.Matches.Count);
+                .SetGameData( // TODO: remove extra args
+                    _wordisGameLevel.Game.Score.Value,
+                    _wordisGameLevel.Game.Matches.Count,
+                    _wordisGameLevel);
 
             UIController.Instance.gameOverScreen.Activate();
         }
@@ -169,12 +186,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.Clear();
             scoreManager.Clear();
             GameProgressTracker.Instance.ClearProgressData();
-            _wordisGame = new WordisGame(_wordisSettings);
+            _wordisGameLevel = _wordisGameLevel
+                .Reset()
+                .WithOutput(message =>
+                {
+                    ShowMessage(message);
+                    Debug.LogWarning(message);
+                });
         }
 
         private void RefreshPresentation(WordisGame gameState)
         {
-            if (gameState.Matches.Last.Any()) // on word matches
+            // check last game event to avoid extra animations on user input
+            if (gameState.LastEvent == GameEvent.Step &&
+                gameState.Matches.Last.Any()) // on word match
             {
                 DisplayMatches(gameState);
             }
@@ -197,7 +222,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // 1. display matched words
             foreach (var match in newMatches)
             {
-                inGameMessage.ShowMessage(match.Word);
+                ShowMessage(match.Word);
+                ShowWordDefinition(match.Word);
             }
 
             var blocksToClear =
@@ -210,7 +236,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             scoreManager.ShowScore(gameState.Score.Value);
 
             // 3. animate blocks destruction
-            StartCoroutine(GameBoard.ClearAllBlocks(_wordisSettings, blocksToClear));
+            StartCoroutine(GameBoard.ClearAllBlocks(_wordisGameLevel.Settings, blocksToClear));
 
             // 4. play break sound
             AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
@@ -222,7 +248,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (wordisObj == null)
             {
-                block.PlaceBlock(_wordisSettings.IsWaterZone(block.RowId)
+                block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                     ? Block.WaterTag
                     : block.defaultSpriteTag);
                 block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
@@ -237,6 +263,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                         $"{wordisChar.Value}";
                 }
             }
+        }
+
+        private void ShowMessage(string message)
+        {
+            inGameMessage.ShowMessage(message);
+        }
+
+        private void ShowWordDefinition(string word)
+        {
+            return;
+            UIController.Instance.ShowTipAtPosition(
+                new Vector2(0, -325F),
+                new Vector2(0.5F, 1),
+                word,
+                7F);
         }
     }
 }

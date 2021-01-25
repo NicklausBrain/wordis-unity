@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.Frameworks.AppSettings.Scripts;
 using Assets.Wordis.Frameworks.HapticFeedback.Scripts;
 using Assets.Wordis.Frameworks.MobileAds._Common;
@@ -82,7 +81,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         {
             if (appSettings == null)
             {
-                appSettings = (AppSettings)Resources.Load("AppSettings");
+                appSettings = (AppSettings)Resources.Load(nameof(AppSettings));
                 if (appSettings.showReviewPopupOnLaunch && appSettings.reviewPopupAppLaunchCount != string.Empty)
                 {
                     appLaunchReviewSessions = appSettings.reviewPopupAppLaunchCount.Split(',')
@@ -98,6 +97,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
             _isInitialized = true;
             InitProfileStatus();
+
+            // TODO: remove obsolete score values
+            // TODO: https://github.com/NicklausBrain/wordis-unity/issues/52
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         }
 
         /// <summary>
-        /// Inits the audio status.
+        /// Initialize the audio status.
         /// </summary>
         public void InitProfileStatus()
         {
@@ -231,17 +233,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Returns best score for the given mode.
         /// </summary>
-        public int GetBestScore(GameMode gameMode = GameMode.Default)
+        public int GetBestScore(string gameLevel)
         {
-            return PlayerPrefs.GetInt($"bestScore_{gameMode}", 0);
+            return PlayerPrefs.GetInt($"bestScore_{gameLevel}", 0);
         }
 
         /// <summary>
         /// Saves best for the give mode.
         /// </summary>
-        public void SetBestScore(int score, GameMode gameMode = GameMode.Default)
+        public void SetBestScore(int score, string gameLevel)
         {
-            PlayerPrefs.SetInt($"bestScore_{gameMode}", score);
+            PlayerPrefs.SetInt($"bestScore_{gameLevel}", score);
         }
     }
 }

@@ -12,23 +12,27 @@
 // THE SOFTWARE.
 
 using System.Collections;
+using System.Linq;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
-using Assets.Wordis.Frameworks.Localization.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 {
+    /// <summary>
+    /// Code behind for Game Over and Level Completion
+    /// </summary>
     public class GameOver : MonoBehaviour
     {
 #pragma warning disable 0649
 
         [Tooltip("Game Over reason text")]
         [SerializeField]
-        Text txtGameOveTitle;
+        Text _txtGameOverTitle;
 
         [Tooltip("Score text from game over screen")]
         [SerializeField]
@@ -38,7 +42,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField]
         Text txtBestScore;
 
-        [Tooltip("Reward Penel")]
+        [Tooltip("Reward Panel")]
         [SerializeField]
         GameObject rewardPanel;
 
@@ -51,10 +55,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField] GameObject highScoreParticle;
 #pragma warning restore 0649
 
-
-        int _rewardAmount = 0;
-        int _totalWordsMatched = 0;
-        int _gameOverId = 0;
+        private int _rewardAmount = 0;
+        private int _gameOverId = 0;
+        private IWordisGameLevel _gameLevel;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
@@ -87,28 +90,29 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         public void SetGameData(
             int score,
             int totalWordsMatched,
-            GameOverReason reason = GameOverReason.GridFilled,
-            GameMode gameMode = GameMode.Default)
+            IWordisGameLevel gameLevel)
         {
-            switch (reason)
-            {
-                case GameOverReason.GridFilled:
-                    txtGameOveTitle.SetTextWithTag("txtGameOver_gridfull");
-                    break;
+            _gameLevel = gameLevel;
 
-                case GameOverReason.TimeOver:
-                    txtGameOveTitle.SetTextWithTag("txtGameOver_timeover");
-                    break;
+            if (gameLevel.IsCompleted) // level is finished successfully
+            {
+                _txtGameOverTitle.text = "LEVEL PASSED"; // todo: localize
+                highScoreParticle.SetActive(true);
+            }
+            else // level is failed
+            {
+                _txtGameOverTitle.text = "GAME OVER"; // todo: localize
+                highScoreParticle.SetActive(false);
             }
 
-            _totalWordsMatched = totalWordsMatched;
             txtScore.text = score.ToString("N0");
 
-            int bestScore = ProfileManager.Instance.GetBestScore(gameMode);
+            // TODO: check all this logic
+            int bestScore = ProfileManager.Instance.GetBestScore(gameLevel.Title);
             if (score > bestScore)
             {
                 bestScore = score;
-                ProfileManager.Instance.SetBestScore(bestScore, gameMode);
+                ProfileManager.Instance.SetBestScore(bestScore, gameLevel.Title);
             }
 
             txtBestScore.text = bestScore.ToString("N0");
@@ -121,7 +125,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (ProfileManager.Instance.gameOverReviewSessions.Contains(_gameOverId))
             {
                 InputManager.Instance.DisableTouchForDelay(2F);
-                Invoke("CheckForReview", 2F);
+                Invoke(nameof(CheckForReview), 2F);
             }
         }
 
@@ -143,8 +147,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             if (InputManager.Instance.canInput())
             {
-                InputManager.Instance.DisableTouchForDelay(1F);
                 UIFeedback.Instance.PlayButtonPressEffect();
+
+                // select next level
+                var nextLevels = SelectLevel.Levels
+                    .SkipWhile(l => l.GetType() != _gameLevel.GetType())
+                    .Skip(1) // this level
+                    .ToArray();
+
+                var nextLevel = nextLevels.Any()
+                    ? nextLevels.First() // go next
+                    : SelectLevel.Levels.First(); // start all over again
+
+                // start next level
+                StartCoroutine(RestartGame(nextLevel));
             }
         }
 
@@ -168,24 +184,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             if (InputManager.Instance.canInput())
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
-                StartCoroutine(RestartGame());
+                StartCoroutine(RestartGame(_gameLevel));
             }
         }
 
         /// <summary>
         /// Restarts game.
         /// </summary>
-        private IEnumerator RestartGame()
+        private IEnumerator RestartGame(IWordisGameLevel level)
         {
             yield return new WaitForSeconds(0.1f);
-            GamePlayUI.Instance.RestartGame();
+            GamePlayUI.Instance
+                .SetLevel(level)
+                .RestartGame();
             gameObject.Deactivate();
-        }
-
-        public enum GameOverReason
-        {
-            GridFilled, // If there is no enough space to place existing blocks. Applies to all game mode.
-            TimeOver, // If timer finishing. Applied only to time mode.
         }
     }
 }

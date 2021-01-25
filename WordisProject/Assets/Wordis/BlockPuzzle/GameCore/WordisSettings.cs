@@ -3,16 +3,24 @@
     public class WordisSettings
     {
         public WordisSettings(
+            float speed = 1.0f,
             int width = 9,
             int height = 9,
             int minWordMatch = 3,
             int waterLevel = 0)
         {
+            Speed = speed;
             WaterLevel = waterLevel;
             Width = width;
             Height = height;
             MinWordLength = minWordMatch;
         }
+
+        /// <summary>
+        /// Game step duration in seconds.
+        /// Lover -> faster game.
+        /// </summary>
+        public float Speed { get; }
 
         /// <summary>
         /// Game board columns count.
@@ -77,11 +85,13 @@
         /// Creates a new instance with the given properties.
         /// </summary>
         public WordisSettings With(
+            float? speed = null,
             int? width = null,
             int? height = null,
             int? minWordLength = null,
             int? waterLevel = null) =>
             new WordisSettings(
+                speed: speed ?? Speed,
                 width: width ?? Width,
                 height: height ?? Height,
                 minWordMatch: minWordLength ?? MinWordLength,

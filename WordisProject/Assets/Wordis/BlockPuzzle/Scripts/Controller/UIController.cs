@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.EffectUtils;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.Home;
@@ -44,7 +45,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public GameObject settingScreen;
         public GameObject consentScreen;
         public GameObject reviewScreen;
-        public GameObject selectModeScreen;
+        public GameObject selectLevelScreen;
         public GameObject pauseGameScreen;
         public GameObject rescueGameScreen;
         public GameObject selectThemeScreen;
@@ -64,8 +65,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // Ordered popup stack is used when another popup tries to open when already a popup is opened. Ordered stack will control it and add upcoming popups
         // to queue so it will load automatically when already existing popup gets closed.
         readonly List<string> _orderedPopupStack = new List<string>();
-
-        [System.NonSerialized] public GameMode cachedSelectedMode = GameMode.Default;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -137,7 +136,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             }
         }
 
-
         /// <summary>
         /// Try to show review screen if app setting has review popup on current gameover id.
         /// </summary>
@@ -201,7 +199,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 return _screenStack[_screenStack.Count - 1];
             }
 
-            return "";
+            return string.Empty;
         }
 
         /// <summary>
@@ -232,11 +230,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         {
             switch (currentScreen)
             {
-                case "HomeScreen":
+                case nameof(HomeScreen):
                     QuitGamePopup();
                     break;
-                case "SelectMode":
-                    selectModeScreen.Deactivate();
+                case nameof(SelectLevel):
+                    selectLevelScreen.Deactivate();
                     break;
 
                 case "GamePlay":
@@ -268,11 +266,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 case "PauseGame":
                     pauseGameScreen.Deactivate();
                     break;
-
-                    //case "RescueGame":
-                    //    GamePlayUI.Instance.OnRescueCancelled();
-                    //    rescueGameScreen.Deactivate();
-                    //    break;
             }
         }
 
@@ -297,7 +290,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         // Quits the game.
         public void QuitGame()
         {
-            Invoke("QuitGameAfterDelay", 0.5F);
+            Invoke(nameof(QuitGameAfterDelay), 0.5F);
         }
 
         /// <summary>
@@ -418,34 +411,27 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Disables home and select mode screen and opens gameplay.
         /// </summary>
-        public void LoadGamePlay(GameMode gameMode)
+        public void LoadGamePlay(IWordisGameLevel gameLevel = null)
         {
-            bool showTutorial = false;
+            //bool showTutorial = false;
 
-            if (!PlayerPrefs.HasKey("tutorialShown"))
-            {
-                GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
-                showTutorial = gamePlaySettings.tutorialModeSettings.modeEnabled;
+            //if (!PlayerPrefs.HasKey("tutorialShown"))
+            //{
+            //   GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load("GamePlaySettings");
+            //    showTutorial = gamePlaySettings.tutorialModeSettings.modeEnabled;
 
-                if (!showTutorial)
-                {
-                    PlayerPrefs.SetInt("tutorialShown", 1);
-                }
-            }
-
+            //    if (!showTutorial)
+            //    {
+            //        PlayerPrefs.SetInt("tutorialShown", 1);
+            //    }
+            //}
             homeScreen.gameObject.Deactivate();
 
-            // TODO: consider adding tutorial
-            //if (showTutorial)
-            //{
-            //    gameScreenTutorial.gameObject.Activate();
-            //    cachedSelectedMode = gameMode;
-            //}
-            //else
-            {
-                gameScreen.gameObject.Activate();
-                gameScreen.GetComponent<GamePlayUI>().RestartGame();
-            }
+            gameScreen.gameObject.Activate();
+            gameScreen
+                .GetComponent<GamePlayUI>()
+                .SetLevel(gameLevel)
+                .RestartGame();
         }
 
         /// <summary>
