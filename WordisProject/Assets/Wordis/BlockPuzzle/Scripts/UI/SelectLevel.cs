@@ -67,13 +67,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 CreateLevelButton(level);
             }
+
+            CreateMoreToComeButton();
         }
 
         /// <summary>
         /// Instantiates a button from template.
         /// </summary>
         /// <returns></returns>
-        private GameObject CreateLevelButton(IWordisGameLevel level)
+        private void CreateLevelButton(IWordisGameLevel level)
         {
             GameObject levelButton = Instantiate(_levelButtonTemplate);
             levelButton.transform.SetParent(_levelListContent.transform);
@@ -86,8 +88,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             // set level startup callback
             levelButton.GetComponent<Button>().onClick.AddListener(() => StartLevel(level));
+        }
 
-            return levelButton;
+        private void CreateMoreToComeButton()
+        {
+            GameObject levelButton = Instantiate(_levelButtonTemplate);
+            levelButton.transform.SetParent(_levelListContent.transform);
+            levelButton.name = "moreToComeBtn";
+            levelButton.transform.localScale = Vector3.one;
+            levelButton.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+            levelButton.transform.SetAsLastSibling();
+            levelButton.GetComponentInChildren<Text>().text = "More to come...";
+            levelButton.SetActive(true);
         }
 
         /// <summary>
