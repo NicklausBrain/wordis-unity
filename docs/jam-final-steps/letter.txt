@@ -1,0 +1,38 @@
+Hello everyone,
+
+We hope that you are all enjoying the 1st edition of the Jam Nation!
+You are hundreds of developers taking part in this game jam and we really want to thank you for your interest in our event, it means a lot to us.
+
+Now that we reached the final week, we want to summarise the last few steps you need to do.
+You will find all the last needed information as well as a Google Form that you will have to fill with the link to your game and to your 4 creatives.
+And don't worry, this is a long mail but there isn't that much to do. 🙂
+
+
+INTEGRATE FACEBOOK AND GOOGLE ANALYTICS SDKs:
+Before submitting your game to the store(s), you NEED to integrate these 2 SDKs, this is mandatory.
+I am sending you with this mail a document that explains how to do it (You can also find it on the Discord).
+If you have the old version of the document, do not pay attention to the "Fun game SDK", you do not need it.
+
+SUBMIT YOUR GAME:
+After integrating the SDKs, you just need to publish your game on the App Store and/or Google Play.
+Be sure to do so before 1st February or it will be too late.
+Here is the Google Form in which you can give us the link to your game store(s) : https://forms.gle/hG4rFjBp1SvHbJGS8
+
+4 CREATIVES OF YOUR GAME:
+We are also going to need 4 creatives of your game, which means 4 short gameplay videos.
+No need for editing, you can just simply record your gameplay with Xrecorder, OBS, or the iPhone tool which is good enough for iOS, it should be quick.
+But if you want to and have the time to, you can edit the video to add extra effects.
+I am sending you with this mail the document of last week's masterclass which gives a lot of information and tips for creatives.
+MP4 is the better format, AVI is okay too.
+For the size, we will need 4:5 (800*1000) / 2:3 1000*1500) / 1:1 (1080*1080) / 9:16 (1080*1920). You will find more information about this in the document.
+You can gather your creatives into one .RAR or .ZIP file.
+Here is the Google Form in which you can give us the link to your creatives (WeTransfer for example) : https://forms.gle/hG4rFjBp1SvHbJGS8
+
+
+This should be everything you need to know to officially submit your game. Nothing more.
+After this, we are going to analyze your games in February and announce the winners on 1st March.
+
+We are really looking forward to seeing the games you've been cooking up this month, it is a thrilling experience for us!
+We wish everybody good luck for the final week, and we remain available to answer any question.
+
+Thank you once again for joining the Nation!
