@@ -7,6 +7,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
     /// </summary>
     public abstract class WordLookupBase
     {
+        /// <summary>
+        /// Array.BinarySearch returns a negative number if value is not found.
+        /// See https://docs.microsoft.com/en-us/dotnet/api/system.array.binarysearch.
+        /// </summary>
+        private const int NegativeIndex = -1;
+
         private readonly Lazy<string[]> _words;
 
         protected WordLookupBase()
@@ -29,7 +35,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
             Array.BinarySearch(
                 _words.Value,
                 word.Trim(),
-                StringComparer.OrdinalIgnoreCase) > -1;
+                StringComparer.OrdinalIgnoreCase) > NegativeIndex;
 
         private static string[] ParseCsv(string csv) =>
             (csv ?? string.Empty).Split(
