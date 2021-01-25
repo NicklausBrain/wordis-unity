@@ -8,9 +8,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter3Palindromes : WordisGameLevelBase<Letter3Palindromes>, IWordisGameLevel
     {
-        private const int NeededMatches = 5;
+        public const int NeededMatches = 5;
 
-        private static readonly WordisSettings LevelSettings = new WordisSettings(
+        public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
             height: 6,
             minWordMatch: 3,
@@ -19,7 +19,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         /// <summary>
         /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Three_letters
         /// </summary>
-        private static WordsSequence BasicPalindromes => WordsSequence.FromCsv(
+        public static WordsSequence ThreeLetterPalindromes => WordsSequence.FromCsv(
             "lol,wow,eve,mom,dad,gig,pop,pup,ewe,did,gig,bob");
 
         private Letter3Palindromes(WordisGame game) : base(game)
@@ -32,7 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public Letter3Palindromes() : this(
             new WordisGame(
                 LevelSettings,
-                BasicPalindromes.AsLetterSource()))
+                ThreeLetterPalindromes.AsLetterSource()))
         {
         }
 

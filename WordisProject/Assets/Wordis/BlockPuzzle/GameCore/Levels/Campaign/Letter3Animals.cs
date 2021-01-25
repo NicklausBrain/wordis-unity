@@ -12,16 +12,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter3Animals : WordisGameLevelBase<Letter3Animals>, IWordisGameLevel
     {
-        private const int NeededMatches = 10;
+        public const int NeededMatches = 10;
 
-        private static readonly WordisSettings LevelSettings = new WordisSettings(
+        public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
             height: 6,
             minWordMatch: 3,
             waterLevel: 0);
 
         /// <inheritdoc cref="Letter3Animals"/>
-        private static WordsSequence Animals => WordsSequence.FromCsv(
+        public static WordsSequence Animals => WordsSequence.FromCsv(
             "cat,dog,rat,pup,pig,bee,cow,owl,fox,bat,elk,ant,fly");
 
         private Letter3Animals(WordisGame game) : base(game)

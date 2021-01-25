@@ -200,6 +200,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             With(gameObjects: _gameObjects.Add(gameObj));
 
         /// <summary>
+        /// For Unit Tests. Creates an instance with predefined word matches.
+        /// </summary>
+        /// <param name="wordMatches"></param>
+        /// <returns></returns>
+        public WordisGame WithWordMatches(params WordMatchEx[] wordMatches) =>
+            With(wordMatches: wordMatches.ToImmutableList());
+
+        /// <summary>
         /// The point where a new active object is generated.
         /// </summary>
         public (int x, int y) StartPoint => (x: Settings.Width / 2, y: 0);

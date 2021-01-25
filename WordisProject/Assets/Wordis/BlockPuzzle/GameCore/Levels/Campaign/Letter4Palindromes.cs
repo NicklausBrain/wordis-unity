@@ -10,9 +10,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter4Palindromes : WordisGameLevelBase<Letter4Palindromes>, IWordisGameLevel
     {
-        private const int NeededMatches = 4;
+        public const int NeededMatches = 4;
 
-        private static readonly WordisSettings LevelSettings = new WordisSettings(
+        public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
             height: 6,
             minWordMatch: 4,
@@ -21,7 +21,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         /// <summary>
         /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Four_letters
         /// </summary>
-        private static WordsSequence FourLetterPalindromes => WordsSequence.FromCsv(
+        public static WordsSequence FourLetterPalindromes => WordsSequence.FromCsv(
             "peep,esse,anna,deed,poop,kook,noon");
 
         private Letter4Palindromes(WordisGame game) : base(game)
