@@ -86,5 +86,21 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 
             results.ForEach(Assert.False);
         }
+
+        [Test]
+        public void Check_ForEmptyWord_ReturnsFalse() =>
+            Assert.IsFalse(EngLookup.Check(string.Empty));
+
+        [Test]
+        public void Check_ForNullWord_ReturnsFalse() =>
+            Assert.IsFalse(EngLookup.Check(null));
+
+        [Test]
+        public void Check_ForFirstSpecialCharacter_ReturnsFalse() =>
+            Assert.IsFalse(EngLookup.Check("`hello"));
+
+        [Test]
+        public void Check_ForEmptyCharacters_TrimsThem() =>
+            Assert.IsTrue(EngLookup.Check(" hello \r\n"));
     }
 }

@@ -46,11 +46,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
                 return false;
             }
 
-            var firstChar = char.ToUpperInvariant(word[0]);
+            var trimmedWord = word.Trim(); // remove empty chars
 
-            if (char.IsLetter(firstChar))
+            var firstChar = char.ToUpperInvariant(trimmedWord[0]);
+
+            if (char.IsLetter(firstChar)) // avoid special characters
             {
-                return EngLookups[firstChar].Check(word);
+                return EngLookups[firstChar].Check(trimmedWord);
             }
 
             return false;
