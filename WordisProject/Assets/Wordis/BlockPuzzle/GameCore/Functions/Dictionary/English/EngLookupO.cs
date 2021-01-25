@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupO
+    class EngLookupO : WordLookupBase
     {
-        private const string Csv =
-            @"o,
+        protected override string WordsInCsv =>
+@"o,
 oad,
 oaf,
 oafish,
@@ -3134,9 +3131,5 @@ ozonometry,
 ozonoscope,
 ozonoscopic,
 ozonous";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

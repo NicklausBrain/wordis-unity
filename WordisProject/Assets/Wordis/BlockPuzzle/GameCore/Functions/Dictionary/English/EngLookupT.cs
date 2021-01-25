@@ -1,16 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupT
+    class EngLookupT : WordLookupBase
     {
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-        
-        private const string Csv =
-            @"t,
+        protected override string WordsInCsv =>
+@"t,
 t cart,
 t iron,
 t rail,

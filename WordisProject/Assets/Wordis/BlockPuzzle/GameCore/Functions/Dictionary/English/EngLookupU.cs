@@ -1,16 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupU
+    class EngLookupU : WordLookupBase
     {
-        
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-        
-        private const string Csv = @"u,
+        protected override string WordsInCsv => @"u,
 uakari,
 uberous,
 uberty,

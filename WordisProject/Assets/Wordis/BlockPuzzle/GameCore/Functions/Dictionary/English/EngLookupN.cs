@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupN
+    class EngLookupN : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"n,
 na,
 nab,
@@ -1996,9 +1993,5 @@ nys,
 nyseys,
 nystagmus,
 nyula";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

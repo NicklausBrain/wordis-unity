@@ -1,8 +1,45 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿using System.Collections.Generic;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    public static class EngLookup
+    /// <summary>
+    /// English words lookup.
+    /// </summary>
+    public class EngLookup : WordLookupBase
     {
-        public static bool Contains(string word)
+        private static readonly IReadOnlyDictionary<char, WordLookupBase> EngLookups =
+            new Dictionary<char, WordLookupBase>
+            {
+                { 'A', new EngLookupA() },
+                { 'B', new EngLookupB() },
+                { 'C', new EngLookupC() },
+                { 'D', new EngLookupD() },
+                { 'E', new EngLookupE() },
+                { 'F', new EngLookupF() },
+                { 'G', new EngLookupG() },
+                { 'H', new EngLookupH() },
+                { 'I', new EngLookupI() },
+                { 'J', new EngLookupJ() },
+                { 'K', new EngLookupK() },
+                { 'L', new EngLookupL() },
+                { 'M', new EngLookupM() },
+                { 'N', new EngLookupN() },
+                { 'O', new EngLookupO() },
+                { 'P', new EngLookupP() },
+                { 'Q', new EngLookupQ() },
+                { 'R', new EngLookupR() },
+                { 'S', new EngLookupS() },
+                { 'T', new EngLookupT() },
+                { 'U', new EngLookupU() },
+                { 'V', new EngLookupV() },
+                { 'W', new EngLookupW() },
+                { 'X', new EngLookupX() },
+                { 'Y', new EngLookupY() },
+                { 'Z', new EngLookupZ() },
+            };
+
+        /// <inheritdoc />
+        public override bool Check(string word)
         {
             if (string.IsNullOrWhiteSpace(word))
             {
@@ -11,35 +48,25 @@
 
             var firstChar = char.ToUpperInvariant(word[0]);
 
-            switch (firstChar)
+            if (char.IsLetter(firstChar))
             {
-                case 'A': return EngLookupA.LookUp.Check(word);
-                case 'B': return EngLookupB.LookUp.Check(word);
-                case 'C': return EngLookupC.LookUp.Check(word);
-                case 'D': return EngLookupD.LookUp.Check(word);
-                case 'E': return EngLookupE.LookUp.Check(word);
-                case 'F': return EngLookupF.LookUp.Check(word);
-                case 'G': return EngLookupG.LookUp.Check(word);
-                case 'H': return EngLookupH.LookUp.Check(word);
-                case 'I': return EngLookupI.LookUp.Check(word);
-                case 'J': return EngLookupJ.LookUp.Check(word);
-                case 'K': return EngLookupK.LookUp.Check(word);
-                case 'L': return EngLookupL.LookUp.Check(word);
-                case 'M': return EngLookupM.LookUp.Check(word);
-                case 'N': return EngLookupN.LookUp.Check(word);
-                case 'O': return EngLookupO.LookUp.Check(word);
-                case 'P': return EngLookupP.LookUp.Check(word);
-                case 'Q': return EngLookupQ.LookUp.Check(word);
-                case 'R': return EngLookupR.LookUp.Check(word);
-                case 'S': return EngLookupS.LookUp.Check(word);
-                case 'T': return EngLookupT.LookUp.Check(word);
-                case 'U': return EngLookupU.LookUp.Check(word);
-                case 'V': return EngLookupV.LookUp.Check(word);
-                case 'W': return EngLookupW.LookUp.Check(word);
-                case 'X': return EngLookupX.LookUp.Check(word);
-                case 'Y': return EngLookupY.LookUp.Check(word);
-                case 'Z': return EngLookupZ.LookUp.Check(word);
-                default: return false;
+                return EngLookups[firstChar].Check(word);
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        protected override string WordsInCsv => string.Empty;
+
+        /// <summary>
+        /// Preload all the words to speedup lookup function.
+        /// </summary>
+        public void WarmUp()
+        {
+            foreach (var letter in EngLookups.Keys)
+            {
+                EngLookups[letter].Check($"{letter}");
             }
         }
     }

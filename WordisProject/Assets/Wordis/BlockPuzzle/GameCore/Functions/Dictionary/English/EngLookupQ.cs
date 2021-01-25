@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupQ
+    class EngLookupQ : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"q,
 qua,
 quab,
@@ -639,9 +636,5 @@ quoting,
 quotum,
 quran,
 qvacked";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

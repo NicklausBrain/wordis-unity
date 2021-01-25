@@ -1,15 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupS
+    class EngLookupS : WordLookupBase
     {
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
-
-        private const string Csv = @"s,
+        protected override string WordsInCsv => @"s,
 saadh,
 saan,
 sabadilla,
