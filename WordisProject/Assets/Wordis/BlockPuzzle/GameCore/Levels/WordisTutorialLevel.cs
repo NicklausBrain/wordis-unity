@@ -55,9 +55,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 .Count() == TutorialSequence.Words.Count;
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public override bool IsFailed => Game.IsGameOver;
-
-        /// <inheritdoc cref="IWordisGameLevel" />
         public override IWordisGameLevel Handle(GameEvent gameEvent)
         {
             switch (gameEvent)

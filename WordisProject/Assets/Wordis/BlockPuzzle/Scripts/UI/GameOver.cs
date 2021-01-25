@@ -99,6 +99,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
                 _txtGameOverTitle.text = "LEVEL PASSED"; // todo: localize
                 highScoreParticle.SetActive(true);
             }
+            else // level is failed
+            {
+                _txtGameOverTitle.text = "GAME OVER"; // todo: localize
+                highScoreParticle.SetActive(false);
+            }
 
             txtScore.text = score.ToString("N0");
 
