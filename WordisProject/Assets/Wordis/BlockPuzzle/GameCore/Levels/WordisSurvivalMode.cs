@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
     /// <summary>
     /// Default game mode, aka endless mode.
     /// </summary>
-    public class WordisSurvivalMode : IWordisGameLevel
+    public class WordisSurvivalMode : WordisGameLevelBase<WordisSurvivalMode>, IWordisGameLevel
     {
         private static readonly WordisSettings DefaultSettings = new WordisSettings(
             width: 9,
@@ -13,44 +11,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             minWordMatch: 3,
             waterLevel: 0);
 
-        private WordisSurvivalMode(WordisGame game)
+        private WordisSurvivalMode(WordisGame game) : base(game)
         {
-            Game = game;
         }
 
+        /// <summary>
+        /// Creates a level in default state.
+        /// </summary>
         public WordisSurvivalMode() : this(
             new WordisGame(DefaultSettings))
         {
         }
 
-        /// <inheritdoc />
-        public WordisGame Game { get; }
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Title => "Survival mode";
 
-        /// <inheritdoc />
-        public WordisSettings Settings => Game.Settings;
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Goal => "How long could you persist?";
 
-        /// <inheritdoc />
-        public string Title => "Survival mode";
-
-        /// <inheritdoc />
-        public string Goal => "How long could you persist?";
-
-        /// <inheritdoc />
-        public bool IsCompleted => false;
-
-        /// <inheritdoc />
-        public bool IsFailed => Game.IsGameOver;
-
-        /// <inheritdoc />
-        public IWordisGameLevel Handle(GameEvent gameEvent)
-        {
-            var updatedGame = Game.Handle(gameEvent);
-
-            return new WordisSurvivalMode(updatedGame);
-        }
-
-        public IWordisGameLevel Reset() => new WordisSurvivalMode();
-
-        public IWordisGameLevel WithOutput(Action<string> outFunc) => this;
+        /// <inheritdoc cref="WordisGameLevelBase{T}" />
+        public override WordisSurvivalMode WithUpdatedGame(WordisGame updatedGame) =>
+            new WordisSurvivalMode(updatedGame);
     }
 }

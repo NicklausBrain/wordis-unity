@@ -7,7 +7,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// <summary>
     /// 3 letters match. Basic palindromes.
     /// </summary>
-    public class Letter4Palindromes : IWordisGameLevel
+    public class Letter4Palindromes : IWordisGameLevel // try abstract 1 more
     {
         private const int NeededMatches = 4;
 
