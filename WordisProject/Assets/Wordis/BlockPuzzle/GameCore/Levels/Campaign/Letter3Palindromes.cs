@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
+﻿using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
@@ -7,15 +6,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// <summary>
     /// 3 letters match. Basic palindromes.
     /// </summary>
-    public class Level1BasicPalindromes : WordisGameLevelBase<Level1BasicPalindromes>, IWordisGameLevel
+    public class Letter3Palindromes : WordisGameLevelBase<Letter3Palindromes>, IWordisGameLevel
     {
         private const int NeededMatches = 5;
-
-        /// <summary>
-        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Three_letters
-        /// </summary>
-        private static WordsSequence BasicPalindromes => WordsSequence.FromCsv(
-            "lol,wow,eve,mom,dad,gig,pop,pup,ewe,did,gig,bob");
 
         private static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
@@ -23,14 +16,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             minWordMatch: 3,
             waterLevel: 0);
 
-        private Level1BasicPalindromes(WordisGame game) : base(game)
+        /// <summary>
+        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Three_letters
+        /// </summary>
+        private static WordsSequence BasicPalindromes => WordsSequence.FromCsv(
+            "lol,wow,eve,mom,dad,gig,pop,pup,ewe,did,gig,bob");
+
+        private Letter3Palindromes(WordisGame game) : base(game)
         {
         }
 
         /// <summary>
         /// Creates a level in its default state.
         /// </summary>
-        public Level1BasicPalindromes() : this(
+        public Letter3Palindromes() : this(
             new WordisGame(
                 LevelSettings,
                 BasicPalindromes.AsLetterSource()))
@@ -48,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             Game.Matches.Count >= NeededMatches;
 
         /// <inheritdoc />
-        public override Level1BasicPalindromes WithUpdatedGame(WordisGame updatedGame) =>
-            new Level1BasicPalindromes(updatedGame);
+        public override Letter3Palindromes WithUpdatedGame(WordisGame updatedGame) =>
+            new Letter3Palindromes(updatedGame);
     }
 }

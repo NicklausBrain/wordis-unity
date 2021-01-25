@@ -10,14 +10,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
     /// </summary>
     public class WordisTutorialLevel : WordisGameLevelBase<WordisTutorialLevel>, IWordisGameLevel
     {
-        private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
-
         private static readonly WordisSettings TutorialLevelSettings =
             new WordisSettings(
                 speed: 1f,
                 width: 3,
                 height: 5,
                 minWordMatch: 3);
+
+        private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
 
         private readonly Action<string> _displayMessage;
 

@@ -15,16 +15,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         }
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public virtual WordisGame Game { get; }
-
-        /// <inheritdoc cref="IWordisGameLevel" />
-        public virtual WordisSettings Settings => Game.Settings;
-
-        /// <inheritdoc cref="IWordisGameLevel" />
         public abstract string Title { get; }
 
         /// <inheritdoc cref="IWordisGameLevel" />
         public abstract string Goal { get; }
+
+        /// <summary>
+        /// Returns a new instance of level with the update game state.
+        /// </summary>
+        /// <param name="updatedGame">Updated game state.</param>
+        /// <returns><see cref="WordisGameLevelBase{T}"/>.</returns>
+        public abstract T WithUpdatedGame(WordisGame updatedGame);
+
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public virtual WordisGame Game { get; }
+
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public virtual WordisSettings Settings => Game.Settings;
 
         /// <inheritdoc cref="IWordisGameLevel" />
         public virtual bool IsCompleted => false;
@@ -41,17 +48,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         }
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public IWordisGameLevel Reset() => new T();
+        public virtual IWordisGameLevel Reset() => new T();
 
         /// <inheritdoc cref="IWordisGameLevel" />
         public virtual IWordisGameLevel WithOutput(Action<string> outFunc) =>
             (IWordisGameLevel)this;
-
-        /// <summary>
-        /// Returns a new instance of level with the update game state.
-        /// </summary>
-        /// <param name="updatedGame">Updated game state.</param>
-        /// <returns><see cref="WordisGameLevelBase{T}"/>.</returns>
-        public abstract T WithUpdatedGame(WordisGame updatedGame);
     }
 }

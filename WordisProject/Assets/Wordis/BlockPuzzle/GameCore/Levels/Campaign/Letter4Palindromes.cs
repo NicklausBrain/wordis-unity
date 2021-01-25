@@ -12,17 +12,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     {
         private const int NeededMatches = 4;
 
-        /// <summary>
-        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Four_letters
-        /// </summary>
-        private static WordsSequence FourLetterPalindromes => WordsSequence.FromCsv(
-            "peep,esse,anna,deed,poop,kook,noon");
-
         private static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
             height: 6,
             minWordMatch: 4,
             waterLevel: 0);
+
+        /// <summary>
+        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Four_letters
+        /// </summary>
+        private static WordsSequence FourLetterPalindromes => WordsSequence.FromCsv(
+            "peep,esse,anna,deed,poop,kook,noon");
 
         private Letter4Palindromes(WordisGame game) : base(game)
         {
