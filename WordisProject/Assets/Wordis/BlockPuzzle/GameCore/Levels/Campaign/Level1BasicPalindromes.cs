@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign

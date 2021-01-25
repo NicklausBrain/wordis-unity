@@ -13,7 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Wordis.BlockPuzzle.GameCore.Levels;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.EffectUtils;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.Home;

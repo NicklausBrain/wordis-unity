@@ -1,4 +1,6 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
+﻿using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 {
     /// <summary>
     /// Default game mode, aka endless mode.
