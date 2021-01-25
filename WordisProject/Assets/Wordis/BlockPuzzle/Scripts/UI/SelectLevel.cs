@@ -100,6 +100,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             levelButton.transform.SetAsLastSibling();
             levelButton.GetComponentInChildren<Text>().text = "More to come...";
             levelButton.SetActive(true);
+            levelButton.GetComponent<Button>().interactable = false;
         }
 
         /// <summary>
