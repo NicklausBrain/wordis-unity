@@ -88,13 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public GamePlayUI SetLevel(IWordisGameLevel gameLevel = null)
         {
-            _wordisGameLevel =
-                gameLevel?.WithOutput(message =>
-                {
-                    ShowMessage(message);
-                    Debug.LogWarning(message);
-                }) ??
-                DefaultLevel;
+            _wordisGameLevel = gameLevel ?? DefaultLevel;
 
             return this;
         }
@@ -192,7 +186,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             gameBoard.Clear();
             scoreManager.Clear();
             GameProgressTracker.Instance.ClearProgressData();
-            _wordisGameLevel = _wordisGameLevel.Reset();
+            _wordisGameLevel = _wordisGameLevel
+                .Reset()
+                .WithOutput(message =>
+                {
+                    ShowMessage(message);
+                    Debug.LogWarning(message);
+                });
         }
 
         private void RefreshPresentation(WordisGame gameState)

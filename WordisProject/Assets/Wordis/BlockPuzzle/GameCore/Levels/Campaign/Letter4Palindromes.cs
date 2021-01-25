@@ -6,14 +6,14 @@ using Assets.Wordis.BlockPuzzle.GameCore.Words;
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
 {
     /// <summary>
-    /// 3 letters match. Basic palindromes.
+    /// 4-letters palindromes. 4-letters match.
     /// </summary>
-    public class Letter4Palindromes : IWordisGameLevel // try abstract 1 more
+    public class Letter4Palindromes : WordisGameLevelBase<Letter4Palindromes>, IWordisGameLevel
     {
         private const int NeededMatches = 4;
 
         /// <summary>
-        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Three_letters
+        /// https://en.wiktionary.org/wiki/Appendix:English_palindromes#Four_letters
         /// </summary>
         private static WordsSequence FourLetterPalindromes => WordsSequence.FromCsv(
             "peep,esse,anna,deed,poop,kook,noon");
@@ -24,11 +24,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             minWordMatch: 4,
             waterLevel: 0);
 
-        private Letter4Palindromes(WordisGame game)
+        private Letter4Palindromes(WordisGame game) : base(game)
         {
-            Game = game;
         }
 
+        /// <summary>
+        /// Creates a level in its default state.
+        /// </summary>
         public Letter4Palindromes() : this(
             new WordisGame(
                 LevelSettings,
@@ -36,31 +38,21 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         {
         }
 
-        public WordisGame Game { get; }
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Title => "4-letter palindromes";
 
-        public WordisSettings Settings => Game.Settings;
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Goal => $"Match {NeededMatches} palindromes";
 
-        public string Title => "4-letter palindromes";
-
-        public string Goal => $"Match {NeededMatches} palindromes";
-
-        public bool IsCompleted =>
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override bool IsCompleted =>
             Game.Matches.All
                 .Select(m => m.Word)
                 .Intersect(FourLetterPalindromes.Words, StringComparer.OrdinalIgnoreCase)
                 .Count() >= NeededMatches;
 
-        public bool IsFailed => Game.IsGameOver;
-
-        public IWordisGameLevel Handle(GameEvent gameEvent)
-        {
-            var updatedGame = Game.Handle(gameEvent);
-
-            return new Letter4Palindromes(updatedGame);
-        }
-
-        public IWordisGameLevel Reset() => new Letter4Palindromes();
-
-        public IWordisGameLevel WithOutput(Action<string> outFunc) => this;
+        /// <inheritdoc />
+        public override Letter4Palindromes WithUpdatedGame(WordisGame updatedGame) =>
+            new Letter4Palindromes(updatedGame);
     }
 }

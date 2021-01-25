@@ -7,7 +7,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// <summary>
     /// 3 letters match. Basic palindromes.
     /// </summary>
-    public class Level1BasicPalindromes : IWordisGameLevel
+    public class Level1BasicPalindromes : WordisGameLevelBase<Level1BasicPalindromes>, IWordisGameLevel
     {
         private const int NeededMatches = 5;
 
@@ -23,11 +23,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             minWordMatch: 3,
             waterLevel: 0);
 
-        private Level1BasicPalindromes(WordisGame game)
+        private Level1BasicPalindromes(WordisGame game) : base(game)
         {
-            Game = game;
         }
 
+        /// <summary>
+        /// Creates a level in its default state.
+        /// </summary>
         public Level1BasicPalindromes() : this(
             new WordisGame(
                 LevelSettings,
@@ -35,27 +37,18 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         {
         }
 
-        public WordisGame Game { get; }
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Title => "Basic palindromes";
 
-        public WordisSettings Settings => Game.Settings;
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Goal => $"Match {NeededMatches} words";
 
-        public string Title => "Basic palindromes";
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override bool IsCompleted =>
+            Game.Matches.Count >= NeededMatches;
 
-        public string Goal => $"Match {NeededMatches} words";
-
-        public bool IsCompleted => Game.Matches.Count >= NeededMatches;
-
-        public bool IsFailed => Game.IsGameOver;
-
-        public IWordisGameLevel Handle(GameEvent gameEvent)
-        {
-            var updatedGame = Game.Handle(gameEvent);
-
-            return new Level1BasicPalindromes(updatedGame);
-        }
-
-        public IWordisGameLevel Reset() => new Level1BasicPalindromes();
-
-        public IWordisGameLevel WithOutput(Action<string> outFunc) => this;
+        /// <inheritdoc />
+        public override Level1BasicPalindromes WithUpdatedGame(WordisGame updatedGame) =>
+            new Level1BasicPalindromes(updatedGame);
     }
 }

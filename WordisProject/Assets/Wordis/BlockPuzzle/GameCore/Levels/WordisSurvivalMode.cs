@@ -18,7 +18,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         }
 
         /// <summary>
-        /// Creates a level in default state.
+        /// Creates a level in its default state.
         /// </summary>
         public WordisSurvivalMode() : this(
             new WordisGame(DefaultSettings))

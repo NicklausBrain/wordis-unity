@@ -33,7 +33,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         public virtual bool IsFailed => Game.IsGameOver;
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public IWordisGameLevel Handle(GameEvent gameEvent)
+        public virtual IWordisGameLevel Handle(GameEvent gameEvent)
         {
             var updatedGame = Game.Handle(gameEvent);
 

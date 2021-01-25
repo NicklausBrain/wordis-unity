@@ -8,7 +8,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
     /// <summary>
     /// Game tutorial.
     /// </summary>
-    public class WordisTutorialLevel : IWordisGameLevel
+    public class WordisTutorialLevel : WordisGameLevelBase<WordisTutorialLevel>, IWordisGameLevel
     {
         private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
 
@@ -22,47 +22,43 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         private readonly Action<string> _displayMessage;
 
         private WordisTutorialLevel(
-            Action<string> displayMessage = null,
-            WordisGame gameState = null)
+            Action<string> displayMessage,
+            WordisGame game) : base(game)
         {
             _displayMessage =
                 displayMessage ??
                 Console.WriteLine;
-            Game =
-                gameState ??
-                new WordisGame(
-                    TutorialLevelSettings,
-                    new WordLetters(TutorialSequence.Word));
         }
 
-        public WordisTutorialLevel() : this(null, null)
+        /// <summary>
+        /// Creates a level in its default state.
+        /// </summary>
+        public WordisTutorialLevel() : this(
+            null,
+            new WordisGame(
+                TutorialLevelSettings,
+                new WordLetters(TutorialSequence.Word)))
         {
         }
 
-        /// <inheritdoc />
-        public WordisGame Game { get; }
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Title => "Tutorial";
 
-        /// <inheritdoc />
-        public WordisSettings Settings => Game.Settings;
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override string Goal => "Match the words";
 
-        /// <inheritdoc />
-        public string Title => "Tutorial";
-
-        /// <inheritdoc />
-        public string Goal => "Match the words";
-
-        /// <inheritdoc />
-        public bool IsCompleted =>
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override bool IsCompleted =>
             Game.Matches.All
                 .Select(m => m.Word)
                 .Intersect(TutorialSequence.Words)
                 .Count() == TutorialSequence.Words.Count;
 
-        /// <inheritdoc />
-        public bool IsFailed => Game.IsGameOver;
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override bool IsFailed => Game.IsGameOver;
 
-        /// <inheritdoc />
-        public IWordisGameLevel Handle(GameEvent gameEvent)
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override IWordisGameLevel Handle(GameEvent gameEvent)
         {
             switch (gameEvent)
             {
@@ -91,16 +87,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             }
         }
 
-        public IWordisGameLevel Reset() =>
-            new WordisTutorialLevel(displayMessage: _displayMessage);
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override IWordisGameLevel WithOutput(Action<string> outFunc) =>
+            With(outFunc: outFunc);
 
-        public IWordisGameLevel WithOutput(Action<string> outFunc) =>
-            new WordisTutorialLevel(displayMessage: outFunc);
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override WordisTutorialLevel WithUpdatedGame(WordisGame updatedGame) =>
+            With(updatedGame);
 
         private WordisTutorialLevel With(
-            WordisGame updatedGame) =>
+            WordisGame updatedGame = null,
+            Action<string> outFunc = null) =>
             new WordisTutorialLevel(
-                _displayMessage,
-                updatedGame);
+                outFunc ?? _displayMessage,
+                updatedGame ?? Game);
     }
 }
