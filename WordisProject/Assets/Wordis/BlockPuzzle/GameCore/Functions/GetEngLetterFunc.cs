@@ -11,6 +11,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     public class GetEngLetterFunc : GetLetterFunc
     {
         /// <summary>
+        /// Random number generator.
+        /// </summary>
+        private static readonly Random Random = new Random(Environment.TickCount);
+
+        /// <summary>
         /// See https://en.wikipedia.org/wiki/Letter_frequency
         /// </summary>
         private static readonly IReadOnlyDictionary<char, float> RelativeEngFrequency =
@@ -56,24 +61,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
                              .Where(k => k < p.Key)
                              .Sum(k => RelativeEngFrequency[k])));
 
-        private int i = 0;
-
-        private char[] arr = new[] { 'C', 'A', 'R', 'T' };
-
         /// <inheritdoc />
         public override char Invoke()
         {
-#if !UNITY_IOS
-            if (i == arr.Length)
-            {
-                i = 0;
-            }
-            return arr[i++];
-#endif
-
-            var rn = new Random(Environment.TickCount);
-
-            var randomPick = rn.NextDouble();
+            var randomPick = Random.NextDouble();
 
             var randomChar = CummulativeEngFrequency.Value.First(p => p.Value > randomPick).Key;
 
