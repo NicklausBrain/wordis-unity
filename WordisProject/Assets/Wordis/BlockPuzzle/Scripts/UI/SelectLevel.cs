@@ -30,8 +30,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         public static readonly IReadOnlyList<IWordisGameLevel> Levels = new IWordisGameLevel[]
         {
             new Letter3Palindromes(),
-            new Letter3Animals(), 
+            new Letter3Animals(),
             new Letter4Palindromes(),
+            new Letter4Animals(),
         };
 
 #pragma warning disable 0649

@@ -76,6 +76,23 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.IsTrue(finalState.IsCompleted);
         }
 
+        [Test]
+        public void Letter4Animals_WhenXAnimalsMatched_IsCompleted()
+        {
+            var requiredMatches =
+                Letter4Animals.Animals.Words
+                    .Take(Letter4Animals.NeededMatches)
+                    .Select(StrToWordMatch)
+                    .ToArray();
+
+            var initialState = new Letter4Animals();
+            var finalState = initialState
+                .WithUpdatedGame(
+                    initialState.Game.WithWordMatches(requiredMatches));
+
+            Assert.IsTrue(finalState.IsCompleted);
+        }
+
         private static WordMatchEx StrToWordMatch(string word) =>
             new WordMatchEx(new WordMatch(
                 word.Select(c => new StaticChar(1, 3, c))), 3, DateTimeOffset.Now);
