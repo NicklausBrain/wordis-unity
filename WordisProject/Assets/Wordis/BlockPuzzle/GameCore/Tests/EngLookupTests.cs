@@ -102,5 +102,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void Check_ForEmptyCharacters_TrimsThem() =>
             Assert.IsTrue(EngLookup.Check(" hello \r\n"));
+
+        [Test]
+        public void WarmUp_ShouldNotFail() =>
+            new EngLookup().WarmUp();
     }
 }
