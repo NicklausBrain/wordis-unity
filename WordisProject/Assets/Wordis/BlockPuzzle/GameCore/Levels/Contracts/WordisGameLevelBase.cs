@@ -20,6 +20,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         /// <inheritdoc cref="IWordisGameLevel" />
         public abstract string Goal { get; }
 
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public virtual string Progress => string.Empty;
+
         /// <summary>
         /// Returns a new instance of level with the update game state.
         /// </summary>

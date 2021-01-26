@@ -24,6 +24,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         string Goal { get; }
 
         /// <summary>
+        /// Level progress data.
+        /// </summary>
+        string Progress { get;}
+
+        /// <summary>
         /// Is level successfully completed.
         /// </summary>
         bool IsCompleted { get; }

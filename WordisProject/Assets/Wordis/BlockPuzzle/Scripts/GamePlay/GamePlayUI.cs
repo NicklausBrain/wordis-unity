@@ -281,10 +281,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (definitions.Any())
             {
-                UIController.Instance.ShowTipAtPosition(
+                UIController.Instance.ShowTopTipAtPosition(
                     tipPosition: new Vector2(0, -250F),
                     anchor: new Vector2(0.5F, 1),
                     tipText: definitions[0].Definition,
+                    duration: 7F);
+            }
+        }
+
+        private void TrackProgress(string levelProgress)
+        {
+            if (!string.IsNullOrWhiteSpace(levelProgress))
+            {
+                UIController.Instance.ShowDownTipAtPosition(
+                    tipPosition: new Vector2(0, -250F),
+                    anchor: new Vector2(0.5F, 1),
+                    tipText: "",
                     duration: 7F);
             }
         }
