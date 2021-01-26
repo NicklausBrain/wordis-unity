@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryC : DictionaryBase
+    public class EngDictC : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"C () C is the third letter of the English alphabet. It is from the Latin letter C, which in old Latin represented the sounds of k, and g (in go); its original value being the latter. In Anglo-Saxon words, or Old English before the Norman Conquest, it always has the sound of k. The Latin C was the same letter as the Greek /, /, and came from the Greek alphabet. The Greeks got it from the Ph/nicians. The English name of C is from the Latin name ce, and was derived, probably, through the French. Etymologically C is related to g, h, k, q, s (and other sibilant sounds). Examples of these relations are in L. acutus, E. acute, ague; E. acrid, eager, vinegar; L. cornu, E. horn; E. cat, kitten; E. coy, quiet; L. circare, OF. cerchier, E. search.

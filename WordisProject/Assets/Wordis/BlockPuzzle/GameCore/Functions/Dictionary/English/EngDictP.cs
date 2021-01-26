@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryP : DictionaryBase
+    public class EngDictP : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"P () the sixteenth letter of the English alphabet, is a nonvocal consonant whose form and value come from the Latin, into which language the letter was brought, through the ancient Greek, from the Phoenician, its probable origin being Egyptian. Etymologically P is most closely related to b, f, and v; as hobble, hopple; father, paternal; recipient, receive. See B, F, and M.

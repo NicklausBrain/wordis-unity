@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryN : DictionaryBase
+    public class EngDictN : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"N () the fourteenth letter of English alphabet, is a vocal consonent, and, in allusion to its mode of formation, is called the dentinasal or linguanasal consonent. Its commoner sound is that heard in ran, done; but when immediately followed in the same word by the sound of g hard or k (as in single, sink, conquer), it usually represents the same sound as the digraph ng in sing, bring, etc. This is a simple but related sound, and is called the gutturo-nasal consonent. See Guide to Pronunciation, // 243-246.

@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryR : DictionaryBase
+    public class EngDictR : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"R () R, the eighteenth letter of the English alphabet, is a vocal consonant. It is sometimes called a semivowel, and a liquid. See Guide to Pronunciation, // 178, 179, and 250-254.

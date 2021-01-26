@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryD : DictionaryBase
+    public class EngDictD : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"D () The fourth letter of the English alphabet, and a vocal consonant. The English letter is from Latin, which is from Greek, which took it from Ph/nician, the probable ultimate origin being Egyptian. It is related most nearly to t and th; as, Eng. deep, G. tief; Eng. daughter, G. tochter, Gr. qyga`thr, Skr. duhitr. See Guide to Pronunciation, �178, 179, 229.

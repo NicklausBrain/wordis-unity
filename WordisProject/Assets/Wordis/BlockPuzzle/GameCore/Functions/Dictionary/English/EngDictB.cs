@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryB : DictionaryBase
+    public class EngDictB : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"B () is the second letter of the English alphabet. (See Guide to Pronunciation, // 196, 220.) It is etymologically related to p, v, f, w and m , letters representing sounds having a close organic affinity to its own sound; as in Eng. bursar and purser; Eng. bear and Lat. ferre; Eng. silver and Ger. silber; Lat. cubitum and It. gomito; Eng. seven, Anglo-Saxon seofon, Ger. sieben, Lat. septem, Gr.""epta`, Sanskrit saptan. The form of letter B is Roman, from Greek B (Beta), of Semitic origin. The small b was formed by gradual change from the capital B.

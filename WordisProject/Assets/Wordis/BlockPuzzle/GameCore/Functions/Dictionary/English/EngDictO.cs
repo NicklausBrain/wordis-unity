@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryO : DictionaryBase
+    public class EngDictO : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"O () O, the fifteenth letter of the English alphabet, derives its form, value, and name from the Greek O, through the Latin. The letter came into the Greek from the Ph/nician, which possibly derived it ultimately from the Egyptian. Etymologically, the letter o is most closely related to a, e, and u; as in E. bone, AS. ban; E. stone, AS. stan; E. broke, AS. brecan to break; E. bore, AS. beran to bear; E. dove, AS. d/fe; E. toft, tuft; tone, tune; number, F. nombre.

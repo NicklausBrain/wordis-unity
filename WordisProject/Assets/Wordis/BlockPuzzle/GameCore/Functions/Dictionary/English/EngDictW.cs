@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryW : DictionaryBase
+    public class EngDictW : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"W () the twenty-third letter of the English alphabet, is usually a consonant, but sometimes it is a vowel, forming the second element of certain diphthongs, as in few, how. It takes its written form and its name from the repetition of a V, this being the original form of the Roman capital letter which we call U. Etymologically it is most related to v and u. See V, and U. Some of the uneducated classes in England, especially in London, confuse w and v, substituting the one for the other, as weal for veal, and veal for weal; wine for vine, and vine for wine, etc. See Guide to Pronunciation, // 266-268.

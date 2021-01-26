@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryH : DictionaryBase
+    public class EngDictH : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"H () the eighth letter of the English alphabet, is classed among the consonants, and is formed with the mouth organs in the same position as that of the succeeding vowel. It is used with certain consonants to form digraphs representing sounds which are not found in the alphabet, as sh, th, /, as in shall, thing, /ine (for zh see /274); also, to modify the sounds of some other letters, as when placed after c and p, with the former of which it represents a compound sound like that of tsh, as in charm (written also tch as in catch), with the latter, the sound of f, as in phase, phantom. In some words, mostly derived or introduced from foreign languages, h following c and g indicates that those consonants have the hard sound before e, i, and y, as in chemistry, chiromancy, chyle, Ghent, Ghibelline, etc.; in some others, ch has the sound of sh, as in chicane. See Guide to Pronunciation, // 153, 179, 181-3, 237-8.

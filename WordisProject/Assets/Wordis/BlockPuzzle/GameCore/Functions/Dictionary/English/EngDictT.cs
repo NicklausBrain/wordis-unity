@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryT : DictionaryBase
+    public class EngDictT : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"T () the twentieth letter of the English alphabet, is a nonvocal consonant. With the letter h it forms the digraph th, which has two distinct sounds, as in thin, then. See Guide to Pronunciation, //262-264, and also //153, 156, 169, 172, 176, 178-180.

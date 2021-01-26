@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryQ : DictionaryBase
+    public class EngDictQ : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"Q () the seventeenth letter of the English alphabet, has but one sound (that of k), and is always followed by u, the two letters together being sounded like kw, except in some words in which the u is silent. See Guide to Pronunciation, / 249. Q is not found in Anglo-Saxon, cw being used instead of qu; as in cwic, quick; cwen, queen. The name (k/) is from the French ku, which is from the Latin name of the same letter; its form is from the Latin, which derived it, through a Greek alphabet, from the Ph/nician, the ultimate origin being Egyptian.

@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryG : DictionaryBase
+    public class EngDictG : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"G () G is the seventh letter of the English alphabet, and a vocal consonant. It has two sounds; one simple, as in gave, go, gull; the other compound (like that of j), as in gem, gin, dingy. See Guide to Pronunciation, // 231-6, 155, 176, 178, 179, 196, 211, 246.

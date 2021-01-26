@@ -15,7 +15,7 @@ if($processAll){
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionary$letter : DictionaryBase
+    public class EngDict$letter : DictionaryBase
     {
         protected override string WordsInCsv =>
 @""$rawData"";

@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryJ : DictionaryBase
+    public class EngDictJ : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"J () J is the tenth letter of the English alphabet. It is a later variant form of the Roman letter I, used to express a consonantal sound, that is, originally, the sound of English y in yet. The forms J and I have, until a recent time, been classed together, and they have been used interchangeably.

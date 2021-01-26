@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryM : DictionaryBase
+    public class EngDictM : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"M () M, the thirteenth letter of the English alphabet, is a vocal consonant, and from the manner of its formation, is called the labio-nasal consonant. See Guide to Pronunciation, // 178-180, 242.

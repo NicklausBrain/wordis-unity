@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryF : DictionaryBase
+    public class EngDictF : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"F () F is the sixth letter of the English alphabet, and a nonvocal consonant. Its form and sound are from the Latin. The Latin borrowed the form from the Greek digamma /, which probably had the value of English w consonant. The form and value of Greek letter came from the Phoenician, the ultimate source being probably Egyptian. Etymologically f is most closely related to p, k, v, and b; as in E. five, Gr. pe`nte; E. wolf, L. lupus, Gr. ly`kos; E. fox, vixen ; fragile, break; fruit, brook, v. t.; E. bear, L. ferre. See Guide to Pronunciation, // 178, 179, 188, 198, 230.

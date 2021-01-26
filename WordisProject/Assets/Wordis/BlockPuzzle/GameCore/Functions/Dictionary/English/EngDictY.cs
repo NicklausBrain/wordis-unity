@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryY : DictionaryBase
+    public class EngDictY : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"Y () Y, the twenty-fifth letter of the English alphabet, at the beginning of a word or syllable, except when a prefix (see Y-), is usually a fricative vocal consonant; as a prefix, and usually in the middle or at the end of a syllable, it is a vowel. See Guide to Pronunciation, // 145, 178-9, 272.

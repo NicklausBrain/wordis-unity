@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryL : DictionaryBase
+    public class EngDictL : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"L () L is the twelfth letter of the English alphabet, and a vocal consonant. It is usually called a semivowel or liquid. Its form and value are from the Greek, through the Latin, the form of the Greek letter being from the Phoenician, and the ultimate origin prob. Egyptian. Etymologically, it is most closely related to r and u; as in pilgrim, peregrine, couch (fr. collocare), aubura (fr. LL. alburnus).

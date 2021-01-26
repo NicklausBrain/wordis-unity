@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryX : DictionaryBase
+    public class EngDictX : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"X () X, the twenty-fourth letter of the English alphabet, has three sounds; a compound nonvocal sound (that of ks), as in wax; a compound vocal sound (that of gz), as in example; and, at the beginning of a word, a simple vocal sound (that of z), as in xanthic. See Guide to Pronunciation, // 217, 270, 271.

@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryU : DictionaryBase
+    public class EngDictU : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"U () the twenty-first letter of the English alphabet, is a cursive form of the letter V, with which it was formerly used interchangeably, both letters being then used both as vowels and consonants. U and V are now, however, differentiated, U being used only as a vowel or semivowel, and V only as a consonant. The true primary vowel sound of U, in Anglo-Saxon, was the sound which it still retains in most of the languages of Europe, that of long oo, as in tool, and short oo, as in wood, answering to the French ou in tour. Etymologically U is most closely related to o, y (vowel), w, and v; as in two, duet, dyad, twice; top, tuft; sop, sup; auspice, aviary. See V, also O and Y.

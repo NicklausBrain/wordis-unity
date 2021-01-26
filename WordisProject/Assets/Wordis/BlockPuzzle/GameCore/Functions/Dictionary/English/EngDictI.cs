@@ -3,7 +3,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionaryI : DictionaryBase
+    public class EngDictI : DictionaryBase
     {
         protected override string WordsInCsv =>
             @"I () I, the ninth letter of the English alphabet, takes its form from the Phoenician, through the Latin and the Greek. The Phoenician letter was probably of Egyptian origin. Its original value was nearly the same as that of the Italian I, or long e as in mete. Etymologically I is most closely related to e, y, j, g; as in dint, dent, beverage, L. bibere; E. kin, AS. cynn; E. thin, AS. /ynne; E. dominion, donjon, dungeon.
