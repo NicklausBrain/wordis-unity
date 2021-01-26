@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupM
+    class EngLookupM : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"m,
 ma,
 maa,
@@ -5887,9 +5884,5 @@ myxomata,
 myxopod,
 myzontes,
 myzostomata";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

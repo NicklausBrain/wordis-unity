@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupJ
+    class EngLookupJ : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"j,
 jaal goat,
 jab,
@@ -798,9 +795,5 @@ juxtaposit,
 juxtaposited,
 juxtapositing,
 juxtaposition";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupY
+    class EngLookupY : WordLookupBase
     {
-        private const string Csv =
-            @"y,
+        protected override string WordsInCsv =>
+@"y,
 y level,
 ya,
 yacare,
@@ -321,9 +318,5 @@ yux,
 yvel,
 ywar,
 ywis";
-        
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

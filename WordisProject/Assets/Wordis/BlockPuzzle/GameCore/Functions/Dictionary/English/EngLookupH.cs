@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupH
+    class EngLookupH : WordLookupBase
     {
-        private const string Csv =
-            @"h,
+        protected override string WordsInCsv =>
+@"h,
 ha,
 haaf,
 haak,
@@ -3869,9 +3866,5 @@ hystricine,
 hystricomorphous,
 hystrix,
 hythe";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

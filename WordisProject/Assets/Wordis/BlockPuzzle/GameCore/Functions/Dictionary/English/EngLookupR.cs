@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupR
+    class EngLookupR : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"r,
 ra,
 raash,
@@ -4850,8 +4847,5 @@ rysimeter,
 ryth,
 rytina,
 ties";
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

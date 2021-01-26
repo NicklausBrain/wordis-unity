@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupB
+    class EngLookupB : WordLookupBase
     {
-        const string Csv =
-            @"b,
+        protected override string WordsInCsv =>
+@"b,
 ba,
 baa,
 baaing,
@@ -5465,8 +5462,5 @@ byzant,
 byzantian,
 byzantine";
 
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupG
+    class EngLookupG : WordLookupBase
     {
-        private const string Csv =
-            @"g,
+        protected override string WordsInCsv =>
+@"g,
 gab,
 gabarage,
 gabardine,
@@ -3321,9 +3318,5 @@ gyrus,
 gyse,
 gyte,
 gyve";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

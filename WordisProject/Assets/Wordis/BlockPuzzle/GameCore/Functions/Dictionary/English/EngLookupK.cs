@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupK
+    class EngLookupK : WordLookupBase
     {
-        private const string Csv =
-            @"k,
+        protected override string WordsInCsv =>
+@"k,
 kaama,
 kabala,
 kabassou,
@@ -847,9 +844,5 @@ kythed,
 kything,
 kytomiton,
 kytoplasma";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

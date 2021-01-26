@@ -7,10 +7,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     /// </summary>
     public class IsLegitEngWordFunc : IsLegitWordFunc
     {
+        public static readonly EngLookup EngLookup = new EngLookup();
+
+        static IsLegitEngWordFunc()
+        {
+            EngLookup.WarmUp();
+        }
+
         /// <inheritdoc />
         public override bool Invoke(string word)
         {
-            var isLegitWord = EngLookup.Contains(word);
+            var isLegitWord = EngLookup.Check(word);
             return isLegitWord;
         }
     }

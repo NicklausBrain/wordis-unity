@@ -1,12 +1,9 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupA
+    class EngLookupA : WordLookupBase
     {
-        private const string Csv =
-            @"a,
+        protected override string WordsInCsv =>
+@"a,
 a b c,
 a cappella,
 a fortiori,
@@ -7722,9 +7719,5 @@ azyme,
 azymic,
 azymite,
 azymous";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }

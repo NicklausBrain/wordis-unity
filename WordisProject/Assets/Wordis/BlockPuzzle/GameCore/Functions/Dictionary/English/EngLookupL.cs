@@ -1,11 +1,8 @@
-﻿using System;
-using WeCantSpell.Hunspell;
-
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
 {
-    static class EngLookupL
+    class EngLookupL : WordLookupBase
     {
-        private const string Csv =
+        protected override string WordsInCsv =>
             @"l,
 la,
 laas,
@@ -3303,9 +3300,5 @@ lythonthriptic,
 lythontriptic,
 lytta,
 lyttae";
-
-        public static WordList LookUp { get; } =
-            WordList.CreateFromWords(
-                Csv.Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
     }
 }
