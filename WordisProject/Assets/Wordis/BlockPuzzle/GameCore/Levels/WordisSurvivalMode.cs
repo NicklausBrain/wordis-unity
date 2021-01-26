@@ -25,13 +25,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         {
         }
 
-        /// <inheritdoc cref="IWordisGameLevel" />
+        /// <inheritdoc cref="IWordisGameLevel.Title" />
         public override string Title => "Survival mode";
 
-        /// <inheritdoc cref="IWordisGameLevel" />
+        /// <inheritdoc cref="IWordisGameLevel.Goal" />
         public override string Goal => "How long could you persist?";
 
-        /// <inheritdoc cref="WordisGameLevelBase{T}" />
+        public override string Progress => $"{Game.Matches.Count} words matched";
+
+        /// <inheritdoc cref="WordisGameLevelBase{T}.WithUpdatedGame(WordisGame)" />
         public override WordisSurvivalMode WithUpdatedGame(WordisGame updatedGame) =>
             new WordisSurvivalMode(updatedGame);
     }

@@ -36,17 +36,21 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         {
         }
 
-        public override string Title => "3-letter animals";
+        public override string Title => "3-letter animals"; // todo: localize
 
-        public override string Goal => $"Match {NeededMatches} animals";
+        public override string Goal => $"Match {NeededMatches} animals"; // todo: localize
 
-        public override bool IsCompleted =>
-            Game.Matches.All
-                .Select(m => m.Word)
-                .Intersect(Animals.Words, StringComparer.OrdinalIgnoreCase)
-                .Count() >= NeededMatches;
+        public override string Progress => $"{MatchedAnimals} of {NeededMatches} animals matched"; // todo: localize
+
+        public override bool IsCompleted => MatchedAnimals >= NeededMatches;
 
         public override Letter3Animals WithUpdatedGame(WordisGame updatedGame) =>
             new Letter3Animals(updatedGame);
+
+        private int MatchedAnimals =>
+            Game.Matches.All
+                .Select(m => m.Word)
+                .Intersect(Animals.Words, StringComparer.OrdinalIgnoreCase)
+                .Count();
     }
 }

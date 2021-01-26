@@ -56,7 +56,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public GameObject languageSelectionScreen;
         public GameObject currencyBalanceButton;
 
-        public GameObject tipView;
+        public GameObject topTipView;
+        public GameObject downTipView;
 
         [Header("Other Public Members")]
         public RectTransform ShopButtonGemsIcon;
@@ -483,7 +484,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
         public void PlayAddGemsAnimationAtPosition(Vector3 position, float delay)
         {
-            GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation")) as GameObject;
+            GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation"));
             rewardAnim.transform.SetParent(RuntimeEffectSpawnParent);
             rewardAnim.GetComponent<RectTransform>().position = position;
             rewardAnim.transform.localScale = Vector3.one;
@@ -493,39 +494,47 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
         public void PlayDeductGemsAnimation(Vector3 position, float delay)
         {
-            GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation")) as GameObject;
+            GameObject rewardAnim = (GameObject)Instantiate(Resources.Load("RewardAnimation"));
             rewardAnim.transform.SetParent(RuntimeEffectSpawnParent);
             rewardAnim.GetComponent<RectTransform>().position = ShopButtonGemsIcon.position;
             rewardAnim.transform.localScale = Vector3.one;
             rewardAnim.GetComponent<RewardAddAnimation>().PlayGemsBalanceUpdateAnimation(position, delay);
         }
 
-        public void ShowTipAtPosition(
-            Vector2 tipPosition,
-            Vector2 anchor,
-            string tipText)
-        {
-            tipView.GetComponent<TipView>().ShowTipAtPosition(
-                tipPosition: tipPosition,
-                anchor: anchor,
-                tipText: tipText);
-
-            tipView.Activate(false);
-        }
-
-        public void ShowTipAtPosition(
+        public void ShowTopTipAtPosition(
             Vector2 tipPosition,
             Vector2 anchor,
             string tipText,
             float duration)
         {
-            tipView.GetComponent<TipView>().ShowTipAtPosition(
+            topTipView.GetComponent<TipView>().ShowTipAtPosition(
                 tipPosition: tipPosition,
                 anchor: anchor,
                 tipText: tipText,
                 duration: duration);
 
-            tipView.Activate(false);
+            topTipView.Activate(false);
+        }
+
+        public void ShowDownTipAtPosition(
+            Vector2 tipPosition,
+            Vector2 anchor,
+            string tipText,
+            float duration)
+        {
+            downTipView.GetComponent<TipView>().ShowTipAtPosition(
+                tipPosition: tipPosition,
+                anchor: anchor,
+                tipText: tipText,
+                duration: duration);
+
+            downTipView.Activate(false);
+        }
+
+        public void HideTips()
+        {
+            topTipView.GetComponent<TipView>().HideTip();
+            downTipView.GetComponent<TipView>().HideTip();
         }
     }
 }

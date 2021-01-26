@@ -10,7 +10,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter4Palindromes : WordisGameLevelBase<Letter4Palindromes>, IWordisGameLevel
     {
-        public const int NeededMatches = 4;
+        public const int NeededMatches = 5;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 5,
@@ -46,15 +46,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         /// <inheritdoc cref="IWordisGameLevel" />
         public override string Goal => $"Match {NeededMatches} palindromes!";
 
+        /// <inheritdoc cref="IWordisGameLevel.Progress" />
+        public override string Progress => $"{MatchedPalindromes} of {NeededMatches} palindromes matched";
+
         /// <inheritdoc cref="IWordisGameLevel" />
-        public override bool IsCompleted =>
-            Game.Matches.All
-                .Select(m => m.Word)
-                .Intersect(FourLetterPalindromes.Words, StringComparer.OrdinalIgnoreCase)
-                .Count() >= NeededMatches;
+        public override bool IsCompleted => MatchedPalindromes >= NeededMatches;
 
         /// <inheritdoc />
         public override Letter4Palindromes WithUpdatedGame(WordisGame updatedGame) =>
             new Letter4Palindromes(updatedGame);
+
+        private int MatchedPalindromes =>
+            Game.Matches.All
+                .Select(m => m.Word)
+                .Intersect(FourLetterPalindromes.Words, StringComparer.OrdinalIgnoreCase)
+                .Count();
     }
 }

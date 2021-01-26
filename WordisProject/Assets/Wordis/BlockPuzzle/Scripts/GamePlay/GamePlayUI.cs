@@ -78,6 +78,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.
                 {
                     RefreshPresentation(updatedLevel.Game);
+                    ShowProgress(updatedLevel.Progress);
                 }
 
                 _wordisGameLevel = updatedLevel;
@@ -198,6 +199,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     ShowMessage(message);
                     Debug.LogWarning(message);
                 });
+
+            UIController.Instance.HideTips();
         }
 
         private void RefreshPresentation(WordisGame gameState)
@@ -281,10 +284,25 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (definitions.Any())
             {
-                UIController.Instance.ShowTipAtPosition(
-                    tipPosition: new Vector2(0, -250F),
-                    anchor: new Vector2(0.5F, 1),
+                UIController.Instance.ShowTopTipAtPosition(
+                    tipPosition: new Vector2(0, -250F), // todo: make default, dont specify in code
+                    anchor: new Vector2(0.5F, 1), // todo: make default, dont specify in code
                     tipText: definitions[0].Definition,
+                    duration: 7F);
+            }
+        }
+
+        /// <summary>
+        /// Try to display level progression.
+        /// </summary>
+        private void ShowProgress(string levelProgress)
+        {
+            if (!string.IsNullOrWhiteSpace(levelProgress))
+            {
+                UIController.Instance.ShowDownTipAtPosition(
+                    tipPosition: new Vector2(0, 400F), // todo: make default, dont specify in code
+                    anchor: new Vector2(0.5F, 0), // todo: make default, dont specify in code
+                    tipText: levelProgress,
                     duration: 7F);
             }
         }

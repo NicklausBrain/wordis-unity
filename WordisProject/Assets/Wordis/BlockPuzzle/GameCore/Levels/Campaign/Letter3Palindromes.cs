@@ -38,11 +38,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         {
         }
 
-        /// <inheritdoc cref="IWordisGameLevel" />
-        public override string Title => "Basic palindromes";
+        /// <inheritdoc cref="IWordisGameLevel.Title" />
+        public override string Title => "Basic palindromes"; // localize
 
-        /// <inheritdoc cref="IWordisGameLevel" />
-        public override string Goal => $"Match {NeededMatches} words";
+        /// <inheritdoc cref="IWordisGameLevel.Goal" />
+        public override string Goal => $"Match {NeededMatches} words"; // localize
+
+        /// <inheritdoc cref="IWordisGameLevel.Progress" />
+        public override string Progress => $"{Game.Matches.Count} of {NeededMatches} words matched";
 
         /// <inheritdoc cref="IWordisGameLevel" />
         public override bool IsCompleted =>
