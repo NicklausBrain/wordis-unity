@@ -64,7 +64,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             }
         }
 
-        private void HideTip()
+        public void HideTip()
         {
             gameObject.Deactivate();
         }

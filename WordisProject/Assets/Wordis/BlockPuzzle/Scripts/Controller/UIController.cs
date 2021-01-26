@@ -530,5 +530,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
 
             downTipView.Activate(false);
         }
+
+        public void HideTips()
+        {
+            topTipView.GetComponent<TipView>().HideTip();
+            downTipView.GetComponent<TipView>().HideTip();
+        }
     }
 }

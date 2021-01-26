@@ -199,6 +199,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     ShowMessage(message);
                     Debug.LogWarning(message);
                 });
+
+            UIController.Instance.HideTips();
         }
 
         private void RefreshPresentation(WordisGame gameState)
