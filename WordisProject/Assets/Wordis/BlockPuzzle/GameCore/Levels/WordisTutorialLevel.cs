@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
+using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using Assets.Wordis.BlockPuzzle.GameCore.Words;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
@@ -21,10 +22,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         private readonly Action<string> _displayMessage;
 
+        /// <summary>
+        /// Steps counter to handle the tips scenario.
+        /// </summary>
+        private readonly int _steps;
+
         private WordisTutorialLevel(
             Action<string> displayMessage,
-            WordisGame game) : base(game)
+            WordisGame game,
+            int steps) : base(game)
         {
+            _steps = steps;
             _displayMessage =
                 displayMessage ??
                 Console.WriteLine;
@@ -37,7 +45,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             null,
             new WordisGame(
                 TutorialLevelSettings,
-                new WordLetters(TutorialSequence.Word)))
+                new WordLetters(TutorialSequence.Word)),
+            0)
         {
         }
 
@@ -57,31 +66,40 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         /// <inheritdoc cref="IWordisGameLevel" />
         public override IWordisGameLevel Handle(GameEvent gameEvent)
         {
-            switch (gameEvent)
+            var centralObject = Game.Matrix[Game.StartPoint.x, Game.StartPoint.y + 1];
+            var activeLetter = (centralObject as ActiveChar)?.Value;
+
+            if (activeLetter == 'C')
             {
-                case GameEvent.Step:
-                    {
-                        WordisGame updatedGame = null;
-
-                        if (Game.GameEvents.Count == 3)
-                            _displayMessage("Swipe left"); // todo: localize
-                        if (Game.GameEvents.Count == 4)
-                            updatedGame = Game.Handle(GameEvent.Left);
-                        if (Game.GameEvents.Count == 6)
-                            _displayMessage("Swipe down"); // todo: localize
-                        if (Game.GameEvents.Count == 7)
-                            updatedGame = Game.Handle(GameEvent.Down);
-                        if (Game.GameEvents.Count == 9)
-                            _displayMessage("Swipe right"); // todo: localize
-                        if (Game.GameEvents.Count == 10)
-                            updatedGame = Game.Handle(GameEvent.Right);
-
-                        return With(
-                            updatedGame: updatedGame ?? Game.Handle(gameEvent));
-                    }
-                default:
-                    return this;
+                if (gameEvent == GameEvent.Left)
+                    return With(Game.Handle(gameEvent));
+                else if (_steps % 3 == 0)
+                    _displayMessage("Swipe left!"); // todo: localize
+                return IncSteps();
             }
+
+            if (activeLetter == 'A')
+            {
+                if (gameEvent == GameEvent.Down)
+                    return With(Game.Handle(gameEvent));
+                else if (_steps % 3 == 0)
+                    _displayMessage("Swipe down!"); // todo: localize
+                return IncSteps();
+            }
+
+            if (activeLetter == 'T')
+            {
+                if (gameEvent == GameEvent.Right)
+                    return With(Game.Handle(gameEvent));
+                else if (_steps % 3 == 0)
+                    _displayMessage("Swipe right!"); // todo: localize
+                return IncSteps();
+            }
+
+            if(gameEvent == GameEvent.Step)
+                return With(updatedGame: Game.Handle(gameEvent), steps: _steps + 1);
+            else
+                return this;
         }
 
         /// <inheritdoc cref="IWordisGameLevel" />
@@ -94,9 +112,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
 
         private WordisTutorialLevel With(
             WordisGame updatedGame = null,
-            Action<string> outFunc = null) =>
+            Action<string> outFunc = null,
+            int? steps = 0) =>
             new WordisTutorialLevel(
                 outFunc ?? _displayMessage,
-                updatedGame ?? Game);
+                updatedGame ?? Game,
+                steps ?? _steps);
+
+        private WordisTutorialLevel IncSteps() => With(steps: _steps + 1);
     }
 }
