@@ -1,4 +1,5 @@
 ﻿using System;
+using gnuciDictionary;
 
 namespace DictPreprocessor
 {
@@ -6,7 +7,13 @@ namespace DictPreprocessor
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var defns = gnuciDictionary.EnglishDictionary.Define("beaver");
+
+            foreach (Word defn in defns)
+            {
+                Console.WriteLine(defn.Definition);
+
+            }
         }
     }
 }
