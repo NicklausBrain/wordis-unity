@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Lookup.English
 {
     /// <summary>
     /// English words lookup.

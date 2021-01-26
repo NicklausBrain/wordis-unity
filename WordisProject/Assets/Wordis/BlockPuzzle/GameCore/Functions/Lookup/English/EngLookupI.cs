@@ -1,4 +1,4 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
+﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Lookup.English
 {
     class EngLookupI : WordLookupBase
     {

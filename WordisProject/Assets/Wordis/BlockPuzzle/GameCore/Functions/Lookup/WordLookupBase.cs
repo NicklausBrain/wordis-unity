@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
+namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Lookup
 {
     /// <summary>
     /// Abstract words lookup dictionary.
