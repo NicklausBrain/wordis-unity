@@ -11,17 +11,17 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     {
         public static readonly EngDict EngDict = new EngDict();
 
-        static DefineEngWordFunc()
-        {
-            EngDict.WarmUp();
-        }
-
         /// <inheritdoc />
         public override IReadOnlyList<WordDefinition> Invoke(string word)
         {
             var definitions = EngDict.Define(word);
 
             return definitions;
+        }
+
+        public void WarmUp()
+        {
+            EngDict.WarmUp();
         }
     }
 }

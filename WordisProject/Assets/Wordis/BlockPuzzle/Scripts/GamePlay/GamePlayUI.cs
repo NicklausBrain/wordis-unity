@@ -38,6 +38,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private static readonly object GameLock = new object();
 
+        private static readonly DefineEngWordFunc DefineWordFunc = new DefineEngWordFunc();
+
         private IWordisGameLevel _wordisGameLevel = DefaultLevel;
 
         private void GameStep() => HandleGameEvent(GameEvent.Step);
@@ -114,6 +116,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             ShowMessage(_wordisGameLevel.Title); // move to TIP area? move to level?
 
             ShowMessage(_wordisGameLevel.Goal); // move to level?
+
+            DefineWordFunc.WarmUp();
 
             ResumeGame();
         }
@@ -273,8 +277,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void ShowWordDefinition(string word)
         {
-            var defineWordFunc = new DefineEngWordFunc();
-            var definitions = defineWordFunc.Invoke(word);
+            var definitions = DefineWordFunc.Invoke(word);
+
             if (definitions.Any())
             {
                 UIController.Instance.ShowTipAtPosition(

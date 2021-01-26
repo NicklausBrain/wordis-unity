@@ -2,6 +2,8 @@
 {
     public class WordDefinition
     {
+        private readonly string _definition;
+
         public WordDefinition(
             string word,
             string category,
@@ -9,14 +11,26 @@
         {
             Word = word;
             Category = category;
-            Definition = definition;
+            _definition = definition;
         }
 
         public string Word { get; }
 
         public string Category { get; }
 
-        public string Definition { get; }
+        public string Definition
+        {
+            get
+            {
+                if (_definition.Length > 64) // magic string
+                {
+                    var shorterVersion = _definition.Split('.', ';')[0];
+                    return shorterVersion;
+                }
+
+                return _definition;
+            }
+        }
 
         public static WordDefinition Parse(string rawDefinition)
         {
