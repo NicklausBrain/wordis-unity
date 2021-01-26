@@ -4589,7 +4589,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CAMPAIGN
+  m_Text: CHALLENGES
 --- !u!222 &341232377
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18982,7 +18982,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SELECT LEVEL
+  m_Text: SELECT A CHALLENGE
 --- !u!222 &1261390741
 CanvasRenderer:
   m_ObjectHideFlags: 0
