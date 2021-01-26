@@ -10,6 +10,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
     /// </summary>
     public class GetEngLetterFunc : GetLetterFunc
     {
+        private static readonly object RandomLock = new object();
+
         /// <summary>
         /// Random number generator.
         /// </summary>
@@ -64,11 +66,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
         /// <inheritdoc />
         public override char Invoke()
         {
-            var randomPick = Random.NextDouble();
-
-            var randomChar = CummulativeEngFrequency.Value.First(p => p.Value > randomPick).Key;
-
-            return randomChar;
+            lock (RandomLock)
+            {
+                var randomPick = Random.NextDouble();
+                var randomChar = CummulativeEngFrequency.Value.First(p => p.Value > randomPick).Key;
+                return randomChar;
+            }
         }
     }
 }

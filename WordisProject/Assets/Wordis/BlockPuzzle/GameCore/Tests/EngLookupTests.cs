@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions.Lookup.English;
 using NUnit.Framework;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Tests

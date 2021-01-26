@@ -1,0 +1,1 @@
+cat .\Cword.csv | Where-Object { [Regex]::IsMatch($_, '^[aA-zZ\s]+$') }  | Sort-Object -Unique   | ForEach-Object {  """$_"","} > d:\cdict2.txt

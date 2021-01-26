@@ -1,4 +1,4 @@
-﻿using Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English;
+﻿using Assets.Wordis.BlockPuzzle.GameCore.Functions.Lookup.English;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions
 {

@@ -14,6 +14,7 @@
 using System;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -36,6 +37,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private static IWordisGameLevel DefaultLevel => new WordisSurvivalMode();
 
         private static readonly object GameLock = new object();
+
+        private static readonly DefineEngWordFunc DefineWordFunc = new DefineEngWordFunc();
 
         private IWordisGameLevel _wordisGameLevel = DefaultLevel;
 
@@ -113,6 +116,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             ShowMessage(_wordisGameLevel.Title); // move to TIP area? move to level?
 
             ShowMessage(_wordisGameLevel.Goal); // move to level?
+
+            DefineWordFunc.WarmUp(); // preload word definitions
 
             ResumeGame();
         }
@@ -272,12 +277,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void ShowWordDefinition(string word)
         {
-            return;
-            UIController.Instance.ShowTipAtPosition(
-                new Vector2(0, -325F),
-                new Vector2(0.5F, 1),
-                word,
-                7F);
+            var definitions = DefineWordFunc.Invoke(word);
+
+            if (definitions.Any())
+            {
+                UIController.Instance.ShowTipAtPosition(
+                    tipPosition: new Vector2(0, -250F),
+                    anchor: new Vector2(0.5F, 1),
+                    tipText: definitions[0].Definition,
+                    duration: 7F);
+            }
         }
     }
 }
