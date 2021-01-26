@@ -5,7 +5,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
     /// </summary>
     public class EngDictZ : DictionaryBase
     {
-        protected override string WordsInCsv =>
+        protected override string RootLetter =>
 @"Z";
     }
 }

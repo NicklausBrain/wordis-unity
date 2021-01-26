@@ -15,13 +15,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
         protected DictionaryBase()
         {
             _allDefinitions = new Lazy<IDictionary<string, WordDefinition[]>>(() =>
-                GetWordDefinitions(WordsInCsv));
+                GetWordDefinitions(RootLetter));
         }
 
         /// <summary>
         /// Words and definitions as raw string.
         /// </summary>
-        protected virtual string WordsInCsv => string.Empty;
+        protected virtual string RootLetter => string.Empty;
 
         /// <summary>
         /// Gets word definitions.
@@ -37,9 +37,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
                 : Array.Empty<WordDefinition>();
         }
 
-        private static Dictionary<string, WordDefinition[]> GetWordDefinitions(string rawContent)
+        private static Dictionary<string, WordDefinition[]> GetWordDefinitions(string rootLetter)
         {
-            var definitions = rawContent
+            var rawContent = Resources.Load<TextAsset>($"Dictionary/{rootLetter}");
+
+            var definitions = rawContent.text
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(WordDefinition.Parse)
                 .GroupBy(d => d.Word, StringComparer.OrdinalIgnoreCase)

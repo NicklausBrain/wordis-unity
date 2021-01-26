@@ -59,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
             return Array.Empty<WordDefinition>();
         }
 
-        protected override string WordsInCsv => string.Empty;
+        protected override string RootLetter => string.Empty;
 
         /// <summary>
         /// Preload all the words to speedup lookup function.
