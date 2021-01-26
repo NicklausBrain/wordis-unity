@@ -20,7 +20,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         /// <inheritdoc cref="IWordisGameLevel" />
         public abstract string Goal { get; }
 
-        /// <inheritdoc cref="IWordisGameLevel" />
+        /// <inheritdoc cref="IWordisGameLevel.Progress" />
         public virtual string Progress => string.Empty;
 
         /// <summary>
