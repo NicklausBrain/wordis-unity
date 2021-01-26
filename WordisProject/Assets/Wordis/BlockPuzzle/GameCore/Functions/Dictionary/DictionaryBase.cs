@@ -44,9 +44,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
 
             var definitions = rawContent.text
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .AsParallel()
                 .Select(WordDefinition.Parse)
                 .GroupBy(d => d.Word, StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(g =>
+                    g.Key,
+                    g => g.Take(1).ToArray(), // todo: take only 1 for now.
+                    StringComparer.OrdinalIgnoreCase);
 
             return definitions;
         }

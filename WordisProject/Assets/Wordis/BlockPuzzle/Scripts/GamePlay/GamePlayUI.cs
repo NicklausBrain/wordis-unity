@@ -117,7 +117,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             ShowMessage(_wordisGameLevel.Goal); // move to level?
 
-            // DefineWordFunc.WarmUp(); // preload word definitions
+            DefineWordFunc.WarmUp(); // preload word definitions
 
             ResumeGame();
         }
