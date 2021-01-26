@@ -14,6 +14,7 @@
 using System;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
@@ -272,12 +273,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void ShowWordDefinition(string word)
         {
-            return;
-            UIController.Instance.ShowTipAtPosition(
-                new Vector2(0, -325F),
-                new Vector2(0.5F, 1),
-                word,
-                7F);
+            var defineWordFunc = new DefineEngWordFunc();
+            var definitions = defineWordFunc.Invoke(word);
+            if (definitions.Any())
+            {
+                UIController.Instance.ShowTipAtPosition(
+                    new Vector2(0, -325F),
+                    new Vector2(0.5F, 1),
+                    definitions[0].Definition,
+                    7F);
+            }
         }
     }
 }

@@ -39,6 +39,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
 
         private static Dictionary<string, WordDefinition[]> GetWordDefinitions(string rootLetter)
         {
+            // todo: nasty reference to unity. core logic should better be pure of it.
             var rawContent = Resources.Load<TextAsset>($"Dictionary/{rootLetter}");
 
             var definitions = rawContent.text
