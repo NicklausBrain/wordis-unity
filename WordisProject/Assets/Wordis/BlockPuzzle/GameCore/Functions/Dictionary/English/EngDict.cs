@@ -3,7 +3,8 @@
     /// <summary>
     /// English words definitions.
     /// </summary>
-    public class EngDictionary : DictionaryBase
+    public class EngDict : DictionaryBase
     {
+        protected override string WordsInCsv => string.Empty;
     }
 }

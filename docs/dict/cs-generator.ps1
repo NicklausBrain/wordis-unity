@@ -5,7 +5,9 @@ param (
 )
 
 if($processAll){
-	Get-ChildItem .\!Dictionary-in-csv\ | ForEach-Object { .\cs-generator.ps1 $_.BaseName (cat $_) > ".\!Dictionary-in-cs\EngDict$($_.BaseName).cs" }
+	Get-ChildItem .\!Dictionary-in-csv\ `
+	| ForEach-Object {
+		 .\cs-generator.ps1 $_.BaseName ((Get-Content $_) -join "`n") > ".\!Dictionary-in-cs\EngDict$($_.BaseName).cs" }
 } else {
 	$DictTemplate =
 "namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English

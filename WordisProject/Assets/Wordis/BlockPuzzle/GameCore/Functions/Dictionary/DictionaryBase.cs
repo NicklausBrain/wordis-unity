@@ -5,5 +5,9 @@
     /// </summary>
     public abstract class DictionaryBase
     {
+        /// <summary>
+        /// Words and definitions as raw string.
+        /// </summary>
+        protected abstract string WordsInCsv { get; }
     }
 }
