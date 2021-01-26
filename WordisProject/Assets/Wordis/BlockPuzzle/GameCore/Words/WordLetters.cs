@@ -26,7 +26,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 
         public override LetterSource Next =>
             IsLast
-                ? this
+                ? new WordLetters(_word)
                 : new WordLetters(_word, _index + 1);
 
         public override bool IsLast => _index == _word.Length - 1;

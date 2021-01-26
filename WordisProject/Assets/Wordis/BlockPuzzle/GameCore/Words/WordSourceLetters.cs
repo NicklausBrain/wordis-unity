@@ -4,7 +4,6 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 {
     /// <summary>
     /// Represents words sequence as a letters sequence.
-    /// TODO: add cycle
     /// </summary>
     public class WordSourceLetters : LetterSource
     {
@@ -30,7 +29,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Words
 
         public override LetterSource Next =>
             IsLast
-                ? this
+                ? new WordSourceLetters(_wordSource.Next)
                 : _letterSource.IsLast
                     ? new WordSourceLetters(_wordSource.Next)
                     : new WordSourceLetters(_wordSource, _letterSource.Next);
