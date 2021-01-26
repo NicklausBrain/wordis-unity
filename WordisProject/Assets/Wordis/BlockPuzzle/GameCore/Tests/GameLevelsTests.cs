@@ -29,13 +29,31 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
-        public void WordisTutorial_AfterXSteps_IsCompleted()
+        public void WordisTutorial_AfterNecessaryInput_IsCompleted()
         {
-            var tutorial = Enumerable
-                .Range(0, 20)
-                .Aggregate(
-                    new WordisTutorialLevel() as IWordisGameLevel,
-                    (t, i) => t.Handle(GameEvent.Step));
+            var tutorial = new WordisTutorialLevel()
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Left)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Down)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Right)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step);
 
             Assert.IsTrue(tutorial.IsCompleted);
         }
