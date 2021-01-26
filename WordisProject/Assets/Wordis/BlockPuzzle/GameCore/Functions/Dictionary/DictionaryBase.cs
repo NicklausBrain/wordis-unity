@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
 {
@@ -20,7 +21,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
         /// <summary>
         /// Words and definitions as raw string.
         /// </summary>
-        protected abstract string WordsInCsv { get; }
+        protected virtual string WordsInCsv => string.Empty;
 
         /// <summary>
         /// Gets word definitions.

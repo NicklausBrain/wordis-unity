@@ -18,7 +18,7 @@ if($processAll){
     public class EngDict$letter : DictionaryBase
     {
         protected override string WordsInCsv =>
-@""$rawData"";
+@""$letter"";
     }
 }
 ";

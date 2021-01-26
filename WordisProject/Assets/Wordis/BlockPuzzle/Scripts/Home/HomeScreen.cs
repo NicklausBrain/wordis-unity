@@ -35,7 +35,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// </summary>
         void Awake()
         {
-            GamePlaySettings gamePlaySettings = (GamePlaySettings) Resources.Load("GamePlaySettings");
+            GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
 
             if (!gamePlaySettings.classicModeSettings.modeEnabled)
             {

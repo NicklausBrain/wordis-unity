@@ -60,5 +60,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary.English
         }
 
         protected override string WordsInCsv => string.Empty;
+
+        /// <summary>
+        /// Preload all the words to speedup lookup function.
+        /// </summary>
+        public void WarmUp()
+        {
+            foreach (var letter in EngDictionaries.Keys)
+            {
+                EngDictionaries[letter].Define($"{letter}");
+            }
+        }
     }
 }
