@@ -278,10 +278,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (definitions.Any())
             {
                 UIController.Instance.ShowTipAtPosition(
-                    new Vector2(0, -325F),
-                    new Vector2(0.5F, 1),
-                    definitions[0].Definition,
-                    7F);
+                    tipPosition: new Vector2(0, -250F),
+                    anchor: new Vector2(0.5F, 1),
+                    tipText: definitions[0].Definition,
+                    duration: 7F);
             }
         }
     }
