@@ -265,7 +265,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (activeChar != null && y > activeChar.Y && x == activeChar.X)
                 {
                     // Highlight the trajectory
-                    block.Highlight(Block.ActiveCharSprite.Value);
+                    block.Highlight(Block.DefaultCharTag);
                 }
                 else
                 {
