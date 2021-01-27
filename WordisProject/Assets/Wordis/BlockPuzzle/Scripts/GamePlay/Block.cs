@@ -127,13 +127,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void PlaceBlock(string spriteTag, bool animate = true)
         {
-            if (spriteTag == defaultSpriteTag && animate)
-            {
-                blockImage
-                    .SetAlpha(0, 0.07f)
-                    .OnComplete(() => PlaceBlock(spriteTag, false));
-                return;
-            }
+            //if (spriteTag == defaultSpriteTag && animate)
+            //{
+            //    blockImage
+            //        .SetAlpha(0, 0.07f)
+            //        .OnComplete(() => PlaceBlock(spriteTag, false));
+            //    return;
+            //}
 
             Sprite sprite = Sprites.GetOrAdd(
                 spriteTag,
