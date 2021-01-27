@@ -9,7 +9,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
     public class WordLettersTests
     {
         [Test]
-        public void Next_OnFirstLetter_PreceedsToSecond()
+        public void Next_OnFirstLetter_ProceedsToSecond()
         {
             var letters = new WordLetters("RAT");
 
