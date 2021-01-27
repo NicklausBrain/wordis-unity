@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
@@ -33,6 +34,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public static string DefaultCharTag => "b1"; // nice blue;
 
         public static string WaterTag => "b4"; // azure (?);
+
+        public static Lazy<Sprite> ActiveCharSprite = new Lazy<Sprite>(() =>
+            ThemeManager.Instance.GetBlockSpriteWithTag(DefaultCharTag));
 
         #endregion
 
@@ -91,6 +95,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public void Highlight(Sprite sprite)
         {
             blockImage.sprite = sprite;
+            blockImage.SetAlpha(0.25F, 0.01F);
             blockImage.enabled = true;
             isFilled = true;
         }
@@ -162,21 +167,30 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // BlockImage will scale down to 0 in 0.35 seconds. and will reset to scale 1 on animation completion.
             UIFeedback.Instance.PlayHapticLight();
-            blockImage.transform.LocalScale(Vector3.zero, 0.35F).OnComplete(() =>
-            {
-                blockImage.transform.localScale = Vector3.one;
-                blockImage.sprite = null;
-            });
+            blockImage.transform.
+                LocalScale(Vector3.zero, 0.35F)
+                .OnComplete(() =>
+                {
+                    blockImage.transform.localScale = Vector3.one;
+                    blockImage.sprite = null;
+                });
 
-            blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(() =>
-            {
-                blockImage.transform.localEulerAngles = Vector3.zero;
-            });
+            blockImage.transform
+                .LocalRotationToZ(90, 0.2F)
+                .OnComplete(() =>
+                {
+                    blockImage.transform.localEulerAngles = Vector3.zero;
+                });
 
             transform.GetComponent<Image>().SetAlpha(1, 0.35F).SetDelay(0.3F);
 
-            // Opacity of block image will set to 0 in 0.3 seconds. and will reset to 1 on animation completion.
-            blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() => { blockImage.enabled = false; });
+            // Opacity of block image will set to 0.5 in 0.3 seconds. and will reset to 1 on animation completion.
+            blockImage
+                .SetAlpha(0.5F, 0.3F)
+                .OnComplete(() =>
+                {
+                    blockImage.enabled = false;
+                });
 
             isFilled = false;
             isAvailable = true;
