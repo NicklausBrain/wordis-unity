@@ -151,6 +151,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
+        [Tooltip("Extra match animation")]
+        public GameObject highScoreParticle;
+
         // GamePlay Setting Scriptable Instance. Initializes on awake.
         [NonSerialized] private GamePlaySettings _gamePlaySettings;
 
@@ -229,6 +232,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             var newMatches = gameState.Matches.Last;
 
+            // play nice animation on extra match
+            if (newMatches.Count > 1)
+            {
+                highScoreParticle.GetComponent<ParticleSystem>().Play();
+            }
+
             // 1. display matched words
             foreach (var match in newMatches)
             {
@@ -265,7 +274,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 if (activeChar != null && y > activeChar.Y && x == activeChar.X)
                 {
                     // Highlight the trajectory
-                    block.Highlight(Block.ActiveCharSprite.Value);
+                    block.Highlight(Block.DefaultCharTag);
                 }
                 else
                 {
