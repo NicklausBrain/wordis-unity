@@ -39,10 +39,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         }
 
         /// <inheritdoc cref="IWordisGameLevel.Title" />
-        public override string Title => "Basic palindromes"; // localize
+        public override string Title => "Basic palindromes"; // todo: localize
 
         /// <inheritdoc cref="IWordisGameLevel.Goal" />
-        public override string Goal => $"Match {NeededMatches} words"; // localize
+        public override string Goal =>
+            $"Match {NeededMatches} words!\n" +
+            $"Like '{ThreeLetterPalindromes.Word.ToUpperInvariant()}'"; // todo: localize
 
         /// <inheritdoc cref="IWordisGameLevel.Progress" />
         public override string Progress => $"{Game.Matches.Count} of {NeededMatches} words matched";

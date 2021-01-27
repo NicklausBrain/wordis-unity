@@ -38,7 +38,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
 
         public override string Title => "3-letter animals"; // todo: localize
 
-        public override string Goal => $"Match {NeededMatches} animals"; // todo: localize
+        public override string Goal =>
+            $"Match {NeededMatches} animals!\n" +
+            $"Like '{Animals.Word.ToUpperInvariant()}'"; // todo: localize
 
         public override string Progress => $"{MatchedAnimals} of {NeededMatches} animals matched"; // todo: localize
 

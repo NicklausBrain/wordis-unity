@@ -44,7 +44,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public override string Title => "4-letter palindromes";
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public override string Goal => $"Match {NeededMatches} palindromes!";
+        public override string Goal =>
+            $"Match {NeededMatches} palindromes!\n" +
+            $"Like '{FourLetterPalindromes.Word.ToUpperInvariant()}'";
 
         /// <inheritdoc cref="IWordisGameLevel.Progress" />
         public override string Progress => $"{MatchedPalindromes} of {NeededMatches} palindromes matched";

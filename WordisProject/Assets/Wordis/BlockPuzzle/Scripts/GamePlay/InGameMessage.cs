@@ -46,10 +46,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             messageView.gameObject.SetActive(true);
 
-            var q = messageView.transform.LocalScale(Vector3.one, 0.2F).SetAnimation(animationCurve).OnComplete(() =>
-            {
-                var w = messageView.transform.LocalScale(Vector3.zero, 0.2F).SetAnimation(animationCurve).SetDelay(1F);
-            });
+            var q = messageView.transform.LocalScale(Vector3.one, 0.2F)
+                .SetAnimation(animationCurve)
+                .OnComplete(() =>
+                {
+                    var w = messageView.transform.LocalScale(Vector3.zero, 0.2F)
+                        .SetAnimation(animationCurve)
+                        .SetDelay(1F);
+                });
 
             yield return new WaitForSeconds(3);
         }
