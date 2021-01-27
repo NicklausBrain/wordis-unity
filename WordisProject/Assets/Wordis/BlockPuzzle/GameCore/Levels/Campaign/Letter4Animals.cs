@@ -12,12 +12,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter4Animals : WordisGameLevelBase<Letter4Animals>, IWordisGameLevel
     {
-        public const int NeededMatches = 20;
+        public const int NeededMatches = 7;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
-            width: 5,
-            height: 6,
-            minWordMatch: 4,
+            width: 9,
+            height: 9,
+            minWordMatch: 3,
             waterLevel: 0);
 
         /// <inheritdoc cref="Letter4Animals "/>
@@ -34,13 +34,15 @@ Orca,Oryx,Oxen,Puma,Seal,Vole,Wolf");
             LevelSettings,
             Animals
                 .Shuffle()
-                .AsLetterSource()))
+                .AsLetterSource(shuffleWordLetters: true)))
         {
         }
 
         public override string Title => "4-letter animals"; // todo: localize
 
-        public override string Goal => $"Match {NeededMatches} animals"; // todo: localize
+        public override string Goal =>
+            $"Match {NeededMatches} animals\n" +
+            $"Like '{Animals.Word.ToUpperInvariant()}'"; // todo: localize
 
         public override string Progress => $"{MatchedAnimals} of {NeededMatches} animals matched"; // todo: localize
 

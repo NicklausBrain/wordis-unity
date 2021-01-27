@@ -9,7 +9,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
     public class WordsSequenceTests
     {
         [Test]
-        public void Next_OnFirstWord_PreceedsToSecond()
+        public void Next_OnFirstWord_ProceedsToSecond()
         {
             var words = new WordsSequence(
                 new[] { "cat", "rat", "dog" });

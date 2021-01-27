@@ -12,11 +12,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter3Animals : WordisGameLevelBase<Letter3Animals>, IWordisGameLevel
     {
-        public const int NeededMatches = 10;
+        public const int NeededMatches = 5;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
-            width: 5,
-            height: 6,
+            width: 7,
+            height: 7,
             minWordMatch: 3,
             waterLevel: 0);
 
@@ -32,13 +32,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             LevelSettings,
             Animals
                 .Shuffle()
-                .AsLetterSource()))
+                .AsLetterSource(shuffleWordLetters: true)))
         {
         }
 
         public override string Title => "3-letter animals"; // todo: localize
 
-        public override string Goal => $"Match {NeededMatches} animals"; // todo: localize
+        public override string Goal =>
+            $"Match {NeededMatches} animals!\n" +
+            $"Like '{Animals.Word.ToUpperInvariant()}'"; // todo: localize
 
         public override string Progress => $"{MatchedAnimals} of {NeededMatches} animals matched"; // todo: localize
 

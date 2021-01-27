@@ -24,7 +24,9 @@
         /// Converts <see cref="WordSource"/> to <see cref="LetterSource"/>.
         /// </summary>
         /// <returns></returns>
-        public LetterSource AsLetterSource() => new WordSourceLetters(this);
+        public LetterSource AsLetterSource(
+            bool shuffleWordLetters = false) =>
+            new WordSourceLetters(this, shuffleWordLetters);
     }
 }
 

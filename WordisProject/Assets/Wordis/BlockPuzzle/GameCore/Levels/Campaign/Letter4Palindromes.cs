@@ -13,7 +13,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public const int NeededMatches = 5;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
-            width: 5,
+            width: 6,
             height: 6,
             minWordMatch: 4,
             waterLevel: 0);
@@ -36,7 +36,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
                 LevelSettings,
                 FourLetterPalindromes
                     .Shuffle()
-                    .AsLetterSource()))
+                    .AsLetterSource(shuffleWordLetters: true)))
         {
         }
 
@@ -44,7 +44,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public override string Title => "4-letter palindromes";
 
         /// <inheritdoc cref="IWordisGameLevel" />
-        public override string Goal => $"Match {NeededMatches} palindromes!";
+        public override string Goal =>
+            $"Match {NeededMatches} palindromes!\n" +
+            $"Like '{FourLetterPalindromes.Word.ToUpperInvariant()}'";
 
         /// <inheritdoc cref="IWordisGameLevel.Progress" />
         public override string Progress => $"{MatchedPalindromes} of {NeededMatches} palindromes matched";
