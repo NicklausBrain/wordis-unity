@@ -80,7 +80,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Assignes logical position on block on the grid.
+        /// Assign logical position on block on the grid.
         /// TODO: seems like should be make in constructor and should not be change ever
         /// </summary>
         public void SetBlockLocation(int rowIndex, int columnIndex)
@@ -94,10 +94,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void Highlight(Sprite sprite)
         {
-            blockImage.sprite = sprite;
-            blockImage.SetAlpha(0.25F, 0.01F);
-            blockImage.enabled = true;
-            isFilled = true;
+            blockImage.SetAlpha(0.21F, 0).OnComplete(() =>
+            {
+                blockImage.sprite = sprite;
+                blockImage.enabled = true;
+                isFilled = true;
+            });
         }
 
         /// <summary>
@@ -118,26 +120,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Places block from the block shape. Typically will be called during gameplay.
-        /// </summary>
-        public void PlaceBlock(Sprite sprite, string spriteTag)
-        {
-            thisCollider.enabled = false;
-            blockImage.enabled = true;
-            blockImage.sprite = sprite;
-            blockImage.color = blockImage.color.WithNewA(1);
-            defaultSprite = sprite;
-            isFilled = true;
-            isAvailable = false;
-            assignedSpriteTag = spriteTag;
-        }
-
-        /// <summary>
         /// Places block from the block shape.
         /// Typically will be called when game starting with progress from previous session.
         /// </summary>
-        public void PlaceBlock(string spriteTag)
+        public void PlaceBlock(string spriteTag, bool animate = true)
         {
+            //if (spriteTag == defaultSpriteTag && animate)
+            //{
+            //    blockImage.SetAlpha(0, 0.1f).OnComplete(() => PlaceBlock(spriteTag, false));
+            //    return;
+            //}
+
             Sprite sprite = ThemeManager.Instance.GetBlockSpriteWithTag(spriteTag);
 
             if (thisCollider != null)
@@ -202,11 +195,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PlaceBlock(Block.WaterTag);
             }
-        }
-
-        public void Fade()
-        {
-            // todo: to be done
         }
     }
 }
