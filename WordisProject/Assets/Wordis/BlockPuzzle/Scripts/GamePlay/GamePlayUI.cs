@@ -151,6 +151,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         [Tooltip("InGameMessage Script Reference To Show Message")]
         public InGameMessage inGameMessage;
 
+        [Tooltip("Extra match animation")]
+        public GameObject highScoreParticle;
+
         // GamePlay Setting Scriptable Instance. Initializes on awake.
         [NonSerialized] private GamePlaySettings _gamePlaySettings;
 
@@ -228,6 +231,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void DisplayMatches(WordisGame gameState)
         {
             var newMatches = gameState.Matches.Last;
+
+            // play nice animation on extra match
+            if (newMatches.Count > 1)
+            {
+                highScoreParticle.GetComponent<ParticleSystem>().Play();
+            }
 
             // 1. display matched words
             foreach (var match in newMatches)
