@@ -98,6 +98,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
+        /// Gets active level.
+        /// </summary>
+        public IWordisGameLevel CurrentLevel => _wordisGameLevel;
+
+        /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
         public void RestartGame()
@@ -132,6 +137,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
+
+                GameProgressTracker.Instance.SaveSession();
             }
         }
 

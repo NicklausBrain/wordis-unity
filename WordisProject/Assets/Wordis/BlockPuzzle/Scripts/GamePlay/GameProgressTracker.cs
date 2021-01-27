@@ -12,7 +12,9 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.Frameworks.Utils;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -24,6 +26,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
+        public const string GameSessionKey = "WordisSession";
+
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
@@ -39,33 +43,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Creates a progress data instance on game start and will be maintained throughout game.
-        /// </summary>
-        private void GamePlayUI_OnGameStartedEvent()
-        {
-            //_currentProgressData = new ProgressData();
-        }
-
-        /// <summary>
-        /// Save progress on calling manually. Typically will be called after rescue done.
-        /// </summary>
-        public void SaveProgressExplicitly()
-        {
-            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            //{
-            //    Invoke(nameof(SaveProgress), 2F);
-            //}
-        }
-
-        /// <summary>
-        /// Clears the progress of current gameplay on game over.
-        /// </summary>
-        private void GamePlayUI_OnGameOverEvent()
-        {
-            ClearProgressData();
-        }
-
-        /// <summary>
         /// Clears the progress of current gameplay.
         /// </summary>
         public void ClearProgressData()
@@ -74,14 +51,34 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// If you want to further optimize progress saving operation, then you can move save progress call to OnApplicationPause(true) instead of GamePlayUI_OnShapePlacedEvent. 
+        /// OnApplicationPause is set to true or false.
+        /// Normally, false is the value returned by the OnApplicationPause message.
+        /// This means the game is running normally in the editor.
+        /// If an editor window such as the Inspector is chosen the game is paused and OnApplicationPause returns true.
+        /// When the game window is selected and active OnApplicationPause again returns false.
+        /// True means that the game is not active.
         /// </summary>
         /// <param name="pause"></param>
         private void OnApplicationPause(bool pause)
         {
             if (pause)
             {
+                
             }
+        }
+
+        public void SaveSession()
+        {
+            var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
+
+            Debug.LogWarning(gameState);
+
+            //var restoredGame = new WordisGame();
+            var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
+
+
+
+            Debug.LogWarning(restored);
         }
 
         /// <summary>
