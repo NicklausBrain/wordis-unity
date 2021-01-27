@@ -24,8 +24,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
-        ProgressData _currentProgressData;
-
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
@@ -43,9 +41,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Creates a progress data instance on game start and will be maintained throughout game.
         /// </summary>
-        private void GamePlayUI_OnGameStartedEvent(GameMode obj)
+        private void GamePlayUI_OnGameStartedEvent()
         {
-            _currentProgressData = new ProgressData();
+            //_currentProgressData = new ProgressData();
         }
 
         /// <summary>
@@ -60,20 +58,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Save progress after block shape places.
-        /// </summary>
-        private void GamePlayUI_OnShapePlacedEvent()
-        {
-            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            //{
-            //    Invoke(nameof(SaveProgress), 1F);
-            //}
-        }
-
-        /// <summary>
         /// Clears the progress of current gameplay on game over.
         /// </summary>
-        private void GamePlayUI_OnGameOverEvent(GameMode currentMode)
+        private void GamePlayUI_OnGameOverEvent()
         {
             ClearProgressData();
         }
@@ -83,7 +70,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void ClearProgressData()
         {
-            _currentProgressData = null;
             DeleteProgress();
         }
 
@@ -95,9 +81,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (pause)
             {
-                if (_currentProgressData != null)
-                {
-                }
             }
         }
 
@@ -105,56 +88,32 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
         /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
         /// </summary>
-        private void SaveProgress(GameMode gameMode = GameMode.Default)
+        private void SaveProgress()
         {
-            if (_currentProgressData != null)
-            {
-                string[] gridData = new string[GameBoard.Instance.allRows.Count];
-                int rowIndex = 0;
-
-                // Reads the status of all elements from the board grid.
-                foreach (List<Block> blockRow in GameBoard.Instance.allRows)
-                {
-                    string row = string.Empty;
-                    foreach (Block b in blockRow)
-                    {
-                        row = row == string.Empty
-                            ? $"{b.isAvailable}-{b.assignedSpriteTag}"
-                            : string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}");
-                    }
-
-                    gridData[rowIndex] = row;
-                    rowIndex++;
-                }
-
-                _currentProgressData.gridData = gridData;
-
-                // Attached all the fetched data to progress data class instance.
-                _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
-                PlayerPrefs.SetString($"gameProgress_{gameMode}",
-                    JsonUtility.ToJson(_currentProgressData));
-            }
+            //PlayerPrefs.SetString($"gameProgress_{gameMode}",
+            //    JsonUtility.ToJson(_currentProgressData));
         }
 
-        public bool HasGameProgress(GameMode gameMode = GameMode.Default)
+        public bool HasGameProgress()
         {
-            return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
+            //return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
+            return false;
         }
 
         /// <summary>
         /// Returns game progress for the given mode if any.
         /// </summary>
-        public ProgressData GetGameProgress(GameMode gameMode = GameMode.Default)
+        public object GetGameProgress()
         {
-            if (HasGameProgress(gameMode))
-            {
-                ProgressData progressData = JsonUtility.FromJson<ProgressData>(
-                    PlayerPrefs.GetString($"gameProgress_{gameMode}"));
-                if (progressData != null)
-                {
-                    return progressData;
-                }
-            }
+            //if (HasGameProgress(gameMode))
+            //{
+            //    ProgressData progressData = JsonUtility.FromJson<ProgressData>(
+            //        PlayerPrefs.GetString($"gameProgress_{gameMode}"));
+            //    if (progressData != null)
+            //    {
+            //        return progressData;
+            //    }
+            //}
 
             return null;
         }
@@ -162,47 +121,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears game progress if any for the given game mode.
         /// </summary>
-        public void DeleteProgress(GameMode gameMode = GameMode.Default)
+        public void DeleteProgress()
         {
-            PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
-        }
-    }
-
-    /// <summary>
-    /// Progress data class will be converted to json after preparing it to save game progress.
-    /// </summary>
-    public class ProgressData
-    {
-        public string[] gridData;
-
-        public int score;
-        public int totalLinesCompleted;
-        public bool rescueDone;
-
-        public ProgressData()
-        {
-        }
-    }
-
-    /// <summary>
-    /// Class that contains info of block shape.
-    /// </summary>
-    [System.Serializable]
-    public class ShapeInfo
-    {
-        public bool isAdvanceShape = false;
-        public string shapeName;
-        public float shapeRotation;
-
-        // Class constructor with required parameters.
-        public ShapeInfo(
-            bool isAdvanceShape,
-            string shapeName,
-            float shapeRotation)
-        {
-            this.isAdvanceShape = isAdvanceShape;
-            this.shapeName = shapeName;
-            this.shapeRotation = shapeRotation;
+            //PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
         }
     }
 }
