@@ -11,7 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.Collections.Concurrent;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
@@ -35,8 +35,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         public static string WaterTag => "b4"; // azure (?);
 
-        public static Lazy<Sprite> ActiveCharSprite = new Lazy<Sprite>(() =>
-            ThemeManager.Instance.GetBlockSpriteWithTag(DefaultCharTag));
+        private static readonly ConcurrentDictionary<string, Sprite> Sprites =
+            new ConcurrentDictionary<string, Sprite>();
 
         #endregion
 
@@ -92,11 +92,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Highlights block with given sprite.
         /// </summary>
-        public void Highlight(Sprite sprite)
+        public void Highlight(string spriteTag)
         {
             blockImage.SetAlpha(0.21F, 0).OnComplete(() =>
             {
-                blockImage.sprite = sprite;
+                blockImage.sprite = Sprites.GetOrAdd(
+                    spriteTag,
+                    ThemeManager.Instance.GetBlockSpriteWithTag);
                 blockImage.enabled = true;
                 isFilled = true;
             });
@@ -127,11 +129,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             //if (spriteTag == defaultSpriteTag && animate)
             //{
-            //    blockImage.SetAlpha(0, 0.1f).OnComplete(() => PlaceBlock(spriteTag, false));
+            //    blockImage
+            //        .SetAlpha(0, 0.07f)
+            //        .OnComplete(() => PlaceBlock(spriteTag, false));
             //    return;
             //}
 
-            Sprite sprite = ThemeManager.Instance.GetBlockSpriteWithTag(spriteTag);
+            Sprite sprite = Sprites.GetOrAdd(
+                spriteTag,
+                ThemeManager.Instance.GetBlockSpriteWithTag);
 
             if (thisCollider != null)
             {
