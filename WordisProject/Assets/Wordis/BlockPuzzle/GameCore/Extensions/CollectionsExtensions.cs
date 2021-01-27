@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Extensions
@@ -17,7 +18,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Extensions
         {
             var list = sourceList.ToArray();
 
-            System.Random rng = new System.Random();
+            Random rng = new Random(Environment.TickCount);
             int n = list.Length;
             while (n > 1)
             {
