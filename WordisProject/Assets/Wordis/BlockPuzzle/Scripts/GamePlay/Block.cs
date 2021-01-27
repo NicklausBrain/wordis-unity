@@ -11,6 +11,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.ThemeManager.Scripts;
@@ -33,6 +34,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public static string DefaultCharTag => "b1"; // nice blue;
 
         public static string WaterTag => "b4"; // azure (?);
+
+        public static Lazy<Sprite> ActiveCharSprite = new Lazy<Sprite>(() =>
+            ThemeManager.Instance.GetBlockSpriteWithTag(DefaultCharTag));
 
         #endregion
 
@@ -76,7 +80,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Assignes logical position on block on the grid.
+        /// Assign logical position on block on the grid.
         /// TODO: seems like should be make in constructor and should not be change ever
         /// </summary>
         public void SetBlockLocation(int rowIndex, int columnIndex)
@@ -90,9 +94,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         public void Highlight(Sprite sprite)
         {
-            blockImage.sprite = sprite;
-            blockImage.enabled = true;
-            isFilled = true;
+            blockImage.SetAlpha(0.21F, 0).OnComplete(() =>
+            {
+                blockImage.sprite = sprite;
+                blockImage.enabled = true;
+                isFilled = true;
+            });
         }
 
         /// <summary>
@@ -113,26 +120,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Places block from the block shape. Typically will be called during gameplay.
-        /// </summary>
-        public void PlaceBlock(Sprite sprite, string spriteTag)
-        {
-            thisCollider.enabled = false;
-            blockImage.enabled = true;
-            blockImage.sprite = sprite;
-            blockImage.color = blockImage.color.WithNewA(1);
-            defaultSprite = sprite;
-            isFilled = true;
-            isAvailable = false;
-            assignedSpriteTag = spriteTag;
-        }
-
-        /// <summary>
         /// Places block from the block shape.
         /// Typically will be called when game starting with progress from previous session.
         /// </summary>
-        public void PlaceBlock(string spriteTag)
+        public void PlaceBlock(string spriteTag, bool animate = true)
         {
+            //if (spriteTag == defaultSpriteTag && animate)
+            //{
+            //    blockImage.SetAlpha(0, 0.1f).OnComplete(() => PlaceBlock(spriteTag, false));
+            //    return;
+            //}
+
             Sprite sprite = ThemeManager.Instance.GetBlockSpriteWithTag(spriteTag);
 
             if (thisCollider != null)
@@ -162,21 +160,30 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // BlockImage will scale down to 0 in 0.35 seconds. and will reset to scale 1 on animation completion.
             UIFeedback.Instance.PlayHapticLight();
-            blockImage.transform.LocalScale(Vector3.zero, 0.35F).OnComplete(() =>
-            {
-                blockImage.transform.localScale = Vector3.one;
-                blockImage.sprite = null;
-            });
+            blockImage.transform.
+                LocalScale(Vector3.zero, 0.35F)
+                .OnComplete(() =>
+                {
+                    blockImage.transform.localScale = Vector3.one;
+                    blockImage.sprite = null;
+                });
 
-            blockImage.transform.LocalRotationToZ(90, 0.2F).OnComplete(() =>
-            {
-                blockImage.transform.localEulerAngles = Vector3.zero;
-            });
+            blockImage.transform
+                .LocalRotationToZ(90, 0.2F)
+                .OnComplete(() =>
+                {
+                    blockImage.transform.localEulerAngles = Vector3.zero;
+                });
 
             transform.GetComponent<Image>().SetAlpha(1, 0.35F).SetDelay(0.3F);
 
-            // Opacity of block image will set to 0 in 0.3 seconds. and will reset to 1 on animation completion.
-            blockImage.SetAlpha(0.5F, 0.3F).OnComplete(() => { blockImage.enabled = false; });
+            // Opacity of block image will set to 0.5 in 0.3 seconds. and will reset to 1 on animation completion.
+            blockImage
+                .SetAlpha(0.5F, 0.3F)
+                .OnComplete(() =>
+                {
+                    blockImage.enabled = false;
+                });
 
             isFilled = false;
             isAvailable = true;
@@ -188,11 +195,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PlaceBlock(Block.WaterTag);
             }
-        }
-
-        public void Fade()
-        {
-            // todo: to be done
         }
     }
 }

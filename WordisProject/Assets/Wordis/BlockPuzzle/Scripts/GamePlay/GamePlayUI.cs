@@ -212,13 +212,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 DisplayMatches(gameState);
             }
 
+            var activeChar = gameState.ActiveChar;
+
             for (int x = 0; x < gameState.Matrix.Width; x++)
             {
                 for (int y = 0; y < gameState.Matrix.Height; y++)
                 {
                     var wordisObject = gameState.Matrix[x, y];
 
-                    RefreshVisualBlock(x, y, wordisObject);
+                    RefreshVisualBlock(x, y, wordisObject, activeChar);
                 }
             }
         }
@@ -250,16 +252,28 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
         }
 
-        private void RefreshVisualBlock(int x, int y, WordisObj wordisObj)
+        private void RefreshVisualBlock(
+            int x,
+            int y,
+            WordisObj wordisObj,
+            ActiveChar activeChar)
         {
             var block = gameBoard.allColumns[x][y];
 
             if (wordisObj == null)
             {
-                block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
-                    ? Block.WaterTag
-                    : block.defaultSpriteTag);
-                block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                if (activeChar != null && y > activeChar.Y && x == activeChar.X)
+                {
+                    // Highlight the trajectory
+                    block.Highlight(Block.ActiveCharSprite.Value);
+                }
+                else
+                {
+                    block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
+                        ? Block.WaterTag
+                        : block.defaultSpriteTag);
+                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                }
             }
             else
             {

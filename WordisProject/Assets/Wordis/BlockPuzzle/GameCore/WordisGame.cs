@@ -18,6 +18,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         private readonly ImmutableList<WordMatchEx> _wordMatches;
         private readonly ImmutableList<WordMatchEx> _lastMatches;
         private readonly ImmutableList<GameEvent> _gameEvents;
+        private readonly Lazy<ActiveChar> _activeChar;
 
         /// <summary>
         ///  x:y
@@ -44,6 +45,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             _wordMatches = wordMatches;
             _gameEvents = gameEvents;
             _lastMatches = lastMatches;
+            _activeChar = new Lazy<ActiveChar>(() =>
+                GameObjects.FirstOrDefault(o => o is ActiveChar) as ActiveChar);
         }
 
         public WordisGame(
@@ -70,6 +73,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// State of the game.
         /// </summary>
         public IReadOnlyList<WordisObj> GameObjects => _gameObjects;
+
+        /// <summary>
+        /// Current active char. Can be NULL.
+        /// </summary>
+        public ActiveChar ActiveChar => _activeChar.Value;
 
         /// <inheritdoc cref="WordisMatrix"/>
         public WordisMatrix Matrix { get; }
@@ -155,7 +163,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                                 lastMatches: matches)
                             : updatedGame;
 
-                        var hasActiveObjects = updatedGame.GameObjects.Any(o => o is ActiveChar);
+                        var hasActiveObjects = updatedGame.ActiveChar != null;
 
                         return hasActiveObjects || updatedGame.IsGameOver
                             ? updatedGame
