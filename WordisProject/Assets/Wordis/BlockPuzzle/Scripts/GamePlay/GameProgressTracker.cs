@@ -15,6 +15,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.Frameworks.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -79,22 +81,43 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-
         public IReadOnlyDictionary<string, int> GetWordStats()
         {
             return _wordsStats;
         }
 
-        public void SaveSession()
+        public bool HasSession(IWordisGameLevel gameLevel)
         {
-            //var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
+            return PlayerPrefs.HasKey($"{GameSessionKey}_{gameLevel.Id}");
+        }
 
-            //Debug.LogWarning(gameState);
+        public void DropSession(IWordisGameLevel gameLevel)
+        {
+            PlayerPrefs.DeleteKey($"{GameSessionKey}_{gameLevel.Id}");
+        }
 
-            ////var restoredGame = new WordisGame();
-            //var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
+        public void SaveSession(IWordisGameLevel gameLevel)
+        {
+            if (gameLevel.Id == nameof(WordisSurvivalMode))
+            {
+                var gameAsJson = WordisGame.ToJson(gameLevel.Game);
 
-            //Debug.LogWarning(restored);
+                PlayerPrefs.SetString($"{GameSessionKey}_{gameLevel.Id}", gameAsJson);
+            }
+        }
+
+        public WordisGame RestoreSession(IWordisGameLevel gameLevel)
+        {
+            if (gameLevel.Id == nameof(WordisSurvivalMode))
+            {
+                var gameAsJson = PlayerPrefs.GetString($"{GameSessionKey}_{gameLevel.Id}");
+
+                var restoredGame = WordisGame.FromJson(gameAsJson);
+
+                return restoredGame;
+            }
+
+            return null;
         }
 
         /// <summary>

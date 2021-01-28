@@ -138,8 +138,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
-
-                //GameProgressTracker.Instance.SaveSession();
+                GameProgressTracker.Instance.SaveSession(_wordisGameLevel);
             }
         }
 
@@ -212,7 +211,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             UIController.Instance.HideTips();
 
-            //GameProgressTracker.Instance.ClearProgressData();
+            GameProgressTracker.Instance.DropSession(_wordisGameLevel);
         }
 
         private void RefreshPresentation(WordisGame gameState)
