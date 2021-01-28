@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
@@ -43,7 +44,15 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             PrepareStatsScreen();
             // scroll to the top
-            _rootContent.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+            StartCoroutine(nameof(ScrollToTop));
+        }
+
+        IEnumerator ScrollToTop()
+        {
+            var scrollRect = _rootContent.GetComponent<ScrollRect>();
+            yield return new WaitForEndOfFrame();
+            scrollRect.gameObject.SetActive(true);
+            scrollRect.verticalNormalizedPosition = 1f;
         }
 
         private void PrepareStatsScreen()
@@ -62,8 +71,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
-
-            Enumerable.Range(0, 10).ToList().ForEach(_ => CreateDummy()); // UI hack for the scroll
         }
 
         private void SetWordsUnlockedCounter(int uniqueWordsUnlocked)
@@ -94,21 +101,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             // set word definition callback
             statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
-        }
-        private void CreateDummy()
-        {
-            GameObject statItem = Instantiate(_statItemTemplate);
-            statItem.transform.SetParent(_statsListContent.transform);
-            statItem.name = $"itm-dummy-imt";
-            statItem.transform.localScale = Vector3.one;
-            statItem.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-            statItem.transform.SetAsLastSibling();
-            statItem.GetComponentsInChildren<Text>().First().text = string.Empty;
-            statItem.GetComponentsInChildren<Text>().Last().text = string.Empty;
-            statItem.SetActive(true);
-
-            // set word definition callback
-            //statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
         }
 
         /// <summary>
