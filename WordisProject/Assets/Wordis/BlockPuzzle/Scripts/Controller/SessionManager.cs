@@ -20,7 +20,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
     {
         public static event Action<SessionInfo> OnSessionUpdatedEvent;
 
-        bool _isFreshLauched = true;
+        bool _isFreshLaunched = true;
         readonly TimeSpan _backgroundThreshHoldTimeSpan = new TimeSpan(0, 0, 120);
         SessionInfo _currentSessionInfo = null;
 
@@ -42,13 +42,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         {
             if (pauseStatus)
             {
-                _isFreshLauched = false;
+                _isFreshLaunched = false;
                 PlayerPrefs.SetString("lastPauseTime", DateTime.Now.ToBinary().ToString());
                 PlayerPrefs.SetString("lastAccessedDate", DateTime.Now.ToBinary().ToString());
             }
             else
             {
-                if (!_isFreshLauched)
+                if (!_isFreshLaunched)
                 {
                     bool doCheckForSessionChange = true;
 

@@ -12,9 +12,11 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
+using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
@@ -50,15 +52,22 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void Start()
         {
-            PrepareLevelsScreen();
+            
         }
 
-        private void PrepareLevelsScreen()
+        private void OnEnable()
         {
-            //foreach (var level in Levels)
-            //{
-            //    CreateLevelButton(level);
-            //}
+            PrepareStatsScreen();
+        }
+
+        private void PrepareStatsScreen()
+        {
+            var wordStats = GameProgressTracker.Instance.GetWordStats();
+
+            foreach (var wordStat in wordStats)
+            {
+                CreateWordStatItem(wordStat.Key, wordStat.Value);
+            }
 
             //CreateMoreToComeButton();
         }
@@ -67,32 +76,33 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// Instantiates a button from template.
         /// </summary>
         /// <returns></returns>
-        private void CreateLevelButton(IWordisGameLevel level)
+        private void CreateWordStatItem(string word, int counter)
         {
-            //GameObject levelButton = Instantiate(_levelButtonTemplate);
-            //levelButton.transform.SetParent(_levelListContent.transform);
-            //levelButton.name = level.GetType().Name;
-            //levelButton.transform.localScale = Vector3.one;
-            //levelButton.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-            //levelButton.transform.SetAsLastSibling();
-            //levelButton.GetComponentInChildren<Text>().text = level.Title;
-            //levelButton.SetActive(true);
+            GameObject statItem = Instantiate(_statItemTemplate);
+            statItem.transform.SetParent(_statsListContent.transform);
+            statItem.name = $"itm-{word}";
+            statItem.transform.localScale = Vector3.one;
+            statItem.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+            statItem.transform.SetAsLastSibling();
+            statItem.GetComponentsInChildren<Text>().First().text = word;
+            statItem.GetComponentsInChildren<Text>().Last().text = $"{counter}";
+            statItem.SetActive(true);
 
             //// set level startup callback
-            //levelButton.GetComponent<Button>().onClick.AddListener(() => StartLevel(level));
+            //statItem.GetComponent<Button>().onClick.AddListener(() => StartLevel(level));
         }
 
         private void CreateMoreToComeButton()
         {
-            //GameObject levelButton = Instantiate(_levelButtonTemplate);
-            //levelButton.transform.SetParent(_levelListContent.transform);
-            //levelButton.name = "moreToComeBtn";
-            //levelButton.transform.localScale = Vector3.one;
-            //levelButton.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-            //levelButton.transform.SetAsLastSibling();
-            //levelButton.GetComponentInChildren<Text>().text = "More to come...";
-            //levelButton.GetComponent<Button>().interactable = false;
-            //levelButton.SetActive(true);
+            //GameObject statItem = Instantiate(_statItemTemplate);
+            //statItem.transform.SetParent(_levelListContent.transform);
+            //statItem.name = "moreToComeBtn";
+            //statItem.transform.localScale = Vector3.one;
+            //statItem.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+            //statItem.transform.SetAsLastSibling();
+            //statItem.GetComponentInChildren<Text>().text = "More to come...";
+            //statItem.GetComponent<Button>().interactable = false;
+            //statItem.SetActive(true);
         }
 
         /// <summary>

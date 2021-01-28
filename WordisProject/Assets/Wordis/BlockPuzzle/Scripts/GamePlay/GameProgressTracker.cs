@@ -11,8 +11,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.Frameworks.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -27,12 +30,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
         public const string GameSessionKey = "WordisSession";
+        public const string WordsStatsKey = "WordisWordsStats";
+
+        private ConcurrentDictionary<string, int> _wordsStats;
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void OnEnable()
+        private void Start()
         {
+            _wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
+                ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
+                    PlayerPrefs.GetString(WordsStatsKey))
+                : new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -42,13 +52,31 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
         }
 
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.SetString(WordsStatsKey, JsonConvert.SerializeObject(_wordsStats));
+        }
+
+        public void AddWordsStats(IReadOnlyList<WordMatchEx> matches)
+        {
+            foreach (WordMatchEx match in matches)
+            {
+                _wordsStats.AddOrUpdate(match.Word, 1, (_, c) => c + 1);
+            }
+        }
+
+        public IReadOnlyDictionary<string, int> GetWordStats()
+        {
+            return _wordsStats;
+        }
+
         /// <summary>
         /// Clears the progress of current gameplay.
         /// </summary>
-        public void ClearProgressData()
-        {
-            DeleteProgress();
-        }
+        //public void ClearProgressData()
+        //{
+        //    DeleteProgress();
+        //}
 
         /// <summary>
         /// OnApplicationPause is set to true or false.
@@ -63,7 +91,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (pause)
             {
-                
+
             }
         }
 
@@ -118,9 +146,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Clears game progress if any for the given game mode.
         /// </summary>
-        public void DeleteProgress()
-        {
-            //PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
-        }
+        //public void DeleteProgress()
+        //{
+        //    //PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
+        //}
     }
 }
