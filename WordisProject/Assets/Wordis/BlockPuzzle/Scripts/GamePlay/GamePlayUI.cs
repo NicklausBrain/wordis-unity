@@ -94,6 +94,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public GamePlayUI SetLevel(IWordisGameLevel gameLevel = null)
         {
             _wordisGameLevel = gameLevel ?? DefaultLevel;
+            _wordisGameLevel = _wordisGameLevel.WithOutput(ShowMessage);
 
             return this;
         }
@@ -201,13 +202,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             PauseGame();
             gameBoard.Clear();
             scoreManager.Clear();
-            _wordisGameLevel = _wordisGameLevel
-                .Reset()
-                .WithOutput(message =>
-                {
-                    ShowMessage(message);
-                    Debug.LogWarning(message);
-                });
+            _wordisGameLevel = _wordisGameLevel.Reset();
 
             UIController.Instance.HideTips();
 
