@@ -139,7 +139,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
 
-                GameProgressTracker.Instance.SaveSession();
+                //GameProgressTracker.Instance.SaveSession();
             }
         }
 
@@ -226,7 +226,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 // 2. refresh score
                 scoreManager.ShowScore(gameState.Score.Value);
                 // 3. update word matching stats
-                GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
+                //GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
             }
 
             var activeChar = gameState.ActiveChar;

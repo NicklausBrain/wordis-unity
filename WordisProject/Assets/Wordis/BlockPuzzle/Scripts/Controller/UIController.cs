@@ -238,6 +238,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 case nameof(SelectLevel):
                     selectLevelScreen.Deactivate();
                     break;
+                case nameof(Statistics):
+                    statisticsScreen.Deactivate();
+                    break;
                 case "GamePlay":
                     break;
                 case "Shop":
@@ -257,9 +260,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                     break;
                 case "SelectLanguage":
                     languageSelectionScreen.Deactivate();
-                    break;
-                case nameof(Statistics):
-                    statisticsScreen.Deactivate();
                     break;
                 case "PauseGame":
                     pauseGameScreen.Deactivate();
