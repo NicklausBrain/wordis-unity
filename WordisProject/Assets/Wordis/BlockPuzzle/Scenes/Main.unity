@@ -19276,6 +19276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statItemTemplate: {fileID: 2041886131}
+  _rootContent: {fileID: 1663899594}
   _statsListContent: {fileID: 750863084}
   _wordsUnlockedCounter: {fileID: 2033611731}
   _maxScoreCounter: {fileID: 1509058439}

@@ -17,6 +17,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
     {
 #pragma warning disable 0649
         [SerializeField] GameObject _statItemTemplate;
+        [SerializeField] GameObject _rootContent;
         [SerializeField] GameObject _statsListContent;
         [SerializeField] GameObject _wordsUnlockedCounter;
         [SerializeField] GameObject _maxScoreCounter;
@@ -41,6 +42,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         private void OnEnable()
         {
             PrepareStatsScreen();
+            // scroll to the top
+            _rootContent.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
         }
 
         private void PrepareStatsScreen()
@@ -59,6 +62,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
+
+            Enumerable.Range(0, 10).ToList().ForEach(_ => CreateDummy()); // UI hack for the scroll
         }
 
         private void SetWordsUnlockedCounter(int uniqueWordsUnlocked)
@@ -89,6 +94,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             // set word definition callback
             statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
+        }
+        private void CreateDummy()
+        {
+            GameObject statItem = Instantiate(_statItemTemplate);
+            statItem.transform.SetParent(_statsListContent.transform);
+            statItem.name = $"itm-dummy-imt";
+            statItem.transform.localScale = Vector3.one;
+            statItem.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+            statItem.transform.SetAsLastSibling();
+            statItem.GetComponentsInChildren<Text>().First().text = string.Empty;
+            statItem.GetComponentsInChildren<Text>().Last().text = string.Empty;
+            statItem.SetActive(true);
+
+            // set word definition callback
+            //statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
         }
 
         /// <summary>
