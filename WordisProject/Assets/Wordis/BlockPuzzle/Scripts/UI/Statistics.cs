@@ -47,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             StartCoroutine(nameof(ScrollToTop));
         }
 
-        IEnumerator ScrollToTop()
+        private IEnumerator ScrollToTop()
         {
             var scrollRect = _rootContent.GetComponent<ScrollRect>();
             yield return new WaitForEndOfFrame();
@@ -65,6 +65,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             // display unlocked words counter
             SetWordsUnlockedCounter(wordStats.Count);
+
+            // remove dynamic items, stands for existing 2 buttons
+            for (int i = 2; i < _statsListContent.transform.childCount; i++)
+            {
+                _statsListContent.transform.GetChild(i).gameObject.Deactivate();
+            }
 
             // display unlocked words ordered by alphabet
             foreach (var wordStat in wordStats.OrderBy(p => p.Key))
@@ -115,7 +121,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             if (definitions.Any())
             {
-                UIController.Instance.ShowMessage(word, definitions[0].Definition);
+                UIController.Instance.ShowMessage(word, definitions[0].FullDefinition);
             }
         }
     }

@@ -32,6 +32,11 @@
             }
         }
 
+        /// <summary>
+        /// Untruncated word definition.
+        /// </summary>
+        public string FullDefinition => _definition;
+
         public static WordDefinition Parse(string rawDefinition)
         {
             var parts = rawDefinition.Split(new[] { '(', ')' });
