@@ -41,6 +41,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.IsNotNull(restoredGame);
             Assert.IsNotEmpty(restoredGame.GameEvents);
             Assert.IsNotEmpty(restoredGame.GameObjects);
+            Assert.IsNotEmpty(restoredGame.Matches.All); // RAT
         }
     }
 }
