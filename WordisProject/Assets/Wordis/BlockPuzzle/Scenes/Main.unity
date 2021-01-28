@@ -19193,7 +19193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statItemTemplate: {fileID: 744686060}
-  _statsListContent: {fileID: 1433346124}
+  _statsListContent: {fileID: 750863084}
 --- !u!95 &979793266
 Animator:
   serializedVersion: 3

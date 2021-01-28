@@ -39,10 +39,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// </summary>
         private void OnEnable()
         {
+            var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
             _wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
                 ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
-                    PlayerPrefs.GetString(WordsStatsKey))
-                : new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                      PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
+                : emptyDict;
         }
 
         /// <summary>
