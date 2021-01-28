@@ -9787,7 +9787,6 @@ GameObject:
   - component: {fileID: 383734332}
   - component: {fileID: 383734331}
   - component: {fileID: 383734330}
-  - component: {fileID: 383734329}
   - component: {fileID: 383734328}
   m_Layer: 5
   m_Name: itm-unlocked-words
@@ -9830,18 +9829,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorTag: DCDayBG
---- !u!225 &383734329
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383734326}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &383734330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42475,7 +42462,6 @@ GameObject:
   - component: {fileID: 2041886138}
   - component: {fileID: 2041886137}
   - component: {fileID: 2041886136}
-  - component: {fileID: 2041886134}
   - component: {fileID: 2041886133}
   m_Layer: 5
   m_Name: itm-stat-template
@@ -42518,18 +42504,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorTag: DCDayBG
---- !u!225 &2041886134
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041886131}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &2041886136
 MonoBehaviour:
   m_ObjectHideFlags: 0
