@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
@@ -74,8 +75,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             statItem.GetComponentsInChildren<Text>().Last().text = $"{counter}";
             statItem.SetActive(true);
 
-            //// set level startup callback
-            //statItem.GetComponent<Button>().onClick.AddListener(() => StartLevel(level));
+            // set word definition callback
+            var btn = statItem.GetComponent<Button>();
+            btn.enabled = true;
+            btn.onClick.AddListener(() => ShowDefinition(word));
         }
 
         private void CreateMoreToComeButton()
@@ -94,15 +97,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// <summary>
         /// Level button listener
         /// </summary>
-        private void StartLevel(IWordisGameLevel level)
+        private void ShowDefinition(string word)
         {
-            //if (InputManager.Instance.canInput())
-            //{
-            //    InputManager.Instance.DisableTouchForDelay();
-            //    UIFeedback.Instance.PlayButtonPressEffect();
-            //    UIController.Instance.LoadGamePlay(level);
-            //    gameObject.Deactivate();
-            //}
+            Debug.LogWarning("ShowDefinition  " + word);
+
+            var defineFn = new DefineEngWordFunc();
+            var definitions = defineFn.Invoke(word);
+
+            if (definitions.Any())
+            {
+                UIController.Instance.ShowMessage(word, definitions[0].Definition);
+            }
         }
     }
 }
