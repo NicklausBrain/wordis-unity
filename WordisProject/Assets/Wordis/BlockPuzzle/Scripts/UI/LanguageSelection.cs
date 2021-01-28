@@ -33,6 +33,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 #pragma warning restore 0649
 
         /// <summary>
+        /// Close button listener.
+        /// </summary>
+        public void OnCloseButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                UIFeedback.Instance.PlayButtonPressEffect();
+                gameObject.Deactivate();
+            }
+        }
+
+        /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
@@ -89,16 +101,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             langButton.GetComponentInChildren<Text>().text = "More to come...";
             langButton.GetComponent<Button>().interactable = false;
             langButton.SetActive(true);
-        }
-
-        // Close button listener.
-        public void OnCloseButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                gameObject.Deactivate();
-            }
         }
     }
 }

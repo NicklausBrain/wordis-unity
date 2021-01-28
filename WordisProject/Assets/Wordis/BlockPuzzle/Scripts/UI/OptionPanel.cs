@@ -80,6 +80,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         }
 
         /// <summary>
+        /// Opens statistics popup.
+        /// </summary>
+        public void OnStatsButtonPressed()
+        {
+            if (InputManager.Instance.canInput())
+            {
+                InputManager.Instance.DisableTouchForDelay();
+                UIFeedback.Instance.PlayButtonPressEffect();
+                UIController.Instance.statisticsScreen.Activate();
+            }
+        }
+
+        /// <summary>
         /// Opens review popup or store review nag.
         /// </summary>
         public void OnRateButtonPressed()

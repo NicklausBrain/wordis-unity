@@ -52,11 +52,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// </summary>
         private void Start()
         {
-            
-        }
-
-        private void OnEnable()
-        {
             PrepareStatsScreen();
         }
 

@@ -37,7 +37,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
-        private void Start()
+        private void OnEnable()
         {
             _wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
                 ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
@@ -97,16 +97,14 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         public void SaveSession()
         {
-            var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
+            //var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
 
-            Debug.LogWarning(gameState);
+            //Debug.LogWarning(gameState);
 
-            //var restoredGame = new WordisGame();
-            var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
+            ////var restoredGame = new WordisGame();
+            //var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
 
-
-
-            Debug.LogWarning(restored);
+            //Debug.LogWarning(restored);
         }
 
         /// <summary>

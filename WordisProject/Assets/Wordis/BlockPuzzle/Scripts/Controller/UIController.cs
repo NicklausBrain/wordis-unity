@@ -54,6 +54,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         public GameObject dailyRewardScreen;
         public GameObject gameOverScreen;
         public GameObject languageSelectionScreen;
+        public GameObject statisticsScreen;
         public GameObject currencyBalanceButton;
 
         public GameObject topTipView;
@@ -227,7 +228,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// On pressing back button of device, the last added popup/screen will get deactivated based on state of the game. 
         /// </summary>
-        void ProcessBackButton(string currentScreen)
+        private void ProcessBackButton(string currentScreen)
         {
             switch (currentScreen)
             {
@@ -237,33 +238,29 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
                 case nameof(SelectLevel):
                     selectLevelScreen.Deactivate();
                     break;
-
                 case "GamePlay":
                     break;
-
                 case "Shop":
                     shopScreen.Deactivate();
                     break;
-
                 case "Settings":
                     settingScreen.Deactivate();
                     break;
-
                 case "CommonMessageScreen":
                     commonMessageScreen.Deactivate();
                     break;
-
                 case "PurchaseSuccessScreen":
                     purchaseSuccessScreen.Deactivate();
                     break;
-
                 case "ReviewAppScreen":
                     reviewScreen.Deactivate();
                     break;
                 case "SelectLanguage":
                     languageSelectionScreen.Deactivate();
                     break;
-
+                case nameof(Statistics):
+                    statisticsScreen.Deactivate();
+                    break;
                 case "PauseGame":
                     pauseGameScreen.Deactivate();
                     break;
@@ -273,7 +270,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Opens a quit game popup.
         /// </summary>
-        void QuitGamePopup()
+        private void QuitGamePopup()
         {
             new CommonDialogueInfo().SetTitle(LocalizationManager.Instance.GetTextWithTag("txtQuitTitle"))
                 .SetMessage(LocalizationManager.Instance.GetTextWithTag("txtQuitConfirm"))
@@ -322,15 +319,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         }
 
         /// <summary>
-        /// Unload unused asset. please call this on safe place as it might give a slight lag. 
-        /// </summary>
-        public void ClearCache()
-        {
-            Resources.UnloadUnusedAssets();
-            System.GC.Collect();
-        }
-
-        /// <summary>
         /// Shows Consent Dialogue.
         /// </summary>
         public void ShowConsentDialogue()
@@ -374,7 +362,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         /// <summary>
         /// Controls the ordered stack.
         /// </summary>
-        void ShowDialogFromStack()
+        private void ShowDialogFromStack()
         {
             if (_orderedPopupStack.Count > 0)
             {
