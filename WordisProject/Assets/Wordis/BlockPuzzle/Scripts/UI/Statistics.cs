@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Functions;
-using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -48,7 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             SetWordsUnlockedCounter(wordStats.Count);
 
-            foreach (var wordStat in wordStats)
+            foreach (var wordStat in wordStats.OrderBy(p => p.Key)) // order the words
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
@@ -76,23 +75,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             statItem.SetActive(true);
 
             // set word definition callback
-            var btn = statItem.GetComponent<Button>();
-            btn.enabled = true;
-            btn.onClick.AddListener(() => ShowDefinition(word));
+            statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
         }
 
-        private void CreateMoreToComeButton()
-        {
-            //GameObject statItem = Instantiate(_statItemTemplate);
-            //statItem.transform.SetParent(_levelListContent.transform);
-            //statItem.name = "moreToComeBtn";
-            //statItem.transform.localScale = Vector3.one;
-            //statItem.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-            //statItem.transform.SetAsLastSibling();
-            //statItem.GetComponentInChildren<Text>().text = "More to come...";
-            //statItem.GetComponent<Button>().interactable = false;
-            //statItem.SetActive(true);
-        }
 
         /// <summary>
         /// Level button listener
