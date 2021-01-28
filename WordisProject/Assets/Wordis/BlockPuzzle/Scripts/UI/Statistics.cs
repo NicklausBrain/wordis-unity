@@ -35,7 +35,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        private void Start()
+        private void OnEnable()
         {
             PrepareStatsScreen();
         }
@@ -48,8 +48,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
-
-            //CreateMoreToComeButton();
         }
 
         /// <summary>

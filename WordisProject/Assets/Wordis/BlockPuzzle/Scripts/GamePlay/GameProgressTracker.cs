@@ -34,33 +34,53 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private ConcurrentDictionary<string, int> _wordsStats;
 
-        /// <summary>
-        /// This function is called when the behaviour becomes enabled or active.
-        /// </summary>
-        private void OnEnable()
+        private void Awake()
         {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.Awake");
+
             var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            _wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
+            _wordsStats = _wordsStats ?? (PlayerPrefs.HasKey(WordsStatsKey)
                 ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
                       PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
-                : emptyDict;
+                : emptyDict);
         }
+
+        ///// <summary>
+        ///// This function is called when the behaviour becomes enabled or active.
+        ///// </summary>
+        //private void OnEnable()
+        //{
+        //    //Debug.LogWarning($"{nameof(GameProgressTracker)}.OnEnable");
+
+        //    //var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        //    //_wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
+        //    //    ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
+        //    //          PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
+        //    //    : emptyDict;
+
+        //    //Debug.LogWarning($"{nameof(_wordsStats)}={_wordsStats.Count}");
+        //}
 
         /// <summary>
         /// This function is called when the behaviour becomes enabled or active.
         /// </summary>
         private void OnDisable()
         {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.OnDisable");
         }
 
         private void OnApplicationQuit()
         {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.OnApplicationQuit");
+            Debug.LogWarning($"{nameof(_wordsStats)}={_wordsStats.Count}");
             PlayerPrefs.SetString(WordsStatsKey, JsonConvert.SerializeObject(_wordsStats));
         }
 
         public void AddWordsStats(IReadOnlyList<WordMatchEx> matches)
         {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.AddWordsStats");
             foreach (WordMatchEx match in matches)
             {
                 _wordsStats.AddOrUpdate(match.Word, 1, (_, c) => c + 1);
