@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Functions;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
@@ -18,6 +19,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         [SerializeField] GameObject _statItemTemplate;
         [SerializeField] GameObject _statsListContent;
         [SerializeField] GameObject _wordsUnlockedCounter;
+        [SerializeField] GameObject _maxScoreCounter;
 #pragma warning restore 0649
 
         /// <summary>
@@ -43,11 +45,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
         private void PrepareStatsScreen()
         {
-            var wordStats = GameProgressTracker.Instance.GetWordStats();
+            var progressTracker = GameProgressTracker.Instance;
+            var wordStats = progressTracker.GetWordStats();
 
+            // display highest score (only survival mode for now)
+            SetMaxScoreCounter(progressTracker.GetBestScore(nameof(WordisSurvivalMode)));
+
+            // display unlocked words counter
             SetWordsUnlockedCounter(wordStats.Count);
 
-            foreach (var wordStat in wordStats.OrderBy(p => p.Key)) // order the words
+            // display unlocked words ordered by alphabet
+            foreach (var wordStat in wordStats.OrderBy(p => p.Key))
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
@@ -56,6 +64,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         private void SetWordsUnlockedCounter(int uniqueWordsUnlocked)
         {
             _wordsUnlockedCounter.GetComponent<Text>().text = $"{uniqueWordsUnlocked}";
+        }
+
+        private void SetMaxScoreCounter(int maxScore)
+        {
+            _maxScoreCounter.GetComponent<Text>().text = $"{maxScore}";
         }
 
         /// <summary>
@@ -77,7 +90,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             // set word definition callback
             statItem.GetComponent<Button>().onClick.AddListener(() => ShowDefinition(word));
         }
-
 
         /// <summary>
         /// Level button listener

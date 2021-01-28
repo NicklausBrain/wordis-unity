@@ -88,7 +88,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             #endregion
 
             txtScore.text = _score.ToString("N0");
-            txtBestScore.text = ProfileManager.Instance.GetBestScore(gameLevel)
+            txtBestScore.text = GameProgressTracker.Instance.GetBestScore(gameLevel)
                 .ToString("N0");
         }
 

@@ -14,6 +14,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         WordisSettings Settings { get; }
 
         /// <summary>
+        /// Surrogate ID for internal logic.
+        /// </summary>
+        string Id { get; }
+
+        /// <summary>
         /// How the level is titled.
         /// </summary>
         string Title { get; }

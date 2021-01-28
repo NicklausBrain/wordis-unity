@@ -107,15 +107,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 
             txtScore.text = score.ToString("N0");
 
-            // TODO: check all this logic
-            int bestScore = ProfileManager.Instance.GetBestScore(gameLevel.Title);
-            if (score > bestScore)
-            {
-                bestScore = score;
-                ProfileManager.Instance.SetBestScore(bestScore, gameLevel.Title);
-            }
+            GameProgressTracker.Instance.TrySetBestScore(score, gameLevel.Id);
 
-            txtBestScore.text = bestScore.ToString("N0");
+            txtBestScore.text = GameProgressTracker.Instance.GetBestScore(gameLevel.Id).ToString("N0");
 
             // Number of time game over shown. Also total game play counts.
             _gameOverId = PlayerPrefs.GetInt("gameOverId", 0);
