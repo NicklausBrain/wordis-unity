@@ -100,16 +100,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Gets active level.
-        /// </summary>
-        public IWordisGameLevel CurrentLevel => _wordisGameLevel;
-
-        /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
-        public void RestartGame()
+        /// <param name="restore">Attempt to restore the last session.</param>
+        public void RestartGame(bool restore = false)
         {
-            ClearGame();
+            if (restore)
+            {
+                TryToRestoreGame();
+            }
+            else
+            {
+                ClearGame();
+            }
 
             // Enables gameplay screen if not active.
             if (!gameBoard.gameObject.activeSelf)
@@ -177,10 +180,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        /// <summary>
-        /// This function is called when the behaviour becomes disabled or inactive.
-        /// </summary>
-        private void OnDisable() => ClearGame();
+        private void OnDisable() => ClearGame(dropSession: false);
+
+        private void OnApplicationQuit() => GameProgressTracker.Instance.SaveSession(_wordisGameLevel);
 
         /// <summary>
         /// Will be called on game over.
@@ -197,7 +199,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             UIController.Instance.gameOverScreen.Activate();
         }
 
-        private void ClearGame()
+        private void ClearGame(bool dropSession = true)
         {
             PauseGame();
             gameBoard.Clear();
@@ -206,7 +208,25 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             UIController.Instance.HideTips();
 
-            GameProgressTracker.Instance.DropSession(_wordisGameLevel);
+            if (dropSession)
+            {
+                GameProgressTracker.Instance.DropSession(_wordisGameLevel);
+            }
+        }
+
+        private void TryToRestoreGame()
+        {
+            // todo: generalize
+            if (_wordisGameLevel is WordisSurvivalMode survivalMode &&
+                GameProgressTracker.Instance.HasSession(survivalMode))
+            {
+                var restoredGame = GameProgressTracker.Instance.RestoreSession(survivalMode);
+                _wordisGameLevel = survivalMode.WithUpdatedGame(restoredGame ?? survivalMode.Game);
+            }
+            else
+            {
+                ClearGame();
+            }
         }
 
         private void RefreshPresentation(WordisGame gameState)

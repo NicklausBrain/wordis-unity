@@ -16,7 +16,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var game = new WordisGame(_settings.With(width: 3, height: 4))
                 .With(new ActiveChar(1, 0, 'R'))
                 .With(new StaticChar(1, 2, 'A'))
-                .With(new StaticChar(1, 3, 'T'));
+                .With(new StaticChar(1, 3, 'T'))
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step);
 
             var gameAsJson = WordisGame.ToJson(game);
 
@@ -30,6 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .With(new ActiveChar(1, 0, 'R'))
                 .With(new StaticChar(1, 2, 'A'))
                 .With(new StaticChar(1, 3, 'T'))
+                .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step);
 
             var gameAsJson = WordisGame.ToJson(game);

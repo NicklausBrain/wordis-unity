@@ -6,14 +6,14 @@
             float speed = 1.0f,
             int width = 9,
             int height = 9,
-            int minWordMatch = 3,
+            int minWordLength = 3,
             int waterLevel = 0)
         {
             Speed = speed;
             WaterLevel = waterLevel;
             Width = width;
             Height = height;
-            MinWordLength = minWordMatch;
+            MinWordLength = minWordLength;
         }
 
         /// <summary>
@@ -94,7 +94,7 @@
                 speed: speed ?? Speed,
                 width: width ?? Width,
                 height: height ?? Height,
-                minWordMatch: minWordLength ?? MinWordLength,
+                minWordLength: minWordLength ?? MinWordLength,
                 waterLevel: waterLevel ?? WaterLevel);
     }
 }

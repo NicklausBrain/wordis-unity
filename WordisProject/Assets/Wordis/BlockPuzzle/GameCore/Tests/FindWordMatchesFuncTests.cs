@@ -19,7 +19,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 4,
                 height: 2,
-                minWordMatch: 3);
+                minWordLength: 3);
 
             // [-][C][-][-][-]
             // [X][-][A][T][-]
@@ -48,7 +48,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 2,
                 height: 5,
-                minWordMatch: 3);
+                minWordLength: 3);
 
             // [-][R][-][-][-]
             // [-][A][-][-][-]
@@ -75,7 +75,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 8,
                 height: 3,
-                minWordMatch: 4);
+                minWordLength: 4);
 
             // [-][-][-][E][-][-][-]
             // [F][I][R][-][F][L][Y]
@@ -115,7 +115,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 8,
                 height: 2,
-                minWordMatch: 4);
+                minWordLength: 4);
 
             // [-][-][-][K][-][-][-]
             // [S][I][C][-][I][L][L] - one end - another start
@@ -152,7 +152,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 3,
                 height: 8,
-                minWordMatch: 4);
+                minWordLength: 4);
 
             // [F][-]
             // [I][-]
@@ -197,7 +197,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 3,
                 height: 8,
-                minWordMatch: 4);
+                minWordLength: 4);
 
             // [S][-]
             // [I][-]
@@ -239,7 +239,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 5,
                 height: 4,
-                minWordMatch: 3);
+                minWordLength: 3);
 
             // [F]
             // [-][I][R][E]
@@ -283,7 +283,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 4,
                 height: 2,
-                minWordMatch: 4);
+                minWordLength: 4);
 
             // [-][C][-][-][-]
             // [X][-][A][T][-]
@@ -305,7 +305,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: 4,
                 height: 2,
-                minWordMatch: 3);
+                minWordLength: 3);
 
             var chars = new[]
             {
@@ -331,7 +331,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             var settings = new WordisSettings(
                 width: chars.Length,
                 height: chars.Length,
-                minWordMatch: 3);
+                minWordLength: 3);
 
             var matrix = chars
                 .SelectMany((_, y) => chars.Select((@char, x) => new StaticChar(x, y, @char)))

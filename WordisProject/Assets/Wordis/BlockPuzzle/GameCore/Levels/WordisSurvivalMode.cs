@@ -10,7 +10,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         private static readonly WordisSettings DefaultSettings = new WordisSettings(
             width: 9,
             height: 9,
-            minWordMatch: 3,
+            minWordLength: 3,
             waterLevel: 0);
 
         private WordisSurvivalMode(WordisGame game) : base(game)

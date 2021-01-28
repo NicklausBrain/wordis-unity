@@ -16,7 +16,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 speed: 1f,
                 width: 3,
                 height: 5,
-                minWordMatch: 3);
+                minWordLength: 3);
 
         private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
 

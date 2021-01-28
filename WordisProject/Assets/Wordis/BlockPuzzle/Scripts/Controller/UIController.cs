@@ -408,7 +408,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             gameScreen
                 .GetComponent<GamePlayUI>()
                 .SetLevel(gameLevel)
-                .RestartGame();
+                .RestartGame(restore: true);
         }
 
         /// <summary>

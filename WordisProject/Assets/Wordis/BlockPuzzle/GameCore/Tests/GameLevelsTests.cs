@@ -133,7 +133,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         private class TestLevel : WordisGameLevelBase<TestLevel>, IWordisGameLevel
         {
             private static readonly WordisSettings DefaultSettings =
-                new WordisSettings(width: 3, height: 3, minWordMatch: 3);
+                new WordisSettings(width: 3, height: 3, minWordLength: 3);
 
             private TestLevel(WordisGame game) : base(game)
             {

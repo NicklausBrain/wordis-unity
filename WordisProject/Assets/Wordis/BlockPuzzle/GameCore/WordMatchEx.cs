@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore.Objects;
+using Newtonsoft.Json;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
@@ -7,15 +10,26 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
     /// </summary>
     public class WordMatchEx : WordMatch
     {
+        [JsonConstructor]
+        private WordMatchEx(
+            IEnumerable<WordisChar> chars,
+            int gameEventId,
+            DateTimeOffset timestamp)
+            : base(chars)
+        {
+            GameEventId = gameEventId;
+            Timestamp = timestamp;
+        }
+
         public WordMatchEx(
             WordMatch wordMatch,
             int gameEventId,
             DateTimeOffset timestamp)
-            : base(
-                wordMatch.MatchedChars)
+            : this(
+                wordMatch.MatchedChars,
+                gameEventId,
+                timestamp)
         {
-            GameEventId = gameEventId;
-            Timestamp = timestamp;
         }
 
         /// <summary>

@@ -100,9 +100,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (gameLevel.Id == nameof(WordisSurvivalMode))
             {
-                var gameAsJson = WordisGame.ToJson(gameLevel.Game);
+                try
+                {
+                    var gameAsJson = WordisGame.ToJson(gameLevel.Game);
 
-                PlayerPrefs.SetString($"{GameSessionKey}_{gameLevel.Id}", gameAsJson);
+                    PlayerPrefs.SetString($"{GameSessionKey}_{gameLevel.Id}", gameAsJson);
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError(exception);
+                }
             }
         }
 
@@ -110,11 +117,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (gameLevel.Id == nameof(WordisSurvivalMode))
             {
-                var gameAsJson = PlayerPrefs.GetString($"{GameSessionKey}_{gameLevel.Id}");
+                try
+                {
+                    var gameAsJson = PlayerPrefs.GetString($"{GameSessionKey}_{gameLevel.Id}");
 
-                var restoredGame = WordisGame.FromJson(gameAsJson);
+                    var restoredGame = WordisGame.FromJson(gameAsJson);
 
-                return restoredGame;
+                    return restoredGame;
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError(exception);
+                }
             }
 
             return null;
