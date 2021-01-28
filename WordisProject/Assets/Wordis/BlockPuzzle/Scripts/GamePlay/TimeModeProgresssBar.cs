@@ -50,7 +50,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Game-over callback.
         /// </summary>
-        private void GamePlayUI_OnGameOverEvent(GameMode gameMode)
+        private void GamePlayUI_OnGameOverEvent()
         {
             StopTimer();
         }
@@ -58,7 +58,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// <summary>
         /// Game pause callback.
         /// </summary>
-        private void GamePlayUI_OnGamePausedEvent(GameMode gameMode, bool paused)
+        private void GamePlayUI_OnGamePausedEvent(bool paused)
         {
             if (paused)
             {

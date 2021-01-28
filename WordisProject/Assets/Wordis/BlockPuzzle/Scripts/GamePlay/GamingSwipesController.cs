@@ -9,6 +9,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (SwipeManager.IsSwipingLeft())
             {
+                // TODO: make a haptic feedback
                 GamePlayUI.Instance.HandleGameEvent(GameEvent.Left);
                 Debug.Log("LEFT SWIPE");
             }

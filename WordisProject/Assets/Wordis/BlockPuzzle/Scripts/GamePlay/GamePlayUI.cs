@@ -12,6 +12,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.BlockPuzzle.GameCore.Functions;
@@ -98,6 +99,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
+        /// Gets active level.
+        /// </summary>
+        public IWordisGameLevel CurrentLevel => _wordisGameLevel;
+
+        /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
         public void RestartGame()
@@ -132,6 +138,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
+
+                //GameProgressTracker.Instance.SaveSession();
             }
         }
 
@@ -194,7 +202,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             PauseGame();
             gameBoard.Clear();
             scoreManager.Clear();
-            GameProgressTracker.Instance.ClearProgressData();
             _wordisGameLevel = _wordisGameLevel
                 .Reset()
                 .WithOutput(message =>
@@ -204,6 +211,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 });
 
             UIController.Instance.HideTips();
+
+            //GameProgressTracker.Instance.ClearProgressData();
         }
 
         private void RefreshPresentation(WordisGame gameState)
@@ -212,7 +221,12 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (gameState.LastEvent == GameEvent.Step &&
                 gameState.Matches.Last.Any()) // on word match
             {
-                DisplayMatches(gameState);
+                // 1. display matches
+                DisplayMatches(gameState.Matches.Last);
+                // 2. refresh score
+                scoreManager.ShowScore(gameState.Score.Value);
+                // 3. update word matching stats
+                GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
             }
 
             var activeChar = gameState.ActiveChar;
@@ -228,11 +242,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        private void DisplayMatches(WordisGame gameState)
+        private void DisplayMatches(IReadOnlyList<WordMatchEx> newMatches)
         {
-            var newMatches = gameState.Matches.Last;
-
-            // play nice animation on extra match
+            // 0. play nice animation on extra match
             if (newMatches.Count > 1)
             {
                 highScoreParticle.GetComponent<ParticleSystem>().Play();
@@ -251,13 +263,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     .Select(c => gameBoard.allColumns[c.X][c.Y])
                     .ToArray();
 
-            // 2. display score
-            scoreManager.ShowScore(gameState.Score.Value);
-
-            // 3. animate blocks destruction
+            // 2. animate blocks destruction
             StartCoroutine(GameBoard.ClearAllBlocks(_wordisGameLevel.Settings, blocksToClear));
 
-            // 4. play break sound
+            // 3. play break sound
             AudioController.Instance.PlayLineBreakSound(blocksToClear.Length);
         }
 
@@ -296,11 +305,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        private void ShowMessage(string message)
-        {
-            inGameMessage.ShowMessage(message);
-        }
-
         private void ShowWordDefinition(string word)
         {
             var definitions = DefineWordFunc.Invoke(word);
@@ -329,5 +333,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     duration: 7F);
             }
         }
+
+        private void ShowMessage(string message) =>
+            inGameMessage.ShowMessage(message);
     }
 }

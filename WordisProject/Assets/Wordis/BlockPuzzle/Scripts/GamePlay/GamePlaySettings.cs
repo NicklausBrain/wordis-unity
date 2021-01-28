@@ -15,15 +15,6 @@ using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
-    // Game Modes.
-    public enum GameMode
-    {
-        Tutorial,
-        Default,
-        Timed,
-        Advance
-    }
-
     /// <summary>
     /// This scriptable object instance contains all the info regarding the game setting for each game mode.static
     /// This settings can be updated from Hyperbyte -> Gameplay Setting menu item.
@@ -78,17 +69,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         /// Lover -> faster game.
         /// </summary>
         public float gameSpeed = 1.0f;
-    }
-
-    /// <summary>
-    /// Block shape info like prefab reference, sprite tag and probability of spawning it.
-    /// </summary>
-    [System.Serializable]
-    public class BlockShapeInfo
-    {
-        public GameObject blockShape;
-        public string blockSpriteTag;
-        public int spawnProbability;
     }
 
     /// <summary>

@@ -57,21 +57,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         }
 
         /// <summary>
-        /// Action on pressing play button on home screen. This is not used and Select Mode screen is also not in use.
-        /// </summary>
-        public void OnPlayButtonPressed()
-        {
-            if (InputManager.Instance.canInput())
-            {
-                InputManager.Instance.DisableTouchForDelay();
-                UIFeedback.Instance.PlayButtonPressEffect();
-
-                //Opens mode selection screen.
-                UIController.Instance.selectLevelScreen.Activate();
-            }
-        }
-
-        /// <summary>
         /// Classic mode button listener.
         /// </summary>
         public void OnClassicModeButtonPressed()

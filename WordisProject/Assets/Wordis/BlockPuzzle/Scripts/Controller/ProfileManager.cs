@@ -63,7 +63,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
         [HideInInspector] public List<int> gameOverReviewSessions = new List<int>();
 
         // Profile manager has initialized or not.
-        bool _isInitialized = false;
+        bool _isInitialized = true;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before

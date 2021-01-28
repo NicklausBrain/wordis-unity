@@ -11,8 +11,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Assets.Wordis.BlockPuzzle.GameCore;
 using Assets.Wordis.Frameworks.Utils;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -24,185 +28,71 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     /// </summary>
     public class GameProgressTracker : Singleton<GameProgressTracker>
     {
-        ProgressData _currentProgressData;
+        public const string GameSessionKey = "WordisSession";
+        public const string WordsStatsKey = "WordisWordsStats";
 
-        /// <summary>
-        /// This function is called when the behaviour becomes enabled or active.
-        /// </summary>
-        private void OnEnable()
+        private ConcurrentDictionary<string, int> _wordsStats;
+
+        private void Awake()
         {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.Awake");
+
+            var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            _wordsStats = _wordsStats ?? (PlayerPrefs.HasKey(WordsStatsKey)
+                ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
+                      PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
+                : emptyDict);
         }
 
         /// <summary>
-        /// This function is called when the behaviour becomes enabled or active.
-        /// </summary>
-        private void OnDisable()
-        {
-        }
-
-        /// <summary>
-        /// Creates a progress data instance on game start and will be maintained throughout game.
-        /// </summary>
-        private void GamePlayUI_OnGameStartedEvent(GameMode obj)
-        {
-            _currentProgressData = new ProgressData();
-        }
-
-        /// <summary>
-        /// Save progress on calling manually. Typically will be called after rescue done.
-        /// </summary>
-        public void SaveProgressExplicitly()
-        {
-            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            //{
-            //    Invoke(nameof(SaveProgress), 2F);
-            //}
-        }
-
-        /// <summary>
-        /// Save progress after block shape places.
-        /// </summary>
-        private void GamePlayUI_OnShapePlacedEvent()
-        {
-            //if (GamePlayUI.Instance.currentModeSettings.saveProgress)
-            //{
-            //    Invoke(nameof(SaveProgress), 1F);
-            //}
-        }
-
-        /// <summary>
-        /// Clears the progress of current gameplay on game over.
-        /// </summary>
-        private void GamePlayUI_OnGameOverEvent(GameMode currentMode)
-        {
-            ClearProgressData();
-        }
-
-        /// <summary>
-        /// Clears the progress of current gameplay.
-        /// </summary>
-        public void ClearProgressData()
-        {
-            _currentProgressData = null;
-            DeleteProgress();
-        }
-
-        /// <summary>
-        /// If you want to further optimize progress saving operation, then you can move save progress call to OnApplicationPause(true) instead of GamePlayUI_OnShapePlacedEvent. 
+        /// OnApplicationPause is set to true or false.
+        /// Normally, false is the value returned by the OnApplicationPause message.
+        /// This means the game is running normally in the editor.
+        /// If an editor window such as the Inspector is chosen the game is paused and OnApplicationPause returns true.
+        /// When the game window is selected and active OnApplicationPause again returns false.
+        /// True means that the game is not active.
         /// </summary>
         /// <param name="pause"></param>
         private void OnApplicationPause(bool pause)
         {
             if (pause)
             {
-                if (_currentProgressData != null)
-                {
-                }
+
             }
         }
 
-        /// <summary>
-        /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
-        /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
-        /// </summary>
-        private void SaveProgress(GameMode gameMode = GameMode.Default)
+        private void OnApplicationQuit()
         {
-            if (_currentProgressData != null)
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.OnApplicationQuit");
+            Debug.LogWarning($"{nameof(_wordsStats)}={_wordsStats.Count}");
+            PlayerPrefs.SetString(WordsStatsKey, JsonConvert.SerializeObject(_wordsStats));
+        }
+
+        public void AddWordsStats(IReadOnlyList<WordMatchEx> matches)
+        {
+            Debug.LogWarning($"{nameof(GameProgressTracker)}.AddWordsStats");
+            foreach (WordMatchEx match in matches)
             {
-                string[] gridData = new string[GameBoard.Instance.allRows.Count];
-                int rowIndex = 0;
-
-                // Reads the status of all elements from the board grid.
-                foreach (List<Block> blockRow in GameBoard.Instance.allRows)
-                {
-                    string row = string.Empty;
-                    foreach (Block b in blockRow)
-                    {
-                        row = row == string.Empty
-                            ? $"{b.isAvailable}-{b.assignedSpriteTag}"
-                            : string.Concat(row, $",{b.isAvailable}-{b.assignedSpriteTag}");
-                    }
-
-                    gridData[rowIndex] = row;
-                    rowIndex++;
-                }
-
-                _currentProgressData.gridData = gridData;
-
-                // Attached all the fetched data to progress data class instance.
-                _currentProgressData.score = GamePlayUI.Instance.scoreManager.GetScore();
-                PlayerPrefs.SetString($"gameProgress_{gameMode}",
-                    JsonUtility.ToJson(_currentProgressData));
+                _wordsStats.AddOrUpdate(match.Word, 1, (_, c) => c + 1);
             }
         }
 
-        public bool HasGameProgress(GameMode gameMode = GameMode.Default)
+        public IReadOnlyDictionary<string, int> GetWordStats()
         {
-            return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
+            return _wordsStats;
         }
 
-        /// <summary>
-        /// Returns game progress for the given mode if any.
-        /// </summary>
-        public ProgressData GetGameProgress(GameMode gameMode = GameMode.Default)
+        public void SaveSession()
         {
-            if (HasGameProgress(gameMode))
-            {
-                ProgressData progressData = JsonUtility.FromJson<ProgressData>(
-                    PlayerPrefs.GetString($"gameProgress_{gameMode}"));
-                if (progressData != null)
-                {
-                    return progressData;
-                }
-            }
+            //var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
 
-            return null;
-        }
+            //Debug.LogWarning(gameState);
 
-        /// <summary>
-        /// Clears game progress if any for the given game mode.
-        /// </summary>
-        public void DeleteProgress(GameMode gameMode = GameMode.Default)
-        {
-            PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
-        }
-    }
+            ////var restoredGame = new WordisGame();
+            //var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
 
-    /// <summary>
-    /// Progress data class will be converted to json after preparing it to save game progress.
-    /// </summary>
-    public class ProgressData
-    {
-        public string[] gridData;
-
-        public int score;
-        public int totalLinesCompleted;
-        public bool rescueDone;
-
-        public ProgressData()
-        {
-        }
-    }
-
-    /// <summary>
-    /// Class that contains info of block shape.
-    /// </summary>
-    [System.Serializable]
-    public class ShapeInfo
-    {
-        public bool isAdvanceShape = false;
-        public string shapeName;
-        public float shapeRotation;
-
-        // Class constructor with required parameters.
-        public ShapeInfo(
-            bool isAdvanceShape,
-            string shapeName,
-            float shapeRotation)
-        {
-            this.isAdvanceShape = isAdvanceShape;
-            this.shapeName = shapeName;
-            this.shapeRotation = shapeRotation;
+            //Debug.LogWarning(restored);
         }
     }
 }
