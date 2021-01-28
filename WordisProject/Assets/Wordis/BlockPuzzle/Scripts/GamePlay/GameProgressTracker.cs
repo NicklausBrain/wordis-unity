@@ -30,6 +30,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
         public const string GameSessionKey = "WordisSession";
         public const string WordsStatsKey = "WordisWordsStats";
+        public const string BestScoreKey = "BestScore";
 
         private ConcurrentDictionary<string, int> _wordsStats;
 
@@ -78,6 +79,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
+
         public IReadOnlyDictionary<string, int> GetWordStats()
         {
             return _wordsStats;
@@ -93,6 +95,29 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             //var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
 
             //Debug.LogWarning(restored);
+        }
+
+        /// <summary>
+        /// Returns best score for the given level.
+        /// </summary>
+        public int GetBestScore(string gameLevel)
+        {
+            return PlayerPrefs.HasKey($"{BestScoreKey}_{gameLevel}")
+                ? PlayerPrefs.GetInt($"{BestScoreKey}_{gameLevel}", 0)
+                : 0;
+        }
+
+        /// <summary>
+        /// Saves best for the give mode if it bigger than existing.
+        /// </summary>
+        public void TrySetBestScore(int score, string gameLevel)
+        {
+            int lastBestScore = GetBestScore(gameLevel);
+
+            if (lastBestScore < score)
+            {
+                PlayerPrefs.SetInt($"{BestScoreKey}_{gameLevel}", score);
+            }
         }
     }
 }

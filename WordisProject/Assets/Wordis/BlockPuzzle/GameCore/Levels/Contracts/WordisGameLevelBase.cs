@@ -15,6 +15,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts
         }
 
         /// <inheritdoc cref="IWordisGameLevel" />
+        public string Id => this.GetType().Name;
+
+        /// <inheritdoc cref="IWordisGameLevel" />
         public abstract string Title { get; }
 
         /// <inheritdoc cref="IWordisGameLevel" />

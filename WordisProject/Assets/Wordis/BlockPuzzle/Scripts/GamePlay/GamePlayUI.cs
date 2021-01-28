@@ -118,7 +118,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             // Generated gameplay grid.
             gameBoard.boardGenerator.GenerateBoard(_wordisGameLevel.Settings);
-            scoreManager.Init(_wordisGameLevel.Title);
+            scoreManager.Init(_wordisGameLevel.Id);
 
             ShowMessage(_wordisGameLevel.Title); // move to TIP area? move to level?
 

@@ -230,20 +230,5 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Controller
             return true;
         }
 
-        /// <summary>
-        /// Returns best score for the given mode.
-        /// </summary>
-        public int GetBestScore(string gameLevel)
-        {
-            return PlayerPrefs.GetInt($"bestScore_{gameLevel}", 0);
-        }
-
-        /// <summary>
-        /// Saves best for the give mode.
-        /// </summary>
-        public void SetBestScore(int score, string gameLevel)
-        {
-            PlayerPrefs.SetInt($"bestScore_{gameLevel}", score);
-        }
     }
 }
