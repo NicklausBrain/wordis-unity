@@ -17,6 +17,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
 #pragma warning disable 0649
         [SerializeField] GameObject _statItemTemplate;
         [SerializeField] GameObject _statsListContent;
+        [SerializeField] GameObject _wordsUnlockedCounter;
 #pragma warning restore 0649
 
         /// <summary>
@@ -44,10 +45,17 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
         {
             var wordStats = GameProgressTracker.Instance.GetWordStats();
 
+            SetWordsUnlockedCounter(wordStats.Count);
+
             foreach (var wordStat in wordStats)
             {
                 CreateWordStatItem(wordStat.Key, wordStat.Value);
             }
+        }
+
+        private void SetWordsUnlockedCounter(int uniqueWordsUnlocked)
+        {
+            _wordsUnlockedCounter.GetComponent<Text>().text = $"{uniqueWordsUnlocked}";
         }
 
         /// <summary>
