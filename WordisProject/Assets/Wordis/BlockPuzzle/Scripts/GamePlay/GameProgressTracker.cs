@@ -15,7 +15,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Assets.Wordis.BlockPuzzle.GameCore;
-using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.Frameworks.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -46,29 +45,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 : emptyDict);
         }
 
-        ///// <summary>
-        ///// This function is called when the behaviour becomes enabled or active.
-        ///// </summary>
-        //private void OnEnable()
-        //{
-        //    //Debug.LogWarning($"{nameof(GameProgressTracker)}.OnEnable");
-
-        //    //var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-
-        //    //_wordsStats = PlayerPrefs.HasKey(WordsStatsKey)
-        //    //    ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
-        //    //          PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
-        //    //    : emptyDict;
-
-        //    //Debug.LogWarning($"{nameof(_wordsStats)}={_wordsStats.Count}");
-        //}
-
         /// <summary>
-        /// This function is called when the behaviour becomes enabled or active.
+        /// OnApplicationPause is set to true or false.
+        /// Normally, false is the value returned by the OnApplicationPause message.
+        /// This means the game is running normally in the editor.
+        /// If an editor window such as the Inspector is chosen the game is paused and OnApplicationPause returns true.
+        /// When the game window is selected and active OnApplicationPause again returns false.
+        /// True means that the game is not active.
         /// </summary>
-        private void OnDisable()
+        /// <param name="pause"></param>
+        private void OnApplicationPause(bool pause)
         {
-            Debug.LogWarning($"{nameof(GameProgressTracker)}.OnDisable");
+            if (pause)
+            {
+
+            }
         }
 
         private void OnApplicationQuit()
@@ -92,31 +83,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             return _wordsStats;
         }
 
-        /// <summary>
-        /// Clears the progress of current gameplay.
-        /// </summary>
-        //public void ClearProgressData()
-        //{
-        //    DeleteProgress();
-        //}
-
-        /// <summary>
-        /// OnApplicationPause is set to true or false.
-        /// Normally, false is the value returned by the OnApplicationPause message.
-        /// This means the game is running normally in the editor.
-        /// If an editor window such as the Inspector is chosen the game is paused and OnApplicationPause returns true.
-        /// When the game window is selected and active OnApplicationPause again returns false.
-        /// True means that the game is not active.
-        /// </summary>
-        /// <param name="pause"></param>
-        private void OnApplicationPause(bool pause)
-        {
-            if (pause)
-            {
-
-            }
-        }
-
         public void SaveSession()
         {
             //var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
@@ -128,47 +94,5 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             //Debug.LogWarning(restored);
         }
-
-        /// <summary>
-        /// This method will be executed after each block shape being placed on board. This will get status of board, block shapes, timer, 
-        /// score etc and will save to progress data class which in turn will be saved to playerprefs in json format.
-        /// </summary>
-        private void SaveProgress()
-        {
-            //PlayerPrefs.SetString($"gameProgress_{gameMode}",
-            //    JsonUtility.ToJson(_currentProgressData));
-        }
-
-        public bool HasGameProgress()
-        {
-            //return PlayerPrefs.HasKey($"gameProgress_{gameMode}");
-            return false;
-        }
-
-        /// <summary>
-        /// Returns game progress for the given mode if any.
-        /// </summary>
-        public object GetGameProgress()
-        {
-            //if (HasGameProgress(gameMode))
-            //{
-            //    ProgressData progressData = JsonUtility.FromJson<ProgressData>(
-            //        PlayerPrefs.GetString($"gameProgress_{gameMode}"));
-            //    if (progressData != null)
-            //    {
-            //        return progressData;
-            //    }
-            //}
-
-            return null;
-        }
-
-        /// <summary>
-        /// Clears game progress if any for the given game mode.
-        /// </summary>
-        //public void DeleteProgress()
-        //{
-        //    //PlayerPrefs.DeleteKey($"gameProgress_{gameMode}");
-        //}
     }
 }
