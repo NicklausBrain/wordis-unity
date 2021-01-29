@@ -143,6 +143,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
                 GameProgressTracker.Instance.SaveSession(_wordisGameLevel);
+                GameProgressTracker.Instance.SaveStats();
             }
         }
 

@@ -108,6 +108,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             txtScore.text = score.ToString("N0");
 
             GameProgressTracker.Instance.TrySetBestScore(score, gameLevel.Id);
+            GameProgressTracker.Instance.SaveStats();
 
             txtBestScore.text = GameProgressTracker.Instance.GetBestScore(gameLevel.Id).ToString("N0");
 
