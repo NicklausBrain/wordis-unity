@@ -177,6 +177,43 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(2, 1, 'A'), gameObjects);
         }
 
-        // todo: weird case when UP is blocked, but down is pushing?
+        [Test]
+        public void HandleStep_OnDoubleCollision_ResolvesIt()
+        {
+            /* Initial state:
+             * [-] [-] [-] [-]
+             * [-] [Q] [-] [-] - static
+             * [-] [A] [-] [-] - active
+             * [-]-[X]-[-] [-]-- water --
+             * [Z]-[Y]-[-] [-]-- water -- */
+            var game = new WordisGame(
+                    _settings.With(width: 4, height: 5, waterLevel: 2),
+                    new WordLetters("*"))
+                .With(new StaticChar(1, 1, 'Q'))
+                .With(new ActiveChar(1, 2, 'A'))
+                .With(new StaticChar(1, 3, 'X'))
+                .With(new StaticChar(1, 4, 'Y'))
+                .With(new StaticChar(0, 4, 'Z'))
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [-] [-]
+             * [-] [Q] [-] [-] - static
+             * [-] [A] [-] [-] - active
+             * [-]-[X]-[-] [-]-- water --
+             * [Z]-[Y]-[-] [-]-- water -- */
+
+            var gameObjects = game.GameObjects.ToArray();
+            Assert.IsNull(
+                   game.Matrix[0, 1]);
+            Assert.Contains(
+                new StaticChar(1, 1, 'Q'), gameObjects);
+            Assert.Contains(
+                new StaticChar(1, 2, 'A'), gameObjects);
+            Assert.Contains(
+                new StaticChar(1, 3, 'X'), gameObjects);
+            Assert.Contains(
+                new StaticChar(1, 4, 'Y'), gameObjects);
+        }
     }
 }
