@@ -1,4 +1,6 @@
-﻿namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
+﻿using System;
+
+namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
 {
     public class WordDefinition
     {
@@ -18,14 +20,30 @@
 
         public string Category { get; }
 
+        /// <summary>
+        /// Display-friendly definition.
+        /// </summary>
         public string Definition
         {
             get
             {
-                if (_definition.Length > 64) // magic string
+                // case for grammar forms
+                if (_definition.StartsWith("of", StringComparison.OrdinalIgnoreCase))
                 {
-                    var shorterVersion = _definition.Split('.', ';')[0];
-                    return shorterVersion;
+                    return $"{Category} {_definition}";
+                }
+
+                // shorten long definitions
+                if (_definition.Length > 64) // magic length
+                {
+                    if (_definition.Contains("; --"))
+                    {
+                        return _definition.Split(new[] { "; --" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                    }
+                    else
+                    {
+                        return _definition.Split('.', ';')[0];
+                    }
                 }
 
                 return _definition;
