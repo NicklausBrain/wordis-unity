@@ -235,6 +235,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// </summary>
         public (int x, int y) StartPoint => (x: Settings.Width / 2, y: 0);
 
+        /// <summary>
+        /// Letter that will come next.
+        /// </summary>
+        public char LetterToCome => _letterSource.Char;
+
         private ActiveChar GenerateActiveChar(char newChar)
         {
             return new ActiveChar(

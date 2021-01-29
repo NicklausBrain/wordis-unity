@@ -246,6 +246,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             var activeChar = gameState.ActiveChar;
 
+            // 4. refresh every block on the board
             for (int x = 0; x < gameState.Matrix.Width; x++)
             {
                 for (int y = 0; y < gameState.Matrix.Height; y++)
@@ -254,6 +255,13 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                     RefreshVisualBlock(x, y, wordisObject, activeChar);
                 }
+            }
+
+            // 5. display a letter to come
+            if (activeChar.Point != gameState.StartPoint)
+            {
+                var startBlock = gameBoard.allColumns[gameState.StartPoint.x][gameState.StartPoint.y];
+                startBlock.SetText($"{gameState.LetterToCome}", Color.black);
             }
         }
 
@@ -305,7 +313,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                         ? Block.WaterTag
                         : block.defaultSpriteTag);
-                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                    block.SetText(string.Empty, Color.white);
                 }
             }
             else
@@ -314,8 +322,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 if (wordisObj is WordisChar wordisChar)
                 {
-                    block.GetComponentInChildren<TextMeshProUGUI>().text =
-                        $"{wordisChar.Value}";
+                    block.SetText($"{wordisChar.Value}", Color.white);
                 }
             }
         }
