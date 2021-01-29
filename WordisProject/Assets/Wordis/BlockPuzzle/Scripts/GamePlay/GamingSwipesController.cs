@@ -1,4 +1,5 @@
 ﻿using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -9,21 +10,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             if (SwipeManager.IsSwipingLeft())
             {
-                // TODO: make a haptic feedback
+                UIFeedback.Instance.PlayButtonPressEffect();
                 GamePlayUI.Instance.HandleGameEvent(GameEvent.Left);
-                Debug.Log("LEFT SWIPE");
             }
 
             if (SwipeManager.IsSwipingRight())
             {
+                UIFeedback.Instance.PlayButtonPressEffect();
                 GamePlayUI.Instance.HandleGameEvent(GameEvent.Right);
-                Debug.Log("RIGHT SWIPE");
             }
 
             if (SwipeManager.IsSwipingDown())
             {
+                UIFeedback.Instance.PlayButtonPressEffect();
                 GamePlayUI.Instance.HandleGameEvent(GameEvent.Down);
-                Debug.Log("DOWN SWIPE");
             }
         }
     }
