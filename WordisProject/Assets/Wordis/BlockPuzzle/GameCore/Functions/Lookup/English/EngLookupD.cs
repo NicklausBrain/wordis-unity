@@ -3346,7 +3346,7 @@ dijudicant,
 dijudicate,
 dijudicated,
 dijudication,
-dika,
+dik
 dike,
 diked,
 diker,

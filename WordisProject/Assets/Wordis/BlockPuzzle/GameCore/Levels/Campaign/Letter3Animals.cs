@@ -22,7 +22,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
 
         /// <inheritdoc cref="Letter3Animals"/>
         public static WordsSequence Animals => WordsSequence.FromCsv(
-            "cat,dog,rat,pup,pig,bee,cow,owl,fox,bat,elk,ant,fly");
+            "Cat,Ant,Bat,Cow,Fly,Bee,Ape,Fox,Dog,Owl,Pig,Elk,Dik,Emu,Hen,Yak,Eel,Koi,rat,pup");
 
         private Letter3Animals(WordisGame game) : base(game)
         {

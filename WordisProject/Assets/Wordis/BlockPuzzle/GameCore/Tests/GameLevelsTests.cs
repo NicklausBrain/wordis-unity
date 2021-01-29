@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Assets.Wordis.BlockPuzzle.GameCore.Functions;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
@@ -14,6 +15,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
     /// </summary>
     public class GameLevelsTests
     {
+        private readonly IsLegitEngWordFunc _isLegitEngWordFunc = new IsLegitEngWordFunc();
+
         [Test]
         public void WordisGameLevelBase_WhenGameIsOver_IsCompletedReturnsFalse()
         {
@@ -78,6 +81,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void Letter3Animals_AllWordsExists()
+        {
+            var allWordsExists = Letter3Animals.Animals.Words
+                .Aggregate(true, (acc, word) =>
+                    acc && CheckWord(word));
+
+            Assert.IsTrue(allWordsExists);
+        }
+
+        [Test]
         public void Letter3Palindromes_WhenXPalindromesMatched_IsCompleted()
         {
             var requiredMatches =
@@ -92,6 +105,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                     initialState.Game.WithWordMatches(requiredMatches));
 
             Assert.IsTrue(finalState.IsCompleted);
+        }
+
+        [Test]
+        public void Letter3Palindromes_AllWordsExist()
+        {
+            var allWordsExists = Letter3Palindromes.ThreeLetterPalindromes.Words
+                .Aggregate(true, (acc, word) =>
+                    acc && CheckWord(word));
+
+            Assert.IsTrue(allWordsExists);
         }
 
         [Test]
@@ -112,6 +135,16 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
+        public void Letter4Palindromes_AllWordsExist()
+        {
+            var allWordsExists = Letter4Palindromes.FourLetterPalindromes.Words
+                .Aggregate(true, (acc, word) =>
+                    acc && CheckWord(word));
+
+            Assert.IsTrue(allWordsExists);
+        }
+
+        [Test]
         public void Letter4Animals_WhenXAnimalsMatched_IsCompleted()
         {
             var requiredMatches =
@@ -128,9 +161,31 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.IsTrue(finalState.IsCompleted);
         }
 
+        [Test]
+        public void Letter4Animals_AllWordsExist()
+        {
+            var allWordsExists = Letter4Animals.Animals.Words
+                .Aggregate(true, (acc, word) =>
+                    acc && CheckWord(word));
+
+            Assert.IsTrue(allWordsExists);
+        }
+
         private static WordMatchEx StrToWordMatch(string word) =>
             new WordMatchEx(new WordMatch(
                 word.Select(c => new StaticChar(1, 3, c))), 3, DateTimeOffset.Now);
+
+        private bool CheckWord(string word)
+        {
+            var isLegit = _isLegitEngWordFunc.Invoke(word);
+
+            if (!isLegit)
+            {
+                Debug.LogError($"{word} is not found");
+            }
+
+            return isLegit;
+        }
 
         private class TestLevel : WordisGameLevelBase<TestLevel>, IWordisGameLevel
         {
