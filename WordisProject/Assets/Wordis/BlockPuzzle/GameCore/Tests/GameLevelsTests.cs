@@ -5,6 +5,7 @@ using Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign;
 using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
 {
@@ -32,6 +33,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void WordisTutorial_AfterNecessaryInput_IsCompleted()
         {
             var tutorial = new WordisTutorialLevel()
+                .WithOutput(Debug.LogWarning)
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
@@ -42,7 +44,9 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step)
                 .Handle(GameEvent.Down)
+                .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step)

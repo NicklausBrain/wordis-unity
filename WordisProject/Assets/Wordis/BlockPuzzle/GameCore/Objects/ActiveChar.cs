@@ -41,6 +41,12 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
         /// </summary>
         private WordisObj HandleStep(WordisGame game)
         {
+            // handle collision
+            if (game.Matrix[X, Y] != null && !game.Matrix[X, Y].Equals(this))
+            {
+                return new StaticChar(X, Y - 1, Value);
+            }
+
             // on reaching water
             if (game.Settings.HasWater && Y == game.Settings.AboveWaterY)
             {

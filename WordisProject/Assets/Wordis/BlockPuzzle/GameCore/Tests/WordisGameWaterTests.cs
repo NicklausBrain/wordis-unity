@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
+using Assets.Wordis.BlockPuzzle.GameCore.Words;
 using NUnit.Framework;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
@@ -84,7 +85,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         }
 
         [Test]
-        public void HandleStep_WhenColumnWithWaterIsNotFull_TheGameIsntOver()
+        public void HandleStep_WhenColumnWithWaterIsNotFull_TheGameIsNotOver()
         {
             /* Initial state:
              * [-] [-] [-]
@@ -106,5 +107,76 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.IsFalse(game.IsGameOver);
             // todo add coordinates assertion
         }
+
+        [Test]
+        public void HandleStep_OnCollision_LiftsActiveCharAndMakeItStatic()
+        {
+            /* Initial state:
+             * [-] [-] [-] [-]
+             * [-] [-] [A] [-]
+             * [-]-[-]-[X]-[-] -- water --
+             * [-]-[Z]-[Y]-[-] -- water -- */
+            var game = new WordisGame(
+                    _settings.With(width: 4, height: 4, waterLevel: 2),
+                    new WordLetters("*"))
+                .With(new StaticChar(2, 2, 'X'))
+                .With(new StaticChar(2, 3, 'Y'))
+                .With(new StaticChar(1, 3, 'Z'))
+                .With(new ActiveChar(2, 1, 'A'))
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [A] [-]
+             * [-] [-] [X] [-]
+             * [-]-[Z]-[Y]-[-] -- water --
+             * [-]-[-]-[-] [-] -- water -- */
+
+            var gameObjects = game.GameObjects.ToArray();
+            Assert.Contains(
+                new StaticChar(2, 1, 'X'), gameObjects);
+            Assert.Contains(
+                new StaticChar(2, 2, 'Y'), gameObjects);
+            Assert.Contains(
+                new StaticChar(1, 2, 'Z'), gameObjects);
+            Assert.Contains(
+                new StaticChar(2, 0, 'A'), gameObjects);
+        }
+
+        [Test]
+        public void HandleStep_AfterCollision_DrownsTheColumn()
+        {
+            /* Initial state:
+             * [-] [-] [-] [-]
+             * [-] [-] [A] [-]
+             * [-]-[-]-[X]-[-] -- water --
+             * [-]-[Z]-[Y]-[-] -- water -- */
+            var game = new WordisGame(
+                    _settings.With(width: 4, height: 4, waterLevel: 2),
+                    new WordLetters("*"))
+                .With(new StaticChar(2, 2, 'X'))
+                .With(new StaticChar(2, 3, 'Y'))
+                .With(new StaticChar(1, 3, 'Z'))
+                .With(new ActiveChar(2, 1, 'A'))
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Step);
+
+            /* Expected state:
+             * [-] [-] [*] [-]
+             * [-] [Z] [A] [-]
+             * [-]-[-]-[X]-[-] -- water --
+             * [-]-[-]-[Y] [-] -- water -- */
+
+            var gameObjects = game.GameObjects.ToArray();
+            Assert.Contains(
+                new StaticChar(2, 2, 'X'), gameObjects);
+            Assert.Contains(
+                new StaticChar(2, 3, 'Y'), gameObjects);
+            Assert.Contains(
+                new StaticChar(1, 1, 'Z'), gameObjects);
+            Assert.Contains(
+                new StaticChar(2, 1, 'A'), gameObjects);
+        }
+
+        // todo: weird case when UP is blocked, but down is pushing?
     }
 }

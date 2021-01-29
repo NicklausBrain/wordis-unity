@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
@@ -25,11 +26,38 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <returns><see cref="WordisObj "/></returns>
         public WordisObj this[int x, int y] => _matrix.Value[y, x];
 
+        /// <summary>
+        /// Gets Game object by its point.
+        /// </summary>
+        /// <param name="p.x">Zero-based column.</param>
+        /// <param name="p.y">Zero-based row.</param>
+        /// <returns><see cref="WordisObj "/></returns>
+        public WordisObj this[(int x, int y) p] => _matrix.Value[p.y, p.x];
+
         /// <inheritdoc cref="WordisSettings.Width"/>
         public int Width => _game.Settings.Width;
 
         /// <inheritdoc cref="WordisSettings.Height"/>
         public int Height => _game.Settings.Height;
+
+        /// <summary>
+        /// String representation for troubleshooting purpose.
+        /// </summary>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    sb.Append($"[{this[x, y]?.ToString() ?? "-"}]");
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
 
         private WordisObj[,] InitMatrix()
         {
