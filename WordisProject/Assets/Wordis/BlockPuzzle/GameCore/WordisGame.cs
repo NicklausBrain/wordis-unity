@@ -152,46 +152,50 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 return this;
             }
 
-            var updatedGameObjects = GameObjects
-                .Select(gameObject => gameObject.Handle(this, gameEvent))
-                .ToImmutableList();
-
             var updatedEvents = _gameEvents.Add(gameEvent);
+
+            // handle static first for collision handling
+            var staticObjects = _gameObjects.Remove(ActiveChar);
+            var staticHandled = staticObjects
+                .Select(o => o.Handle(this, gameEvent))
+                .ToImmutableList();
+            var updatedGame = With(
+                gameObjects: staticHandled,
+                gameEvents: updatedEvents,
+                lastMatches: ImmutableList<WordMatchEx>.Empty);
+
+            // handle active char if any
+            if (ActiveChar != null)
+            {
+                updatedGame = With(
+                    gameObjects: staticHandled.Add(ActiveChar.Handle(updatedGame, gameEvent)),
+                    gameEvents: updatedEvents,
+                    lastMatches: ImmutableList<WordMatchEx>.Empty);
+            }
 
             switch (gameEvent)
             {
                 case GameEvent.Step:
                     {
-                        var updatedGame = With(
-                            gameObjects: updatedGameObjects,
-                            gameEvents: updatedEvents,
-                            lastMatches: ImmutableList<WordMatchEx>.Empty);
-
                         var matches = FindWordMatches(updatedGame.Matrix);
 
                         updatedGame = matches.Any()
                             ? updatedGame.With(
-                                gameObjects: updatedGameObjects
+                                gameObjects: updatedGame._gameObjects
                                     .Except(matches.SelectMany(m => m.MatchedChars))
                                     .ToImmutableList(),
                                 wordMatches: updatedGame._wordMatches.AddRange(matches),
                                 lastMatches: matches)
                             : updatedGame;
 
-                        var hasActiveObjects = updatedGame.ActiveChar != null;
-
-                        return hasActiveObjects || updatedGame.IsGameOver
-                            ? updatedGame
-                            : updatedGame
-                                // todo: consider generating active object 1 step later
-                                // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
-                                .With(GenerateActiveChar(_letterSource.Char))
-                                .With(letterSource: _letterSource.Next);
+                        // todo: consider generating active object 1 step later
+                        // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
+                        return updatedGame.CanHaveActiveChar
+                            ? updatedGame.WithNewActiveChar()
+                            : updatedGame;
                     }
                 default:
-                    return With(
-                        gameObjects: updatedGameObjects,
-                        gameEvents: updatedEvents);
+                    return updatedGame;
             }
         }
 
@@ -259,6 +263,13 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
             return foundMatches;
         }
+
+        private bool CanHaveActiveChar =>
+            !IsGameOver && ActiveChar == null && Matrix[StartPoint.x, StartPoint.y] == null;
+
+        private WordisGame WithNewActiveChar() =>
+            With(GenerateActiveChar(_letterSource.Char))
+                .With(letterSource: _letterSource.Next);
 
         /// <summary>
         /// Represent collections of word matches made through the game.

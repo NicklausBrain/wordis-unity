@@ -40,5 +40,13 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// String representation for troubleshooting purpose.
+        /// </summary>
+        public override string ToString()
+        {
+            return $"{Value},{base.ToString()}";
+        }
     }
 }

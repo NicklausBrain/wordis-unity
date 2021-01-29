@@ -303,7 +303,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             if (wordisObj == null)
             {
-                if (activeChar != null && y > activeChar.Y && x == activeChar.X)
+                if (activeChar != null &&
+                    y > activeChar.Y &&
+                    x == activeChar.X &&
+                    !_wordisGameLevel.Settings.IsWaterZone(y))
                 {
                     // Highlight the trajectory
                     block.Highlight(Block.DefaultCharTag);

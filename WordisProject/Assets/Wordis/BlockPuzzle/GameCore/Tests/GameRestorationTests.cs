@@ -29,6 +29,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         public void FromJson_RestoresGameState()
         {
             var game = new WordisGame(_settings.With(width: 3, height: 4))
+                .With(new ActiveChar(0, 0, 'X'))
                 .With(new ActiveChar(1, 0, 'R'))
                 .With(new StaticChar(1, 2, 'A'))
                 .With(new StaticChar(1, 3, 'T'))
