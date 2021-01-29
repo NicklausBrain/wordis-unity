@@ -261,8 +261,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (activeChar.Point != gameState.StartPoint)
             {
                 var startBlock = gameBoard.allColumns[gameState.StartPoint.x][gameState.StartPoint.y];
-                startBlock.GetComponentInChildren<TextMeshProUGUI>().text = $"{gameState.LetterToCome}";
-                startBlock.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+                startBlock.SetText($"{gameState.LetterToCome}", Color.black);
             }
         }
 
@@ -314,8 +313,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                         ? Block.WaterTag
                         : block.defaultSpriteTag);
-                    block.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-                    block.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                    block.SetText(string.Empty, Color.white);
                 }
             }
             else
@@ -324,8 +322,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
                 if (wordisObj is WordisChar wordisChar)
                 {
-                    block.GetComponentInChildren<TextMeshProUGUI>().text = $"{wordisChar.Value}";
-                    block.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                    block.SetText($"{wordisChar.Value}", Color.white);
                 }
             }
         }

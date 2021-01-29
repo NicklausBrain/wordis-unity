@@ -176,7 +176,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             block.transform.SetParent(blockRoot.transform);
             block.transform.localScale = Vector3.one;
 
-            //var text = block.GetComponentInChildren<TextMeshProUGUI>()
             return block.GetComponent<RectTransform>();
         }
     }
