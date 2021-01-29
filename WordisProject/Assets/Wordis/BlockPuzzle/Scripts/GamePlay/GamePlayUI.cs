@@ -301,7 +301,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             var block = gameBoard.allColumns[x][y];
 
-            if (wordisObj == null)
+            if (wordisObj == null) // empty block
             {
                 if (activeChar != null &&
                     y > activeChar.Y &&
@@ -309,17 +309,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     !_wordisGameLevel.Settings.IsWaterZone(y))
                 {
                     // Highlight the trajectory
+                    block.SetText(string.Empty, Color.white);
                     block.Highlight(Block.DefaultCharTag);
                 }
                 else
                 {
+                    // Either empty or 'water'
                     block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                         ? Block.WaterTag
                         : block.defaultSpriteTag);
                     block.SetText(string.Empty, Color.white);
                 }
             }
-            else
+            else // letter block
             {
                 block.PlaceBlock(Block.DefaultCharTag);
 
