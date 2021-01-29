@@ -154,7 +154,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
             var updatedEvents = _gameEvents.Add(gameEvent);
 
-            // handle static first to collision handling
+            // handle static first for collision handling
             var staticObjects = _gameObjects.Remove(ActiveChar);
             var staticHandled = staticObjects
                 .Select(o => o.Handle(this, gameEvent))
