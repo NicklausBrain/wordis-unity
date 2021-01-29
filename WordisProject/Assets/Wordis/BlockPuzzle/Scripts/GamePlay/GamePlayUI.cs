@@ -79,7 +79,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     _wordisGameLevel.Game.GameEvents.Count) // avoid extra refresh on game over.
                 {
                     RefreshPresentation(updatedLevel.Game);
-                    ShowProgress(updatedLevel.Progress);
+                    ShowProgress(
+                        $"{updatedLevel.Game.LetterToCome}\n" +
+                        updatedLevel.Progress);
                 }
 
                 _wordisGameLevel = updatedLevel;
