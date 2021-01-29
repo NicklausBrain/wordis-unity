@@ -1,20 +1,11 @@
-﻿// ©2019 - 2020 HYPERBYTE STUDIOS LLP
-// All rights reserved
-// Redistribution of this software is strictly not allowed.
-// Copy of this software can be obtained from unity asset store only.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels;
+using Assets.Wordis.BlockPuzzle.GameCore.Levels.Contracts;
+using Assets.Wordis.BlockPuzzle.Scripts.Controller;
 using Assets.Wordis.Frameworks.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -40,10 +31,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             var emptyDict = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            _wordsStats = _wordsStats ?? (PlayerPrefs.HasKey(WordsStatsKey)
-                ? JsonConvert.DeserializeObject<ConcurrentDictionary<string, int>>(
-                      PlayerPrefs.GetString(WordsStatsKey)) ?? emptyDict
-                : emptyDict);
+            var loadedStats = LoadStats();
+            _wordsStats = new ConcurrentDictionary<string, int>(loadedStats);
         }
 
         /// <summary>
@@ -65,9 +54,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         private void OnApplicationQuit()
         {
-            Debug.LogWarning($"{nameof(GameProgressTracker)}.OnApplicationQuit");
-            Debug.LogWarning($"{nameof(_wordsStats)}={_wordsStats.Count}");
-            PlayerPrefs.SetString(WordsStatsKey, JsonConvert.SerializeObject(_wordsStats));
+            SaveStats();
         }
 
         public void AddWordsStats(IReadOnlyList<WordMatchEx> matches)
@@ -79,22 +66,94 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
+        private Dictionary<string, int> LoadStats()
+        {
+            if (PlayerPrefs.HasKey(WordsStatsKey))
+            {
+                try
+                {
+                    var stats = JsonConvert.DeserializeObject<Dictionary<string, int>>(
+                        PlayerPrefs.GetString(WordsStatsKey));
+                    return stats ?? new Dictionary<string, int>();
+                }
+                catch (Exception exception)
+                {
+                    // UIController.Instance.ShowMessage("Exception", exception.Message);
+                    Debug.LogError(exception);
+                }
+            }
+
+            return new Dictionary<string, int>();
+        }
+
+        public void SaveStats()
+        {
+            try
+            {
+                PlayerPrefs.SetString(WordsStatsKey, JsonConvert.SerializeObject(
+                    _wordsStats.ToDictionary(s => s.Key, s => s.Value)));
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
+        }
 
         public IReadOnlyDictionary<string, int> GetWordStats()
         {
             return _wordsStats;
         }
 
-        public void SaveSession()
+        public bool HasSession(IWordisGameLevel gameLevel)
         {
-            //var gameState = JsonConvert.SerializeObject(GamePlayUI.Instance.CurrentLevel.Game);
+            return PlayerPrefs.HasKey($"{GameSessionKey}_{gameLevel.Id}");
+        }
 
-            //Debug.LogWarning(gameState);
+        public void DropSession(IWordisGameLevel gameLevel)
+        {
+            PlayerPrefs.DeleteKey($"{GameSessionKey}_{gameLevel.Id}");
+        }
 
-            ////var restoredGame = new WordisGame();
-            //var restored = JsonConvert.DeserializeObject<WordisGame>(gameState);
+        public void SaveSession(IWordisGameLevel gameLevel)
+        {
+            if (gameLevel.Id == nameof(WordisSurvivalMode))
+            {
+                try
+                {
+                    var gameAsJson = WordisGame.ToJson(gameLevel.Game);
 
-            //Debug.LogWarning(restored);
+                    PlayerPrefs.SetString($"{GameSessionKey}_{gameLevel.Id}", gameAsJson);
+                }
+                catch (Exception exception)
+                {
+                    // UIController.Instance.ShowMessage("Exception", exception.Message);
+
+                    Debug.LogError(exception);
+                }
+            }
+        }
+
+        public WordisGame RestoreSession(IWordisGameLevel gameLevel)
+        {
+            if (gameLevel.Id == nameof(WordisSurvivalMode))
+            {
+                try
+                {
+                    var gameAsJson = PlayerPrefs.GetString($"{GameSessionKey}_{gameLevel.Id}");
+
+                    var restoredGame = WordisGame.FromJson(gameAsJson);
+
+                    return restoredGame;
+                }
+                catch (Exception exception)
+                {
+                    // UIController.Instance.ShowMessage("Exception", exception.Message);
+
+                    Debug.LogError(exception);
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

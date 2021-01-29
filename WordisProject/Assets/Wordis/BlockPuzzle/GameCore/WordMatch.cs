@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Wordis.BlockPuzzle.GameCore.Objects;
+using Newtonsoft.Json;
 
 namespace Assets.Wordis.BlockPuzzle.GameCore
 {
     public class WordMatch
     {
+        [JsonProperty("chars")]
         private readonly WordisChar[] _chars;
 
+        [JsonConstructor]
         public WordMatch(IEnumerable<WordisChar> chars)
         {
             _chars = chars?.ToArray() ?? Array.Empty<WordisChar>();
         }
 
+        [JsonIgnore]
         public string Word => new string(MatchedChars.Select(c => c.Value).ToArray());
 
+        [JsonIgnore]
         public IReadOnlyList<WordisChar> MatchedChars => _chars;
 
         protected bool Equals(WordMatch other)

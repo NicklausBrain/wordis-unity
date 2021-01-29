@@ -17,7 +17,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 9,
             height: 9,
-            minWordMatch: 3,
+            minWordLength: 3,
             waterLevel: 0);
 
         /// <inheritdoc cref="Letter4Animals "/>

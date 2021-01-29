@@ -16,7 +16,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 speed: 1f,
                 width: 3,
                 height: 5,
-                minWordMatch: 3);
+                minWordLength: 3);
 
         private static WordsSequence TutorialSequence => WordsSequence.FromCsv("CAT");
 
@@ -38,15 +38,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 Console.WriteLine;
         }
 
-        /// <summary>
-        /// Creates a level in its default state.
-        /// </summary>
-        public WordisTutorialLevel() : this(
-            null,
+        private WordisTutorialLevel(Action<string> displayMessage = null) : this(
+            displayMessage,
             new WordisGame(
                 TutorialLevelSettings,
                 new WordLetters(TutorialSequence.Word)),
             0)
+        {
+        }
+
+        /// <summary>
+        /// Creates a level in its default state.
+        /// </summary>
+        public WordisTutorialLevel() : this(null)
         {
         }
 
@@ -96,7 +100,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
                 return IncSteps();
             }
 
-            if(gameEvent == GameEvent.Step)
+            if (gameEvent == GameEvent.Step)
                 return With(updatedGame: Game.Handle(gameEvent), steps: _steps + 1);
             else
                 return this;
@@ -109,6 +113,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
         /// <inheritdoc cref="IWordisGameLevel" />
         public override WordisTutorialLevel WithUpdatedGame(WordisGame updatedGame) =>
             With(updatedGame);
+
+        /// <inheritdoc cref="IWordisGameLevel" />
+        public override IWordisGameLevel Reset() =>
+            new WordisTutorialLevel(_displayMessage);
 
         private WordisTutorialLevel With(
             WordisGame updatedGame = null,

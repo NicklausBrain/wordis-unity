@@ -59,7 +59,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// <summary>
         /// Classic mode button listener.
         /// </summary>
-        public void OnClassicModeButtonPressed()
+        public void OnClassicModeButtonPressed() // todo: rename to survival
         {
             if (InputManager.Instance.canInput())
             {
@@ -71,13 +71,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// <summary>
         /// Time mode button listener.
         /// </summary>
-        public void OnTimeModeButtonPressed()
+        public void OnTimeModeButtonPressed() // todo: drop
         {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay();
-            }
         }
 
         /// <summary>
@@ -89,28 +84,20 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.LoadGamePlay(new WordisTutorialLevel());
-
-                //Opens mode selection screen.
-                //UIController.Instance.selectModeScreen.Activate();
             }
         }
 
         /// <summary>
         /// Advance mode button listener.
         /// </summary>
-        public void OnAdvanceModeButtonPressed()
+        public void OnAdvanceModeButtonPressed() // todo: drop
         {
-            if (InputManager.Instance.canInput())
-            {
-                UIFeedback.Instance.PlayButtonPressEffect();
-                UIController.Instance.LoadGamePlay();
-            }
         }
 
         /// <summary>
         /// Advance mode button listener.
         /// </summary>
-        public void OnCampaignModeButtonPressed()
+        public void OnCampaignModeButtonPressed() // todo: rename to challenges
         {
             if (InputManager.Instance.canInput())
             {

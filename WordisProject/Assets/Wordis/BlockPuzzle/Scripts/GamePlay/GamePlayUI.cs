@@ -94,21 +94,25 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         public GamePlayUI SetLevel(IWordisGameLevel gameLevel = null)
         {
             _wordisGameLevel = gameLevel ?? DefaultLevel;
+            _wordisGameLevel = _wordisGameLevel.WithOutput(ShowMessage);
 
             return this;
         }
 
         /// <summary>
-        /// Gets active level.
-        /// </summary>
-        public IWordisGameLevel CurrentLevel => _wordisGameLevel;
-
-        /// <summary>
         /// Starts game with selected game mode.
         /// </summary>
-        public void RestartGame()
+        /// <param name="restore">Attempt to restore the last session.</param>
+        public void RestartGame(bool restore = false)
         {
-            ClearGame();
+            if (restore)
+            {
+                TryToRestoreGame();
+            }
+            else
+            {
+                ClearGame();
+            }
 
             // Enables gameplay screen if not active.
             if (!gameBoard.gameObject.activeSelf)
@@ -138,8 +142,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 UIFeedback.Instance.PlayButtonPressEffect();
                 UIController.Instance.pauseGameScreen.Activate();
-
-                //GameProgressTracker.Instance.SaveSession();
+                GameProgressTracker.Instance.SaveSession(_wordisGameLevel);
+                GameProgressTracker.Instance.SaveStats();
             }
         }
 
@@ -177,10 +181,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        /// <summary>
-        /// This function is called when the behaviour becomes disabled or inactive.
-        /// </summary>
-        private void OnDisable() => ClearGame();
+        private void OnDisable() => ClearGame(dropSession: false);
+
+        private void OnApplicationQuit() => GameProgressTracker.Instance.SaveSession(_wordisGameLevel);
 
         /// <summary>
         /// Will be called on game over.
@@ -197,22 +200,34 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             UIController.Instance.gameOverScreen.Activate();
         }
 
-        private void ClearGame()
+        private void ClearGame(bool dropSession = true)
         {
             PauseGame();
             gameBoard.Clear();
             scoreManager.Clear();
-            _wordisGameLevel = _wordisGameLevel
-                .Reset()
-                .WithOutput(message =>
-                {
-                    ShowMessage(message);
-                    Debug.LogWarning(message);
-                });
+            _wordisGameLevel = _wordisGameLevel.Reset();
 
             UIController.Instance.HideTips();
 
-            //GameProgressTracker.Instance.ClearProgressData();
+            if (dropSession)
+            {
+                GameProgressTracker.Instance.DropSession(_wordisGameLevel);
+            }
+        }
+
+        private void TryToRestoreGame()
+        {
+            // todo: generalize
+            if (_wordisGameLevel is WordisSurvivalMode survivalMode &&
+                GameProgressTracker.Instance.HasSession(survivalMode))
+            {
+                var restoredGame = GameProgressTracker.Instance.RestoreSession(survivalMode);
+                _wordisGameLevel = survivalMode.WithUpdatedGame(restoredGame ?? survivalMode.Game);
+            }
+            else
+            {
+                ClearGame();
+            }
         }
 
         private void RefreshPresentation(WordisGame gameState)
