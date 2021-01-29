@@ -244,7 +244,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
             }
 
-            var activeChar = gameState.ActiveChar;
+            var activeChar = gameState.ActiveChar; // can be null
 
             // 4. refresh every block on the board
             for (int x = 0; x < gameState.Matrix.Width; x++)
@@ -258,7 +258,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             // 5. display a letter to come
-            if (activeChar.Point != gameState.StartPoint)
+            if (activeChar?.Point != gameState.StartPoint)
             {
                 var startBlock = gameBoard.allColumns[gameState.StartPoint.x][gameState.StartPoint.y];
                 startBlock.SetText($"{gameState.LetterToCome}", Color.black);
