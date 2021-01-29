@@ -260,8 +260,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // 5. display a letter to come
             if (activeChar?.Point != gameState.StartPoint)
             {
+                var backgroundColor = new Color(0.10f, 0.13f, 0.21f);
                 var startBlock = gameBoard.allColumns[gameState.StartPoint.x][gameState.StartPoint.y];
-                startBlock.SetText($"{gameState.LetterToCome}", Color.black);
+                startBlock.SetText($"{gameState.LetterToCome}", backgroundColor);
             }
         }
 
