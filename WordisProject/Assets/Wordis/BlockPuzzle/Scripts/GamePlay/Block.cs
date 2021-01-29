@@ -65,6 +65,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         // Box collide attached to this block.
         BoxCollider2D thisCollider;
 
+        // Inner text of the block
+        private TextMeshProUGUI _textMeshProUgui;
+
 #pragma warning disable 0649
         // Image component on the block. Assigned from Inspector.
         [SerializeField] Image blockImage;
@@ -201,6 +204,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PlaceBlock(Block.WaterTag);
             }
+        }
+
+        /// <summary>
+        /// Sets block text with the given color.
+        /// </summary>
+        public void SetText(string text, Color color)
+        {
+            _textMeshProUgui = _textMeshProUgui ?? GetComponentInChildren<TextMeshProUGUI>();
+            _textMeshProUgui.text = text;
+            _textMeshProUgui.color = color;
         }
     }
 }

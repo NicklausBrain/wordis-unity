@@ -24,6 +24,11 @@
         public int Y { get; }
 
         /// <summary>
+        /// Returns coordinates as a point structure.
+        /// </summary>
+        public (int x, int y) Point => (X, Y);
+
+        /// <summary>
         /// Handles game event, transforming the object if necessary.
         /// </summary>
         /// <param name="wordisGame">Reference to a game this game object belongs to.</param>
