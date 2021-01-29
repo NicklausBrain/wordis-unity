@@ -190,7 +190,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
 
                         // todo: consider generating active object 1 step later
                         // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
-                        return CanHaveActiveChar
+                        return updatedGame.CanHaveActiveChar
                             ? updatedGame.WithNewActiveChar()
                             : updatedGame;
                     }

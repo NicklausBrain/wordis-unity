@@ -66,7 +66,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             // display unlocked words counter
             SetWordsUnlockedCounter(wordStats.Count);
 
-            // remove dynamic items, stands for existing 2 buttons
+            // remove dynamic items, i = 2 stands for existing 2 buttons
             for (int i = 2; i < _statsListContent.transform.childCount; i++)
             {
                 _statsListContent.transform.GetChild(i).gameObject.Deactivate();

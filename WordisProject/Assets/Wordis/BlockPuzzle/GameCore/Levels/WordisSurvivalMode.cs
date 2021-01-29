@@ -11,7 +11,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             width: 9,
             height: 9,
             minWordLength: 3,
-            waterLevel: 0);
+            waterLevel: 3);
 
         private WordisSurvivalMode(WordisGame game) : base(game)
         {
