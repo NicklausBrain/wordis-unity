@@ -172,7 +172,7 @@ PlayerSettings:
     Standalone: com.wordis.blockpuzzle
     iPhone: com.wordis.blockpuzzle
   buildNumber:
-    iPhone: 10
+    iPhone: 12
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
