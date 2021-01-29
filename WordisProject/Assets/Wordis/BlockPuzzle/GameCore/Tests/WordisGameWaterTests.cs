@@ -200,8 +200,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
              * [-] [-] [-] [-]
              * [-] [Q] [-] [-] - static
              * [-] [A] [-] [-] - active
-             * [-]-[X]-[-] [-]-- water --
-             * [Z]-[Y]-[-] [-]-- water -- */
+             * [Z]-[X]-[-] [-]-- water --
+             * [-]-[Y]-[-] [-]-- water -- */
 
             var gameObjects = game.GameObjects.ToArray();
             Assert.IsNull(
@@ -214,6 +214,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 new StaticChar(1, 3, 'X'), gameObjects);
             Assert.Contains(
                 new StaticChar(1, 4, 'Y'), gameObjects);
+            Assert.Contains(
+                new StaticChar(0, 3, 'Z'), gameObjects);
         }
     }
 }
