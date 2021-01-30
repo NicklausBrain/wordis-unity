@@ -13,7 +13,6 @@
 
 using Assets.Wordis.BlockPuzzle.GameCore.Levels;
 using Assets.Wordis.BlockPuzzle.Scripts.Controller;
-using Assets.Wordis.BlockPuzzle.Scripts.GamePlay;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
@@ -36,24 +35,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// </summary>
         void Awake()
         {
-            GamePlaySettings gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
-
-            if (!gamePlaySettings.classicModeSettings.modeEnabled)
-            {
-                _btnPlay.gameObject.SetActive(false);
-            }
-
-            if (!gamePlaySettings.timeModeSettings.modeEnabled)
-            {
-                btnTimeMode.gameObject.SetActive(false);
-            }
-
-            if (!gamePlaySettings.advancedModeSettings.modeEnabled)
-            {
-                btnAdvanceMode.gameObject.SetActive(false);
-            }
-
-            gamePlaySettings = null;
             GameAnalytics.Initialize();
 
             if (!FB.IsInitialized)

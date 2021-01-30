@@ -24,7 +24,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -128,8 +127,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             ShowMessage(_wordisGameLevel.Goal); // move to level?
 
-            DefineWordFunc.WarmUp(); // preload word definitions
-
             ResumeGame();
         }
 
@@ -179,6 +176,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
             }
+
+            // Preload word definitions
+            DefineWordFunc.WarmUp();
         }
 
         private void OnDisable() => ClearGame(dropSession: false);
@@ -260,8 +260,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             // 5. display a letter to come
             if (activeChar?.Point != gameState.StartPoint)
             {
+                var backgroundColor = new Color(0.10f, 0.13f, 0.21f);
                 var startBlock = gameBoard.allColumns[gameState.StartPoint.x][gameState.StartPoint.y];
-                startBlock.SetText($"{gameState.LetterToCome}", Color.black);
+                startBlock.SetText($"{gameState.LetterToCome}", backgroundColor);
             }
         }
 
@@ -301,7 +302,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         {
             var block = gameBoard.allColumns[x][y];
 
-            if (wordisObj == null)
+            if (wordisObj == null) // empty block
             {
                 if (activeChar != null &&
                     y > activeChar.Y &&
@@ -309,17 +310,19 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     !_wordisGameLevel.Settings.IsWaterZone(y))
                 {
                     // Highlight the trajectory
+                    block.SetText(string.Empty, Color.white);
                     block.Highlight(Block.DefaultCharTag);
                 }
                 else
                 {
+                    // Either empty or 'water'
                     block.PlaceBlock(_wordisGameLevel.Settings.IsWaterZone(block.RowId)
                         ? Block.WaterTag
                         : block.defaultSpriteTag);
                     block.SetText(string.Empty, Color.white);
                 }
             }
-            else
+            else // letter block
             {
                 block.PlaceBlock(Block.DefaultCharTag);
 
@@ -339,7 +342,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 UIController.Instance.ShowTopTipAtPosition(
                     tipPosition: new Vector2(0, -250F), // todo: make default, dont specify in code
                     anchor: new Vector2(0.5F, 1), // todo: make default, dont specify in code
-                    tipText: definitions[0].Definition,
+                    tipText: $"{definitions[0].Word}: {definitions[0].Definition}",
                     duration: 7F);
             }
         }
