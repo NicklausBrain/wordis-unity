@@ -127,8 +127,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
             ShowMessage(_wordisGameLevel.Goal); // move to level?
 
-            DefineWordFunc.WarmUp(); // preload word definitions
-
             ResumeGame();
         }
 
@@ -178,6 +176,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 _gamePlaySettings = (GamePlaySettings)Resources.Load(nameof(GamePlaySettings));
             }
+
+            // Preload word definitions
+            DefineWordFunc.WarmUp();
         }
 
         private void OnDisable() => ClearGame(dropSession: false);
