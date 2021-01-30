@@ -24,7 +24,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI;
 using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
@@ -342,7 +341,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 UIController.Instance.ShowTopTipAtPosition(
                     tipPosition: new Vector2(0, -250F), // todo: make default, dont specify in code
                     anchor: new Vector2(0.5F, 1), // todo: make default, dont specify in code
-                    tipText: definitions[0].Definition,
+                    tipText: $"{definitions[0].Word}: {definitions[0].Definition}",
                     duration: 7F);
             }
         }
