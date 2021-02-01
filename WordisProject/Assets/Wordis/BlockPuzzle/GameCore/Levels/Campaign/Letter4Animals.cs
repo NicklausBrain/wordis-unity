@@ -12,7 +12,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class Letter4Animals : WordisGameLevelBase<Letter4Animals>, IWordisGameLevel
     {
-        public const int NeededMatches = 7;
+        public const int NeededMatches = 3;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 9,

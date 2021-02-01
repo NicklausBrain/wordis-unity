@@ -10,7 +10,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
     /// </summary>
     public class ColorNames : WordisGameLevelBase<ColorNames>, IWordisGameLevel
     {
-        public const int NeededMatches = 5;
+        public const int NeededMatches = 3;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
             width: 9,
