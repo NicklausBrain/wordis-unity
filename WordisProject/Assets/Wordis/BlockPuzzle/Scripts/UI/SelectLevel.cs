@@ -32,6 +32,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.UI
             new Letter3Palindromes(),
             new Letter3Animals(),
             new Letter4Palindromes(),
+            new ColorNames(),
             new Letter4Animals(),
         };
 

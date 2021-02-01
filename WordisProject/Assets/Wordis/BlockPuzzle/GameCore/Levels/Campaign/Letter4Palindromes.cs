@@ -13,8 +13,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
         public const int NeededMatches = 5;
 
         public static readonly WordisSettings LevelSettings = new WordisSettings(
-            width: 6,
-            height: 6,
+            width: 7,
+            height: 7,
             minWordLength: 4,
             waterLevel: 0);
 

@@ -171,6 +171,33 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
             Assert.IsTrue(allWordsExists);
         }
 
+        [Test]
+        public void ColorNames_WhenXColorsMatched_IsCompleted()
+        {
+            var requiredMatches =
+                ColorNames.Colors.Words
+                    .Take(ColorNames.NeededMatches)
+                    .Select(StrToWordMatch)
+                    .ToArray();
+
+            var initialState = new ColorNames();
+            var finalState = initialState
+                .WithUpdatedGame(
+                    initialState.Game.WithWordMatches(requiredMatches));
+
+            Assert.IsTrue(finalState.IsCompleted);
+        }
+
+        [Test]
+        public void ColorNames_AllWordsExist()
+        {
+            var allWordsExists = ColorNames.Colors.Words
+                .Aggregate(true, (acc, word) =>
+                    acc && CheckWord(word));
+
+            Assert.IsTrue(allWordsExists);
+        }
+
         private static WordMatchEx StrToWordMatch(string word) =>
             new WordMatchEx(new WordMatch(
                 word.Select(c => new StaticChar(1, 3, c))), 3, DateTimeOffset.Now);

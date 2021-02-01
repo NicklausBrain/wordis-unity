@@ -18,7 +18,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels.Campaign
             width: 9,
             height: 9,
             minWordLength: 3,
-            waterLevel: 0);
+            waterLevel: 3);
 
         /// <inheritdoc cref="Letter4Animals "/>
         public static WordsSequence Animals => WordsSequence.FromCsv(
