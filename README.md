@@ -20,3 +20,13 @@
 
 ## Core logic
 See `WordisProject/Assets/Wordis/BlockPuzzle/GameCore`;
+
+## Unit tests
+See `WordisProject/Assets/Wordis/BlockPuzzle/GameCore/Tests`;
+Use Unity Test Runner or Standalone NUnit project to run them
+
+## iOS app
+[https://apps.apple.com/ua/app/wordis-puzzle/id1548679723](https://apps.apple.com/ua/app/wordis-puzzle/id1548679723)
+
+## Android app
+To be published
