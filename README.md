@@ -30,3 +30,6 @@ Use Unity Test Runner or Standalone NUnit project to run them
 
 ## Android app
 To be published
+
+## Copyright
+© 2021 Nikolay Mozgovoy, Alex Chipizhenko, Vlad Khromykh, Alex Vambol
