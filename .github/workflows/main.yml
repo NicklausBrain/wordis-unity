@@ -15,8 +15,23 @@ defaults:
 
 jobs:
   build:
-    name: Build my project ✨
+    name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - test-project
+        unityVersion:
+          - 2019.4.1f1
+          #- 2020.2.1f1
+        targetPlatform:
+          #- StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          #- StandaloneWindows64 # Build a Windows 64-bit standalone.
+          #- StandaloneLinux64 # Build a Linux 64-bit standalone.
+          - iOS # Build an iOS player.
+          - Android # Build an Android player.
+          #- WebGL # WebGL.
     steps:
       # Checkout
       - name: Checkout repository
@@ -27,22 +42,30 @@ jobs:
       # Cache
       - uses: actions/cache@v2
         with:
-          path: Library
-          key: Library
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
 
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v2
+      # BUILD
+      - uses: game-ci/unity-test-runner@v2
+        id: testRunner
         with:
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
+      - uses: actions/upload-artifact@v2
+        if: always()
         with:
-          targetPlatform: WebGL
-
-      # Output
+          name: Test results (all modes)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+      - uses: game-ci/unity-builder@v2
+        with:
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
       - uses: actions/upload-artifact@v2
         with:
           name: Build
