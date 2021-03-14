@@ -6,10 +6,6 @@ name: Unity Build
 #  push: { branches: [main] }
 on: [push]
 
-defaults:
-  run:
-    working-directory: WordisProject
-
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
