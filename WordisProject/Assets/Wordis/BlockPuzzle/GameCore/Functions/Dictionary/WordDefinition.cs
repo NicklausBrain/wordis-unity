@@ -51,7 +51,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Functions.Dictionary
         }
 
         /// <summary>
-        /// Untruncated word definition.
+        /// Original word definition.
         /// </summary>
         public string FullDefinition => _definition;
 
