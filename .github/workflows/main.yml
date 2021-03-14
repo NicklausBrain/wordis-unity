@@ -47,6 +47,7 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
+          working-directory: WordisProject
 
       # BUILD
       - uses: game-ci/unity-test-runner@v2
@@ -55,18 +56,22 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: WordisProject
       - uses: actions/upload-artifact@v2
         if: always()
         with:
           name: Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
+          working-directory: WordisProject
       - uses: game-ci/unity-builder@v2
         with:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
+          working-directory: WordisProject
       - uses: actions/upload-artifact@v2
         with:
           name: Build
           path: build
+          working-directory: WordisProject
