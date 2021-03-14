@@ -10,8 +10,8 @@ defaults:
   run:
     working-directory: WordisProject
 
-#env:
-#  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
   build:
