@@ -17,7 +17,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using Facebook.Unity;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.Home
 {
@@ -34,31 +33,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// </summary>
         void Awake()
         {
-            if (!FB.IsInitialized)
-            {
-                // Initialize the Facebook SDK
-                FB.Init(InitCallback, OnHideUnity);
-            }
-            else
-            {
-                // Already initialized, signal an app activation App Event
-                FB.ActivateApp();
-            }
-        }
-
-        private void InitCallback()
-        {
-            if (FB.IsInitialized)
-            {
-                // Signal an app activation App Event
-                FB.ActivateApp();
-                // Continue with Facebook SDK
-                // ...
-            }
-            else
-            {
-                Debug.Log("Failed to Initialize the Facebook SDK");
-            }
         }
 
         private void OnHideUnity(bool isGameShown)
