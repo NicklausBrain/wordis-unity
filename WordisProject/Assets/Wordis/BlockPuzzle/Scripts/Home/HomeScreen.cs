@@ -17,7 +17,6 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
-using GameAnalyticsSDK;
 using Facebook.Unity;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.Home
@@ -35,8 +34,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.Home
         /// </summary>
         void Awake()
         {
-            GameAnalytics.Initialize();
-
             if (!FB.IsInitialized)
             {
                 // Initialize the Facebook SDK
