@@ -20,6 +20,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         // todo: find a way to serialize this dependency
         // [JsonProperty("findWordMatchesFunc")]
         private readonly FindWordMatchesFunc _findWordMatchesFunc;
+        [JsonProperty("availableMatches")]
+        private readonly ImmutableList<WordMatchEx> _availableMatches;
         [JsonProperty("wordMatches")]
         private readonly ImmutableList<WordMatchEx> _wordMatches;
         [JsonProperty("lastMatches")]
@@ -45,6 +47,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             ImmutableList<WordisObj> gameObjects,
             ImmutableList<WordMatchEx> wordMatches,
             ImmutableList<WordMatchEx> lastMatches,
+            ImmutableList<WordMatchEx> availableMatches,
             ImmutableList<GameEvent> gameEvents)
         {
             Settings = settings;
@@ -58,6 +61,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             _gameObjects = gameObjects ?? ImmutableList<WordisObj>.Empty;
             _wordMatches = wordMatches ?? ImmutableList<WordMatchEx>.Empty;
             _lastMatches = lastMatches ?? ImmutableList<WordMatchEx>.Empty;
+            _availableMatches = availableMatches ?? ImmutableList<WordMatchEx>.Empty;
             _gameEvents = gameEvents ?? ImmutableList<GameEvent>.Empty;
             _activeChar = new Lazy<ActiveChar>(() =>
                 GameObjects.FirstOrDefault(o => o is ActiveChar) as ActiveChar);
@@ -73,6 +77,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 gameObjects: null,
                 wordMatches: null,
                 lastMatches: null,
+                availableMatches: null,
                 gameEvents: null)
         {
         }
@@ -177,15 +182,30 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 case GameEvent.Step:
                     {
-                        var matches = FindWordMatches(updatedGame.Matrix);
+                        var availableMatches = FindWordMatches(updatedGame.Matrix);
 
-                        updatedGame = matches.Any()
+                        updatedGame = availableMatches.Any()
+                            ? updatedGame.With(
+                                availableMatches: availableMatches)
+                            : updatedGame;
+
+                        // todo: consider generating active object 1 step later
+                        // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
+                        return updatedGame.CanHaveActiveChar
+                            ? updatedGame.WithNewActiveChar()
+                            : updatedGame;
+                    }
+                case GameEvent.Match:
+                    {
+                        var availableMatches = updatedGame._availableMatches;
+
+                        updatedGame = availableMatches.Any()
                             ? updatedGame.With(
                                 gameObjects: updatedGame._gameObjects
-                                    .Except(matches.SelectMany(m => m.MatchedChars))
+                                    .Except(availableMatches.SelectMany(m => m.MatchedChars))
                                     .ToImmutableList(),
-                                wordMatches: updatedGame._wordMatches.AddRange(matches),
-                                lastMatches: matches)
+                                wordMatches: updatedGame._wordMatches.AddRange(availableMatches),
+                                lastMatches: availableMatches)
                             : updatedGame;
 
                         // todo: consider generating active object 1 step later
@@ -208,6 +228,7 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             ImmutableList<WordisObj> gameObjects = null,
             ImmutableList<WordMatchEx> wordMatches = null,
             ImmutableList<WordMatchEx> lastMatches = null,
+            ImmutableList<WordMatchEx> availableMatches = null,
             ImmutableList<GameEvent> gameEvents = null) =>
             new WordisGame(
                 settings: Settings,
@@ -216,7 +237,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                 gameObjects: gameObjects ?? _gameObjects,
                 gameEvents: gameEvents ?? _gameEvents,
                 wordMatches: wordMatches ?? _wordMatches,
-                lastMatches: lastMatches ?? _lastMatches);
+                lastMatches: lastMatches ?? _lastMatches,
+                availableMatches: availableMatches ?? _availableMatches);
 
         /// <summary>
         /// Spawns a new game object inside a game.
@@ -293,6 +315,11 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             /// </summary>
             public IReadOnlyList<WordMatchEx> Last =>
                 _game._lastMatches ?? ImmutableList<WordMatchEx>.Empty;
+
+            /// <summary>
+            /// Matches available to make at this step.
+            /// </summary>
+            public IReadOnlyList<WordMatchEx> Available => _game._availableMatches;
 
             /// <summary>
             /// Total matches.

@@ -244,7 +244,10 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
             }
 
+            
             var activeChar = gameState.ActiveChar; // can be null
+            var availableMatches = new HashSet<WordisChar>(
+                gameState.Matches.Available.SelectMany(m => m.MatchedChars));
 
             // 4. refresh every block on the board
             for (int x = 0; x < gameState.Matrix.Width; x++)
@@ -253,7 +256,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 {
                     var wordisObject = gameState.Matrix[x, y];
 
-                    RefreshVisualBlock(x, y, wordisObject, activeChar);
+                    RefreshVisualBlock(x, y, wordisObject, activeChar, availableMatches);
                 }
             }
 
@@ -298,7 +301,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             int x,
             int y,
             WordisObj wordisObj,
-            ActiveChar activeChar)
+            ActiveChar activeChar,
+            HashSet<WordisChar> matchedChars)
         {
             var block = gameBoard.allColumns[x][y];
 
@@ -324,7 +328,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
             else // letter block
             {
-                block.PlaceBlock(Block.DefaultCharTag);
+                block.PlaceBlock(matchedChars.Contains(wordisObj) ? Block.MatchedCharTag : Block.DefaultCharTag);
 
                 if (wordisObj is WordisChar wordisChar)
                 {

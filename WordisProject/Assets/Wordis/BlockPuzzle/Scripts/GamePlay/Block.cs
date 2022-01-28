@@ -31,6 +31,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     {
         #region Wordis
 
+        public static string MatchedCharTag => "b5"; // nice yellow;
+
         public static string DefaultCharTag => "b1"; // nice blue;
 
         public static string WaterTag => "b4"; // azure (?);

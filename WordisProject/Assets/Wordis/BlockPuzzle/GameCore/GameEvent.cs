@@ -32,5 +32,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// Move the current <see cref="WordisObj"/> to the right.
         /// </summary>
         Right,
+
+        /// <summary>
+        /// User approves highlighted words to match.
+        /// </summary>
+        Match,
     }
 }
