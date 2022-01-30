@@ -25,6 +25,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
@@ -233,7 +234,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void RefreshPresentation(WordisGame gameState)
         {
             // check last game event to avoid extra animations on user input
-            if (gameState.LastEvent == GameEvent.Step &&
+            if (gameState.LastEvent == GameEvent.Match &&
                 gameState.Matches.Last.Any()) // on word match
             {
                 // 1. display matches
@@ -244,7 +245,6 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 GameProgressTracker.Instance.AddWordsStats(gameState.Matches.Last);
             }
 
-            
             var activeChar = gameState.ActiveChar; // can be null
             var availableMatches = new HashSet<WordisChar>(
                 gameState.Matches.Available.SelectMany(m => m.MatchedChars));
@@ -304,7 +304,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             ActiveChar activeChar,
             HashSet<WordisChar> matchedChars)
         {
-            var block = gameBoard.allColumns[x][y];
+            Block block = gameBoard.allColumns[x][y];
+            block.GetComponent<Button>().onClick.RemoveAllListeners();
 
             if (wordisObj == null) // empty block
             {
@@ -328,13 +329,21 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
             else // letter block
             {
-                block.PlaceBlock(matchedChars.Contains(wordisObj) ? Block.MatchedCharTag : Block.DefaultCharTag);
+                var isMatchedChar = matchedChars.Contains(wordisObj);
+                block.PlaceBlock(isMatchedChar ? Block.MatchedCharTag : Block.DefaultCharTag);
+
+                block.GetComponent<Button>().onClick.AddListener(EmmitWordMatch);
 
                 if (wordisObj is WordisChar wordisChar)
                 {
                     block.SetText($"{wordisChar.Value}", Color.white);
                 }
             }
+        }
+
+        void EmmitWordMatch()
+        {
+            HandleGameEvent(GameEvent.Match);
         }
 
         private void ShowWordDefinition(string word)

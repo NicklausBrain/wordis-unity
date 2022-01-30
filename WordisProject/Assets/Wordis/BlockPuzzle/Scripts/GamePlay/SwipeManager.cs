@@ -109,7 +109,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     {
                         if (Application.isEditor)
                         {
-                            Debug.Log("[SwipeManager] Swipe was not long enough.");
+                            // Debug.Log("[SwipeManager] Swipe was not long enough.");
                         }
 
                         swipeDirection = Swipe.None;

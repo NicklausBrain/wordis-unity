@@ -205,7 +205,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                                     .Except(availableMatches.SelectMany(m => m.MatchedChars))
                                     .ToImmutableList(),
                                 wordMatches: updatedGame._wordMatches.AddRange(availableMatches),
-                                lastMatches: availableMatches)
+                                lastMatches: availableMatches,
+                                availableMatches: ImmutableList<WordMatchEx>.Empty)
                             : updatedGame;
 
                         // todo: consider generating active object 1 step later
