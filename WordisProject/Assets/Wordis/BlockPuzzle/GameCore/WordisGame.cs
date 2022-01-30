@@ -184,10 +184,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                     {
                         var availableMatches = FindWordMatches(updatedGame.Matrix);
 
-                        updatedGame = availableMatches.Any()
-                            ? updatedGame.With(
-                                availableMatches: availableMatches)
-                            : updatedGame;
+                        updatedGame = updatedGame.With(
+                                availableMatches: availableMatches);
 
                         // todo: consider generating active object 1 step later
                         // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
