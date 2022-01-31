@@ -305,7 +305,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             HashSet<WordisChar> matchedChars)
         {
             Block block = gameBoard.allColumns[x][y];
-            block.GetComponent<Button>().onClick.RemoveAllListeners();
+            block.RemoveAllListeners();
 
             if (wordisObj == null) // empty block
             {
@@ -332,7 +332,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var isMatchedChar = matchedChars.Contains(wordisObj);
                 block.PlaceBlock(isMatchedChar ? Block.MatchedCharTag : Block.DefaultCharTag);
 
-                block.GetComponent<Button>().onClick.AddListener(EmmitWordMatch);
+                block.AddOnClickListener(EmmitWordMatch);
 
                 if (wordisObj is WordisChar wordisChar)
                 {

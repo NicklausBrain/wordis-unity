@@ -20,6 +20,7 @@ using Assets.Wordis.Frameworks.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
@@ -206,6 +207,16 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PlaceBlock(Block.WaterTag);
             }
+        }
+
+        public void AddOnClickListener(UnityAction action)
+        {
+            this.GetComponent<Button>().onClick.AddListener(action);
+        }
+
+        public void RemoveAllListeners()
+        {
+            this.GetComponent<Button>().onClick.RemoveAllListeners();
         }
 
         /// <summary>
