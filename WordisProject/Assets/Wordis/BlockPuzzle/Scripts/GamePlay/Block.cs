@@ -164,7 +164,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Clears block. Will be called when line containing this block will get completed. This is typical animation effect of how completed block shoudl disappear.
+        /// Clears block. Will be called when line containing this block will get completed.
+        /// This is typical animation effect of how completed block should disappear.
         /// </summary>
         public void Clear(WordisSettings settings = null)
         {
@@ -206,6 +207,30 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             if (settings != null && settings.IsWaterZone(RowId))
             {
                 PlaceBlock(Block.WaterTag);
+            }
+        }
+
+        public void ShakeAnimation()
+        {
+            if(_textMeshProUgui == null || blockImage == null){
+                return;
+            }
+
+            var targets = new []{_textMeshProUgui.transform, blockImage.transform};
+
+            const float duration = 0.2F;
+
+            foreach(var target in targets) {
+                target
+                .LocalRotationToZ(15, duration)
+                .OnComplete(() =>
+                {
+                    target
+                    .LocalRotationToZ(0, duration)
+                    .OnComplete(() =>
+                    {
+                    });
+                });
             }
         }
 

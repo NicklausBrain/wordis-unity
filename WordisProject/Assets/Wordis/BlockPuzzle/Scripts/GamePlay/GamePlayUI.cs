@@ -332,6 +332,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 var isMatchedChar = matchedChars.Contains(wordisObj);
                 block.PlaceBlock(isMatchedChar ? Block.MatchedCharTag : Block.DefaultCharTag);
 
+                if (isMatchedChar)
+                {
+                    block.ShakeAnimation();
+                }
+
                 block.AddOnClickListener(EmmitWordMatch);
 
                 if (wordisObj is WordisChar wordisChar)
