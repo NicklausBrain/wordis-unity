@@ -21,19 +21,27 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Objects
             WordisGame game,
             GameEvent gameEvent)
         {
-            switch (gameEvent)
+            if (gameEvent == GameEvent.Step)
             {
-                case GameEvent.Step:
-                    return HandleStep(game);
-                case GameEvent.Down:
-                    return HandleDown(game);
-                case GameEvent.Left:
-                    return HandleLeft(game);
-                case GameEvent.Right:
-                    return HandleRight(game);
-                default:
-                    return this;
+                return HandleStep(game);
             }
+
+            if (gameEvent == GameEvent.Down)
+            {
+                return HandleDown(game);
+            }
+
+            if (gameEvent == GameEvent.Left)
+            {
+                return HandleLeft(game);
+            }
+
+            if (gameEvent == GameEvent.Right)
+            {
+                return HandleRight(game);
+            }
+
+            return this;
         }
 
         /// <summary>

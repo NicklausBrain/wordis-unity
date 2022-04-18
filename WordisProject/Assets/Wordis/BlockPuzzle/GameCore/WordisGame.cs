@@ -178,44 +178,42 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                     lastMatches: ImmutableList<WordMatchEx>.Empty);
             }
 
-            switch (gameEvent)
+            if (gameEvent == GameEvent.Step)
             {
-                case GameEvent.Step:
-                    {
-                        var availableMatches = FindWordMatches(updatedGame.Matrix);
+               var availableMatches = FindWordMatches(updatedGame.Matrix);
 
-                        updatedGame = updatedGame.With(
-                                availableMatches: availableMatches);
+                updatedGame = updatedGame.With(
+                        availableMatches: availableMatches);
 
-                        // todo: consider generating active object 1 step later
-                        // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
-                        return updatedGame.CanHaveActiveChar
-                            ? updatedGame.WithNewActiveChar()
-                            : updatedGame;
-                    }
-                case GameEvent.Match:
-                    {
-                        var availableMatches = updatedGame._availableMatches;
-
-                        updatedGame = availableMatches.Any()
-                            ? updatedGame.With(
-                                gameObjects: updatedGame._gameObjects
-                                    .Except(availableMatches.SelectMany(m => m.MatchedChars))
-                                    .ToImmutableList(),
-                                wordMatches: updatedGame._wordMatches.AddRange(availableMatches),
-                                lastMatches: availableMatches,
-                                availableMatches: ImmutableList<WordMatchEx>.Empty)
-                            : updatedGame;
-
-                        // todo: consider generating active object 1 step later
-                        // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
-                        return updatedGame.CanHaveActiveChar
-                            ? updatedGame.WithNewActiveChar()
-                            : updatedGame;
-                    }
-                default:
-                    return updatedGame;
+                // todo: consider generating active object 1 step later
+                // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
+                return updatedGame.CanHaveActiveChar
+                    ? updatedGame.WithNewActiveChar()
+                    : updatedGame;
             }
+
+            if (gameEvent == GameEvent.Match)
+            {
+                var availableMatches = updatedGame._availableMatches;
+
+                updatedGame = availableMatches.Any()
+                    ? updatedGame.With(
+                        gameObjects: updatedGame._gameObjects
+                            .Except(availableMatches.SelectMany(m => m.MatchedChars))
+                            .ToImmutableList(),
+                        wordMatches: updatedGame._wordMatches.AddRange(availableMatches),
+                        lastMatches: availableMatches,
+                        availableMatches: ImmutableList<WordMatchEx>.Empty)
+                    : updatedGame;
+
+                // todo: consider generating active object 1 step later
+                // todo: https://github.com/NicklausBrain/wordis-unity/issues/38
+                return updatedGame.CanHaveActiveChar
+                    ? updatedGame.WithNewActiveChar()
+                    : updatedGame;
+            }
+
+            return updatedGame;
         }
 
         /// <summary>
