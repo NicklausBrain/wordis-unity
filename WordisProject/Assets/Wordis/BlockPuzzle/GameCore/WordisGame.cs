@@ -192,17 +192,22 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
                     : updatedGame;
             }
 
-            if (gameEvent == GameEvent.Match)
+            if (gameEvent is MatchEvent)
             {
-                var availableMatches = updatedGame._availableMatches;
+                var matchEvent = gameEvent as MatchEvent;
+                var match = updatedGame._availableMatches
+                    .Where(a => a.MatchedChars.Contains(matchEvent.Char))
+                    .OrderByDescending(a => a.MatchedChars.Count)
+                    .Take(1)
+                    .ToImmutableList();
 
-                updatedGame = availableMatches.Any()
+                updatedGame = match.Any()
                     ? updatedGame.With(
                         gameObjects: updatedGame._gameObjects
-                            .Except(availableMatches.SelectMany(m => m.MatchedChars))
+                            .Except(match.SelectMany(m => m.MatchedChars))
                             .ToImmutableList(),
-                        wordMatches: updatedGame._wordMatches.AddRange(availableMatches),
-                        lastMatches: availableMatches,
+                        wordMatches: updatedGame._wordMatches.AddRange(match),
+                        lastMatches: match,
                         availableMatches: ImmutableList<WordMatchEx>.Empty)
                     : updatedGame;
 

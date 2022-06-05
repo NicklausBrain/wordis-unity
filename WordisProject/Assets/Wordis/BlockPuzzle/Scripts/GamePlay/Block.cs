@@ -234,9 +234,9 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
         }
 
-        public void AddOnClickListener(UnityAction action)
+        public void AddOnClickListener(System.Action action)
         {
-            this.GetComponent<Button>().onClick.AddListener(action);
+            this.GetComponent<Button>().onClick.AddListener(() => action());
         }
 
         public void RemoveAllListeners()

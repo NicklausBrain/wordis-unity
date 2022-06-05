@@ -38,4 +38,14 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// </summary>
         public static readonly GameEvent Match = new GameEvent();
     }
+
+    public class MatchEvent: GameEvent
+    {
+        public MatchEvent(WordisChar @char)
+        {
+            this.Char = @char;
+        }
+
+        public WordisChar Char { get; private set; }
+    }
 }

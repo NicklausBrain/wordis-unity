@@ -234,7 +234,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void RefreshPresentation(WordisGame gameState)
         {
             // check last game event to avoid extra animations on user input
-            if (gameState.LastEvent == GameEvent.Match &&
+            if (gameState.LastEvent is MatchEvent &&
                 gameState.Matches.Last.Any()) // on word match
             {
                 // 1. display matches
@@ -337,18 +337,18 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                     block.ShakeAnimation();
                 }
 
-                block.AddOnClickListener(EmmitWordMatch);
-
                 if (wordisObj is WordisChar wordisChar)
                 {
+                    block.AddOnClickListener(EmmitWordMatch(wordisObj as WordisChar));
+
                     block.SetText($"{wordisChar.Value}", Color.white);
                 }
             }
         }
 
-        void EmmitWordMatch()
+        System.Action EmmitWordMatch(WordisChar wordisChar)
         {
-            HandleGameEvent(GameEvent.Match);
+            return () => HandleGameEvent(new MatchEvent(wordisChar));
         }
 
         private void ShowWordDefinition(string word)
