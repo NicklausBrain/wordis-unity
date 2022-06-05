@@ -348,7 +348,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 
         System.Action EmmitWordMatch(WordisChar wordisChar)
         {
-            return () => HandleGameEvent(new MatchEvent(wordisChar));
+            return () => HandleGameEvent(GameEvent.Match(wordisChar));
         }
 
         private void ShowWordDefinition(string word)

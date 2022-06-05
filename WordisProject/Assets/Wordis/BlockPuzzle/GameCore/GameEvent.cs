@@ -36,7 +36,10 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         /// <summary>
         /// User approves highlighted words to match.
         /// </summary>
-        public static readonly GameEvent Match = new GameEvent();
+        public static GameEvent Match(WordisChar @char)
+        {
+            return new MatchEvent(@char);
+        }
     }
 
     public class MatchEvent: GameEvent
