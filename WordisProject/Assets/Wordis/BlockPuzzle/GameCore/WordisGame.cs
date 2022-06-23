@@ -196,8 +196,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
             {
                 var matchEvent = gameEvent as MatchEvent;
                 var match = updatedGame._availableMatches
-                    .Where(a => a.MatchedChars.Contains(matchEvent.Char))
-                    .OrderByDescending(a => a.MatchedChars.Count)
+                    .Where(a => a.CharsSet.Contains(matchEvent.Char))
+                    .OrderByDescending(a => a.MatchedChars.Length)
                     .Take(1)
                     .ToImmutableList();
 
