@@ -25,6 +25,7 @@ using Assets.Wordis.BlockPuzzle.Scripts.UI.Extensions;
 using Assets.Wordis.Frameworks.InputManager.Scripts;
 using Assets.Wordis.Frameworks.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
@@ -233,7 +234,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         private void RefreshPresentation(WordisGame gameState)
         {
             // check last game event to avoid extra animations on user input
-            if (gameState.LastEvent == GameEvent.Step &&
+            if (gameState.LastEvent is MatchEvent &&
                 gameState.Matches.Last.Any()) // on word match
             {
                 // 1. display matches
@@ -245,6 +246,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
 
             var activeChar = gameState.ActiveChar; // can be null
+            var availableMatches = new HashSet<WordisChar>(
+                gameState.Matches.Available.SelectMany(m => m.MatchedChars));
 
             // 4. refresh every block on the board
             for (int x = 0; x < gameState.Matrix.Width; x++)
@@ -253,7 +256,7 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
                 {
                     var wordisObject = gameState.Matrix[x, y];
 
-                    RefreshVisualBlock(x, y, wordisObject, activeChar);
+                    RefreshVisualBlock(x, y, wordisObject, activeChar, availableMatches);
                 }
             }
 
@@ -298,9 +301,11 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             int x,
             int y,
             WordisObj wordisObj,
-            ActiveChar activeChar)
+            ActiveChar activeChar,
+            HashSet<WordisChar> matchedChars)
         {
-            var block = gameBoard.allColumns[x][y];
+            Block block = gameBoard.allColumns[x][y];
+            block.RemoveAllListeners();
 
             if (wordisObj == null) // empty block
             {
@@ -324,13 +329,26 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             }
             else // letter block
             {
-                block.PlaceBlock(Block.DefaultCharTag);
+                var isMatchedChar = matchedChars.Contains(wordisObj);
+                block.PlaceBlock(isMatchedChar ? Block.MatchedCharTag : Block.DefaultCharTag);
+
+                if (isMatchedChar)
+                {
+                    block.ShakeAnimation();
+                }
 
                 if (wordisObj is WordisChar wordisChar)
                 {
+                    block.AddOnClickListener(EmmitWordMatch(wordisObj as WordisChar));
+
                     block.SetText($"{wordisChar.Value}", Color.white);
                 }
             }
+        }
+
+        System.Action EmmitWordMatch(WordisChar wordisChar)
+        {
+            return () => HandleGameEvent(GameEvent.Match(wordisChar));
         }
 
         private void ShowWordDefinition(string word)

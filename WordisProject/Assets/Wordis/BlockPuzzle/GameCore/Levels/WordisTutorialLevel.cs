@@ -101,7 +101,19 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Levels
             }
 
             if (gameEvent == GameEvent.Step)
+            {
+                if (Game.Matches.Available.FirstOrDefault(a => a.Word.Equals("CAT")) != null)
+                {
+                    if (_steps % 3 == 0)
+                        _displayMessage("Touch the word!"); // todo: localize
+                    return With(updatedGame: Game, steps: _steps + 1);
+                }
                 return With(updatedGame: Game.Handle(gameEvent), steps: _steps + 1);
+            }
+
+            if (gameEvent is MatchEvent) {
+                return With(updatedGame: Game.Handle(gameEvent), steps: _steps + 1);
+            }
             else
                 return this;
         }

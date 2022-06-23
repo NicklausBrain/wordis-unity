@@ -11,17 +11,20 @@ namespace Assets.Wordis.BlockPuzzle.GameCore
         [JsonProperty("chars")]
         private readonly WordisChar[] _chars;
 
+        public ISet<WordisChar> CharsSet { get; private set; }
+
         [JsonConstructor]
         public WordMatch(IEnumerable<WordisChar> chars)
         {
-            _chars = chars?.ToArray() ?? Array.Empty<WordisChar>();
+            _chars = chars.ToArray();
+            CharsSet = new HashSet<WordisChar>(_chars) ?? new HashSet<WordisChar>();
         }
 
         [JsonIgnore]
         public string Word => new string(MatchedChars.Select(c => c.Value).ToArray());
 
         [JsonIgnore]
-        public IReadOnlyList<WordisChar> MatchedChars => _chars;
+        public WordisChar[] MatchedChars => _chars;
 
         protected bool Equals(WordMatch other)
         {

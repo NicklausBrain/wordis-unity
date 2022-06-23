@@ -28,13 +28,15 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
         [Test]
         public void FromJson_RestoresGameState()
         {
+            var a = new StaticChar(1, 2, 'A');
             var game = new WordisGame(_settings.With(width: 3, height: 4))
                 .With(new ActiveChar(0, 0, 'X'))
                 .With(new ActiveChar(1, 0, 'R'))
-                .With(new StaticChar(1, 2, 'A'))
+                .With(a)
                 .With(new StaticChar(1, 3, 'T'))
                 .Handle(GameEvent.Step)
-                .Handle(GameEvent.Step);
+                .Handle(GameEvent.Step)
+                .Handle(GameEvent.Match(a));
 
             var gameAsJson = WordisGame.ToJson(game);
             var restoredGame = WordisGame.FromJson(gameAsJson);

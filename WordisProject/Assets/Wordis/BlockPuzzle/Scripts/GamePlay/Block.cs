@@ -20,6 +20,7 @@ using Assets.Wordis.Frameworks.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
 {
@@ -30,6 +31,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
     public class Block : MonoBehaviour
     {
         #region Wordis
+
+        public static string MatchedCharTag => "b5"; // nice yellow;
 
         public static string DefaultCharTag => "b1"; // nice blue;
 
@@ -161,7 +164,8 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
         }
 
         /// <summary>
-        /// Clears block. Will be called when line containing this block will get completed. This is typical animation effect of how completed block shoudl disappear.
+        /// Clears block. Will be called when line containing this block will get completed.
+        /// This is typical animation effect of how completed block should disappear.
         /// </summary>
         public void Clear(WordisSettings settings = null)
         {
@@ -204,6 +208,40 @@ namespace Assets.Wordis.BlockPuzzle.Scripts.GamePlay
             {
                 PlaceBlock(Block.WaterTag);
             }
+        }
+
+        public void ShakeAnimation()
+        {
+            if(_textMeshProUgui == null || blockImage == null){
+                return;
+            }
+
+            var targets = new []{_textMeshProUgui.transform, blockImage.transform};
+
+            const float duration = 0.2F;
+
+            foreach(var target in targets) {
+                target
+                .LocalRotationToZ(15, duration)
+                .OnComplete(() =>
+                {
+                    target
+                    .LocalRotationToZ(0, duration)
+                    .OnComplete(() =>
+                    {
+                    });
+                });
+            }
+        }
+
+        public void AddOnClickListener(System.Action action)
+        {
+            this.GetComponent<Button>().onClick.AddListener(() => action());
+        }
+
+        public void RemoveAllListeners()
+        {
+            this.GetComponent<Button>().onClick.RemoveAllListeners();
         }
 
         /// <summary>
