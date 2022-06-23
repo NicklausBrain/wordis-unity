@@ -60,6 +60,8 @@ namespace Assets.Wordis.BlockPuzzle.GameCore.Tests
                 .Handle(GameEvent.Step)
                 .Handle(GameEvent.Step);
 
+            tutorial = tutorial.Handle(GameEvent.Match(tutorial.Game.GameObjects.First() as WordisChar));
+
             Assert.IsTrue(tutorial.IsCompleted);
         }
 
