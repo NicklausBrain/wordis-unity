@@ -24,13 +24,14 @@ See `WordisProject/Assets/Wordis/BlockPuzzle/GameCore`;
 
 ## Unit tests
 See `WordisProject/Assets/Wordis/BlockPuzzle/GameCore/Tests`;
-Use Unity Test Runner or Standalone NUnit project to run them
+Use Unity Test Runner or a Standalone NUnit project to run them
 
 ## iOS app
-[https://apps.apple.com/ua/app/wordis-puzzle/id1548679723](https://apps.apple.com/ua/app/wordis-puzzle/id1548679723)
+- unzip `./mac-wordis.zip`
+~[https://apps.apple.com/ua/app/wordis-puzzle/id1548679723](https://apps.apple.com/ua/app/wordis-puzzle/id1548679723)~
 
-## Android app
-To be published
+## Other platforms
+- can be built using Unity 2019.4.29f1
 
 ## Copyright
 © 2021 Nikolay Mozgovoy, Alex Chipizhenko, Vlad Khromykh, Alex Vambol
